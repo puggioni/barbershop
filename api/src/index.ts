@@ -1,5 +1,6 @@
 import app from "./app";
+import port from "./app";
 
-app.listen(5000, function () {
-  console.log("Server Started!");
+app.listen(port, () => {
+  console.log(`server started at http://localhost:${port}`);
 });
