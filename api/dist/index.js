@@ -4,6 +4,23 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const app_1 = __importDefault(require("./app"));
-app_1.default.listen(5000, function () {
-    console.log("Server Started!");
+const dotenv_1 = __importDefault(require("dotenv"));
+const mongoose_1 = __importDefault(require("mongoose"));
+dotenv_1.default.config();
+//=======CONNECT TO SERVER=======//
+app_1.default.listen(process.env.PORT, () => {
+    console.log(`Successfully started the server, listening on port: ${process.env.PORT}`);
+});
+//=======CONNECT TO MONGO=======//
+const db_1 = require("./db");
+mongoose_1.default
+    .connect(db_1.config.mongo.url, {
+    retryWrites: true,
+    w: "majority",
+})
+    .then(() => {
+    console.log("Started the database");
+})
+    .catch((err) => {
+    console.log(err);
 });
