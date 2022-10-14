@@ -20,6 +20,7 @@ app.use((_req, res, next) => {
   next();
 });
 
+//CONFIGURACION DE RUTAS
 app.use("/", routes);
 app.use(cors());
 

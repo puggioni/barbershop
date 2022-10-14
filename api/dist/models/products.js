@@ -8,17 +8,13 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Product = void 0;
 const typegoose_1 = require("@typegoose/typegoose");
-class Category {
-}
-__decorate([
-    (0, typegoose_1.prop)({
-        required: true,
-    }),
-    __metadata("design:type", String)
-], Category.prototype, "description", void 0);
+const categories_1 = __importDefault(require("./categories"));
 class Product {
 }
 __decorate([
@@ -63,10 +59,10 @@ __decorate([
 ], Product.prototype, "favorite", void 0);
 __decorate([
     (0, typegoose_1.prop)({
-        type: () => [Category],
+        ref: () => categories_1.default,
     }),
     __metadata("design:type", Array)
-], Product.prototype, "categories", void 0);
+], Product.prototype, "category", void 0);
 exports.Product = Product;
 const ProductModel = (0, typegoose_1.getModelForClass)(Product);
 exports.default = ProductModel;

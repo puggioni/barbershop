@@ -22,6 +22,7 @@ app.use((_req, res, next) => {
     res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE");
     next();
 });
+//CONFIGURACION DE RUTAS
 app.use("/", index_1.default);
 app.use((0, cors_1.default)());
 app.use((err, _req, res, _next) => {
