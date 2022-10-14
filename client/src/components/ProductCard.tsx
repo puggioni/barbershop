@@ -1,4 +1,4 @@
-import {Link} from "react-router-dom"
+import { Link } from "react-router-dom";
 
 type Props = {
   nombre: string;
@@ -23,9 +23,8 @@ const ProductCard = ({ nombre, precio, rating, imagen }: Props) => {
         <div>{rating}</div>
       </div>
       <Link to={`/product/${nombre}`}>
-      <button className="absolute right-0 bottom-0 m-4">Ver más</button>
+        <button className="absolute right-0 bottom-0 m-4">Ver más</button>
       </Link>
-      
     </div>
   );
 };
