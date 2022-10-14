@@ -4,13 +4,13 @@ import CategoryModel from "../../models/categories";
 
 const router = Router();
 
-router.post("/create", async (req, res) => {
+router.delete("/delete", async (req, res) => {
   const { name } = req.body;
   try {
-    const categorySaved = await CategoryModel.create(name);
-    res.send(categorySaved);
+    const categoryDeleted = await CategoryModel.findOneAndDelete(name);
+    res.send(categoryDeleted);
   } catch (error) {
-    res.status(500).send({ error });
+    res.status(500).send({error});
   }
 });
 
