@@ -3,6 +3,7 @@ import { prop, getModelForClass, Ref } from "@typegoose/typegoose";
 class Category {
   @prop({
     required: true,
+    unique: true
   })
   public name: string;
 }
