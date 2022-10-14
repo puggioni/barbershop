@@ -18,8 +18,16 @@ const router = (0, express_1.Router)();
 router.post("/create", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { name, description, price, stock, available, favorite, categories } = req.body;
     try {
-        const productSaved = yield products_1.default.create(req.body);
-        res.send(productSaved);
+        const response = yield products_1.default.create({
+            name: name,
+            description: description,
+            price: price,
+            stock: stock,
+            available: available,
+            favorite: favorite,
+        });
+        const finalResponse = yield response.populate("categories");
+        res.status(201).json(finalResponse);
     }
     catch (err) {
         res.status(500).send(err);

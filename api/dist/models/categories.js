@@ -16,6 +16,8 @@ class Category {
 __decorate([
     (0, typegoose_1.prop)({
         required: true,
+        unique: true,
+        trim: true,
     }),
     __metadata("design:type", String)
 ], Category.prototype, "name", void 0);
