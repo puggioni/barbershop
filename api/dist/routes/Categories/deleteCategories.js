@@ -18,7 +18,7 @@ const router = (0, express_1.Router)();
 router.delete("/delete", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { name } = req.body;
     try {
-        const categoryDeleted = yield categories_1.default.findOneAndDelete(name);
+        const categoryDeleted = yield categories_1.default.findOneAndDelete({ name: name });
         res.send(categoryDeleted);
     }
     catch (error) {

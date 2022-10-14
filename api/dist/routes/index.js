@@ -7,8 +7,10 @@ const express_1 = require("express");
 /* ============PRODUCTS============ */
 const postProducts_1 = __importDefault(require("./Products/postProducts"));
 const getProducts_1 = __importDefault(require("./Products/getProducts"));
+const deleteProducts_1 = __importDefault(require("./Products/deleteProducts"));
 const router = (0, express_1.Router)();
 /* ============PRODUCTS============ */
 router.use("/products", postProducts_1.default);
 router.use("/products", getProducts_1.default);
+router.use("/products", deleteProducts_1.default);
 exports.default = router;

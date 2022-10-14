@@ -15,15 +15,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const categories_1 = __importDefault(require("../../models/categories"));
 const router = (0, express_1.Router)();
-router.post("/create", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.delete("/delete", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { name } = req.body;
-    console.log("Received new category:", name);
     try {
-        const categorySaved = yield categories_1.default.create({ name: name });
-        res.send(categorySaved);
+        const categoryDeleted = yield categories_1.default.findOneAndDelete(name);
+        res.send(categoryDeleted);
     }
     catch (error) {
-        console.log("Error:", error);
         res.status(500).send({ error });
     }
 }));
