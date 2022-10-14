@@ -22,7 +22,7 @@ app.use((_req, res, next) => {
 });
 
 //CONFIGURACION DE RUTAS
-app.use("/api", routes);
+app.use("/", routes);
 app.use(cors());
 
 app.use((err: any, _req: any, res: any, _next: any) => {
