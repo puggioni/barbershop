@@ -24,7 +24,7 @@ app.use((_req, res, next) => {
     next();
 });
 //CONFIGURACION DE RUTAS
-app.use("/api", index_1.default);
+app.use("/", index_1.default);
 app.use((0, cors_1.default)());
 app.use((err, _req, res, _next) => {
     const status = err.status || 500;
