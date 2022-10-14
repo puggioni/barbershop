@@ -1,11 +1,17 @@
 import React from "react";
-import "./App.css";
-
+import data from "./mockdata";
+import ProductCard from "./components/ProductCard";
 function App() {
-  const handleClick = () => {};
   return (
-    <div className="App">
-      <button onClick={() => handleClick()}>Store</button>
+    <div>
+      {data.map((data) => (
+        <ProductCard
+          nombre={data.name}
+          imagen={data.imagen}
+          precio={data.precio}
+          rating={data.rating}
+        />
+      ))}
     </div>
   );
 }
