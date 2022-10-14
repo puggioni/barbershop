@@ -1,4 +1,3 @@
-import { PurchaseOrder } from "./purchaseOrder";
 import { prop, getModelForClass, Ref } from "@typegoose/typegoose";
 import { Role } from "./role";
 import { Shift } from "./shift";
@@ -45,16 +44,11 @@ export class User {
   public shift: Ref<typeof Shift>;
 
   @prop({
-    ref: () => PurchaseOrder,
-  })
-  public purchaseOrder: Ref<PurchaseOrder>;
-
-  @prop({
     type: Boolean,
   })
   public confirm: boolean;
 }
 
-const user = getModelForClass(User);
+const UserModel = getModelForClass(User);
 
-export default user;
+export default UserModel;
