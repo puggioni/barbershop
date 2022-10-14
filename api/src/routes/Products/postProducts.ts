@@ -1,4 +1,3 @@
-import { Category } from "./../../models/categories";
 import { Router } from "express";
 
 import ProductModel from "../../models/products";
@@ -15,10 +14,9 @@ router.post("/create", async (req, res) => {
       price: price,
       stock: stock,
       available: available,
-      favorite: favorite,
+      categories: categories,
     });
-    const finalResponse = await response.populate("categories");
-    res.status(201).json(finalResponse);
+    res.status(200).send(response);
   } catch (err) {
     res.status(500).send(err);
   }

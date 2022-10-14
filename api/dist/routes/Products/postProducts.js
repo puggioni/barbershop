@@ -24,10 +24,9 @@ router.post("/create", (req, res) => __awaiter(void 0, void 0, void 0, function*
             price: price,
             stock: stock,
             available: available,
-            favorite: favorite,
+            categories: categories,
         });
-        const finalResponse = yield response.populate("categories");
-        res.status(201).json(finalResponse);
+        res.status(200).send(response);
     }
     catch (err) {
         res.status(500).send(err);
