@@ -1,8 +1,7 @@
 const data = [
   {
     name: "nombre de producto 1",
-    imagen:
-      "https://gaprastore.com/wp-content/uploads/2021/07/21413_3e8f434db4c56abadc6ee836fbf4ee5e.jpg",
+    imagen: "https://ss893.suburbia.com.mx/xl/5003019464.jpg",
     precio: 100,
     rating: 10,
   },
