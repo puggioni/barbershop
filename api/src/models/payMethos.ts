@@ -8,6 +8,6 @@ export class PayMethods {
   public description: string;
 }
 
-const payMethods = getModelForClass(PayMethods);
+const PayMethodsModel = getModelForClass(PayMethods);
 
-export default payMethods;
+export default PayMethodsModel;

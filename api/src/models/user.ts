@@ -55,6 +55,6 @@ export class User {
   public confirm: boolean;
 }
 
-const user = getModelForClass(User);
+const UserModel = getModelForClass(User);
 
-export default user;
+export default UserModel;

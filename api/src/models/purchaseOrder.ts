@@ -31,6 +31,6 @@ export class PurchaseOrder {
   public payMethod: Ref<PayMethods>;
 }
 
-const purchaseOrder = getModelForClass(PurchaseOrder);
+const PoModel = getModelForClass(PurchaseOrder);
 
-export default purchaseOrder;
+export default PoModel;

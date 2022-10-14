@@ -8,6 +8,6 @@ export class Role {
   public description: string;
 }
 
-const UserRole = getModelForClass(Role);
+const RoleModel = getModelForClass(Role);
 
-export default UserRole;
+export default RoleModel;

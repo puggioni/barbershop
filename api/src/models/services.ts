@@ -32,6 +32,6 @@ export class Services {
   public shift: Ref<Shift>;
 }
 
-const services = getModelForClass(Services);
+const ServicesModel = getModelForClass(Services);
 
-export default services;
+export default ServicesModel;

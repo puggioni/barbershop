@@ -54,6 +54,6 @@ export class Product {
   public purchaseOrder: Ref<PurchaseOrder>;
 }
 
-const product = getModelForClass(Product);
+const ProductModel = getModelForClass(Product);
 
-export default product;
+export default ProductModel;

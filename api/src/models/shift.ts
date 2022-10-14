@@ -26,6 +26,6 @@ export class Shift {
   public services: Ref<Services>;
 }
 
-const shift = getModelForClass(Shift);
+const ShiftModel = getModelForClass(Shift);
 
-export default shift;
+export default ShiftModel;

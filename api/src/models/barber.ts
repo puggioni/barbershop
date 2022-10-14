@@ -36,6 +36,6 @@ export class Barber {
   public comments: Comment[];
 }
 
-const barber = getModelForClass(Barber);
+const BarberModel = getModelForClass(Barber);
 
-export default barber;
+export default BarberModel;
