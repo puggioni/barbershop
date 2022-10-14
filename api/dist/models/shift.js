@@ -14,15 +14,9 @@ const typegoose_1 = require("@typegoose/typegoose");
 const barber_1 = require("./barber");
 const office_1 = require("./office");
 const services_1 = require("./services");
-const user_1 = require("./user");
+/* import { User } from "./user"; */
 class Shift {
 }
-__decorate([
-    (0, typegoose_1.prop)({
-        ref: () => user_1.User,
-    }),
-    __metadata("design:type", Object)
-], Shift.prototype, "user", void 0);
 __decorate([
     (0, typegoose_1.prop)({
         ref: () => barber_1.Barber,

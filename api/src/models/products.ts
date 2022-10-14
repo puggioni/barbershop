@@ -1,5 +1,4 @@
 import { prop, getModelForClass, Ref } from "@typegoose/typegoose";
-import { PurchaseOrder } from "./purchaseOrder";
 
 class Category {
   @prop({
@@ -47,11 +46,6 @@ export class Product {
     type: () => [Category],
   })
   public categories: Category[];
-
-  @prop({
-    ref: () => PurchaseOrder,
-  })
-  public purchaseOrder: Ref<PurchaseOrder>;
 }
 
 const ProductModel = getModelForClass(Product);

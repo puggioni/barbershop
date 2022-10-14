@@ -30,10 +30,10 @@ export class Barber {
   })
   public shift: string;
 
-  @prop({
+  /*  @prop({
     type: () => [Comment],
   })
-  public comments: Comment[];
+  public comments: Comment[]; */
 }
 
 const BarberModel = getModelForClass(Barber);

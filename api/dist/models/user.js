@@ -10,7 +10,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.User = void 0;
-const purchaseOrder_1 = require("./purchaseOrder");
 const typegoose_1 = require("@typegoose/typegoose");
 const role_1 = require("./role");
 const shift_1 = require("./shift");
@@ -63,12 +62,6 @@ __decorate([
     }),
     __metadata("design:type", Object)
 ], User.prototype, "shift", void 0);
-__decorate([
-    (0, typegoose_1.prop)({
-        ref: () => purchaseOrder_1.PurchaseOrder,
-    }),
-    __metadata("design:type", Object)
-], User.prototype, "purchaseOrder", void 0);
 __decorate([
     (0, typegoose_1.prop)({
         type: Boolean,

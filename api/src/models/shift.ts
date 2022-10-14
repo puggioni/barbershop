@@ -2,13 +2,13 @@ import { prop, getModelForClass, Ref } from "@typegoose/typegoose";
 import { Barber } from "./barber";
 import { Office } from "./office";
 import { Services } from "./services";
-import { User } from "./user";
+/* import { User } from "./user"; */
 
 export class Shift {
-  @prop({
+  /* @prop({
     ref: () => User,
   })
-  public user: Ref<User>;
+  public user: Ref<User>; */
 
   @prop({
     ref: () => Barber,

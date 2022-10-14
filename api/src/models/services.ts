@@ -26,10 +26,10 @@ export class Services {
   })
   public time: string;
 
-  @prop({
+  /* @prop({
     ref: () => Shift,
   })
-  public shift: Ref<Shift>;
+  public shift: Ref<Shift>; */
 }
 
 const ServicesModel = getModelForClass(Services);

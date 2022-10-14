@@ -12,7 +12,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.PurchaseOrder = void 0;
 const typegoose_1 = require("@typegoose/typegoose");
 const payMethos_1 = require("./payMethos");
-const products_1 = require("./products");
 const user_1 = require("./user");
 class PurchaseOrder {
 }
@@ -36,12 +35,6 @@ __decorate([
     }),
     __metadata("design:type", Object)
 ], PurchaseOrder.prototype, "user", void 0);
-__decorate([
-    (0, typegoose_1.prop)({
-        ref: () => products_1.Product,
-    }),
-    __metadata("design:type", Object)
-], PurchaseOrder.prototype, "product", void 0);
 __decorate([
     (0, typegoose_1.prop)({
         ref: () => payMethos_1.PayMethods,

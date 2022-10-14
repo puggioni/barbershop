@@ -11,7 +11,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Services = void 0;
 const typegoose_1 = require("@typegoose/typegoose");
-const shift_1 = require("./shift");
 class Services {
 }
 __decorate([
@@ -42,12 +41,6 @@ __decorate([
     }),
     __metadata("design:type", String)
 ], Services.prototype, "time", void 0);
-__decorate([
-    (0, typegoose_1.prop)({
-        ref: () => shift_1.Shift,
-    }),
-    __metadata("design:type", Object)
-], Services.prototype, "shift", void 0);
 exports.Services = Services;
 const ServicesModel = (0, typegoose_1.getModelForClass)(Services);
 exports.default = ServicesModel;

@@ -49,12 +49,6 @@ __decorate([
     }),
     __metadata("design:type", String)
 ], Barber.prototype, "shift", void 0);
-__decorate([
-    (0, typegoose_1.prop)({
-        type: () => [Comment],
-    }),
-    __metadata("design:type", Array)
-], Barber.prototype, "comments", void 0);
 exports.Barber = Barber;
 const BarberModel = (0, typegoose_1.getModelForClass)(Barber);
 exports.default = BarberModel;
