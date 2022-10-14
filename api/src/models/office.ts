@@ -14,6 +14,6 @@ export class Office {
   public shift: String;
 }
 
-const office = getModelForClass(Office);
+const OfficeModel = getModelForClass(Office);
 
-export default office;
+export default OfficeModel;
