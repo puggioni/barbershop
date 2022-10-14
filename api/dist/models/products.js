@@ -15,6 +15,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Product = void 0;
 const typegoose_1 = require("@typegoose/typegoose");
 const categories_1 = __importDefault(require("./categories"));
+class Category {
+}
+__decorate([
+    (0, typegoose_1.prop)({
+        required: true,
+    }),
+    __metadata("design:type", String)
+], Category.prototype, "description", void 0);
 class Product {
 }
 __decorate([
@@ -62,7 +70,7 @@ __decorate([
         ref: () => categories_1.default,
     }),
     __metadata("design:type", Array)
-], Product.prototype, "category", void 0);
+], Product.prototype, "categories", void 0);
 exports.Product = Product;
 const ProductModel = (0, typegoose_1.getModelForClass)(Product);
 exports.default = ProductModel;

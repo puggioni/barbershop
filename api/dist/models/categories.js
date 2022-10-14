@@ -9,6 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.Category = void 0;
 const typegoose_1 = require("@typegoose/typegoose");
 class Category {
 }
@@ -18,5 +19,8 @@ __decorate([
     }),
     __metadata("design:type", String)
 ], Category.prototype, "name", void 0);
-const CategoryModel = (0, typegoose_1.getModelForClass)(Category);
+exports.Category = Category;
+const CategoryModel = (0, typegoose_1.getModelForClass)(Category, {
+    schemaOptions: { timestamps: true },
+});
 exports.default = CategoryModel;

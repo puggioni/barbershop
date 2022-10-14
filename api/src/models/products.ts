@@ -1,6 +1,13 @@
 import { prop, getModelForClass, Ref } from "@typegoose/typegoose";
 import CategoryModel from "./categories";
 
+class Category {
+  @prop({
+    required: true,
+  })
+  public description: string;
+}
+
 export class Product {
   @prop({
     required: true,
@@ -39,7 +46,7 @@ export class Product {
   @prop({
     ref: () => CategoryModel,
   })
-  public category: Ref<typeof CategoryModel>[];
+  public categories: Ref<typeof CategoryModel>[];
 }
 
 const ProductModel = getModelForClass(Product);
