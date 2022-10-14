@@ -8,7 +8,6 @@ const app = express();
 
 app.use(express.json());
 
-//CONFIGURACION CORS
 app.use(bodyParser.urlencoded({ extended: true, limit: "50mb" }));
 app.use(bodyParser.json({ limit: "50mb" }));
 app.use(cookieParser());
@@ -21,8 +20,7 @@ app.use((_req, res, next) => {
   next();
 });
 
-//CONFIGURACION DE RUTAS
-app.use("/api", routes);
+app.use("/", routes);
 app.use(cors());
 
 app.use((err: any, _req: any, res: any, _next: any) => {
