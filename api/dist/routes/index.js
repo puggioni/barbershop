@@ -4,7 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
-/* ============PRODUCTS============ */
+/* ============PRODUCTS FILES============ */
 const postProducts_1 = __importDefault(require("./Products/postProducts"));
 const getAllProducts_1 = __importDefault(require("./Products/getAllProducts"));
 const getSearchedProducts_1 = __importDefault(require("./Products/getSearchedProducts"));
@@ -20,7 +20,5 @@ router.use("/products", getAllProducts_1.default);
 router.use("/products", getSearchedProducts_1.default);
 router.use("/products", getProduct_1.default);
 router.use("/products", deleteProducts_1.default);
-router.use("/products", filterProducts_1.default);
-/* ============CATEGORIES============ */
-router.use("/categories", postCategories_1.default);
+
 exports.default = router;

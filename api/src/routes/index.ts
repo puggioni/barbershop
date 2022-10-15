@@ -1,5 +1,5 @@
 import { Router } from "express";
-/* ============PRODUCTS============ */
+/* ============PRODUCTS FILES============ */
 import postProducts from "./Products/postProducts";
 import getAllProducts from "./Products/getAllProducts";
 import getSearchedProducts from "./Products/getSearchedProducts";
@@ -20,6 +20,5 @@ router.use("/products", getProduct);
 router.use("/products", deleteProducts);
 router.use("/products", filterProducts);
 
-/* ============CATEGORIES============ */
-router.use("/categories", postCategories);
+
 export default router;

@@ -61,8 +61,7 @@ const productSchema = new mongoose_1.Schema({
     },
     avaible: {
         type: Boolean,
-    },
-    favorite: {
+
         type: Boolean,
     },
     categories: [
