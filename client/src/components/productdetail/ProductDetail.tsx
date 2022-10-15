@@ -1,13 +1,12 @@
-import { produceWithPatches } from "immer";
-import React,{useEffect} from "react";
-import {useSelector,useDispatch} from "react-redux"
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../app/store";
 import { getProductDetail, clearProducDetail } from "./ptoductdetailSlice";
 import {useParams} from "react-router";
 import {useNavigate} from "react-router-dom";
 
 type QuizParams = {
-  id: string
+  id: string;
 };
 
 export default function ProductDetail() {

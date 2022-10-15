@@ -1,25 +1,25 @@
-import { createSlice } from '@reduxjs/toolkit'
-import type { PayloadAction } from '@reduxjs/toolkit'
-import data from "../../mockdata"
+import { createSlice } from "@reduxjs/toolkit";
+import type { PayloadAction } from "@reduxjs/toolkit";
+import data from "../../mockdata";
 
 export interface ProductdetailState {
-    name: string;
-    precio: number;
-    rating: number;
-    imagen?: string;
-    description: string
+  name: string;
+  precio: number;
+  rating: number;
+  imagen?: string;
+  description: string;
 }
 
 const initialState: ProductdetailState = {
-    name: "",
-    precio: 0,
-    rating: 0,
-    imagen: "",
-    description: ""
-}
+  name: "",
+  precio: 0,
+  rating: 0,
+  imagen: "",
+  description: "",
+};
 
 export const productdetailSlice = createSlice({
-  name: 'productdetail',
+  name: "productdetail",
   initialState,
   reducers: {
     getProductDetail:(state, action:PayloadAction<string>)=>{
@@ -47,9 +47,9 @@ export const productdetailSlice = createSlice({
     //   state.value += action.payload
     // },
   },
-})
+});
 
 // Action creators are generated for each case reducer function
 export const { getProductDetail, clearProducDetail} = productdetailSlice.actions
 
-export default productdetailSlice.reducer
+export default productdetailSlice.reducer;
