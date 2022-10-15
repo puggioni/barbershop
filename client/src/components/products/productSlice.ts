@@ -1,67 +1,68 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
+import { AppThunk } from "../../app/store";
 
 export interface products {
   id: string;
+  image: string;
+  rating: number;
   name: string;
-  description: string;
+  description?: string;
   price: number;
-  stock: number;
+  stock?: number;
   available: boolean;
-  favorite: boolean;
-  category: Array<any>;
-  __v: number;
+  favorite?: boolean;
+  category?: Array<any>;
+  __v?: number;
 }
 interface ProductState {
   allProducts: Array<products> | null;
   loading: boolean;
   errors: any;
+  favs: Object[];
 }
 const initialState: ProductState = {
   allProducts: [],
   loading: false,
   errors: null,
+  favs: [],
 };
 
 //action
-export const fetchAllProducts = createAsyncThunk<products[]>(
-  "allProducts/getAllProducts",
-  async (_, thunkAPI) => {
+
+export const fetchAllProducts = (): AppThunk => {
+  return async (dispatch) => {
     try {
       const productos = await axios.get("http://localhost:5000/products/all");
-      return productos.data;
+      dispatch(allProducts(productos.data));
     } catch (error) {
-      return thunkAPI.rejectWithValue(error);
+      return error;
     }
-  }
-);
+  };
+};
+export const addFavoriteProduct = (productoFav: products): AppThunk => {
+  return async (dispatch) => {
+    try {
+      const res = await axios.post("http://localhost:5000/", productoFav); // agregar url de back
+      return res;
+    } catch (error) {
+      return error;
+    }
+  };
+};
 
 //reducer
 export const getAllProductsSlice = createSlice({
   name: "allProducts",
   initialState,
   reducers: {
-    setProductState: (state, action: PayloadAction<products[]>) => {
+    allProducts: (state, action: PayloadAction<products[]>) => {
       state.allProducts = action.payload;
+      state.loading = false;
     },
-  },
-  extraReducers: (builder) => {
-    builder.addCase(fetchAllProducts.pending, (state) => {
-      state.loading = true;
-    });
-
-    builder.addCase(fetchAllProducts.fulfilled, (state, action) => {
-      state.loading = false;
-      state.allProducts = action.payload;
-    });
-
-    builder.addCase(fetchAllProducts.rejected, (state, action) => {
-      state.loading = false;
-      state.errors = action.payload;
-    });
   },
 });
 
 export default getAllProductsSlice.reducer;
-export const { setProductState } = getAllProductsSlice.actions;
+export const { allProducts } = getAllProductsSlice.actions;

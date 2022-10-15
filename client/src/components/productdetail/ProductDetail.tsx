@@ -21,12 +21,12 @@ export default function ProductDetail() {
       if(typeof id==="string"){
         dispatch(getProductDetail(id))
       }
-    },[id]);
+    },[dispatch, id]);
     useEffect(()=>{
       return()=>{
         dispatch(clearProducDetail())
       };
-    },[])
+    },[dispatch])
 
     function goBack() :void{
         navigate(-1);

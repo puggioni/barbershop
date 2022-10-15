@@ -4,6 +4,15 @@ import { useCallback, useEffect } from "react";
 import { fetchAllProducts } from "./productSlice";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 
+interface prodCard {
+  name: string;
+  image: string;
+  price: number;
+  rating: number;
+  available: boolean;
+  id: string;
+}
+
 const Products = () => {
   const dispatch = useAppDispatch();
 
@@ -15,21 +24,25 @@ const Products = () => {
     inicializar();
   }, [inicializar]);
 
-  const data = useAppSelector((state: RootState) => state.getAllProducts);
+  const data = useAppSelector((state: RootState) => state.products);
 
   if (data?.allProducts instanceof Array) {
     return (
-      <div>
-        {data?.allProducts.map((data) => (
-          <ProductCard
-            nombre={data.name}
-            imagen={undefined}
-            precio={data.price}
-            rating={undefined}
-            available={data.available}
-          />
-        ))}
-      </div>
+      <>
+        <button></button>
+        <div>
+          {data?.allProducts.map((data: prodCard) => (
+            <ProductCard
+              name={data.name}
+              image={"undefined"}
+              price={data.price}
+              rating={0}
+              available={data.available}
+              id={data.id}
+            />
+          ))}
+        </div>
+      </>
     );
   } else {
     return <div>Error</div>;
