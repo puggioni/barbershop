@@ -18,17 +18,15 @@ import mongoose from "mongoose";
 const { Schema, model } = mongoose;
 
 export interface IRole {
-  naame: string;
+  name: string;
 }
 
-const roleSchema = new Schema(
-  {
+const roleSchema = new Schema({
+  name: {
     type: String,
-    name: String,
+    required: true,
+    unique: true,
   },
-  {
-    versionKey: false,
-  }
-);
+});
 
 export default model<IRole>("Role", roleSchema);

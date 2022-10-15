@@ -38,11 +38,11 @@ router.post("/signup", (req, res) => __awaiter(void 0, void 0, void 0, function*
             const role = yield role_1.default.findOne({ name: "user" });
             user.role = [role._id];
         }
+        console.log(user);
         const savedUser = yield user.save();
         const token = jsonwebtoken_1.default.sign({ _id: savedUser._id }, "token", {
             expiresIn: 60 * 60 * 24,
         });
-        console.log(savedUser);
         res.status(200).json({ token });
     }
     catch (err) {

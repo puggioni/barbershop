@@ -20,9 +20,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importDefault(require("mongoose"));
 const { Schema, model } = mongoose_1.default;
 const roleSchema = new Schema({
-    type: String,
-    name: String,
-}, {
-    versionKey: false,
+    name: {
+        type: String,
+        required: true,
+        unique: true,
+    },
 });
 exports.default = model("Role", roleSchema);

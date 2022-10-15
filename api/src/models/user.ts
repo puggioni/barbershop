@@ -126,7 +126,7 @@ const UserSchema = new Schema<IUser, UserModel>(
     }, */
     role: [
       {
-        type: Types.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: "Role",
       },
     ],
