@@ -5,11 +5,20 @@ import ProductModel from "../../models/products";
 const router = Router();
 
 router.post("/create", async (req, res) => {
-  const { name, description, price, stock, available, favorite, categories } =
+  let { name, description, price, stock, available, favorite, categories } =
     req.body;
+  if(typeof(name) === 'string')
+    name = name.toLocaleLowerCase();
   try {
-    const productSaved = await ProductModel.create(req.body);
-    res.send(productSaved);
+    const response = await ProductModel.create({
+      name: name,
+      description: description,
+      price: price,
+      stock: stock,
+      available: available,
+      categories: categories,
+    });
+    res.status(200).send(response);
   } catch (err) {
     res.status(500).send(err);
   }

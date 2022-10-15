@@ -12,7 +12,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.User = void 0;
 const typegoose_1 = require("@typegoose/typegoose");
 const role_1 = require("./role");
-const shift_1 = require("./shift");
 class User {
 }
 __decorate([
@@ -56,12 +55,6 @@ __decorate([
     }),
     __metadata("design:type", Object)
 ], User.prototype, "role", void 0);
-__decorate([
-    (0, typegoose_1.prop)({
-        ref: () => shift_1.Shift,
-    }),
-    __metadata("design:type", Object)
-], User.prototype, "shift", void 0);
 __decorate([
     (0, typegoose_1.prop)({
         type: Boolean,
