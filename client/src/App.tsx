@@ -1,10 +1,7 @@
-import React from "react";
-// import data from "./mockdata";
-import { Routes, Route } from "react-router-dom";
-// import ProductCard from "./components/ProductCard";
-import ProductDetail from "./components/productdetail/ProductDetail";
+import { Route, Routes } from "react-router-dom";
 import Home from "./components/Home";
-import Products from "./components/Products";
+import ProductDetail from "./components/productdetail/ProductDetail";
+import Products from "./components/products/Products";
 function App() {
   return (
     <div>
