@@ -1,9 +1,12 @@
+import { Link } from "react-router-dom";
+
 type Props = {
   nombre: string;
   precio: number;
   rating: any;
   imagen?: string;
 };
+
 const ProductCard = ({ nombre, precio, rating, imagen }: Props) => {
   return (
     <div className=" flex bg-slate-200/50 m-4 rounded-lg max-w-3xl max-h-40 relative">
@@ -19,7 +22,9 @@ const ProductCard = ({ nombre, precio, rating, imagen }: Props) => {
         <h2 className="font-medium text-2xl">${precio}</h2>
         <div>{rating}</div>
       </div>
-      <button className="absolute right-0 bottom-0 m-4">Ver más</button>
+      <Link to={`/product/${nombre}`}>
+        <button className="absolute right-0 bottom-0 m-4">Ver más</button>
+      </Link>
     </div>
   );
 };

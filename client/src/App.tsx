@@ -1,19 +1,17 @@
 import React from "react";
-import data from "./mockdata";
-import ProductCard from "./components/ProductCard";
-import NavBar from "./components/NavBar";
+import { Routes, Route } from "react-router-dom";
+import ProductDetail from "./components/productdetail/ProductDetail";
+import Home from "./components/Home";
+import Products from "./components/Products";
 function App() {
   return (
+  <NavBar />
     <div>
-      <NavBar />
-      {data.map((data) => (
-        <ProductCard
-          nombre={data.name}
-          imagen={data.imagen}
-          precio={data.precio}
-          rating={data.rating}
-        />
-      ))}
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/product" element={<Products />}></Route>
+        <Route path="/product/:id" element={<ProductDetail />} />
+      </Routes>
     </div>
   );
 }
