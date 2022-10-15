@@ -34,6 +34,11 @@ export class Product {
   public available: boolean;
 
   @prop({
+    type: String,
+  })
+  public imageURL: string;
+
+  @prop({
     type: Boolean,
   })
   public favorite: boolean;

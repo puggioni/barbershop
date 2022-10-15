@@ -52,6 +52,12 @@ __decorate([
 ], Product.prototype, "available", void 0);
 __decorate([
     (0, typegoose_1.prop)({
+        type: String,
+    }),
+    __metadata("design:type", String)
+], Product.prototype, "imageURL", void 0);
+__decorate([
+    (0, typegoose_1.prop)({
         type: Boolean,
     }),
     __metadata("design:type", Boolean)
