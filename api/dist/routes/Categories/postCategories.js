@@ -16,15 +16,17 @@ const express_1 = require("express");
 const categories_1 = __importDefault(require("../../models/categories"));
 const router = (0, express_1.Router)();
 router.post("/create", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { name } = req.body;
-    console.log("Received new category:", name);
+    let { name } = req.body;
+    if (typeof name === "string")
+        name = name[0].toUpperCase() + name.substring(1);
     try {
-        const categorySaved = yield categories_1.default.create({ name: name });
-        res.send(categorySaved);
+        const response = yield categories_1.default.create({
+            name,
+        });
+        res.status(200).send(response);
     }
     catch (error) {
-        console.log("Error:", error);
-        res.status(500).send({ error });
+        res.status(500).send(error);
     }
 }));
 exports.default = router;

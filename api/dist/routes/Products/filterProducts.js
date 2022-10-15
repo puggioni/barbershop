@@ -16,11 +16,22 @@ const express_1 = require("express");
 const products_1 = __importDefault(require("../../models/products"));
 const router = (0, express_1.Router)();
 router.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    let { filterBarberTools } = req.query;
+    let { filterBarberTools, filterHairProducts } = req.query;
     if (filterBarberTools) {
         try {
             const products = yield products_1.default.find({
                 categories: { $regex: ".*" + "barbertool" + ".*" },
+            });
+            res.send(products);
+        }
+        catch (error) {
+            res.status(500).send(error);
+        }
+    }
+    if (filterHairProducts) {
+        try {
+            const products = yield products_1.default.find({
+                categories: { $regex: ".*" + "hair product" + ".*" },
             });
             res.send(products);
         }

@@ -11,6 +11,8 @@ const getSearchedProducts_1 = __importDefault(require("./Products/getSearchedPro
 const deleteProducts_1 = __importDefault(require("./Products/deleteProducts"));
 const getProduct_1 = __importDefault(require("./Products/getProduct"));
 const filterProducts_1 = __importDefault(require("./Products/filterProducts"));
+/* ============CATEGORIES============ */
+const postCategories_1 = __importDefault(require("./Categories/postCategories"));
 const router = (0, express_1.Router)();
 /* ============PRODUCTS============ */
 router.use("/products", postProducts_1.default);
@@ -19,4 +21,6 @@ router.use("/products", getSearchedProducts_1.default);
 router.use("/products", getProduct_1.default);
 router.use("/products", deleteProducts_1.default);
 router.use("/products", filterProducts_1.default);
+/* ============CATEGORIES============ */
+router.use("/categories", postCategories_1.default);
 exports.default = router;
