@@ -13,23 +13,30 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
-const products_1 = __importDefault(require("../../models/products"));
+const user_1 = __importDefault(require("../../models/user"));
+const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const router = (0, express_1.Router)();
-router.post("/create", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { name, description, price, stock, available, favorite, categories } = req.body;
+router.post("/signin", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const response = yield products_1.default.create({
-            name: name,
-            description: description,
-            price: price,
-            stock: stock,
-            available: available,
-            categories: categories,
+        const userFound = yield user_1.default.findOne({ email: req.body.email }).populate("role", "name -_id");
+        if (!userFound)
+            return res.status(400).json({ message: "User not found" });
+        const matchPassword = yield user_1.default.comparePassword(req.body.password, userFound.password);
+        if (!matchPassword)
+            return res.status(401).json({ token: null, message: "Invalid Password" });
+        const token = jsonwebtoken_1.default.sign({ _id: userFound._id }, "token", {
+            expiresIn: 60 * 60 * 24,
         });
-        res.status(200).send(response);
+        console.log(userFound);
+        res.json({ token });
     }
     catch (err) {
-        res.status(500).send(err);
+        if (err instanceof Error) {
+            console.log(err.message);
+        }
+        else {
+            console.log(err);
+        }
     }
 }));
 exports.default = router;

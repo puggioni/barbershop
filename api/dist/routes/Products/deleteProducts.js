@@ -15,21 +15,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const products_1 = __importDefault(require("../../models/products"));
 const router = (0, express_1.Router)();
-router.post("/create", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { name, description, price, stock, available, favorite, categories } = req.body;
+router.delete("/delete", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { id } = req.body;
     try {
-        const response = yield products_1.default.create({
-            name: name,
-            description: description,
-            price: price,
-            stock: stock,
-            available: available,
-            categories: categories,
-        });
-        res.status(200).send(response);
+        const productDeleted = yield products_1.default.findOneAndDelete({ _id: id });
+        res.send(productDeleted);
     }
-    catch (err) {
-        res.status(500).send(err);
+    catch (error) {
+        res.status(500).send({ error });
     }
 }));
 exports.default = router;

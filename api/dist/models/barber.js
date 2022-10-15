@@ -8,10 +8,13 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Barber = void 0;
 const typegoose_1 = require("@typegoose/typegoose");
-const user_1 = require("./user");
+const office_1 = __importDefault(require("./office"));
 class Comment {
 }
 __decorate([
@@ -26,12 +29,14 @@ __decorate([
     }),
     __metadata("design:type", Number)
 ], Comment.prototype, "rating", void 0);
+class Schelude {
+}
 __decorate([
     (0, typegoose_1.prop)({
-        ref: () => user_1.User,
+        type: String,
     }),
-    __metadata("design:type", Object)
-], Comment.prototype, "user", void 0);
+    __metadata("design:type", String)
+], Schelude.prototype, "day", void 0);
 class Barber {
 }
 __decorate([
@@ -49,6 +54,24 @@ __decorate([
     }),
     __metadata("design:type", String)
 ], Barber.prototype, "shift", void 0);
+__decorate([
+    (0, typegoose_1.prop)({
+        type: () => [Comment],
+    }),
+    __metadata("design:type", Array)
+], Barber.prototype, "comments", void 0);
+__decorate([
+    (0, typegoose_1.prop)({
+        ref: () => office_1.default,
+    }),
+    __metadata("design:type", Object)
+], Barber.prototype, "office", void 0);
+__decorate([
+    (0, typegoose_1.prop)({
+        type: () => [Schelude],
+    }),
+    __metadata("design:type", Array)
+], Barber.prototype, "schelude", void 0);
 exports.Barber = Barber;
 const BarberModel = (0, typegoose_1.getModelForClass)(Barber);
 exports.default = BarberModel;

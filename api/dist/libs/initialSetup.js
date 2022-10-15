@@ -12,24 +12,21 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const express_1 = require("express");
-const products_1 = __importDefault(require("../../models/products"));
-const router = (0, express_1.Router)();
-router.post("/create", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { name, description, price, stock, available, favorite, categories } = req.body;
+exports.createRoles = void 0;
+const role_1 = __importDefault(require("../models/role"));
+const createRoles = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const response = yield products_1.default.create({
-            name: name,
-            description: description,
-            price: price,
-            stock: stock,
-            available: available,
-            categories: categories,
-        });
-        res.status(200).send(response);
+        const count = yield role_1.default.estimatedDocumentCount();
+        if (count > 0)
+            return;
+        const values = yield Promise.all([
+            new role_1.default({ name: "user" }).save(),
+            new role_1.default({ name: "admin" }).save(),
+        ]);
+        console.log(values);
     }
-    catch (err) {
-        res.status(500).send(err);
+    catch (error) {
+        console.error(error);
     }
-}));
-exports.default = router;
+});
+exports.createRoles = createRoles;
