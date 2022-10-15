@@ -1,6 +1,4 @@
-import React from "react";
 import { Link } from "react-router-dom";
-import Products from "./Products";
 
 const buttonStyle =
   "m-auto px-3 py-1.5 bg-white rounded-lg border-2 border-black text-black";
