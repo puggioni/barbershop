@@ -13,20 +13,32 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
+const categories_1 = __importDefault(require("../../models/categories"));
 const products_1 = __importDefault(require("../../models/products"));
 const router = (0, express_1.Router)();
 router.post("/create", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { name, description, price, stock, available, favorite, categories } = req.body;
+    let { name, description, price, stock, available, favorite, categories } = req.body;
+    if (typeof name === "string")
+        name = name.toLocaleLowerCase();
     try {
-        const response = yield products_1.default.create({
+        const product = new products_1.default({
             name: name,
             description: description,
             price: price,
             stock: stock,
             available: available,
+            favorite: favorite,
             categories: categories,
         });
-        res.status(200).send(response);
+        if (categories) {
+            const foundCategory = yield categories_1.default.find({
+                name: { $in: categories },
+            });
+            product.categories = foundCategory.map((el) => el._id);
+        }
+        product.populate("categories", "name -_id");
+        const savedProduct = yield product.save();
+        res.status(200).send(product);
     }
     catch (err) {
         res.status(500).send(err);

@@ -1,54 +1,41 @@
-import { prop, getModelForClass, Ref } from "@typegoose/typegoose";
 
-export class Product {
-  @prop({
-    required: true,
-    type: String,
-    unique: true,
-    trim: true,
-  })
-  public name: string;
 
-  @prop({
-    required: true,
-    type: String,
-    trim: true,
-  })
-  public description: string;
+const productSchema = new Schema(
+  {
+    name: {
+      type: String,
+      required: true,
+    },
+    description: {
+      required: true,
+      type: String,
+      default: "",
+    },
+    price: {
+      required: true,
+      type: Number,
+    },
+    stock: {
+      type: Number,
+      default: 0,
+    },
+    avaible: {
+      type: Boolean,
+    },
+    favorite: {
+      type: Boolean,
+    },
+    categories: [
+      {
+        type: Types.ObjectId,
+        ref: "Categories",
+      },
+    ],
+  },
+  {
+    versionKey: false,
+    timestamps: true,
+  }
+);
 
-  @prop({
-    required: true,
-    type: Number,
-  })
-  public price: number;
-
-  @prop({
-    default: 0,
-    type: Number,
-  })
-  public stock: number;
-
-  @prop({
-    type: Boolean,
-  })
-  public available: boolean;
-
-  @prop({
-    type: String,
-  })
-  public imageURL: string;
-
-  @prop({
-    type: Boolean,
-  })
-  public favorite: boolean;
-
-  @prop({
-    type: () => [String],
-  })
-  public categories: String[];
-}
-
-const ProductModel = getModelForClass(Product);
-
-export default ProductModel;
+export default model<IProduct>("Product", productSchema);
