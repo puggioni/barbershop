@@ -1,5 +1,4 @@
 import { prop, getModelForClass, Ref } from "@typegoose/typegoose";
-import { Shift } from "./shift";
 
 export class Services {
   @prop({
@@ -25,11 +24,6 @@ export class Services {
     type: String,
   })
   public time: string;
-
-  /* @prop({
-    ref: () => Shift,
-  })
-  public shift: Ref<Shift>; */
 }
 
 const ServicesModel = getModelForClass(Services);

@@ -1,6 +1,5 @@
 import { prop, getModelForClass, Ref } from "@typegoose/typegoose";
 import { Role } from "./role";
-import { Shift } from "./shift";
 
 export class User {
   @prop({
@@ -37,11 +36,6 @@ export class User {
     ref: () => Role,
   })
   public role: Ref<typeof Role>;
-
-  @prop({
-    ref: () => Shift,
-  })
-  public shift: Ref<typeof Shift>;
 
   @prop({
     type: Boolean,

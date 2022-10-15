@@ -1,5 +1,5 @@
 import { prop, getModelForClass, Ref } from "@typegoose/typegoose";
-import { User } from "./user";
+import Office from "./office";
 class Comment {
   @prop({
     type: String,
@@ -10,12 +10,14 @@ class Comment {
     type: Number,
   })
   public rating: number;
-
-  @prop({
-    ref: () => User,
-  })
-  public user: Ref<User>;
 }
+class Schelude {
+  @prop({
+    type: String,
+  })
+  public day: string;
+}
+
 export class Barber {
   @prop({
     required: true,
@@ -30,10 +32,19 @@ export class Barber {
   })
   public shift: string;
 
-  /*  @prop({
+  @prop({
     type: () => [Comment],
   })
-  public comments: Comment[]; */
+  public comments: Comment[];
+
+  @prop({
+    ref: () => Office,
+  })
+  public office: Ref<typeof Office>;
+  @prop({
+    type: () => [Schelude],
+  })
+  public schelude: Schelude[];
 }
 
 const BarberModel = getModelForClass(Barber);
