@@ -41,6 +41,7 @@ router.post("/create", (req, res) => __awaiter(void 0, void 0, void 0, function*
         res.status(200).send(product);
     }
     catch (err) {
+        console.log(err);
         res.status(500).send(err);
     }
 }));

@@ -18,5 +18,5 @@ router.use("/products", getAllProducts_1.default);
 router.use("/products", getSearchedProducts_1.default);
 router.use("/products", getProduct_1.default);
 router.use("/products", deleteProducts_1.default);
-router.use("/products", filterProducts_1.default);
+
 exports.default = router;

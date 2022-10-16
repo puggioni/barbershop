@@ -61,6 +61,7 @@ import bCrypt from "bcryptjs";
 const { Schema, model } = mongoose;
 
 export interface IUser {
+  id: Types.ObjectId;
   email: string;
   password: string;
   name: string;
@@ -85,6 +86,10 @@ interface UserModel extends Model<IUser> {
 
 const UserSchema = new Schema<IUser, UserModel>(
   {
+    id: {
+      type: Schema.Types.ObjectId,
+      default: new Types.ObjectId(),
+    },
     email: {
       type: String,
       unique: true,

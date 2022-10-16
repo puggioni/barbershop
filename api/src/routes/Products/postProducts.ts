@@ -1,4 +1,5 @@
 import { Router } from "express";
+
 import Category from "../../models/categories";
 import Product from "../../models/products";
 
@@ -30,6 +31,7 @@ router.post("/create", async (req, res) => {
     const savedProduct = await product.save();
     res.status(200).send(product);
   } catch (err) {
+    console.log(err);
     res.status(500).send(err);
   }
 });
