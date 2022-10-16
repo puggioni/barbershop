@@ -24,11 +24,7 @@ router.post("/login", async (req, res) => {
     console.log(userFound);
     res.json({ token });
   } catch (err) {
-    if (err instanceof Error) {
-      console.log(err.message);
-    } else {
-      console.log(err);
-    }
+    console.log(err);
   }
 });
 

@@ -1,10 +1,11 @@
 import { Router } from "express";
+
 import Category from "../../models/categories";
 import Product from "../../models/products";
-
+import { verifyToken, isAdmin } from "../Auth/middlewares";
 const router = Router();
 
-router.post("/create", async (req, res) => {
+router.post("/create", verifyToken, isAdmin, async (req, res) => {
   let { name, description, price, stock, available, favorite, categories } =
     req.body;
   if (typeof name === "string") name = name.toLocaleLowerCase();
@@ -30,6 +31,7 @@ router.post("/create", async (req, res) => {
     const savedProduct = await product.save();
     res.status(200).send(product);
   } catch (err) {
+    console.log(err);
     res.status(500).send(err);
   }
 });

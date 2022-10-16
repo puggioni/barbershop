@@ -22,6 +22,7 @@ const Products = () => {
       <div>
         {data?.allProducts.map((data) => (
           <ProductCard
+            id={data._id}
             nombre={data.name}
             imagen={undefined}
             precio={data.price}

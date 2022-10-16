@@ -31,12 +31,7 @@ router.post("/login", (req, res) => __awaiter(void 0, void 0, void 0, function* 
         res.json({ token });
     }
     catch (err) {
-        if (err instanceof Error) {
-            console.log(err.message);
-        }
-        else {
-            console.log(err);
-        }
+        console.log(err);
     }
 }));
 exports.default = router;
