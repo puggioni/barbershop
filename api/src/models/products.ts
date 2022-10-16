@@ -1,54 +1,59 @@
-import { prop, getModelForClass, Ref } from "@typegoose/typegoose";
+import mongoose from "mongoose";
+const { Schema, model } = mongoose;
 
-export class Product {
-  @prop({
-    required: true,
-    type: String,
-    unique: true,
-    trim: true,
-  })
-  public name: string;
-
-  @prop({
-    required: true,
-    type: String,
-    trim: true,
-  })
-  public description: string;
-
-  @prop({
-    required: true,
-    type: Number,
-  })
-  public price: number;
-
-  @prop({
-    default: 0,
-    type: Number,
-  })
-  public stock: number;
-
-  @prop({
-    type: Boolean,
-  })
-  public available: boolean;
-
-  @prop({
-    type: String,
-  })
-  public imageURL: string;
-
-  @prop({
-    type: Boolean,
-  })
-  public favorite: boolean;
-
-  @prop({
-    type: () => [String],
-  })
-  public categories: String[];
+export interface IProduct {
+  name: string;
+  description: string;
+  price: number;
+  stock: number;
+  image: string;
+  available: boolean;
+  categories: {
+    [key: string]: any;
+  };
+  favorite: boolean;
 }
 
-const ProductModel = getModelForClass(Product);
+const productSchema = new Schema(
+  {
+    name: {
+      type: String,
+      required: true,
+    },
+    description: {
+      required: true,
+      type: String,
+      default: "",
+    },
+    price: {
+      required: true,
+      type: Number,
+    },
+    stock: {
+      type: Number,
+      default: 0,
+    },
+    image: {
+      type: String,
+      default: "",
+    },
+    avaible: {
+      type: Boolean,
+    },
+    favorite: {
+      type: Boolean,
+    },
+    categories: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Categories",
+      },
+    ],
+  },
+  {
+    versionKey: false,
+    timestamps: true,
+  }
+);
 
-export default ProductModel;
+export default model<IProduct>("Product", productSchema);
