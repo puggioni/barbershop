@@ -8,7 +8,7 @@ const Products = () => {
   const dispatch = useAppDispatch();
 
   const inicializar = useCallback(async () => {
-    dispatch(fetchAllProducts());
+    dispatch(fetchAllProducts(""));
   }, [dispatch]);
 
   useEffect(() => {

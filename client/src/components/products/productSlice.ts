@@ -25,14 +25,24 @@ const initialState: ProductState = {
 };
 
 //action
-export const fetchAllProducts = createAsyncThunk<products[]>(
+export const fetchAllProducts = createAsyncThunk(
   "allProducts/getAllProducts",
-  async (_, thunkAPI) => {
+  async (tosearch: string, thunkAPI) => {
+    if(!tosearch){
+      console.log("entro a buscar todo")
     try {
       const productos = await axios.get("http://localhost:5000/products/all");
       return productos.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
+    }
+    }else {
+      try {
+        const productos = await axios.get("http://localhost:5000/products/search?name="+tosearch);
+        return productos.data;
+      } catch (error) {
+        return thunkAPI.rejectWithValue(error);
+      }
     }
   }
 );
