@@ -98,20 +98,6 @@ const UserSchema = new Schema({
         type: String,
         default: "",
     },
-    /*  address: {
-      type: {
-        postalCode: String,
-        country: String,
-        direction: String,
-        reference: String,
-      },
-      default: {
-        postalCode: "",
-        country: "",
-        direction: "",
-        reference: "",
-      },
-    }, */
     role: [
         {
             type: Schema.Types.ObjectId,

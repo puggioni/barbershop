@@ -3,7 +3,7 @@ import User from "../../models/user";
 import jwt from "jsonwebtoken";
 const router = Router();
 
-router.post("/signin", async (req, res) => {
+router.post("/login", async (req, res) => {
   try {
     const userFound = await User.findOne({ email: req.body.email }).populate(
       "role",

@@ -16,7 +16,7 @@ const express_1 = require("express");
 const user_1 = __importDefault(require("../../models/user"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const router = (0, express_1.Router)();
-router.post("/signin", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.post("/login", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const userFound = yield user_1.default.findOne({ email: req.body.email }).populate("role", "name -_id");
         if (!userFound)
