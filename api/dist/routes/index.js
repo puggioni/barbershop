@@ -17,6 +17,6 @@ router.use("/products", deleteProducts_1.default);
 const signin_1 = __importDefault(require("./Auth/signin"));
 const signup_1 = __importDefault(require("./Auth/signup"));
 /* ============AUTH============ */
-router.use("/auth", signin_1.default);
-router.use("/auth", signup_1.default);
+router.use("/users", signin_1.default);
+router.use("/users", signup_1.default);
 exports.default = router;

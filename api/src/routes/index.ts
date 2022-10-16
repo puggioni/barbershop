@@ -15,6 +15,6 @@ router.use("/products", deleteProducts);
 import signin from "./Auth/signin";
 import signup from "./Auth/signup";
 /* ============AUTH============ */
-router.use("/auth", signin);
-router.use("/auth", signup);
+router.use("/users", signin);
+router.use("/users", signup);
 export default router;
