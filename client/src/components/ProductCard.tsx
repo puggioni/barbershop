@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 
 type Props = {
+  id:string;
   nombre: string;
   precio: number;
   rating: any;
@@ -8,7 +9,7 @@ type Props = {
   available: boolean;
 };
 
-const ProductCard = ({ nombre, precio, rating, imagen, available }: Props) => {
+const ProductCard = ({ id,nombre, precio, rating, imagen, available }: Props) => {
   if (available) {
     return (
       <div className=" flex bg-slate-200/50 m-4 rounded-lg max-w-3xl max-h-40 relative">
@@ -24,7 +25,7 @@ const ProductCard = ({ nombre, precio, rating, imagen, available }: Props) => {
           <h2 className="font-medium text-2xl">${precio}</h2>
           <div>{rating}</div>
         </div>
-        <Link to={`/product/${nombre}`}>
+        <Link to={`/product/${id}`}>
           <button className="text-blue absolute right-0 bottom-0 m-4">
             Ver más
           </button>

@@ -2,17 +2,18 @@ import React from "react";
 import { Routes, Route } from "react-router-dom";
 import ProductDetail from "./components/productdetail/ProductDetail";
 import Home from "./components/Home";
-import ProductDetail from "./components/productdetail/ProductDetail";
+import NavBar from "./components/NavBar";
 import Products from "./components/products/Products";
 
 function App() {
   return (
-  <NavBar />
+  
     <div>
+      <NavBar/>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/product" element={<Products />}></Route>
-        <Route path="/product/:id" element={<ProductDetail />} />
+        <Route path="/product/:idProduct" element={<ProductDetail />} />
       </Routes>
     </div>
   );
