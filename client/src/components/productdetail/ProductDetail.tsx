@@ -9,7 +9,7 @@ import {useNavigate} from "react-router-dom";
 type QuizParams = {
   idProduct: string;
 };
-
+ 
 export default function ProductDetail() {
   const dispatch =useAppDispatch();
   const {idProduct}=useParams<QuizParams>();
