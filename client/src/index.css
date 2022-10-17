@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 body {
-  background-image: url('https://revistacoiffure.com/wp-content/uploads/2021/01/pexels-nick-demou-1319459.jpg');
+  background-image: url("https://revistacoiffure.com/wp-content/uploads/2021/01/pexels-nick-demou-1319459.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

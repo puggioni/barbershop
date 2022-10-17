@@ -1,22 +1,22 @@
 import { useEffect, useCallback } from "react";
-//import { useSelector, useDispatch } from "react-redux";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { RootState } from "../../app/store";
-import { getProductDetail, clearProducDetail, getProduct } from "./ptoductdetailSlice";
-import {useParams} from "react-router";
-import {useNavigate} from "react-router-dom";
+import { clearProducDetail,getProduct } from "./ptoductdetailSlice";
+import { useParams } from "react-router";
+import { useNavigate } from "react-router-dom";
+import { VscArrowLeft } from "react-icons/vsc";
 
 type QuizParams = {
   idProduct: string;
 };
-
+ 
 export default function ProductDetail() {
   const dispatch =useAppDispatch();
   const {idProduct}=useParams<QuizParams>();
   const {product}=useAppSelector((state: RootState)=>state.producdetail);
   let navigate = useNavigate();
   const buttonStyle =
-  "m-auto px-3 py-1.5 bg-white rounded-lg border-2 border-black text-black";
+    "m-auto px-3 py-1.5 bg-white rounded-lg border-2 border-black text-black";
 
   const inicializar = useCallback(async () => {
     if(idProduct)
@@ -38,11 +38,18 @@ export default function ProductDetail() {
     function goBack() :void{
         navigate(-1);
     }
+  
+
+  useEffect(() => {
+    return () => {
+      dispatch(clearProducDetail());
+    };
+  }, [dispatch]);
 
   return( 
    
   <div className="bg-slate-100">
-    <h1 className=" mr-auto" onClick={goBack}>⬅ Go back</h1>
+    <VscArrowLeft className=" mr-auto" onClick={goBack}/>
     { product ?<>
     <div className="flex justify-center">
     <img className=" w-5/6  rounded-xl" src={product.image} alt="" />
@@ -62,5 +69,5 @@ export default function ProductDetail() {
     </div>
     <label htmlFor="" className=" p-5">Stock: {product.stock} Unidades</label>
     </>
-    :<h1>El producto requerido no existe 🤔</h1>}</div>);
+    :<h1>El producto requerido no existe o no esta activo🤔</h1>}</div>);
 }
