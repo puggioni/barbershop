@@ -6,6 +6,7 @@ import getSearchedProducts from "./Products/getSearchedProducts";
 import deleteProducts from "./Products/deleteProducts";
 import getProduct from "./Products/getProduct";
 import filterProducts from "./Products/filterProducts";
+import editProducts from "./Products/editProduct";
 /* ============USERS FILES============ */
 import signUp from "./Auth/signup";
 import login from "./Auth/signin";
@@ -21,6 +22,7 @@ router.use("/products", getSearchedProducts);
 router.use("/products", getProduct);
 router.use("/products", deleteProducts);
 router.use("/products", filterProducts);
+router.use("/products", editProducts);
 
 /* ============USERS============ */
 router.use("/users", signUp);

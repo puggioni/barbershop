@@ -1,9 +1,15 @@
 node_modules
 .env
+=======
 /api/package.json
 /api/package-lock.json
 /api/node_modules
 /client/package.json
 /client/package-lock.json
 /client/node_modules
+/api/node_modules
+/.gitignore
+.gitignore
+api/package-lock.json
+api/package.json
 ```
