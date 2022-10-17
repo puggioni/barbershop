@@ -37,7 +37,7 @@ const productSchema = new Schema(
       type: String,
       default: "",
     },
-    avaible: {
+    available: {
       type: Boolean,
     },
     favorite: {
