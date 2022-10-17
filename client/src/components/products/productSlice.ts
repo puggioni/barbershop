@@ -4,7 +4,7 @@ import axios from "axios";
 import { AppThunk } from "../../app/store";
 
 export interface products {
-  id: string;
+  _id: string;
   image: string;
   rating: number;
   name: string;

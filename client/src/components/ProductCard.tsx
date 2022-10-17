@@ -4,14 +4,6 @@ import { useState } from "react";
 import { useAppDispatch } from "../app/hooks";
 import { addFavoriteProduct, products } from "./products/productSlice";
 
-// export type cardProps = {
-//   name: string;
-//   price: number;
-//   rating?: number;
-//   image?: string;
-//   available: boolean;
-// };
-
 const ProductCard = (producto: products) => {
   const added = (
     <BsFillBookmarkFill
@@ -21,6 +13,7 @@ const ProductCard = (producto: products) => {
       className="absolute top-5 right-5 w-6 h-6 pointer-events-auto fill-amber-200"
     />
   );
+
   const notAdded = (
     <BsBookmarkHeart className="absolute top-5 right-5 w-6 h-6 pointer-events-auto hover:fill-amber-200" />
   );
