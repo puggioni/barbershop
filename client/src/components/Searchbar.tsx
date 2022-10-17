@@ -19,7 +19,7 @@ const SearchBar = (expand: any) => {
   function search(e: any) {
     e.preventDefault();
     if (!tosearch.length && !expand.expandSearch.length) {
-      expand.setSearch("w-full cursor-text border-black pl-16 pr-4 ");
+      expand.setSearch("!w-full cursor-text border-black !pl-16 pr-4 ");
       setCol("col-start-2 col-end-4");
     } else if (!tosearch.length) {
       expand.setSearch("");
@@ -43,7 +43,7 @@ const SearchBar = (expand: any) => {
       <input
         onChange={handleChange}
         name="tosearch"
-        className={`peer cursor-pointer z-10 h-8 w-12 rounded-full border bg-transparent pl-5 outline-none ${expand.expandSearch}`}
+        className={`peer ${expand.expandSearch} cursor-pointer z-10 h-8  rounded-full border bg-transparent pl-5 outline-none w-12`}
         value={tosearch}
         type="search"
         placeholder=""
