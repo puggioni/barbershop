@@ -56,7 +56,7 @@ const UserModel = getModelForClass(User);
 export default UserModel;
  */
 
-import mongoose, { Model, Types } from "mongoose";
+import mongoose, { Model } from "mongoose";
 import bCrypt from "bcryptjs";
 const { Schema, model } = mongoose;
 
@@ -70,12 +70,6 @@ export interface IUser {
   role: {
     [key: string]: any;
   };
-  /* adress: {
-    postalCode: String;
-    country: String;
-    direction: String;
-    reference: String;
-  }; */
 }
 
 interface UserModel extends Model<IUser> {
@@ -110,20 +104,7 @@ const UserSchema = new Schema<IUser, UserModel>(
       type: String,
       default: "",
     },
-    /*  address: {
-      type: {
-        postalCode: String,
-        country: String,
-        direction: String,
-        reference: String,
-      },
-      default: {
-        postalCode: "",
-        country: "",
-        direction: "",
-        reference: "",
-      },
-    }, */
+
     role: [
       {
         type: Schema.Types.ObjectId,

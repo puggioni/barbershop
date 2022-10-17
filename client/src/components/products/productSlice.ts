@@ -3,7 +3,7 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 
 export interface products {
-  id: string;
+  _id: string;
   name: string;
   description: string;
   price: number;
