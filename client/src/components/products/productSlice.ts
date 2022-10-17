@@ -33,7 +33,7 @@ const initialState: ProductState = {
 
 export const fetchAllProducts = (tosearch: string): AppThunk => {
   return async (dispatch) => {
-    console.log(tosearch +  "hola")
+    
     if(!tosearch){
     try {
       const productos = await axios.get("http://localhost:5000/products/all");
