@@ -1,31 +1,55 @@
 import { Link } from "react-router-dom";
+import { BsFillBookmarkFill, BsBookmarkHeart } from "react-icons/bs";
+import { useState } from "react";
+import { useAppDispatch } from "../app/hooks";
+import { addFavoriteProduct, products } from "./products/productSlice";
 
-type Props = {
-  id:string;
-  nombre: string;
-  precio: number;
-  rating: any;
-  imagen?: string;
-  available: boolean;
-};
+const ProductCard = (producto: products) => {
+  const added = (
+    <BsFillBookmarkFill
+      onClick={() => {
+        handleBookmark();
+      }}
+      className="absolute top-5 right-5 w-6 h-6 pointer-events-auto fill-amber-200"
+    />
+  );
 
-const ProductCard = ({ id,nombre, precio, rating, imagen, available }: Props) => {
-  if (available) {
+  const notAdded = (
+    <BsBookmarkHeart className="absolute top-5 right-5 w-6 h-6 pointer-events-auto hover:fill-amber-200" />
+  );
+
+  const [activated, setBookMarkactive] = useState(false);
+
+  const dispatch = useAppDispatch();
+  function handleBookmark() {
+    const active = activated === true ? false : true;
+    setBookMarkactive(active);
+    dispatch(addFavoriteProduct(producto));
+  }
+
+  if (producto) {
     return (
       <div className=" flex bg-slate-200/50 m-4 rounded-lg max-w-3xl max-h-40 relative">
-        <div className=" h-full w-2/5 mr-4 rounded-lg object-center">
+        <div className=" h-full w-2/5 mr-4 rounded-lg object-center relative">
+          <div
+            onClick={() => {
+              handleBookmark();
+            }}
+          >
+            {activated ? added : notAdded}
+          </div>
           <img
             className="h-32 m-4 object-cover bg-white rounded-xl "
-            src={imagen}
+            src={producto.image}
             alt="product"
           />
         </div>
         <div className="p-4 flex flex-col justify-between font-sans text-[#000300] ">
-          <h3>{nombre}</h3>
-          <h2 className="font-medium text-2xl">${precio}</h2>
-          <div>{rating}</div>
+          <h3>{producto.name}</h3>
+          <h2 className="font-medium text-2xl">${producto.price}</h2>
+          <div>{producto.rating}</div>
         </div>
-        <Link to={`/product/${id}`}>
+        <Link to={`/product/${producto._id}`}>
           <button className="text-blue absolute right-0 bottom-0 m-4">
             Ver más
           </button>

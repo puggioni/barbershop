@@ -16,28 +16,55 @@ const express_1 = require("express");
 const products_1 = __importDefault(require("../../models/products"));
 const router = (0, express_1.Router)();
 router.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    let { filterBarberTools, filterHairProducts } = req.query;
+    let { filterBarberTools, filterHairProduct, filterSkinProduct, filterBeardProduct, } = req.query;
+    const products = yield products_1.default.find().populate("categories", "name");
+    console.log(products);
     if (filterBarberTools) {
         try {
-            const products = yield products_1.default.find({
-                categories: { $regex: ".*" + "barbertool" + ".*" },
-            });
-            res.send(products);
+            const respuesta = [];
+            const resolve = products.forEach((obj) => obj.categories.forEach((el) => el["name"] === "barbertool" ? respuesta.push(obj) : false));
+            console.log("RESPUESTA", respuesta);
+            res.send(respuesta);
         }
         catch (error) {
             res.status(500).send(error);
         }
     }
-    if (filterHairProducts) {
+    else if (filterHairProduct) {
         try {
-            const products = yield products_1.default.find({
-                categories: { $regex: ".*" + "hair product" + ".*" },
-            });
-            res.send(products);
+            const respuesta = [];
+            const resolve = products.forEach((obj) => obj.categories.forEach((el) => el["name"] === "Hairproduct" ? respuesta.push(obj) : false));
+            console.log("RESPUESTA", respuesta);
+            res.send(respuesta);
         }
         catch (error) {
             res.status(500).send(error);
         }
+    }
+    else if (filterSkinProduct) {
+        try {
+            const respuesta = [];
+            const resolve = products.forEach((obj) => obj.categories.forEach((el) => el["name"] === "Skinproduct" ? respuesta.push(obj) : false));
+            console.log("RESPUESTA", respuesta);
+            res.send(respuesta);
+        }
+        catch (error) {
+            res.status(500).send(error);
+        }
+    }
+    else if (filterBeardProduct) {
+        try {
+            const respuesta = [];
+            const resolve = products.forEach((obj) => obj.categories.forEach((el) => el["name"] === "Beardproduct" ? respuesta.push(obj) : false));
+            console.log("RESPUESTA", respuesta);
+            res.send(respuesta);
+        }
+        catch (error) {
+            res.status(500).send(error);
+        }
+    }
+    else {
+        res.status(200).send(products);
     }
 }));
 exports.default = router;
