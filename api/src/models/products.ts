@@ -1,4 +1,18 @@
+import mongoose from "mongoose";
+const { Schema, model } = mongoose;
 
+export interface IProduct {
+  name: string;
+  description: string;
+  price: number;
+  stock: number;
+  image: string;
+  available: boolean;
+  categories: {
+    [key: string]: any;
+  };
+  favorite: boolean;
+}
 
 const productSchema = new Schema(
   {
@@ -19,6 +33,10 @@ const productSchema = new Schema(
       type: Number,
       default: 0,
     },
+    image: {
+      type: String,
+      default: "",
+    },
     avaible: {
       type: Boolean,
     },
@@ -27,7 +45,7 @@ const productSchema = new Schema(
     },
     categories: [
       {
-        type: Types.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: "Categories",
       },
     ],

@@ -8,22 +8,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const express_1 = require("express");
-const middlewares_1 = require("../Auth/middlewares");
-const products_1 = __importDefault(require("../../models/products"));
-const router = (0, express_1.Router)();
-router.delete("/delete", middlewares_1.verifyToken, middlewares_1.isAdmin, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { id } = req.body;
-    try {
-        const productDeleted = yield products_1.default.findOneAndDelete({ _id: id });
-        res.send(productDeleted);
-    }
-    catch (error) {
-        res.status(500).send({ error });
-    }
-}));
-exports.default = router;
+exports.verifyToken = void 0;
+const verifyToken = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const token = req.headers["x-access-token"];
+    console.log(token);
+    next();
+});
+exports.verifyToken = verifyToken;

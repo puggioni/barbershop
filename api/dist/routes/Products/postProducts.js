@@ -15,8 +15,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const categories_1 = __importDefault(require("../../models/categories"));
 const products_1 = __importDefault(require("../../models/products"));
+const middlewares_1 = require("../Auth/middlewares");
 const router = (0, express_1.Router)();
-router.post("/create", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.post("/create", middlewares_1.verifyToken, middlewares_1.isAdmin, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     let { name, description, price, stock, available, favorite, categories } = req.body;
     if (typeof name === "string")
         name = name.toLocaleLowerCase();
@@ -41,6 +42,7 @@ router.post("/create", (req, res) => __awaiter(void 0, void 0, void 0, function*
         res.status(200).send(product);
     }
     catch (err) {
+        console.log(err);
         res.status(500).send(err);
     }
 }));
