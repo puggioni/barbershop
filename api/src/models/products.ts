@@ -32,7 +32,13 @@ const productSchema = new Schema(
       type: Number,
       default: 0,
     },
-    avaible: {
+
+    image: {
+      type: String,
+      default: "",
+    },
+    available: {
+
       type: Boolean,
     },
     favorite: {

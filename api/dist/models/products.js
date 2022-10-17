@@ -19,7 +19,13 @@ const productSchema = new mongoose_1.Schema({
         type: Number,
         default: 0,
     },
-    avaible: {
+
+    image: {
+        type: String,
+        default: "",
+    },
+    available: {
+
         type: Boolean,
     },
     favorite: {
