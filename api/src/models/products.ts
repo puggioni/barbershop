@@ -1,5 +1,4 @@
-import mongoose from "mongoose";
-const { Schema, model } = mongoose;
+import { Schema, model } from "mongoose";
 
 export interface IProduct {
   name: string;
@@ -33,11 +32,13 @@ const productSchema = new Schema(
       type: Number,
       default: 0,
     },
+
     image: {
       type: String,
       default: "",
     },
     available: {
+
       type: Boolean,
     },
     favorite: {

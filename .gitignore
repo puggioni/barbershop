@@ -1,5 +1,6 @@
 node_modules
 .env
+=======
 /api/package.json
 /api/package-lock.json
 /api/node_modules
