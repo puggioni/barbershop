@@ -69,5 +69,5 @@ export default function ProductDetail() {
     </div>
     <label htmlFor="" className=" p-5">Stock: {product.stock} Unidades</label>
     </>
-    :<h1>El producto requerido no existe 🤔</h1>}</div>);
+    :<h1>El producto requerido no existe o no esta activo🤔</h1>}</div>);
 }
