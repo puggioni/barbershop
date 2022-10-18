@@ -7,7 +7,7 @@ import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { VscArrowLeft } from "react-icons/vsc";
 import {  useNavigate } from "react-router";
 import Paginate from "../Paginate"
-import { fetchAllProducts } from "./productSlice";
+//import { fetchAllProducts } from "./productSlice";
 import Categorias from "../FilterCategorias";
 
 
@@ -68,7 +68,7 @@ const Products = () => {
           <Categorias />
         </div>
         <div className="font-display lg:grid lg:grid-cols-4 lg:mr-24 lg:ml-48 lg:gap-8">
-          {currentProducts?.allProducts.map((data: prodCard) => (
+          {currentProducts?.map((data: prodCard) => (
             <ProductCard
               key={data._id}
               _id={data._id}
