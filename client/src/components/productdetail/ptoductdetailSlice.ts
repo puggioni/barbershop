@@ -40,8 +40,7 @@ export const productdetailSlice = createSlice({
   reducers: {
     getProductDetail: (state, action:PayloadAction<Product>)=>{
           state.product = action.payload;
-       
-        
+           
     },
     clearProducDetail:(state)=>{
       Object.assign(state,initialState)
