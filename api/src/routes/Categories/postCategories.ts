@@ -1,10 +1,11 @@
 import { Router } from "express";
 
 import CategoriesModel from "../../models/categories";
+import { verifyToken, isAdmin } from "../Auth/middlewares";
 
 const router = Router();
 
-router.post("/create", async (req, res) => {
+router.post("/create", verifyToken, isAdmin, async (req, res) => {
   let { name } = req.body;
   if (typeof name === "string")
     name = name[0].toUpperCase() + name.substring(1);

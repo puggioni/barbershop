@@ -19,8 +19,8 @@ const router = (0, express_1.Router)();
 router.delete("/delete", middlewares_1.verifyToken, middlewares_1.isAdmin, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.body;
     try {
-        const productDeleted = yield products_1.default.findOneAndDelete({ _id: id });
-        res.send(productDeleted);
+        const deletedProduct = yield products_1.default.findOneAndDelete({ _id: id });
+        res.send(deletedProduct);
     }
     catch (error) {
         res.status(500).send({ error });
