@@ -13,6 +13,7 @@ const NavBar = () => {
     hideTitle = "hidden";
   }
   return (
+
     <div className="bg-stone-50/70 p-2 grid grid-flow-col justify-items-center items-center grid-cols-3">
       <VscMenu
         size={25}
@@ -46,6 +47,7 @@ const NavBar = () => {
         Henry Barber
       </h2>
       <SearchBar expandSearch={expandSearch} setSearch={setExpand} />
+
     </div>
   );
 };

@@ -1,12 +1,10 @@
 import { Router } from "express";
-
-import Category from "../../models/categories";
 import Product from "../../models/products";
 import { verifyToken, isAdmin } from "../Auth/middlewares";
 const router = Router();
 
 router.patch("/edit/:idProduct", verifyToken, isAdmin, async (req, res) => {
-    let { name, description, price, stock, categories } = req.body;
+    let { name, description, price, stock, image, categories } = req.body;
     const { idProduct } = req.params;
 
     if (typeof name === "string") name = name.toLocaleLowerCase();
@@ -16,8 +14,9 @@ router.patch("/edit/:idProduct", verifyToken, isAdmin, async (req, res) => {
     description ? product.description = description : {};
     price ? product.price = price : {};
     stock ? product.stock = stock : {};
+    image ? product.image = image : {};
     !stock ? product.available = false : {};
-    categories? /*TO-DO: aca adjuntar categorias nuevas al producto*/{} : {};
+    categories ? product.categories = categories : {};
     
     try {
         const savedProduct = await product.save();
