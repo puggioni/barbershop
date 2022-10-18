@@ -1,15 +1,12 @@
-
 import ProductCard from "../ProductCard";
 import { RootState } from "../../app/store";
 import { useCallback, useEffect, useState } from "react";
-import { allProducts, fetchAllProducts } from "./productSlice";
+import { fetchAllProducts } from "./productSlice";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { VscArrowLeft } from "react-icons/vsc";
-import {  useNavigate } from "react-router";
-import Paginate from "../Paginate"
-//import { fetchAllProducts } from "./productSlice";
+import { useNavigate } from "react-router";
+import Paginate from "../Paginate";
 import Categorias from "../FilterCategorias";
-
 
 interface prodCard {
   _id: string;
@@ -20,20 +17,14 @@ interface prodCard {
   available: boolean;
 }
 
-interface props {
-  pageNumber: number
-}
-
 const Products = () => {
   const dispatch = useAppDispatch();
   let navigate = useNavigate();
 
-
-  const [currentPage, setCurrentPage] = useState(1)
-  const [productsPerPage, setProductsPerPage] = useState(8)
+  const [currentPage, setCurrentPage] = useState(1);
+  const [productsPerPage] = useState(8);
   const lastPostIndex = currentPage * productsPerPage;
   const firstPostIndex = lastPostIndex - productsPerPage;
-
 
   const inicializar = useCallback(async () => {
     dispatch(fetchAllProducts(""));
@@ -44,19 +35,16 @@ const Products = () => {
   }, [inicializar]);
 
   const data = useAppSelector((state: RootState) => state.products);
-  console.log(data)
-
-
 
   const goBack = () => {
     navigate(-1);
   };
 
   if (data?.allProducts instanceof Array) {
-
-    
-    const currentProducts = data.allProducts.slice(firstPostIndex, lastPostIndex);
-
+    const currentProducts = data.allProducts.slice(
+      firstPostIndex,
+      lastPostIndex
+    );
 
     return (
       <>
@@ -79,16 +67,16 @@ const Products = () => {
               available={data.available}
             />
           ))}
-          <Paginate allProducts={data.allProducts.length} productsPerPage={productsPerPage} setCurrentPage={setCurrentPage}/> 
+          <Paginate
+            allProducts={data.allProducts.length}
+            productsPerPage={productsPerPage}
+            setCurrentPage={setCurrentPage}
+          />
         </div>
       </>
-      
     );
   } else {
     return <div>Error</div>;
   }
-  
-
-
 };
 export default Products;

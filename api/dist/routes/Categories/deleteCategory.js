@@ -13,21 +13,17 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
-const categories_1 = __importDefault(require("../../models/categories"));
 const middlewares_1 = require("../Auth/middlewares");
+const categories_1 = __importDefault(require("../../models/categories"));
 const router = (0, express_1.Router)();
-router.post("/create", middlewares_1.verifyToken, middlewares_1.isAdmin, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    let { name } = req.body;
-    if (typeof name === "string")
-        name = name[0].toUpperCase() + name.substring(1);
+router.delete("/delete", middlewares_1.verifyToken, middlewares_1.isAdmin, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { name } = req.body;
     try {
-        const response = yield categories_1.default.create({
-            name,
-        });
-        res.status(200).send(response);
+        const deletedCategory = yield categories_1.default.findOneAndDelete({ name: name });
+        res.send(deletedCategory);
     }
     catch (error) {
-        res.status(500).send(error);
+        res.status(500).send({ error });
     }
 }));
 exports.default = router;
