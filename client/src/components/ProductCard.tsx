@@ -29,8 +29,11 @@ const ProductCard = (producto: products) => {
 
   if (producto) {
     return (
-      <div className=" flex bg-slate-200/50 m-4 rounded-lg max-w-3xl max-h-40 relative">
-        <div className=" h-full w-2/5 mr-4 rounded-lg object-center relative">
+      <div
+        className=" flex bg-slate-200/50 m-4 rounded-lg max-w-3xl lg:max-h-full lg:m-0 max-h-40 relative 
+      lg:grid lg:grid-row-2  lg:justify-items-center lg:gap-8 lg:pl-4"
+      >
+        <div className=" h-full w-2/5 lg:w-[90%] lg:h-72 lg:mt-4 mr-4 rounded-lg object-center relative">
           <div
             onClick={() => {
               handleBookmark();
@@ -39,7 +42,7 @@ const ProductCard = (producto: products) => {
             {activated ? added : notAdded}
           </div>
           <img
-            className="h-32 m-4 object-cover bg-white rounded-xl "
+            className="h-32 m-4 object-cover bg-white rounded-xl lg:h-full lg:m-0"
             src={producto.image}
             alt="product"
           />
@@ -47,7 +50,9 @@ const ProductCard = (producto: products) => {
         <div className="p-4 flex flex-col justify-between font-display text-lg text-[#000300] ">
           <h3>{producto.name}</h3>
           <h2 className="font-medium text-2xl">${producto.price}</h2>
-          <div>{producto.rating}</div>
+          <div className="lg:absolute lg:left-1 lg:bottom-1">
+            {producto.rating}
+          </div>
         </div>
         <Link to={`/product/${producto._id}`}>
           <button className="text-blue absolute right-0 bottom-0 m-4">

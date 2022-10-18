@@ -6,7 +6,7 @@ import { verifyToken, isAdmin } from "../Auth/middlewares";
 const router = Router();
 
 router.post("/create", verifyToken, isAdmin, async (req, res) => {
-  let { name, description, price, stock, available, favorite, categories } =
+  let { name, description, price, stock, image, available, favorite, categories } =
     req.body;
   if (typeof name === "string") name = name.toLocaleLowerCase();
   try {
@@ -15,6 +15,7 @@ router.post("/create", verifyToken, isAdmin, async (req, res) => {
       description: description,
       price: price,
       stock: stock,
+      image: image,
       available: available,
       favorite: favorite,
       categories: categories,
@@ -29,7 +30,7 @@ router.post("/create", verifyToken, isAdmin, async (req, res) => {
     product.populate("categories", "name -_id");
 
     const savedProduct = await product.save();
-    res.status(200).send(product);
+    res.status(200).send(savedProduct);
   } catch (err) {
     console.log(err);
     res.status(500).send(err);

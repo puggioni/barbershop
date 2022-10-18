@@ -29,29 +29,29 @@ const initialState: ProductState = {
   favs: [],
 };
 
-//action
-
+//==========action==================
 export const fetchAllProducts = (tosearch: string): AppThunk => {
   return async (dispatch) => {
-    console.log(tosearch +  "hola")
-    if(!tosearch){
-    try {
-      const productos = await axios.get("http://localhost:5000/products/all");
-      dispatch(allProducts(productos.data));
-    } catch (error) {
-      return error;
+    if (!tosearch) {
+      try {
+        const productos = await axios.get("http://localhost:5000/products/all");
+        dispatch(allProducts(productos.data));
+      } catch (error) {
+        return error;
+      }
+    } else {
+      try {
+        const productos = await axios.get(
+          "http://localhost:5000/products/search?name=" + tosearch
+        );
+        dispatch(allProducts(productos.data));
+      } catch (error) {
+        return error;
+      }
     }
-  }else{
-    try {
-      const productos = await axios.get("http://localhost:5000/products/search?name="+tosearch);
-      dispatch(allProducts(productos.data));
-    } catch (error) {
-      return error;
-    }
-  }
-  }
+  };
 };
-  
+
 export const addFavoriteProduct = (productoFav: products): AppThunk => {
   return async (dispatch) => {
     try {
@@ -63,7 +63,20 @@ export const addFavoriteProduct = (productoFav: products): AppThunk => {
   };
 };
 
-//reducer
+export const filter = (categoria: string): AppThunk => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.get(
+        `http://localhost:5000/products/filter/${categoria}`
+      );
+      dispatch(filterByCaregory(data));
+    } catch (error) {
+      return error;
+    }
+  };
+};
+
+//================reducer===================
 export const getAllProductsSlice = createSlice({
   name: "allProducts",
   initialState,
@@ -72,8 +85,13 @@ export const getAllProductsSlice = createSlice({
       state.allProducts = action.payload;
       state.loading = false;
     },
+
+    filterByCaregory: (state, action: PayloadAction<products[]>) => {
+      state.allProducts = action.payload;
+      state.loading = false;
+    },
   },
 });
 
 export default getAllProductsSlice.reducer;
-export const { allProducts } = getAllProductsSlice.actions;
+export const { allProducts, filterByCaregory } = getAllProductsSlice.actions;
