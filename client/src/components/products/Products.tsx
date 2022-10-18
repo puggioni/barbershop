@@ -3,6 +3,7 @@ import { VscArrowLeft } from "react-icons/vsc";
 import { useNavigate } from "react-router";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { RootState } from "../../app/store";
+import Categorias from "../Categorias";
 import ProductCard from "../ProductCard";
 import { fetchAllProducts } from "./productSlice";
 
@@ -39,18 +40,18 @@ const Products = () => {
           onClick={() => goBack()}
           className="ml-4 mt-3 h-6 w-6 fill-white"
         />
-        <div
-          className="
-lg:grid lg:grid-cols-4 lg:mx-24 lg:gap-8"
-        >
+        <div>
+          <Categorias />
+        </div>
+        <div className="lg:grid lg:grid-cols-4 lg:mx-24 lg:gap-8">
           {data?.allProducts.map((data: prodCard) => (
             <ProductCard
               key={data._id}
               _id={data._id}
               name={data.name}
-              image={"undefined"}
+              image={data.image}
               price={data.price}
-              rating={0}
+              rating={10}
               available={data.available}
             />
           ))}
