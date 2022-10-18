@@ -15,29 +15,48 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const products_1 = __importDefault(require("../../models/products"));
 const router = (0, express_1.Router)();
-router.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    let { filterBarberTools, filterHairProducts } = req.query;
-    if (filterBarberTools) {
-        try {
-            const products = yield products_1.default.find({
-                categories: { $regex: ".*" + "barbertool" + ".*" },
-            });
-            res.send(products);
+router.get("/filter/:categoryName", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { categoryName } = req.params;
+    const query = req.query;
+    const arrayQuery = [];
+    for (let property in query) {
+        if (property === "stock" || property === "price") {
+            arrayQuery.push({ [property]: Number(query[property]) });
         }
-        catch (error) {
-            res.status(500).send(error);
+        else {
+            arrayQuery.push({ [property]: query[property] });
         }
     }
-    if (filterHairProducts) {
-        try {
-            const products = yield products_1.default.find({
-                categories: { $regex: ".*" + "hair product" + ".*" },
+    const products = yield products_1.default.find().populate("categories", "name");
+    try {
+        let respuesta = [];
+        products.forEach((obj) => obj.categories.forEach((el) => el["name"] === categoryName ? respuesta.push(obj) : false));
+        if (arrayQuery.length === 0) {
+            res.status(200).send(respuesta);
+        }
+        else {
+            arrayQuery.forEach((obj) => {
+                if (Object.keys(obj)[0] === "price") {
+                    respuesta = respuesta.filter((el) => {
+                        return el["price"] >= Object.values(obj)[0];
+                    });
+                }
+                if (Object.keys(obj)[0] === "stock") {
+                    respuesta = respuesta.filter((el) => {
+                        return el["stock"] >= Object.values(obj)[0];
+                    });
+                }
+                if (Object.keys(obj)[0] === "available") {
+                    respuesta = respuesta.filter((el) => {
+                        return (el["available"] = Object.values(obj)[0]);
+                    });
+                }
             });
-            res.send(products);
+            res.status(200).send(respuesta);
         }
-        catch (error) {
-            res.status(500).send(error);
-        }
+    }
+    catch (error) {
+        res.status(500).send(error);
     }
 }));
 exports.default = router;
