@@ -32,6 +32,7 @@ const initialState: ProductState = {
 //==========action==================
 export const fetchAllProducts = (tosearch: string): AppThunk => {
   return async (dispatch) => {
+
     if (!tosearch) {
       try {
         const productos = await axios.get("http://localhost:5000/products/all");
@@ -48,6 +49,7 @@ export const fetchAllProducts = (tosearch: string): AppThunk => {
       } catch (error) {
         return error;
       }
+
     }
   };
 };

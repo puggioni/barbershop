@@ -39,13 +39,8 @@ export const productdetailSlice = createSlice({
   initialState,
   reducers: {
     getProductDetail: (state, action:PayloadAction<Product>)=>{
-        //console.log('Acá se haría el fetch al back para conseguir el detalle del producto; '+action.payload)
- 
-          // const aux = data.find(element=>element.name===action.payload)
-          // if(typeof aux==="object")Object.assign(state,aux)
           state.product = action.payload;
-       
-        
+           
     },
     clearProducDetail:(state)=>{
       Object.assign(state,initialState)
@@ -67,23 +62,10 @@ export const productdetailSlice = createSlice({
       });
     },
 
-    // increment: (state) => {
-    //   // Redux Toolkit allows us to write "mutating" logic in reducers. It
-    //   // doesn't actually mutate the state because it uses the Immer library,
-    //   // which detects changes to a "draft state" and produces a brand new
-    //   // immutable state based off those changes
-    //   state.value += 1
-    // },
-    // decrement: (state) => {
-    //   state.value -= 1
-    // },
-    // incrementByAmount: (state, action: PayloadAction<number>) => {
-    //   state.value += action.payload
-    // },
 
 });
 
-// Action creators are generated for each case reducer function
+
 export const { getProductDetail, clearProducDetail} = productdetailSlice.actions
 
 export default productdetailSlice.reducer;

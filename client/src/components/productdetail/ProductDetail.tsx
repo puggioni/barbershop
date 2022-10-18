@@ -48,14 +48,19 @@ export default function ProductDetail() {
 
   return( 
    
-  <div className="bg-slate-100">
-    <VscArrowLeft className=" mr-auto" onClick={goBack}/>
+  <div className=" bg-slate-200/50  flex  flex-col md:flex-row" >
+  
+    <VscArrowLeft className=" ml-4 mt-3 h-6 w-6 fill-black" onClick={goBack}/>
+   
     { product ?<>
-    <div className="flex justify-center">
-    <img className=" w-5/6  rounded-xl" src={product.image} alt="" />
+      <div className=" w-5/6 flex self-center">
+    <div className="flex justify-center min">
+    <img className=" w-9/10 rounded-3xl p-5 " src={product.image} alt="" /> 
     </div>
+    </div>
+    <div className="w-5/6 flex-col self-center">
     <h1 className=" text-center font-bold p-5">{product.name}</h1>
-    <div className="flex justify-end ">
+    <div className="justify-end ">
     <h2 className=" font-bold justify-end px-5 text-lg" >${product.price}</h2>
     </div>
     <form action="" className="ml-10 mb-5 justify-center">
@@ -65,9 +70,10 @@ export default function ProductDetail() {
     </form>    
     <div>
     <label htmlFor="" className=" font-bold ml-3">Descripción: </label>
-    <p className="ml-3">{product.description}</p>
+    <p className="ml-3 text-justify self-center p-4">{product.description}</p>
     </div>
     <label htmlFor="" className=" p-5">Stock: {product.stock} Unidades</label>
+    </div>
     </>
     :<h1>El producto requerido no existe o no esta activo🤔</h1>}</div>);
 }
