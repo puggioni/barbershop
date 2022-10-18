@@ -28,5 +28,4 @@ router.use("/products", editProducts);
 router.use("/users", signUp);
 router.use("/users", login);
 
-
 export default router;
