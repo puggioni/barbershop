@@ -18,7 +18,7 @@ const products_1 = __importDefault(require("../../models/products"));
 const middlewares_1 = require("../Auth/middlewares");
 const router = (0, express_1.Router)();
 router.post("/create", middlewares_1.verifyToken, middlewares_1.isAdmin, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    let { name, description, price, stock, available, favorite, categories } = req.body;
+    let { name, description, price, stock, image, available, favorite, categories } = req.body;
     if (typeof name === "string")
         name = name.toLocaleLowerCase();
     try {
@@ -27,6 +27,7 @@ router.post("/create", middlewares_1.verifyToken, middlewares_1.isAdmin, (req, r
             description: description,
             price: price,
             stock: stock,
+            image: image,
             available: available,
             favorite: favorite,
             categories: categories,
