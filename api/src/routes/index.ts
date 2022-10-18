@@ -12,6 +12,7 @@ import signUp from "./Auth/signup";
 import login from "./Auth/signin";
 /* ============CATEGORIES============ */
 import postCategories from "./Categories/postCategories";
+import deleteCategory from "./Categories/deleteCategory";
 
 const router = Router();
 
@@ -31,6 +32,7 @@ router.use("/users", login);
 
 /* ============CATEGORIES============ */
 router.use("/categories", postCategories);
+router.use("/categories", deleteCategory);
 
 
 export default router;
