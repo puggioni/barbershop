@@ -8,7 +8,9 @@ const buttonStyle =
 const Home = () => {
   return (
     <div className=" h-screen text-white">
+      <Link to={"/user/login"}>
       <button className="absolute top-15 right-0 m-4 ">Log In/Sign Up</button>
+      </Link>
       <div className="flex flex-col gap-y-10 font-semibold translate-y-1/2">
         <h1 className="my-auto text-5xl text-center">
           Henry Barber <br />

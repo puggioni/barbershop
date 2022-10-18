@@ -54,9 +54,9 @@ export default function ProductDetail() {
             </div>
           </div>
           <div className="w-5/6 flex-col self-center">
-            <h1 className=" text-center font-bold p-5">{product.name}</h1>
+            <h1 className=" text-center font-bold p-5 text-2xl">{product.name}</h1>
             <div className="justify-end ">
-              <h2 className=" font-bold justify-end px-5 text-lg">
+              <h2 className=" font-bold justify-end px-5 text-2xl">
                 ${product.price}
               </h2>
             </div>
