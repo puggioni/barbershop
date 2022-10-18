@@ -1,11 +1,15 @@
-import { useCallback, useEffect } from "react";
-import { VscArrowLeft } from "react-icons/vsc";
-import { useNavigate } from "react-router";
-import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { RootState } from "../../app/store";
-import Categorias from "../FilterCategorias";
+
 import ProductCard from "../ProductCard";
+import { RootState } from "../../app/store";
+import { useCallback, useEffect, useState } from "react";
+import { allProducts, fetchAllProducts } from "./productSlice";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { VscArrowLeft } from "react-icons/vsc";
+import {  useNavigate } from "react-router";
+import Paginate from "../Paginate"
 import { fetchAllProducts } from "./productSlice";
+import Categorias from "../FilterCategorias";
+
 
 interface prodCard {
   _id: string;
@@ -16,9 +20,21 @@ interface prodCard {
   available: boolean;
 }
 
+interface props {
+  pageNumber: number
+}
+
 const Products = () => {
   const dispatch = useAppDispatch();
   let navigate = useNavigate();
+
+
+  const [currentPage, setCurrentPage] = useState(1)
+  const [productsPerPage, setProductsPerPage] = useState(8)
+  const lastPostIndex = currentPage * productsPerPage;
+  const firstPostIndex = lastPostIndex - productsPerPage;
+
+
   const inicializar = useCallback(async () => {
     dispatch(fetchAllProducts(""));
   }, [dispatch]);
@@ -28,12 +44,20 @@ const Products = () => {
   }, [inicializar]);
 
   const data = useAppSelector((state: RootState) => state.products);
+  console.log(data)
+
+
 
   const goBack = () => {
     navigate(-1);
   };
 
   if (data?.allProducts instanceof Array) {
+
+    
+    const currentProducts = data.allProducts.slice(firstPostIndex, lastPostIndex);
+
+
     return (
       <>
         <VscArrowLeft
@@ -43,8 +67,8 @@ const Products = () => {
         <div>
           <Categorias />
         </div>
-        <div className="lg:grid lg:grid-cols-4 lg:mr-24 lg:ml-48 lg:gap-8">
-          {data?.allProducts.map((data: prodCard) => (
+        <div className="font-display lg:grid lg:grid-cols-4 lg:mr-24 lg:ml-48 lg:gap-8">
+          {currentProducts?.allProducts.map((data: prodCard) => (
             <ProductCard
               key={data._id}
               _id={data._id}
@@ -55,11 +79,16 @@ const Products = () => {
               available={data.available}
             />
           ))}
+          <Paginate allProducts={data.allProducts.length} productsPerPage={productsPerPage} setCurrentPage={setCurrentPage}/> 
         </div>
       </>
+      
     );
   } else {
     return <div>Error</div>;
   }
+  
+
+
 };
 export default Products;
