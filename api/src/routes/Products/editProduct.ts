@@ -13,9 +13,9 @@ router.patch("/edit/:idProduct", verifyToken, isAdmin, async (req, res) => {
     name ? product.name = name : {};
     description ? product.description = description : {};
     price ? product.price = price : {};
-    stock ? product.stock = stock : {};
+    (stock <= 0) ? product.stock = 0 : product.stock = stock;
     image ? product.image = image : {};
-    !stock ? product.available = false : {};
+    (stock <= 0) ? product.available = false : product.available = true;
     categories ? product.categories = categories : {};
     
     try {
