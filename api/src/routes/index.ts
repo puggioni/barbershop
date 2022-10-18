@@ -28,7 +28,9 @@ router.use("/products", editProducts);
 router.use("/users", signUp);
 router.use("/users", login);
 
+
 /* ============CATEGORIES============ */
 router.use("/categories", postCategories);
+
 
 export default router;
