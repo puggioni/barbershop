@@ -5,7 +5,6 @@ const Caregorias = () => {
   const dispatch = useAppDispatch();
 
   const handleClick = (event: any) => {
-    console.log(event.target.value);
     if (event.target.value.length) dispatch(filter(event.target.value));
   };
 

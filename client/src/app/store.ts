@@ -1,10 +1,8 @@
 import { Action, configureStore, ThunkAction } from "@reduxjs/toolkit";
-import productdetailReducer from "../components/productdetail/ptoductdetailSlice";
 import getAllProducts from "../components/products/productSlice";
 const store = configureStore({
   //aca se agregan los reducers
   reducer: {
-    producdetail: productdetailReducer,
     products: getAllProducts,
   },
 });
