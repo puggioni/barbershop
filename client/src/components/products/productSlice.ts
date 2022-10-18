@@ -67,7 +67,7 @@ export const filter = (categoria: string): AppThunk => {
   return async (dispatch) => {
     try {
       const { data } = await axios.get(
-        `http://localhost:5000/products/filters/${categoria}`
+        `http://localhost:5000/products/filter/${categoria}`
       );
       dispatch(filterByCaregory(data));
     } catch (error) {

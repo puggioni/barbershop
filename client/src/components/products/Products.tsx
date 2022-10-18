@@ -3,7 +3,7 @@ import { VscArrowLeft } from "react-icons/vsc";
 import { useNavigate } from "react-router";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { RootState } from "../../app/store";
-import Categorias from "../Categorias";
+import Categorias from "../FilterCategorias";
 import ProductCard from "../ProductCard";
 import { fetchAllProducts } from "./productSlice";
 
@@ -43,7 +43,7 @@ const Products = () => {
         <div>
           <Categorias />
         </div>
-        <div className="lg:grid lg:grid-cols-4 lg:mx-24 lg:gap-8">
+        <div className="lg:grid lg:grid-cols-4 lg:mr-24 lg:ml-48 lg:gap-8">
           {data?.allProducts.map((data: prodCard) => (
             <ProductCard
               key={data._id}
