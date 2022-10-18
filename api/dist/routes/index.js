@@ -12,6 +12,7 @@ const deleteProducts_1 = __importDefault(require("./Products/deleteProducts"));
 const getProduct_1 = __importDefault(require("./Products/getProduct"));
 const filterProducts_1 = __importDefault(require("./Products/filterProducts"));
 const editProduct_1 = __importDefault(require("./Products/editProduct"));
+const postPopulateProducts_1 = __importDefault(require("./Products/postPopulateProducts"));
 /* ============USERS FILES============ */
 const signup_1 = __importDefault(require("./Auth/signup"));
 const signin_1 = __importDefault(require("./Auth/signin"));
@@ -27,6 +28,7 @@ router.use("/products", getProduct_1.default);
 router.use("/products", deleteProducts_1.default);
 router.use("/products", filterProducts_1.default);
 router.use("/products", editProduct_1.default);
+router.use("/products", postPopulateProducts_1.default);
 /* ============USERS============ */
 router.use("/users", signup_1.default);
 router.use("/users", signin_1.default);

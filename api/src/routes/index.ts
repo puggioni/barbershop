@@ -7,6 +7,7 @@ import deleteProducts from "./Products/deleteProducts";
 import getProduct from "./Products/getProduct";
 import filterProducts from "./Products/filterProducts";
 import editProducts from "./Products/editProduct";
+import populatedProducts from "./Products/postPopulateProducts";
 /* ============USERS FILES============ */
 import signUp from "./Auth/signup";
 import login from "./Auth/signin";
@@ -24,6 +25,7 @@ router.use("/products", getProduct);
 router.use("/products", deleteProducts);
 router.use("/products", filterProducts);
 router.use("/products", editProducts);
+router.use("/products", populatedProducts);
 
 /* ============USERS============ */
 router.use("/users", signUp);
