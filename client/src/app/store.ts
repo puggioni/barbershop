@@ -1,11 +1,11 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { Action, configureStore, ThunkAction } from "@reduxjs/toolkit";
 import productdetailReducer from "../components/productdetail/ptoductdetailSlice";
 import getAllProducts from "../components/products/productSlice";
 const store = configureStore({
   //aca se agregan los reducers
   reducer: {
     producdetail: productdetailReducer,
-    getAllProducts: getAllProducts,
+    products: getAllProducts,
   },
 });
 
@@ -15,3 +15,9 @@ export default store;
 export type RootState = ReturnType<typeof store.getState>;
 // Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
 export type AppDispatch = typeof store.dispatch;
+export type AppThunk<ReturnType = void> = ThunkAction<
+  ReturnType,
+  RootState,
+  unknown,
+  Action<string>
+>;

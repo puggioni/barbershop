@@ -13,32 +13,23 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
-const categories_1 = __importDefault(require("../../models/categories"));
 const products_1 = __importDefault(require("../../models/products"));
 const middlewares_1 = require("../Auth/middlewares");
 const router = (0, express_1.Router)();
-router.post("/create", middlewares_1.verifyToken, middlewares_1.isAdmin, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    let { name, description, price, stock, image, available, favorite, categories } = req.body;
+router.patch("/edit/:idProduct", middlewares_1.verifyToken, middlewares_1.isAdmin, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    let { name, description, price, stock, image, categories } = req.body;
+    const { idProduct } = req.params;
     if (typeof name === "string")
         name = name.toLocaleLowerCase();
+    const product = yield products_1.default.findById(idProduct);
+    name ? product.name = name : {};
+    description ? product.description = description : {};
+    price ? product.price = price : {};
+    stock ? product.stock = stock : {};
+    image ? product.image = image : {};
+    !stock ? product.available = false : {};
+    categories ? product.categories = categories : {};
     try {
-        const product = new products_1.default({
-            name: name,
-            description: description,
-            price: price,
-            stock: stock,
-            image: image,
-            available: available,
-            favorite: favorite,
-            categories: categories,
-        });
-        if (categories) {
-            const foundCategory = yield categories_1.default.find({
-                name: { $in: categories },
-            });
-            product.categories = foundCategory.map((el) => el._id);
-        }
-        product.populate("categories", "name -_id");
         const savedProduct = yield product.save();
         res.status(200).send(savedProduct);
     }
