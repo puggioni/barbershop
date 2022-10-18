@@ -1,5 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
-import type { PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 import { AppThunk } from "../../app/store";
 
@@ -18,42 +17,44 @@ export interface products {
 }
 interface ProductState {
   allProducts: Array<products> | null;
+  product: products | null;
   loading: boolean;
   errors: any;
   favs: Object[];
 }
 const initialState: ProductState = {
   allProducts: [],
+  product: null,
   loading: false,
   errors: null,
   favs: [],
 };
 
-//action
-
+//==========action==================
 export const fetchAllProducts = (tosearch: string): AppThunk => {
   return async (dispatch) => {
-    console.log(tosearch +  "hola")
-    if(!tosearch){
-    try {
-      const productos = await axios.get("http://localhost:5000/products/all");
-      dispatch(allProducts(productos.data));
-    } catch (error) {
-      return error;
+    if (!tosearch) {
+      try {
+        const productos = await axios.get("http://localhost:5000/products/all");
+        dispatch(allProducts(productos.data));
+      } catch (error) {
+        return error;
+      }
+    } else {
+      try {
+        const productos = await axios.get(
+          "http://localhost:5000/products/search?name=" + tosearch
+        );
+        dispatch(allProducts(productos.data));
+      } catch (error) {
+        return error;
+      }
     }
-  }else{
-    try {
-      const productos = await axios.get("http://localhost:5000/products/search?name="+tosearch);
-      dispatch(allProducts(productos.data));
-    } catch (error) {
-      return error;
-    }
-  }
-  }
+  };
 };
-  
+
 export const addFavoriteProduct = (productoFav: products): AppThunk => {
-  return async (dispatch) => {
+  return async () => {
     try {
       const res = await axios.post("http://localhost:5000/", productoFav); // agregar url de back
       return res;
@@ -63,7 +64,39 @@ export const addFavoriteProduct = (productoFav: products): AppThunk => {
   };
 };
 
-//reducer
+export const filter = (categoria: string): AppThunk => {
+  return async (dispatch) => {
+    try {
+      const product = await axios.get(
+        `http://localhost:5000/products/filter/${categoria}`
+      );
+      dispatch(filterByCaregory(product.data));
+    } catch (error) {
+      return error;
+    }
+  };
+};
+
+export const productDetail = (idProduct: string): AppThunk => {
+  return async (dispatch) => {
+    try {
+      const producto = await axios.get(
+        `http://localhost:5000/products/${idProduct}`
+      );
+      dispatch(detail(producto.data));
+    } catch (error) {
+      return error;
+    }
+  };
+};
+
+export const clearProducDetail: any = () => {
+  return (dispatch: any) => {
+    dispatch(clearDetail());
+  };
+};
+
+//================reducer===================
 export const getAllProductsSlice = createSlice({
   name: "allProducts",
   initialState,
@@ -72,8 +105,23 @@ export const getAllProductsSlice = createSlice({
       state.allProducts = action.payload;
       state.loading = false;
     },
+
+    filterByCaregory: (state, action: PayloadAction<products[]>) => {
+      state.allProducts = action.payload;
+      state.loading = false;
+    },
+
+    detail: (state, action: PayloadAction<products>) => {
+      state.product = action.payload;
+      state.loading = false;
+    },
+
+    clearDetail: (state) => {
+      Object.assign(state, initialState);
+    },
   },
 });
 
 export default getAllProductsSlice.reducer;
-export const { allProducts } = getAllProductsSlice.actions;
+export const { allProducts, filterByCaregory, detail, clearDetail } =
+  getAllProductsSlice.actions;
