@@ -26,7 +26,6 @@ const SearchBar = (expand: any) => {
       setCol("");
     }
     if (tosearch.length) {
-      console.log(e);
       setTosearch("");
       expand.setSearch("");
       setCol("");
