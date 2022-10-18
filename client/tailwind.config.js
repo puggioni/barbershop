@@ -7,6 +7,10 @@ module.exports = {
         width: "width",
       },
     },
+    fontFamily: {
+      'display': ['Quicksand'],
+      'body': ['Open Sans'],
+    }
   },
   plugins: [],
 };

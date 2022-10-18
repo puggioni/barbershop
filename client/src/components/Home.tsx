@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom";
 
+
+
 const buttonStyle =
   "m-auto px-3 py-1.5 bg-white rounded-lg border-2 border-black text-black hover:bg-black hover:text-white";
 
