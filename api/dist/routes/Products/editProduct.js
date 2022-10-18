@@ -17,7 +17,7 @@ const products_1 = __importDefault(require("../../models/products"));
 const middlewares_1 = require("../Auth/middlewares");
 const router = (0, express_1.Router)();
 router.patch("/edit/:idProduct", middlewares_1.verifyToken, middlewares_1.isAdmin, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    let { name, description, price, stock, categories } = req.body;
+    let { name, description, price, stock, image, categories } = req.body;
     const { idProduct } = req.params;
     if (typeof name === "string")
         name = name.toLocaleLowerCase();
@@ -26,8 +26,9 @@ router.patch("/edit/:idProduct", middlewares_1.verifyToken, middlewares_1.isAdmi
     description ? product.description = description : {};
     price ? product.price = price : {};
     stock ? product.stock = stock : {};
+    image ? product.image = image : {};
     !stock ? product.available = false : {};
-    categories ? /*TO-DO: aca adjuntar categorias nuevas al producto*/ {} : {};
+    categories ? product.categories = categories : {};
     try {
         const savedProduct = yield product.save();
         res.status(200).send(savedProduct);
