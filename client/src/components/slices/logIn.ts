@@ -17,7 +17,7 @@ const initialState = { res: {} };
 export const logIn = (email: string, password: string): AppThunk => {
   return async (dispatch) => {
     try {
-      const res: any = await axios.post("http://localhost:5000/users/login", {
+      const res: any = await axios.post("http://localhost:5001/users/login", {
         email,
         password,
       });
