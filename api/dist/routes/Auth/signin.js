@@ -27,11 +27,11 @@ router.post("/login", (req, res) => __awaiter(void 0, void 0, void 0, function* 
         const token = jsonwebtoken_1.default.sign({ _id: userFound._id }, "token", {
             expiresIn: 60 * 60 * 24,
         });
-        console.log(userFound);
-        res.json({ token });
+        res.cookie("jwt", token, { httpOnly: true, maxAge: 1000 * 60 * 60 * 24 });
+        res.status(200).json({ user: userFound._id });
     }
     catch (err) {
-        console.log(err);
+        res.status(500).json(err);
     }
 }));
 exports.default = router;

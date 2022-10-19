@@ -55,6 +55,6 @@ const isAdmin = (req, res, next) => __awaiter(void 0, void 0, void 0, function* 
             return;
         }
     }
-    return res.status(403).json({ message: "Requiere ser administrador" });
+    return res.status(403).json({ isAdmin: false });
 });
 exports.isAdmin = isAdmin;

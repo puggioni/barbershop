@@ -10,6 +10,9 @@ export interface IProduct {
   categories: {
     [key: string]: any;
   };
+  reviews: {
+    [key: string]: any;
+  };
   favorite: boolean;
 }
 
@@ -29,16 +32,17 @@ const productSchema = new Schema(
       type: Number,
     },
     stock: {
+      required: true,
       type: Number,
       default: 0,
     },
 
     image: {
+      required: true,
       type: String,
       default: "",
     },
     available: {
-
       type: Boolean,
     },
     favorite: {
@@ -46,8 +50,16 @@ const productSchema = new Schema(
     },
     categories: [
       {
+        required: true,
         type: Schema.Types.ObjectId,
         ref: "Categories",
+      },
+    ],
+    reviews: [
+      {
+        required: true,
+        type: Schema.Types.ObjectId,
+        ref: "Reviews",
       },
     ],
   },

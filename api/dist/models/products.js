@@ -16,10 +16,12 @@ const productSchema = new mongoose_1.Schema({
         type: Number,
     },
     stock: {
+        required: true,
         type: Number,
         default: 0,
     },
     image: {
+        required: true,
         type: String,
         default: "",
     },
@@ -31,8 +33,16 @@ const productSchema = new mongoose_1.Schema({
     },
     categories: [
         {
+            required: true,
             type: mongoose_1.Schema.Types.ObjectId,
             ref: "Categories",
+        },
+    ],
+    reviews: [
+        {
+            required: true,
+            type: mongoose_1.Schema.Types.ObjectId,
+            ref: "Reviews",
         },
     ],
 }, {
