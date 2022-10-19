@@ -2,25 +2,25 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 import { AppThunk } from "../../app/store";
 
-export interface userInfo {
+// localStorage.setItem('myCat', 'Tom');
+// localStorage.getItem('myCat');
+// localStorage.removeItem('myCat');
 
-  user: string;
+interface userFound {
+  token: string;
 }
 
-const initialState: userInfo = {
-  user: "",
-
-};
+const initialState = { res: {} };
 
 //==========action==================
 export const logIn = (email: string, password: string): AppThunk => {
   return async (dispatch) => {
     try {
-      const credenciales: string = await axios.post(
-        "http://localhost:5000/users/login",
-        { email, password }
-      );
-      dispatch(userLogIn(credenciales));
+      const res: any = await axios.post("http://localhost:5000/users/login", {
+        email,
+        password,
+      });
+      dispatch(userLogIn(res.data.token));
     } catch (error) {
       return error;
     }
@@ -32,10 +32,9 @@ export const logInReducerSlice = createSlice({
   name: "login",
   initialState,
   reducers: {
-    userLogIn: (state, action: PayloadAction<string>) => {
-
-      state.user = action.payload;
-
+    userLogIn: (state: any, action: PayloadAction<userFound>) => {
+      state.token = action.payload;
+      localStorage.setItem("token", state.token);
     },
   },
 });

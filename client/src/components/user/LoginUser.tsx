@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useAppDispatch } from "../../app/hooks";
 import { logIn } from "../slices/logIn";
@@ -9,8 +9,15 @@ export default function LoginUser() {
 
   const dispatch = useAppDispatch();
 
-  const handleSubmit = (e: React.MouseEvent<HTMLElement>) => {
+  useEffect(() => {
+    if(token)
+      dispatch();
+    else(){
+      log in
+    }
+  },[]);
 
+  const handleSubmit = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
     dispatch(logIn(email, password));
     setPassword("");
