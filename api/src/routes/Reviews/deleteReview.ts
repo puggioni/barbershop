@@ -14,11 +14,9 @@ router.delete("/delete", verifyToken, async (req, res) => {
       (obj: any) => obj._id.toString() !== String(_idReview)
     );
     product["reviews"] = deleteProductReview;
-    console.log(deleteProductReview);
 
     const saveProduct = await product.save();
-    console.log("SAVEDPRODUCT", saveProduct);
-    console.log("PRODUCT", product);
+
     res.status(200).send(product);
   } catch (error) {
     console.log(error);
