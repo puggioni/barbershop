@@ -1,5 +1,5 @@
-import { useAppDispatch } from "../app/hooks";
-import { filter } from "./products/productSlice";
+import { useAppDispatch } from "../../app/hooks";
+import { filter } from "../slices/productSlice";
 
 const Caregorias = () => {
   const dispatch = useAppDispatch();
@@ -11,11 +11,7 @@ const Caregorias = () => {
   return (
     <div
       className="grid fixed justify-items-start
-    ml-4
-    
-    text-lg
-    rounded-xl
-    bg-slate-500/50 z-1 h-1/2 w-[10%] p-4"
+    ml-4 text-lg rounded-xl bg-slate-500/50 z-1 h-1/2 w-[10%] p-4 font-semibold"
     >
       <label className="text-xl text-slate-200">Filters: </label>
       <button
