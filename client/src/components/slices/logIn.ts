@@ -2,24 +2,23 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 import { AppThunk } from "../../app/store";
 
-interface userInfo {
-  userName: string;
-  password: string;
+export interface userInfo {
   token: string;
-  role: string;
 }
 
 const initialState: userInfo = {
-  userName: "",
-  password: "",
   token: "",
-  role: "",
 };
 
 //==========action==================
-export const unaAccion = (): AppThunk => {
-  return async () => {
+export const logIn = (email: string, password: string): AppThunk => {
+  return async (dispatch) => {
     try {
+      const credenciales: string = await axios.post(
+        "http://localhost:5000/users/login",
+        { email, password }
+      );
+      dispatch(userLogIn(credenciales));
     } catch (error) {
       return error;
     }
@@ -28,12 +27,14 @@ export const unaAccion = (): AppThunk => {
 //================reducer===================
 
 export const logInReducerSlice = createSlice({
-  name: "unReducer",
+  name: "login",
   initialState,
   reducers: {
-    allProducts: (state, action: PayloadAction<userInfo>) => {},
+    userLogIn: (state, action: PayloadAction<string>) => {
+      state.token = action.payload;
+    },
   },
 });
 
 export default logInReducerSlice.reducer;
-export const {} = logInReducerSlice.actions;
+export const { userLogIn } = logInReducerSlice.actions;

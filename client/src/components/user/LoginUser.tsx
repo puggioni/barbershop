@@ -1,6 +1,21 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useAppDispatch } from "../../app/hooks";
+import { logIn } from "../slices/logIn";
 
 export default function LoginUser() {
+  const [password, setPassword] = useState("");
+  const [email, setUserName] = useState("");
+
+  const dispatch = useAppDispatch();
+
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+    dispatch(logIn(email, password));
+    setPassword("");
+    setUserName("");
+  };
+
   return (
     <div className="font-sans">
       <Link to={"/"}>
@@ -8,8 +23,6 @@ export default function LoginUser() {
       </Link>
       <div className="relative min-h-screen flex flex-col sm:justify-center items-center">
         <div className="relative sm:max-w-sm w-full">
-          {/* <div className="card bg-blue-400 shadow-lg  w-full h-full rounded-3xl absolute  transform -rotate-6"></div>
-                <div className="card bg-red-400 shadow-lg  w-full h-full rounded-3xl absolute  transform rotate-6"></div> */}
           <div className="relative w-full rounded-3xl  px-6 py-4  bg-slate-200/50  shadow-md">
             <label className="block mt-3 text-sm text-700 text-center font-semibold">
               Ingresa
@@ -19,7 +32,12 @@ export default function LoginUser() {
                 <input
                   type="email"
                   placeholder="Correo electronico"
-                  className="mt-1 block w-full border-none bg-gray-100 h-11 rounded-xl shadow-lg hover:bg-blue-100 focus:bg-blue-100 focus:ring-0"
+                  className="mt-1 pl-4 block w-full border-none bg-gray-100 h-11 rounded-xl shadow-lg hover:bg-blue-100 focus:bg-blue-100 focus:ring-0"
+                  name="userName"
+                  value={email}
+                  onChange={(event) => {
+                    setUserName(event.target.value);
+                  }}
                 />
               </div>
 
@@ -27,12 +45,18 @@ export default function LoginUser() {
                 <input
                   type="password"
                   placeholder="Contraseña"
-                  className="mt-1 block w-full border-none bg-gray-100 h-11 rounded-xl shadow-lg hover:bg-blue-100 focus:bg-blue-100 focus:ring-0"
+                  className="mt-1 pl-4 block w-full border-none bg-gray-100 h-11 rounded-xl shadow-lg hover:bg-blue-100 focus:bg-blue-100 focus:ring-0"
+                  name="password"
+                  onChange={(event) => setPassword(event.target.value)}
+                  value={password}
                 />
               </div>
 
               <div className="mt-7">
-                <button className="bg-blue-500 w-full py-3 rounded-xl text-white shadow-xl hover:shadow-inner focus:outline-none transition duration-500 ease-in-out  transform hover:-translate-x hover:scale-105">
+                <button
+                  className="bg-blue-500 w-full py-3 rounded-xl text-white shadow-xl hover:shadow-inner focus:outline-none transition duration-500 ease-in-out  transform hover:-translate-x hover:scale-105"
+                  onClick={(e) => handleSubmit(e)}
+                >
                   Ingresar
                 </button>
               </div>
