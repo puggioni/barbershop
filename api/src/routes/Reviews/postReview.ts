@@ -5,7 +5,7 @@ import Product from "../../models/products";
 import { verifyToken, isCommon } from "../Auth/middlewares";
 const router = Router();
 
-router.post("/create", async (req, res) => {
+router.post("/create", verifyToken, async (req, res) => {
   let { rating, comment, productId } =
     req.body;
   //save review, get returned reviewId
