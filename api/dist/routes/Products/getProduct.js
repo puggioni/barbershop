@@ -18,10 +18,24 @@ const router = (0, express_1.Router)();
 router.get("/:idProduct", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { idProduct } = req.params;
     try {
-        const product = yield products_1.default.findById(idProduct);
-        res.send(product);
+        yield products_1.default.findById(idProduct).populate("reviews")
+            .then(response => {
+            let filteredProd = {
+                "_id": response._id,
+                "name": response.name,
+                "description": response.description,
+                "price": response.price,
+                "stock": response.stock,
+                "image": response.image,
+                "available": response.available,
+                "favorite": response.favorite,
+                "reviews": response.reviews.map(item => { return { reviewId: item._id, rating: item.rating, comment: item.comment }; })
+            };
+            return filteredProd;
+        }).then(prod => res.send(prod));
     }
     catch (err) {
+        console.log(err);
         res.status(500).send(err);
     }
 }));
