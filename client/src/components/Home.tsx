@@ -7,7 +7,7 @@ const buttonStyle =
 
 const Home = () => {
   return (
-    <div className=" h-screen text-white">
+    <div className="h-screen text-white">
       <Link to={"/user/login"}>
       <button className="absolute top-15 right-0 m-4 ">Log In/Sign Up</button>
       </Link>
@@ -19,7 +19,9 @@ const Home = () => {
         <Link className={buttonStyle} to="/product">
           Store
         </Link>
-        <button className={buttonStyle}>Pedí Tu Turno</button>
+        <Link className={buttonStyle} to="/reserve">
+          Pedi tu Turno
+        </Link>
         <button className={buttonStyle}>Conocenos</button>
       </div>
     </div>
