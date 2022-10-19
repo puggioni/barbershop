@@ -38,6 +38,13 @@ const productSchema = new mongoose_1.Schema({
             ref: "Categories",
         },
     ],
+    reviews: [
+        {
+            required: true,
+            type: mongoose_1.Schema.Types.ObjectId,
+            ref: "Reviews",
+        },
+    ],
 }, {
     versionKey: false,
     timestamps: true,

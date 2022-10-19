@@ -16,6 +16,9 @@ import isAdmin from "./Auth/isAdmin";
 import postCategories from "./Categories/postCategories";
 import deleteCategory from "./Categories/deleteCategory";
 import getCategories from "./Categories/getAllCategories";
+/* ============REVIEWS============ */
+import postReview from "./Reviews/postReview";
+
 
 const router = Router();
 
@@ -34,11 +37,13 @@ router.use("/users", signUp);
 router.use("/users", login);
 router.use("/users", isAdmin);
 
-
 /* ============CATEGORIES============ */
 router.use("/categories", postCategories);
 router.use("/categories", deleteCategory);
 router.use("/categories", getCategories);
+
+/* ============REVIEWS============ */
+router.use("/reviews", postReview);
 
 
 export default router;
