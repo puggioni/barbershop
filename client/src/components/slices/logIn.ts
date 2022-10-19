@@ -12,6 +12,10 @@ const initialState: userInfo = {
 
 };
 
+type dataUser = {
+  data: string;
+}
+
 //==========actions==================
 export const logIn = (email: string, password: string): AppThunk => {
   return async (dispatch) => {
@@ -30,12 +34,15 @@ export const logIn = (email: string, password: string): AppThunk => {
 export const logUp = (user:object): AppThunk => {
   return async (dispatch) => {
     try {
-      const credenciales: string = await axios.post(
+      const credenciales: dataUser = await axios.post(
         "http://localhost:5000/users/signup",user
       );
-      dispatch(userCreate(credenciales));
+      console.log(credenciales)
+      dispatch(userCreate(credenciales.data));
     } catch (error) {
+      console.log(error)
       return error;
+      
     }
   };
 };
@@ -51,7 +58,7 @@ export const logInReducerSlice = createSlice({
 
     },
     userCreate: (state, action: PayloadAction<string>) => {
-      state.token = action.payload;
+      state.user = action.payload;
     },
   }
 });
