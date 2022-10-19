@@ -10,6 +10,7 @@ export default function LoginUser() {
   const dispatch = useAppDispatch();
 
   const handleSubmit = (e: React.MouseEvent<HTMLElement>) => {
+
     e.preventDefault();
     dispatch(logIn(email, password));
     setPassword("");

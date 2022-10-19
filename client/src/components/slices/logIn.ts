@@ -3,11 +3,13 @@ import axios from "axios";
 import { AppThunk } from "../../app/store";
 
 export interface userInfo {
+
   user: string;
 }
 
 const initialState: userInfo = {
   user: "",
+
 };
 
 //==========action==================
@@ -31,7 +33,9 @@ export const logInReducerSlice = createSlice({
   initialState,
   reducers: {
     userLogIn: (state, action: PayloadAction<string>) => {
+
       state.user = action.payload;
+
     },
   },
 });
