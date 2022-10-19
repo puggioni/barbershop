@@ -17,26 +17,22 @@ const ProductReviews_1 = __importDefault(require("../../models/ProductReviews"))
 const products_1 = __importDefault(require("../../models/products"));
 const middlewares_1 = require("../Auth/middlewares");
 const router = (0, express_1.Router)();
-router.post("/create", middlewares_1.verifyToken, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    let { rating, comment, productId } = req.body;
-    //save review, get returned reviewId
-    //edit product, add reviewId to reviews[]
+router.delete("/delete", middlewares_1.verifyToken, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { _idReview, _idProduct } = req.body;
     try {
-        const review = new ProductReviews_1.default({
-            comment: comment,
-            rating: rating,
-        });
-        const { _id } = yield review.save();
-        products_1.default.findById(productId)
-            .then((product) => {
-            product.reviews.push(_id);
-            return product.save();
-        })
-            .then((savedProduct) => res.status(200).send(savedProduct));
+        let product = yield products_1.default.findById(_idProduct).populate("reviews");
+        const deleteReview = yield ProductReviews_1.default.findOneAndDelete({ _id: _idReview });
+        const deleteProductReview = product["reviews"].filter((obj) => obj._id.toString() !== String(_idReview));
+        product["reviews"] = deleteProductReview;
+        console.log(deleteProductReview);
+        const saveProduct = yield product.save();
+        console.log("SAVEDPRODUCT", saveProduct);
+        console.log("PRODUCT", product);
+        res.status(200).send(product);
     }
-    catch (err) {
-        console.log(err);
-        res.status(500).send(err);
+    catch (error) {
+        console.log(error);
+        res.status(500).send(error);
     }
 }));
 exports.default = router;

@@ -18,7 +18,7 @@ import deleteCategory from "./Categories/deleteCategory";
 import getCategories from "./Categories/getAllCategories";
 /* ============REVIEWS============ */
 import postReview from "./Reviews/postReview";
-
+import deleteReview from "./Reviews/deleteReview";
 
 const router = Router();
 
@@ -44,6 +44,6 @@ router.use("/categories", getCategories);
 
 /* ============REVIEWS============ */
 router.use("/reviews", postReview);
-
+router.use("/reviews", deleteReview);
 
 export default router;
