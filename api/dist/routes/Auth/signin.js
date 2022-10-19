@@ -18,7 +18,9 @@ const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const router = (0, express_1.Router)();
 router.post("/login", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const userFound = yield user_1.default.findOne({ email: req.body.email }).populate("role", "name -_id");
+        const userFound = yield user_1.default.findOne({
+            email: req.body.email,
+        }).populate("role", "name -_id");
         if (!userFound)
             return res.status(400).json({ message: "User not found" });
         const matchPassword = yield user_1.default.comparePassword(req.body.password, userFound.password);
@@ -27,8 +29,7 @@ router.post("/login", (req, res) => __awaiter(void 0, void 0, void 0, function* 
         const token = jsonwebtoken_1.default.sign({ _id: userFound._id }, "token", {
             expiresIn: 60 * 60 * 24,
         });
-        res.cookie("jwt", token, { httpOnly: true, maxAge: 1000 * 60 * 60 * 24 });
-        res.status(200).json({ user: userFound._id });
+        res.status(200).json({ token, userFound });
     }
     catch (err) {
         res.status(500).json(err);
