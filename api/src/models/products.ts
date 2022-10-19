@@ -10,6 +10,9 @@ export interface IProduct {
   categories: {
     [key: string]: any;
   };
+  reviews: {
+    [key: string]: any;
+  };
   favorite: boolean;
 }
 
@@ -50,6 +53,13 @@ const productSchema = new Schema(
         required: true,
         type: Schema.Types.ObjectId,
         ref: "Categories",
+      },
+    ],
+    reviews: [
+      {
+        required: true,
+        type: Schema.Types.ObjectId,
+        ref: "Reviews",
       },
     ],
   },
