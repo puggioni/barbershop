@@ -19,6 +19,7 @@ import getCategories from "./Categories/getAllCategories";
 /* ============REVIEWS============ */
 import postReview from "./Reviews/postReview";
 import deleteReview from "./Reviews/deleteReview";
+import editReview from "./Reviews/editReview";
 
 const router = Router();
 
@@ -45,5 +46,6 @@ router.use("/categories", getCategories);
 /* ============REVIEWS============ */
 router.use("/reviews", postReview);
 router.use("/reviews", deleteReview);
+router.use("/reviews", editReview);
 
 export default router;
