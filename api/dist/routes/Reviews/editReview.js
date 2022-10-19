@@ -21,12 +21,12 @@ router.patch("/edit/:IdReview", middlewares_1.verifyToken, (req, res) => __await
     const { IdReview } = req.params;
     try {
         yield productReviews_1.default.findById(IdReview)
-            .then(review => {
-            rating ? review.rating = rating : {};
-            comment ? review.comment = comment : {};
+            .then((review) => {
+            rating ? (review.rating = rating) : {};
+            comment ? (review.comment = comment) : {};
             return review.save();
         })
-            .then(savedReview => res.status(200).send(savedReview));
+            .then((savedReview) => res.status(200).send(savedReview));
     }
     catch (err) {
         console.log(err);

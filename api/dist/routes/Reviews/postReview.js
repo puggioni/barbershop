@@ -13,7 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
-const ProductReviews_1 = __importDefault(require("../../models/ProductReviews"));
+const productReviews_1 = __importDefault(require("../../models/productReviews"));
 const products_1 = __importDefault(require("../../models/products"));
 const middlewares_1 = require("../Auth/middlewares");
 const router = (0, express_1.Router)();
@@ -22,7 +22,7 @@ router.post("/create", middlewares_1.verifyToken, (req, res) => __awaiter(void 0
     //save review, get returned reviewId
     //edit product, add reviewId to reviews[]
     try {
-        const review = new ProductReviews_1.default({
+        const review = new productReviews_1.default({
             comment: comment,
             rating: rating,
         });

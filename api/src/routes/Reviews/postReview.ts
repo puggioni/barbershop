@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { ObjectId } from "mongoose";
-import Review from "../../models/ProductReviews";
+import Review from "../../models/productReviews";
 import Product from "../../models/products";
 import { verifyToken, isCommon } from "../Auth/middlewares";
 const router = Router();

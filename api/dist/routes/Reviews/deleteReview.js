@@ -13,7 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
-const ProductReviews_1 = __importDefault(require("../../models/ProductReviews"));
+const productReviews_1 = __importDefault(require("../../models/productReviews"));
 const products_1 = __importDefault(require("../../models/products"));
 const middlewares_1 = require("../Auth/middlewares");
 const router = (0, express_1.Router)();
@@ -21,7 +21,7 @@ router.delete("/delete", middlewares_1.verifyToken, (req, res) => __awaiter(void
     const { _idReview, _idProduct } = req.body;
     try {
         let product = yield products_1.default.findById(_idProduct).populate("reviews");
-        const deleteReview = yield ProductReviews_1.default.findOneAndDelete({ _id: _idReview });
+        const deleteReview = yield productReviews_1.default.findOneAndDelete({ _id: _idReview });
         const deleteProductReview = product["reviews"].filter((obj) => obj._id.toString() !== String(_idReview));
         product["reviews"] = deleteProductReview;
         const saveProduct = yield product.save();
