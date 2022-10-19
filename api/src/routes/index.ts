@@ -12,6 +12,7 @@ import populatedProducts from "./Products/postPopulateProducts";
 import signUp from "./Auth/signup";
 import login from "./Auth/signin";
 
+import isAdmin from "./Auth/isAdmin";
 /* ============CATEGORIES============ */
 import postCategories from "./Categories/postCategories";
 import deleteCategory from "./Categories/deleteCategory";
@@ -32,6 +33,7 @@ router.use("/products", populatedProducts);
 /* ============USERS============ */
 router.use("/users", signUp);
 router.use("/users", login);
+router.use("/users", isAdmin);
 
 /* ============CATEGORIES============ */
 router.use("/categories", postCategories);

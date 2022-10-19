@@ -38,5 +38,5 @@ export const isAdmin = async (req, res, next) => {
       return;
     }
   }
-  return res.status(403).json({ message: "Requiere ser administrador" });
+  return res.status(403).json({ isAdmin: false });
 };
