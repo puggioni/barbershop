@@ -1,10 +1,10 @@
-import { useEffect, useCallback } from "react";
-import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { RootState } from "../../app/store";
+import { useCallback, useEffect } from "react";
+import { VscArrowLeft } from "react-icons/vsc";
 import { useParams } from "react-router";
 import { useNavigate } from "react-router-dom";
-import { VscArrowLeft } from "react-icons/vsc";
-import { clearProducDetail, productDetail } from "../products/productSlice";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { RootState } from "../../app/store";
+import { clearProducDetail, productDetail } from "../slices/productSlice";
 
 type QuizParams = {
   idProduct: string;
@@ -54,7 +54,9 @@ export default function ProductDetail() {
             </div>
           </div>
           <div className="w-5/6 flex-col self-center">
-            <h1 className=" text-center font-bold p-5 text-2xl">{product.name}</h1>
+            <h1 className=" text-center font-bold p-5 text-2xl">
+              {product.name}
+            </h1>
             <div className="justify-end ">
               <h2 className=" font-bold justify-end px-5 text-2xl">
                 ${product.price}

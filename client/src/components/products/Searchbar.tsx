@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { useAppDispatch } from "../app/hooks";
-import { fetchAllProducts } from "./products/productSlice";
 import { BsSearch } from "react-icons/bs";
+import { useAppDispatch } from "../../app/hooks";
+import { fetchAllProducts } from "../slices/productSlice";
 
 type evento = {
   target: eventarget;

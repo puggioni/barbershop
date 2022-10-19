@@ -1,6 +1,6 @@
-import SearchBar from "./Searchbar";
-import { VscChromeClose, VscMenu } from "react-icons/vsc";
 import { useState } from "react";
+import { VscChromeClose, VscMenu } from "react-icons/vsc";
+import SearchBar from "./products/Searchbar";
 
 const NavBar = () => {
   const [mobileMenu, setMobileMenu] = useState(false);

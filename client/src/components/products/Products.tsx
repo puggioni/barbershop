@@ -1,12 +1,12 @@
-import ProductCard from "../ProductCard";
-import { RootState } from "../../app/store";
 import { useCallback, useEffect, useState } from "react";
-import { fetchAllProducts } from "./productSlice";
-import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { VscArrowLeft } from "react-icons/vsc";
 import { useNavigate } from "react-router";
-import Paginate from "../Paginate";
-import Categorias from "../FilterCategorias";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { RootState } from "../../app/store";
+import Paginate from "./Paginate";
+import { fetchAllProducts } from "../slices/productSlice";
+import Categorias from "./FilterCategorias";
+import ProductCard from "./ProductCard";
 
 interface prodCard {
   _id: string;
@@ -50,7 +50,7 @@ const Products = () => {
       <>
         <VscArrowLeft
           onClick={() => goBack()}
-          className="ml-4 mt-3 h-6 w-6 fill-white"
+          className="ml-12 my-3 h-6 w-6 fill-white"
         />
         <div>
           <Categorias />
@@ -67,12 +67,12 @@ const Products = () => {
               available={data.available}
             />
           ))}
-          <Paginate
-            allProducts={data.allProducts.length}
-            productsPerPage={productsPerPage}
-            setCurrentPage={setCurrentPage}
-          />
         </div>
+        <Paginate
+          allProducts={data.allProducts.length}
+          productsPerPage={productsPerPage}
+          setCurrentPage={setCurrentPage}
+        />
       </>
     );
   } else {
