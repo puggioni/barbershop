@@ -21,10 +21,10 @@ router.post("/login", async (req, res) => {
     const token: string = jwt.sign({ _id: userFound._id }, "token", {
       expiresIn: 60 * 60 * 24,
     });
-    console.log(userFound);
-    res.json({ token });
+    res.cookie("jwt", token, { httpOnly: true, maxAge: 1000 * 60 * 60 * 24 });
+    res.status(200).json({ user: userFound._id });
   } catch (err) {
-    console.log(err);
+    res.status(500).json(err);
   }
 });
 

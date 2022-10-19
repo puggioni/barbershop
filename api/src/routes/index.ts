@@ -11,6 +11,7 @@ import populatedProducts from "./Products/postPopulateProducts";
 /* ============USERS FILES============ */
 import signUp from "./Auth/signup";
 import login from "./Auth/signin";
+
 /* ============CATEGORIES============ */
 import postCategories from "./Categories/postCategories";
 import deleteCategory from "./Categories/deleteCategory";
@@ -32,11 +33,9 @@ router.use("/products", populatedProducts);
 router.use("/users", signUp);
 router.use("/users", login);
 
-
 /* ============CATEGORIES============ */
 router.use("/categories", postCategories);
 router.use("/categories", deleteCategory);
 router.use("/categories", getCategories);
-
 
 export default router;
