@@ -33,13 +33,13 @@ router.post("/signup", async (req, res) => {
       const role = await Role.findOne({ name: "user" });
       user.role = [role._id];
     }
-    console.log(user);
+
     const savedUser = await user.save();
     const token: string = jwt.sign({ _id: savedUser._id }, "token", {
       expiresIn: 60 * 60 * 24,
     });
     res.cookie("jwt", token, { httpOnly: true, maxAge: 1000 * 60 * 60 * 24 });
-    res.status(200).json({ user: savedUser._id });
+    res.status(200).json({ token, savedUser });
   } catch (err) {
     if (err instanceof Error) {
       console.log(err.message);
