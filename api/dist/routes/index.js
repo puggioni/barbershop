@@ -16,6 +16,7 @@ const postPopulateProducts_1 = __importDefault(require("./Products/postPopulateP
 /* ============USERS FILES============ */
 const signup_1 = __importDefault(require("./Auth/signup"));
 const signin_1 = __importDefault(require("./Auth/signin"));
+const isAdmin_1 = __importDefault(require("./Auth/isAdmin"));
 /* ============CATEGORIES============ */
 const postCategories_1 = __importDefault(require("./Categories/postCategories"));
 const deleteCategory_1 = __importDefault(require("./Categories/deleteCategory"));
@@ -33,6 +34,7 @@ router.use("/products", postPopulateProducts_1.default);
 /* ============USERS============ */
 router.use("/users", signup_1.default);
 router.use("/users", signin_1.default);
+router.use("/users", isAdmin_1.default);
 /* ============CATEGORIES============ */
 router.use("/categories", postCategories_1.default);
 router.use("/categories", deleteCategory_1.default);
