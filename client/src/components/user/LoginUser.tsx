@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../../app/hooks";
 import { logIn } from "../slices/logIn";
 
@@ -8,13 +8,13 @@ export default function LoginUser() {
   const [email, setUserName] = useState("");
 
   const dispatch = useAppDispatch();
-
+  const navigate = useNavigate();
   const handleSubmit = (e: React.MouseEvent<HTMLElement>) => {
-
     e.preventDefault();
     dispatch(logIn(email, password));
     setPassword("");
     setUserName("");
+    navigate("/");
   };
 
   return (
