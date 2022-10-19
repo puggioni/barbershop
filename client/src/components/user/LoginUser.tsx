@@ -10,11 +10,7 @@ export default function LoginUser() {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if(token)
-      dispatch();
-    else(){
-      log in
-    }
+   
   },[]);
 
   const handleSubmit = (e: React.MouseEvent<HTMLElement>) => {

@@ -7,6 +7,7 @@ import { AppThunk } from "../../app/store";
 // localStorage.removeItem('myCat');
 
 interface userFound {
+  user: Object;
   token: string;
 }
 
@@ -16,11 +17,12 @@ const initialState = { res: {} };
 export const logIn = (email: string, password: string): AppThunk => {
   return async (dispatch) => {
     try {
-      const res: any = await axios.post("http://localhost:5000/users/login", {
+      const res: any = await axios.post("http://localhost:5001/users/login", {
         email,
         password,
       });
-      dispatch(userLogIn(res.data.token));
+      console.log(res.data);
+      dispatch(userLogIn(res.data));
     } catch (error) {
       return error;
     }
@@ -33,8 +35,10 @@ export const logInReducerSlice = createSlice({
   initialState,
   reducers: {
     userLogIn: (state: any, action: PayloadAction<userFound>) => {
-      state.token = action.payload;
+      state.token = JSON.stringify(action.payload.token);
       localStorage.setItem("token", state.token);
+      state.userFound = JSON.stringify(action.payload.user);
+      localStorage.setItem("user", state.userFound);
     },
   },
 });

@@ -5,21 +5,26 @@ const router = Router();
 
 router.post("/login", async (req, res) => {
   try {
-    const userFound = await User.findOne({
+    const userFound: Object = await User.findOne({
       email: req.body.email,
     }).populate("role", "name -_id");
     if (!userFound) return res.status(400).json({ message: "User not found" });
     const matchPassword = await User.comparePassword(
       req.body.password,
-      userFound.password
+      userFound["password"]
     );
     if (!matchPassword)
       return res.status(401).json({ token: null, message: "Invalid Password" });
 
-    const token: string = jwt.sign({ _id: userFound._id }, "token", {
+    const token: string = jwt.sign({ _id: userFound["._id"] }, "token", {
       expiresIn: 60 * 60 * 24,
     });
-    res.header("auth-token", token).json({ token, userFound });
+    const response = {
+      user: userFound,
+      token,
+    };
+    console.log(userFound);
+    res.header("auth-token", token).send(response);
   } catch (err) {
     res.status(500).json(err);
   }
