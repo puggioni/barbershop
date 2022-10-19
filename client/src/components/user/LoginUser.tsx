@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../../app/hooks";
 import { logIn } from "../slices/logIn";
 
@@ -7,17 +7,21 @@ export default function LoginUser() {
   const [password, setPassword] = useState("");
   const [email, setUserName] = useState("");
 
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
-
-  useEffect(() => {
-   
-  },[]);
+  const user = localStorage.getItem("user");
+  useEffect(() => {}, []);
 
   const handleSubmit = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
     dispatch(logIn(email, password));
-    setPassword("");
-    setUserName("");
+    if (user) {
+      navigate(-1);
+      setPassword("");
+      setUserName("");
+    } else {
+      alert("Nombre/Contraseña no existe");
+    }
   };
 
   return (
