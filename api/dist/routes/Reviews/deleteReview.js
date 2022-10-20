@@ -24,8 +24,10 @@ router.delete("/delete", middlewares_1.verifyToken, (req, res) => __awaiter(void
         const deleteReview = yield productReviews_1.default.findOneAndDelete({ _id: _idReview });
         const deleteProductReview = product["reviews"].filter((obj) => obj._id.toString() !== String(_idReview));
         product["reviews"] = deleteProductReview;
+        product.rating_sum -= deleteReview.rating;
+        product.rating = product.rating_sum / product.reviews.length;
         const saveProduct = yield product.save();
-        res.status(200).send(product);
+        res.status(200).send(saveProduct);
     }
     catch (error) {
         console.log(error);

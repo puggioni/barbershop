@@ -29,6 +29,7 @@ router.get("/:idProduct", (req, res) => __awaiter(void 0, void 0, void 0, functi
                 "image": response.image,
                 "available": response.available,
                 "favorite": response.favorite,
+                "rating": response.rating,
                 "reviews": response.reviews.map(item => { return { reviewId: item._id, rating: item.rating, comment: item.comment }; })
             };
             return filteredProd;

@@ -1,5 +1,4 @@
 import { Router } from "express";
-import { ObjectId } from "mongoose";
 import Review from "../../models/productReviews";
 import Product from "../../models/products";
 import { verifyToken, isCommon } from "../Auth/middlewares";
@@ -19,6 +18,8 @@ router.post("/create", verifyToken, async (req, res) => {
     Product.findById(productId)
       .then((product) => {
         product.reviews.push(_id);
+        product.rating_sum += rating;
+        product.rating = product.rating_sum / product.reviews.length;
         return product.save();
       })
       .then((savedProduct) => res.status(200).send(savedProduct));

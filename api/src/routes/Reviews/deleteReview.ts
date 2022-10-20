@@ -1,5 +1,4 @@
 import { Router } from "express";
-import { ObjectId } from "mongoose";
 import Review from "../../models/productReviews";
 import Product from "../../models/products";
 import { verifyToken, isCommon } from "../Auth/middlewares";
@@ -14,10 +13,12 @@ router.delete("/delete", verifyToken, async (req, res) => {
       (obj: any) => obj._id.toString() !== String(_idReview)
     );
     product["reviews"] = deleteProductReview;
+    product.rating_sum -= deleteReview.rating;
+    product.rating = product.rating_sum / product.reviews.length;
 
     const saveProduct = await product.save();
 
-    res.status(200).send(product);
+    res.status(200).send(saveProduct);
   } catch (error) {
     console.log(error);
     res.status(500).send(error);

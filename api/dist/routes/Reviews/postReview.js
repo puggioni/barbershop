@@ -30,6 +30,8 @@ router.post("/create", middlewares_1.verifyToken, (req, res) => __awaiter(void 0
         products_1.default.findById(productId)
             .then((product) => {
             product.reviews.push(_id);
+            product.rating_sum += rating;
+            product.rating = product.rating_sum / product.reviews.length;
             return product.save();
         })
             .then((savedProduct) => res.status(200).send(savedProduct));

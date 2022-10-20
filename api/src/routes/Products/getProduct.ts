@@ -18,6 +18,7 @@ router.get("/:idProduct", async (req, res) => {
           "image": response.image,
           "available": response.available,
           "favorite": response.favorite,
+          "rating": response.rating,
           "reviews": response.reviews.map(item => { return { reviewId: item._id, rating: item.rating, comment: item.comment } })
         }
         return filteredProd;
