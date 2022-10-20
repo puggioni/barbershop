@@ -2,9 +2,6 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 import { AppThunk } from "../../app/store";
 
-// localStorage.setItem('myCat', 'Tom');
-// localStorage.getItem('myCat');
-// localStorage.removeItem('myCat');
 
 interface userFound {
   user: Object;
