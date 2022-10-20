@@ -13,7 +13,11 @@ interface userFound {
 
 const initialState = { res: {} };
 
-//==========action==================
+type dataUser = {
+  data: string;
+}
+
+//==========actions==================
 export const logIn = (email: string, password: string): AppThunk => {
   return async (dispatch) => {
     try {
@@ -28,7 +32,23 @@ export const logIn = (email: string, password: string): AppThunk => {
     }
   };
 };
-//================reducer===================
+
+export const logUp = (user:object): AppThunk => {
+  return async (dispatch) => {
+    try {
+      const credenciales: dataUser = await axios.post(
+        "http://localhost:5000/users/signup",user
+      );
+      dispatch(userCreate(credenciales.data));
+      alert("Usuario creado exitosamente")
+    } catch (error) {
+      console.log(error)
+      return error;
+      
+    }
+  };
+};
+//================reducers===================
 
 export const logInReducerSlice = createSlice({
   name: "login",
@@ -40,8 +60,13 @@ export const logInReducerSlice = createSlice({
       state.userFound = JSON.stringify(action.payload.user);
       localStorage.setItem("user", state.userFound);
     },
-  },
+    userCreate: (state, action: PayloadAction<string>) => {
+      state.user = action.payload;
+    },
+  }
 });
 
+
+
 export default logInReducerSlice.reducer;
-export const { userLogIn } = logInReducerSlice.actions;
+export const { userLogIn, userCreate} = logInReducerSlice.actions;

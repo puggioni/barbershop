@@ -2,7 +2,7 @@ import { Route, Routes } from "react-router-dom";
 import Home from "./components/Home";
 import ProductDetail from "./components/products/ProductDetail";
 import Products from "./components/products/Products";
-import CreateUser from "./components/user/createUser";
+import CreateUser from "./components/user/CreateUser";
 import LoginUser from "./components/user/LoginUser";
 import Reserve from "./components/Reserve/Reserve";
 import BarberDetail from "./components/Reserve/BarberDetail";
