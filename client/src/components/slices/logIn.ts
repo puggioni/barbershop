@@ -14,7 +14,11 @@ const initialState = {
   logeado: false,
 };
 
-//==========action==================
+type dataUser = {
+  data: string;
+}
+
+//==========actions==================
 export const logIn = (email: string, password: string): AppThunk => {
   return async (dispatch) => {
     try {
@@ -29,6 +33,7 @@ export const logIn = (email: string, password: string): AppThunk => {
   };
 };
 
+
 export const logOut = () => {
   return (dispatch: any) => {
     dispatch(userLogOut());
@@ -39,7 +44,23 @@ export const yaLog = () => {
     dispatch(yaLogeado());
   };
 };
-//================reducer===================
+
+export const logUp = (user:object): AppThunk => {
+  return async (dispatch) => {
+    try {
+      const credenciales: dataUser = await axios.post(
+        "http://localhost:5000/users/signup",user
+      );
+      dispatch(userCreate(credenciales.data));
+      alert("Usuario creado exitosamente")
+    } catch (error) {
+      console.log(error)
+      return error;
+      
+    }
+  };
+};
+
 
 export const logInReducerSlice = createSlice({
   name: "login",
@@ -63,8 +84,15 @@ export const logInReducerSlice = createSlice({
     yaLogeado: (state) => {
       state.logeado = true;
     },
-  },
+    userCreate: (state, action: PayloadAction<string>) => {
+      state.user = action.payload;
+    },
+  }
 });
 
+
+
 export default logInReducerSlice.reducer;
-export const { userLogIn, userLogOut, yaLogeado } = logInReducerSlice.actions;
+
+export const { userLogIn, userLogOut, yaLogeado, userCreate } = logInReducerSlice.actions;
+

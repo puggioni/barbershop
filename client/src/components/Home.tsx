@@ -19,6 +19,7 @@ const Home = () => {
   }, [dispatch, user]);
 
   return (
+
     <div className=" h-screen text-white">
       {logeado ? (
         <Logeado />
@@ -29,6 +30,7 @@ const Home = () => {
           </button>
         </Link>
       )}
+
       <div className="flex flex-col gap-y-10 font-semibold translate-y-1/2">
         <h1 className="my-auto text-5xl text-center">
           Henry Barber <br />
@@ -37,7 +39,9 @@ const Home = () => {
         <Link className={buttonStyle} to="/product">
           Store
         </Link>
-        <button className={buttonStyle}>Pedí Tu Turno</button>
+        <Link className={buttonStyle} to="/reserve">
+          Pedi tu Turno
+        </Link>
         <button className={buttonStyle}>Conocenos</button>
       </div>
     </div>
