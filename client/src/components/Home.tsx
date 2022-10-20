@@ -1,14 +1,26 @@
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../app/hooks";
+import { yaLog } from "./slices/logIn";
 import Logeado from "./user/Logeado";
 
 export const buttonStyle =
   "m-auto px-3 py-1.5 bg-white rounded-lg border-2 border-black text-black hover:bg-black hover:text-white";
 
 const Home = () => {
-  const user: any = JSON.parse(window.localStorage.getItem("user") || "[]");
+  const logeado = useAppSelector((state) => state.logIn.logeado);
+  const dispatch = useAppDispatch();
+  const user: any = JSON.parse(window.localStorage.getItem("user") || "{}");
+
+  useEffect(() => {
+    if (Object.keys(user).length) {
+      dispatch(yaLog());
+    }
+  }, [dispatch, user]);
+
   return (
     <div className=" h-screen text-white">
-      {user ? (
+      {logeado ? (
         <Logeado />
       ) : (
         <Link to={"/user/login"}>
