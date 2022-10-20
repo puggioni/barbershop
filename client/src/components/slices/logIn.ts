@@ -2,15 +2,16 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 import { AppThunk } from "../../app/store";
 
-export interface userInfo {
+// localStorage.setItem('myCat', 'Tom');
+// localStorage.getItem('myCat');
+// localStorage.removeItem('myCat');
 
-  user: string;
+interface userFound {
+  user: Object;
+  token: string;
 }
 
-const initialState: userInfo = {
-  user: "",
-
-};
+const initialState = { res: {} };
 
 type dataUser = {
   data: string;
@@ -20,11 +21,12 @@ type dataUser = {
 export const logIn = (email: string, password: string): AppThunk => {
   return async (dispatch) => {
     try {
-      const credenciales: string = await axios.post(
-        "http://localhost:5000/users/login",
-        { email, password }
-      );
-      dispatch(userLogIn(credenciales));
+      const res: any = await axios.post("http://localhost:5000/users/login", {
+        email,
+        password,
+      });
+      console.log(res.data);
+      dispatch(userLogIn(res.data));
     } catch (error) {
       return error;
     }
@@ -52,10 +54,11 @@ export const logInReducerSlice = createSlice({
   name: "login",
   initialState,
   reducers: {
-    userLogIn: (state, action: PayloadAction<string>) => {
-      
-      state.user = action.payload;
-
+    userLogIn: (state: any, action: PayloadAction<userFound>) => {
+      state.token = JSON.stringify(action.payload.token);
+      localStorage.setItem("token", state.token);
+      state.userFound = JSON.stringify(action.payload.user);
+      localStorage.setItem("user", state.userFound);
     },
     userCreate: (state, action: PayloadAction<string>) => {
       state.user = action.payload;

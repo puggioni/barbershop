@@ -172,10 +172,12 @@ export default function CreateUser() {
                     {warnToPrint.lastname}
                   </span>
                 )}
+
               </div>
 
               <div className="mt-7">
                 <input
+
                   value={formUser.email}
                   name="email"
                   type="email"
