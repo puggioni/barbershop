@@ -37,8 +37,8 @@ export const logUp = (user:object): AppThunk => {
       const credenciales: dataUser = await axios.post(
         "http://localhost:5000/users/signup",user
       );
-      console.log(credenciales)
       dispatch(userCreate(credenciales.data));
+      alert("Usuario creado exitosamente")
     } catch (error) {
       console.log(error)
       return error;
@@ -53,7 +53,7 @@ export const logInReducerSlice = createSlice({
   initialState,
   reducers: {
     userLogIn: (state, action: PayloadAction<string>) => {
-
+      
       state.user = action.payload;
 
     },

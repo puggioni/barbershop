@@ -5,23 +5,25 @@ import { useAppDispatch } from "../../app/hooks";
 
 export default function CreateUser() {
   const dispatch = useAppDispatch();
+  const initialFormUser={ 
+  name: "",
+  lastname: "",
+  email: "",
+  password: "",
+  phone_number: "",
+  role: "",
+  repassword: "",}  
 
-  const [formUser, setFormUser] = useState({
-    name: "",
-    lastname: "",
-    email: "",
-    password: "",
-    phone_number: "",
-    role: "",
-    repassword: "",
-  });
-  const [warnToPrint, setWarnToPrint] = useState({
+  const initialWarnToPrint={
     name: "*El nombre es obligatorio",
-    lastname: "*Apellidos son obligatirios",
+    lastname: "*Apellidos son obligatorios",
     email: "*Email obligatorio",
-    password: "La contraseña debe tener mumeros y letras y minimo de 6 caracteres",
+    password: "La contraseña debe tener múmeros y letras y mínimo de 6 caracteres",
     phone_number: "",
-  });
+    repassword:""}  
+
+  const [formUser, setFormUser] = useState(initialFormUser);
+  const [warnToPrint, setWarnToPrint] = useState(initialWarnToPrint);
 
   function handleSubmit(
     e:
@@ -29,17 +31,15 @@ export default function CreateUser() {
       | React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) {
     e.preventDefault();
-    console.log(formUser);
-    dispatch(logUp(formUser));
-    setFormUser({
-      name: "",
-      lastname: "",
-      email: "",
-      password: "",
-      phone_number: "",
-      role: "",
-      repassword: "",
-    });
+    //console.log(formUser);
+    if(warnToPrint.name||warnToPrint.lastname||warnToPrint.email||
+        warnToPrint.password||warnToPrint.phone_number||warnToPrint.repassword){
+            alert("Por favor asegurese que los campos requeridos esten llenos correctamente")
+    }else {
+        dispatch(logUp(formUser));
+        setFormUser(initialFormUser);
+        setWarnToPrint(initialWarnToPrint);
+}
   }
   function loadForm(e: any) {
     if (e.target.name && typeof e.target.value === "string") {
@@ -51,20 +51,20 @@ export default function CreateUser() {
 
     switch (e.target.name) {
       case "name":
-        if (!/^[A-Za-z0-9\s]+$/g.test(e.target.value)) {
+        if (!/^[A-Za-z\s]+$/g.test(e.target.value)) {
           setWarnToPrint({
             ...warnToPrint,
-            name: "*No debe tener Caracteres especiales",
+            name: "*No debe tener Caracteres especiales ni números",
           });
         } else {
           setWarnToPrint({ ...warnToPrint, name: "" });
         }
         break;
       case "lastname":
-        if (!/^[A-Za-z0-9\s]+$/g.test(e.target.value)) {
+        if (!/^[A-Za-z\s]+$/g.test(e.target.value)) {
           setWarnToPrint({
             ...warnToPrint,
-            lastname:"*No debe tener Caracteres especiales",
+            lastname:"*No debe tener Caracteres especiales ni números",
           });
         } else {
           setWarnToPrint({ ...warnToPrint, lastname: "" });
@@ -101,34 +101,26 @@ export default function CreateUser() {
                         ...warnToPrint,
                         password:"*Debe tener mas de 6 y menos de 12 digitos",
                       });
+                }else if(formUser.repassword!==e.target.value){
+                    setWarnToPrint({
+                        ...warnToPrint,
+                        repassword:"*Las contraseñas deben ser iguales",
+                        password:""
+                      });
                 }else{
-                  setWarnToPrint({ ...warnToPrint, password: "" });
-                }
-                break;       
-      // case "image":
-      // if(!/^(ftp|http|https):\/\/[^ "]+$/.test(e.target.value)||e.target.value.length>255){
-      //   setErrorImage("You must enter a valid image URL")
-      // }else{setErrorImage("")}
-      // break;
-      // case "description":
-      // if(!e.target.value){
-      //   setErrorDescription("* The description is mandatory.")
-      // }else if(e.target.value.length>2000){
-      //   setErrorDescription("* The description is too long, please make sure it is less than 2000 characters.")
-      // }
-      // else{setErrorDescription("")}
-      // break;
-      // case "released":
-      // if(isNaN(Date.parse(e.target.value))||e.target.value.split("-")[0]>2023||e.target.value.split("-")[0]<1900){
-      //     setErrorReleased("You must enter a valid date, dd/mm/yyyy")
-      // }else{setErrorReleased("")}
-      // break;
-      // case "rating":
-      // if(e.target.value>5 || e.target.value<0){
-      //   setErrorRating("The value of the rating must be in a range from 0.0 to 5.0")
-      // }else{setErrorRating("")}
-
-      // break;
+                  setWarnToPrint({ ...warnToPrint, password: "",repassword: ""  });
+                } 
+                break;
+            case "repassword":
+                    if(formUser.password!==e.target.value){
+                        setWarnToPrint({
+                            ...warnToPrint,
+                            repassword:"*Las contraseñas deben ser iguales",
+                          });
+                    }else{
+                      setWarnToPrint({ ...warnToPrint, repassword: "" });
+                    }
+            break;
 
       default:
         break;
@@ -233,6 +225,11 @@ export default function CreateUser() {
                   placeholder="Confirmar contraseña"
                   className="mt-1 block w-full border-none bg-gray-100 h-11 rounded-xl shadow-lg hover:bg-blue-100 focus:bg-blue-100 focus:ring-0"
                 />
+                   {!warnToPrint.repassword ? null : (
+                  <span className=" text-red-700 font-semibold">
+                    {warnToPrint.repassword}
+                  </span>
+                )}
               </div>
 
               <div className="mt-7">
@@ -256,11 +253,11 @@ export default function CreateUser() {
               </div>
 
               <div className="flex mt-7 justify-center w-full">
-                <button className="mr-5 bg-blue-500 border-none px-4 py-2 rounded-xl cursor-pointer text-white shadow-xl hover:shadow-inner transition duration-500 ease-in-out  transform hover:-translate-x hover:scale-105">
+                <button onSubmit={e=>(e.preventDefault())} className="mr-5 bg-blue-500 border-none px-4 py-2 rounded-xl cursor-pointer text-white shadow-xl hover:shadow-inner transition duration-500 ease-in-out  transform hover:-translate-x hover:scale-105">
                   Facebook
                 </button>
 
-                <button className="bg-red-500 border-none px-4 py-2 rounded-xl cursor-pointer text-white shadow-xl hover:shadow-inner transition duration-500 ease-in-out  transform hover:-translate-x hover:scale-105">
+                <button onSubmit={e=>(e.preventDefault())} className="bg-red-500 border-none px-4 py-2 rounded-xl cursor-pointer text-white shadow-xl hover:shadow-inner transition duration-500 ease-in-out  transform hover:-translate-x hover:scale-105">
                   Google
                 </button>
               </div>
