@@ -7,7 +7,6 @@ import Paginate from "./Paginate";
 import { fetchAllProducts } from "../slices/productSlice";
 import Categorias from "./FilterCategorias";
 import ProductCard from "./ProductCard";
-import NavBar from "../NavBar";
 
 interface prodCard {
   _id: string;

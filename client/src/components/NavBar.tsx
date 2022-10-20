@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { VscChromeClose, VscMenu } from "react-icons/vsc";
 import SearchBar from "./products/Searchbar";
-
+import { AiOutlineShoppingCart } from "react-icons/ai";
+import { Link } from "react-router-dom";
 const NavBar = () => {
   const [mobileMenu, setMobileMenu] = useState(false);
   const [expandSearch, setExpand] = useState("");
@@ -12,6 +13,7 @@ const NavBar = () => {
   if (expandSearch.length) {
     hideTitle = "hidden";
   }
+
   return (
     <div className="bg-stone-50/70 p-2 grid grid-flow-col justify-items-center items-center grid-cols-3">
       <VscMenu
@@ -46,6 +48,10 @@ const NavBar = () => {
         Henry Barber
       </h2>
       <SearchBar expandSearch={expandSearch} setSearch={setExpand} />
+
+      <Link to={"/products/shooping-cart"}>
+        <AiOutlineShoppingCart size={40} className="mx-4" />
+      </Link>
     </div>
   );
 };
