@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
+var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Barber = void 0;
 const typegoose_1 = require("@typegoose/typegoose");
@@ -64,7 +65,7 @@ __decorate([
     (0, typegoose_1.prop)({
         ref: () => office_1.default,
     }),
-    __metadata("design:type", Object)
+    __metadata("design:type", typeof (_a = typeof typegoose_1.Ref !== "undefined" && typegoose_1.Ref) === "function" ? _a : Object)
 ], Barber.prototype, "office", void 0);
 __decorate([
     (0, typegoose_1.prop)({

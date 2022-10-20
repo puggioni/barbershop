@@ -45,6 +45,7 @@ export const fetchAllProducts = (tosearch: string): AppThunk => {
         const productos = await axios.get(
           "http://localhost:5000/products/search?name=" + tosearch
         );
+        console.log(productos.data);
         dispatch(allProducts(productos.data));
       } catch (error) {
         return error;
@@ -56,7 +57,10 @@ export const fetchAllProducts = (tosearch: string): AppThunk => {
 export const addFavoriteProduct = (productoFav: products): AppThunk => {
   return async () => {
     try {
-      const res = await axios.post("http://localhost:5000/", productoFav); // agregar url de back
+      const res = await axios.post(
+        "http://localhost:5000/products/",
+        productoFav
+      ); // agregar url de back
       return res;
     } catch (error) {
       return error;

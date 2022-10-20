@@ -2,16 +2,17 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 import { AppThunk } from "../../app/store";
 
-// localStorage.setItem('myCat', 'Tom');
-// localStorage.getItem('myCat');
-// localStorage.removeItem('myCat');
-
 interface userFound {
   user: Object;
   token: string;
+  logeado: boolean;
 }
 
-const initialState = { res: {} };
+const initialState = {
+  user: "",
+  token: "",
+  logeado: false,
+};
 
 type dataUser = {
   data: string;
@@ -25,11 +26,22 @@ export const logIn = (email: string, password: string): AppThunk => {
         email,
         password,
       });
-      console.log(res.data);
       dispatch(userLogIn(res.data));
     } catch (error) {
       return error;
     }
+  };
+};
+
+
+export const logOut = () => {
+  return (dispatch: any) => {
+    dispatch(userLogOut());
+  };
+};
+export const yaLog = () => {
+  return (dispatch: any) => {
+    dispatch(yaLogeado());
   };
 };
 
@@ -48,17 +60,29 @@ export const logUp = (user:object): AppThunk => {
     }
   };
 };
-//================reducers===================
+
 
 export const logInReducerSlice = createSlice({
   name: "login",
   initialState,
   reducers: {
     userLogIn: (state: any, action: PayloadAction<userFound>) => {
-      state.token = JSON.stringify(action.payload.token);
-      localStorage.setItem("token", state.token);
-      state.userFound = JSON.stringify(action.payload.user);
-      localStorage.setItem("user", state.userFound);
+      state.token = action.payload.token;
+      localStorage.setItem("token", JSON.stringify(action.payload.token));
+
+      state.userFound = action.payload.user;
+      localStorage.setItem("user", JSON.stringify(action.payload.user));
+
+      state.logeado = true;
+    },
+    userLogOut: (state) => {
+      state.token = "";
+      state.user = "";
+      state.logeado = false;
+      localStorage.clear();
+    },
+    yaLogeado: (state) => {
+      state.logeado = true;
     },
     userCreate: (state, action: PayloadAction<string>) => {
       state.user = action.payload;
@@ -69,4 +93,6 @@ export const logInReducerSlice = createSlice({
 
 
 export default logInReducerSlice.reducer;
-export const { userLogIn, userCreate} = logInReducerSlice.actions;
+
+export const { userLogIn, userLogOut, yaLogeado, userCreate } = logInReducerSlice.actions;
+
