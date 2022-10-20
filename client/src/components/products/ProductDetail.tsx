@@ -38,7 +38,7 @@ export default function ProductDetail() {
 
   return (
     <>
-    <NavBar />
+   
     <div className=" bg-slate-200/50  flex  flex-col md:flex-row">
       <VscArrowLeft
         className=" ml-4 mt-3 h-12 w-12 fill-black"
