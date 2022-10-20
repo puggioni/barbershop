@@ -13,26 +13,31 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
-const user_1 = __importDefault(require("../../models/user"));
-const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+const products_1 = __importDefault(require("../../models/products"));
 const router = (0, express_1.Router)();
-router.post("/login", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.post("/add", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { product } = req.body;
+    //busco el producto que me llega por id
+    const productFound = yield products_1.default.findOne({ id: product.id });
+    //creo un nuevo carrito
+    let cart = {
+        products: [],
+        total: 0,
+        quantity: 0,
+    };
     try {
-        const userFound = yield user_1.default.findOne({
-            email: req.body.email,
-        }).populate("role", "name -_id");
-        if (!userFound)
-            return res.status(400).json({ message: "User not found" });
-        const matchPassword = yield user_1.default.comparePassword(req.body.password, userFound.password);
-        if (!matchPassword)
-            return res.status(401).json({ token: null, message: "Invalid Password" });
-        const token = jsonwebtoken_1.default.sign({ _id: userFound._id }, "token", {
-            expiresIn: 60 * 60 * 24,
-        });
-        res.status(200).json({ token, userFound });
+        //actualizo las variables del carrito
+        cart.products = [...cart.products, productFound];
+        cart.total = cart.total + productFound.price;
+        cart.quantity = cart.quantity + 1;
+        //paso a string el objeto del carrito
+        let localStorage = JSON.stringify(cart);
+        //guardo el carrito en el local storage
+        localStorage.setItem("cart", localStorage);
+        res.status(200).send(cart);
     }
-    catch (err) {
-        res.status(500).json(err);
+    catch (error) {
+        res.status(500).send(error);
     }
 }));
 exports.default = router;

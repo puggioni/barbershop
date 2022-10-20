@@ -11,6 +11,7 @@ import populatedProducts from "./Products/postPopulateProducts";
 /* ============USERS FILES============ */
 import signUp from "./Auth/signup";
 import login from "./Auth/signin";
+
 import isAdmin from "./Auth/isAdmin";
 /* ============CATEGORIES============ */
 import postCategories from "./Categories/postCategories";
@@ -47,5 +48,6 @@ router.use("/categories", getCategories);
 router.use("/reviews", postReview);
 router.use("/reviews", deleteReview);
 router.use("/reviews", editReview);
+
 
 export default router;

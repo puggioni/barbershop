@@ -1,8 +1,8 @@
-import { Link } from "react-router-dom";
-import { BsFillBookmarkFill, BsBookmarkHeart } from "react-icons/bs";
 import { useState } from "react";
-import { useAppDispatch } from "../app/hooks";
-import { addFavoriteProduct, products } from "./products/productSlice";
+import { BsBookmarkHeart, BsFillBookmarkFill } from "react-icons/bs";
+import { Link } from "react-router-dom";
+import { useAppDispatch } from "../../app/hooks";
+import { addFavoriteProduct, products } from "../slices/productSlice";
 
 const ProductCard = (producto: products) => {
   const added = (
@@ -31,7 +31,7 @@ const ProductCard = (producto: products) => {
     return (
       <div
         className=" flex bg-slate-200/50 m-4 rounded-lg max-w-3xl lg:max-h-full lg:m-0 max-h-40 relative 
-      lg:grid lg:grid-row-2  lg:justify-items-center lg:gap-8 lg:pl-4"
+      lg:grid lg:grid-row-2  lg:justify-items-center lg:gap-8 lg:pl-4 shadow-xl hover:scale-105"
       >
         <div className=" h-full w-2/5 lg:w-[90%] lg:h-72 lg:mt-4 mr-4 rounded-lg object-center relative">
           <div
