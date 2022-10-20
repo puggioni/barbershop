@@ -20,6 +20,16 @@ const productSchema = new mongoose_1.Schema({
         type: Number,
         default: 0,
     },
+    rating: {
+        required: true,
+        type: Number,
+        default: 0,
+    },
+    rating_sum: {
+        required: true,
+        type: Number,
+        default: 0,
+    },
     image: {
         required: true,
         type: String,

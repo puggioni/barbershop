@@ -13,31 +13,25 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
+const productReviews_1 = __importDefault(require("../../models/productReviews"));
 const products_1 = __importDefault(require("../../models/products"));
+const middlewares_1 = require("../Auth/middlewares");
 const router = (0, express_1.Router)();
-router.get("/:idProduct", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { idProduct } = req.params;
+router.delete("/delete", middlewares_1.verifyToken, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { _idReview, _idProduct } = req.body;
     try {
-        yield products_1.default.findById(idProduct).populate("reviews")
-            .then(response => {
-            let filteredProd = {
-                "_id": response._id,
-                "name": response.name,
-                "description": response.description,
-                "price": response.price,
-                "stock": response.stock,
-                "image": response.image,
-                "available": response.available,
-                "favorite": response.favorite,
-                "rating": response.rating,
-                "reviews": response.reviews.map(item => { return { reviewId: item._id, rating: item.rating, comment: item.comment }; })
-            };
-            return filteredProd;
-        }).then(prod => res.send(prod));
+        let product = yield products_1.default.findById(_idProduct).populate("reviews");
+        const deleteReview = yield productReviews_1.default.findOneAndDelete({ _id: _idReview });
+        const deleteProductReview = product["reviews"].filter((obj) => obj._id.toString() !== String(_idReview));
+        product["reviews"] = deleteProductReview;
+        product.rating_sum -= deleteReview.rating;
+        product.rating = product.rating_sum / product.reviews.length;
+        const saveProduct = yield product.save();
+        res.status(200).send(saveProduct);
     }
-    catch (err) {
-        console.log(err);
-        res.status(500).send(err);
+    catch (error) {
+        console.log(error);
+        res.status(500).send(error);
     }
 }));
 exports.default = router;

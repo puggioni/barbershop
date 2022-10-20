@@ -13,27 +13,28 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
+const productReviews_1 = __importDefault(require("../../models/productReviews"));
 const products_1 = __importDefault(require("../../models/products"));
+const middlewares_1 = require("../Auth/middlewares");
 const router = (0, express_1.Router)();
-router.get("/:idProduct", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { idProduct } = req.params;
+router.post("/create", middlewares_1.verifyToken, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    let { rating, comment, productId } = req.body;
+    //save review, get returned reviewId
+    //edit product, add reviewId to reviews[]
     try {
-        yield products_1.default.findById(idProduct).populate("reviews")
-            .then(response => {
-            let filteredProd = {
-                "_id": response._id,
-                "name": response.name,
-                "description": response.description,
-                "price": response.price,
-                "stock": response.stock,
-                "image": response.image,
-                "available": response.available,
-                "favorite": response.favorite,
-                "rating": response.rating,
-                "reviews": response.reviews.map(item => { return { reviewId: item._id, rating: item.rating, comment: item.comment }; })
-            };
-            return filteredProd;
-        }).then(prod => res.send(prod));
+        const review = new productReviews_1.default({
+            comment: comment,
+            rating: rating,
+        });
+        const { _id } = yield review.save();
+        products_1.default.findById(productId)
+            .then((product) => {
+            product.reviews.push(_id);
+            product.rating_sum += rating;
+            product.rating = product.rating_sum / product.reviews.length;
+            return product.save();
+        })
+            .then((savedProduct) => res.status(200).send(savedProduct));
     }
     catch (err) {
         console.log(err);
