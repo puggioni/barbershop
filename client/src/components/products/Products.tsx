@@ -49,7 +49,6 @@ const Products = () => {
 
     return (
       <div className="">
-        <NavBar />
         <VscArrowLeft
           onClick={() => goBack()}
           className="ml-12 my-3 h-6 w-6 fill-white"

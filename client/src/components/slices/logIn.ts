@@ -73,15 +73,18 @@ export const logInReducerSlice = createSlice({
 
       state.logeado = true;
     },
+
     userLogOut: (state) => {
       state.token = "";
       state.user = "";
       state.logeado = false;
       localStorage.clear();
     },
+
     yaLogeado: (state) => {
       state.logeado = true;
     },
+
     userCreate: (state, action: PayloadAction<string>) => {
       state.user = action.payload;
     },
