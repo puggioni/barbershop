@@ -42,14 +42,14 @@ const SearchBar = (expand: any) => {
       <input
         onChange={handleChange}
         name="tosearch"
-        className={`peer ${expand.expandSearch} cursor-pointer z-10 h-8  rounded-full border bg-transparent pl-5 outline-none w-12`}
+        className={`peer ${expand.expandSearch} transition-all cursor-pointer z-10 h-8  rounded-full border bg-transparent pl-5 outline-none w-12`}
         value={tosearch}
         type="search"
         placeholder=""
       />
 
       <BsSearch
-        className="absolute top-1 my-auto h-6 w-12 border-r border-transparent stroke-gray-500  peer-focus:border-black peer-focus:stroke-black"
+        className="absolute top-1 my-auto h-6 w-12 border-r rounded-lg border-transparent stroke-gray-500  peer-focus:border-black peer-focus:stroke-black"
         stroke="currentColor"
         onClick={(event) => {
           search(event);

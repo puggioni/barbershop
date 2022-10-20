@@ -22,6 +22,10 @@ const auth_1 = require("../middlewares/auth");
 const postCategories_1 = __importDefault(require("./Categories/postCategories"));
 const deleteCategory_1 = __importDefault(require("./Categories/deleteCategory"));
 const getAllCategories_1 = __importDefault(require("./Categories/getAllCategories"));
+/* ============REVIEWS============ */
+const postReview_1 = __importDefault(require("./Reviews/postReview"));
+const deleteReview_1 = __importDefault(require("./Reviews/deleteReview"));
+const editReview_1 = __importDefault(require("./Reviews/editReview"));
 const router = (0, express_1.Router)();
 /* ============PRODUCTS============ */
 router.use("/products", postProducts_1.default);
@@ -41,4 +45,8 @@ router.use("/users", googlesignin_1.default);
 router.use("/categories", postCategories_1.default);
 router.use("/categories", deleteCategory_1.default);
 router.use("/categories", getAllCategories_1.default);
+/* ============REVIEWS============ */
+router.use("/reviews", postReview_1.default);
+router.use("/reviews", deleteReview_1.default);
+router.use("/reviews", editReview_1.default);
 exports.default = router;

@@ -5,6 +5,8 @@ export interface IProduct {
   description: string;
   price: number;
   stock: number;
+  rating: number;
+  rating_sum: number;
   image: string;
   available: boolean;
   categories: {
@@ -36,7 +38,16 @@ const productSchema = new Schema(
       type: Number,
       default: 0,
     },
-
+    rating: {
+      required: true,
+      type: Number,
+      default: 0,
+    },
+    rating_sum: {
+      required: true,
+      type: Number,
+      default: 0,
+    },
     image: {
       required: true,
       type: String,

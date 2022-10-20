@@ -2,20 +2,22 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../../app/hooks";
 import { logIn } from "../slices/logIn";
-import GoogleAuth from "./googleAuth";
+
 export default function LoginUser() {
   const [password, setPassword] = useState("");
   const [email, setUserName] = useState("");
 
-  const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
   const handleSubmit = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
     dispatch(logIn(email, password));
+    navigate(-1);
     setPassword("");
     setUserName("");
-    navigate("/");
   };
+
   return (
     <div className="font-sans">
       <Link to={"/"}>
@@ -73,12 +75,10 @@ export default function LoginUser() {
                 <button className="mr-5 bg-blue-500 border-none px-4 py-2 rounded-xl cursor-pointer text-white shadow-xl hover:shadow-inner transition duration-500 ease-in-out  transform hover:-translate-x hover:scale-105">
                   Facebook
                 </button>
-                <GoogleAuth />
 
-                {/* <button className="bg-red-500 border-none px-4 py-2 rounded-xl cursor-pointer text-white shadow-xl hover:shadow-inner transition duration-500 ease-in-out  transform hover:-translate-x hover:scale-105">
+                <button className="bg-red-500 border-none px-4 py-2 rounded-xl cursor-pointer text-white shadow-xl hover:shadow-inner transition duration-500 ease-in-out  transform hover:-translate-x hover:scale-105">
                   Google
-                  
-                </button> */}
+                </button>
               </div>
 
               <div className="mt-7">

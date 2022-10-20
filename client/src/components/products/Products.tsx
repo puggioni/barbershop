@@ -7,6 +7,7 @@ import Paginate from "./Paginate";
 import { fetchAllProducts } from "../slices/productSlice";
 import Categorias from "./FilterCategorias";
 import ProductCard from "./ProductCard";
+import NavBar from "../NavBar";
 
 interface prodCard {
   _id: string;
@@ -39,7 +40,7 @@ const Products = () => {
   const goBack = () => {
     navigate(-1);
   };
-
+  console.log(data);
   if (data?.allProducts instanceof Array) {
     const currentProducts = data.allProducts.slice(
       firstPostIndex,
@@ -47,7 +48,8 @@ const Products = () => {
     );
 
     return (
-      <>
+      <div className="">
+        <NavBar />
         <VscArrowLeft
           onClick={() => goBack()}
           className="ml-12 my-3 h-6 w-6 fill-white"
@@ -73,7 +75,7 @@ const Products = () => {
           productsPerPage={productsPerPage}
           setCurrentPage={setCurrentPage}
         />
-      </>
+      </div>
     );
   } else {
     return <div>Error</div>;

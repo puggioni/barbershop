@@ -4,6 +4,7 @@ import { useParams } from "react-router";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { RootState } from "../../app/store";
+import NavBar from "../NavBar";
 import { clearProducDetail, productDetail } from "../slices/productSlice";
 
 type QuizParams = {
@@ -36,9 +37,11 @@ export default function ProductDetail() {
   }
 
   return (
+    <>
+    <NavBar />
     <div className=" bg-slate-200/50  flex  flex-col md:flex-row">
       <VscArrowLeft
-        className=" ml-4 mt-3 h-6 w-6 fill-black"
+        className=" ml-4 mt-3 h-12 w-12 fill-black"
         onClick={goBack}
       />
 
@@ -87,5 +90,7 @@ export default function ProductDetail() {
         <h1>El producto requerido no existe o no esta activo🤔</h1>
       )}
     </div>
+    </>
+
   );
 }
