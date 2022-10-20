@@ -2,12 +2,20 @@ import { Router } from "express";
 
 import Category from "../../models/categories";
 import Product from "../../models/products";
-import { verifyToken, isAdmin } from "../Auth/middlewares";
+import { verifyToken, isAdmin } from "../../middlewares/auth";
 const router = Router();
 
 router.post("/create", verifyToken, isAdmin, async (req, res) => {
-  let { name, description, price, stock, image, available, favorite, categories } =
-    req.body;
+  let {
+    name,
+    description,
+    price,
+    stock,
+    image,
+    available,
+    favorite,
+    categories,
+  } = req.body;
   if (typeof name === "string") name = name.toLocaleLowerCase();
   try {
     const product = new Product({

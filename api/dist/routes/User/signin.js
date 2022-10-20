@@ -13,19 +13,31 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
-const auth_1 = require("../../middlewares/auth");
-const categories_1 = __importDefault(require("../../models/categories"));
+const user_1 = __importDefault(require("../../models/user"));
+const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const router = (0, express_1.Router)();
-router.delete("/delete", auth_1.verifyToken, auth_1.isAdmin, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { name } = req.body;
+router.post("/login", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const deletedCategory = yield categories_1.default.findOneAndDelete({
-            name: name,
+        const userFound = yield user_1.default.findOne({
+            email: req.body.email,
+        }).populate("role", "name -_id");
+        if (!userFound)
+            return res.status(400).json({ message: "User not found" });
+        const matchPassword = yield user_1.default.comparePassword(req.body.password, userFound["password"]);
+        if (!matchPassword)
+            return res.status(401).json({ token: null, message: "Invalid Password" });
+        const token = jsonwebtoken_1.default.sign({ _id: userFound["._id"] }, "token", {
+            expiresIn: 60 * 60 * 24,
         });
-        res.send(deletedCategory);
+        const response = {
+            user: userFound,
+            token,
+        };
+        console.log(userFound);
+        res.header("auth-token", token).send(response);
     }
-    catch (error) {
-        res.status(500).send({ error });
+    catch (err) {
+        res.status(500).json(err);
     }
 }));
 exports.default = router;

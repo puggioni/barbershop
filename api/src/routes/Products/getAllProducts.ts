@@ -6,7 +6,7 @@ const router = Router();
 
 router.get("/all", async (req, res) => {
   try {
-    await ProductModel.find().populate("categories", "name")
+    /* await ProductModel.find().populate("categories", "name")
       .then(products => {
         let filteredProds = products.map(item => {
           let container = { name: "", description: "", price: 0, stock: 0, image: "", available: true, favorite: true, categories: [""] };
@@ -21,9 +21,11 @@ router.get("/all", async (req, res) => {
           return container;
         })
         return filteredProds;
-      }).then(result => res.send(result))
-  }
-  catch (err) {
+      }).then(result => res.send(result)) */
+    await ProductModel.find()
+      .populate("categories", "name -_id")
+      .then((products) => res.status(200).send(products));
+  } catch (err) {
     console.log(err);
     res.status(500).send(err);
   }

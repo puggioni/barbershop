@@ -1,7 +1,7 @@
 import { Router } from "express";
 
 import CategoriesModel from "../../models/categories";
-import { verifyToken, isAdmin } from "../Auth/middlewares";
+import { verifyToken, isAdmin } from "../../middlewares/auth";
 
 const router = Router();
 

@@ -9,10 +9,10 @@ import filterProducts from "./Products/filterProducts";
 import editProducts from "./Products/editProduct";
 import populatedProducts from "./Products/postPopulateProducts";
 /* ============USERS FILES============ */
-import signUp from "./Auth/signup";
-import login from "./Auth/signin";
-
-import isAdmin from "./Auth/isAdmin";
+import signUp from "./User/signup";
+import login from "./User/signin";
+import google from "./User/googlesignin";
+import { isAdmin } from "../middlewares/auth";
 /* ============CATEGORIES============ */
 import postCategories from "./Categories/postCategories";
 import deleteCategory from "./Categories/deleteCategory";
@@ -34,6 +34,7 @@ router.use("/products", populatedProducts);
 router.use("/users", signUp);
 router.use("/users", login);
 router.use("/users", isAdmin);
+router.use("/users", google);
 
 /* ============CATEGORIES============ */
 router.use("/categories", postCategories);

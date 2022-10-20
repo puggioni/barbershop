@@ -15,13 +15,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const categories_1 = __importDefault(require("../../models/categories"));
 const products_1 = __importDefault(require("../../models/products"));
-const middlewares_1 = require("../Auth/middlewares");
+const auth_1 = require("../../middlewares/auth");
 const router = (0, express_1.Router)();
-router.post("/populateProducts", middlewares_1.verifyToken, middlewares_1.isAdmin, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.post("/populateProducts", auth_1.verifyToken, auth_1.isAdmin, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     let productsArray = req.body;
     try {
         for (const product of productsArray) {
-            let { name, description, price, stock, image, available, favorite, categories } = product;
+            let { name, description, price, stock, image, available, favorite, categories, } = product;
             if (typeof name === "string")
                 name = name.toLocaleLowerCase();
             const createdProduct = new products_1.default({

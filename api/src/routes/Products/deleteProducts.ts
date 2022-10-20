@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { verifyToken, isAdmin } from "../Auth/middlewares";
+import { verifyToken, isAdmin } from "../../middlewares/auth";
 import ProductModel from "../../models/products";
 
 const router = Router();

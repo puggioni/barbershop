@@ -7,12 +7,12 @@ import cors from "cors";
 import { createRoles } from "./libs/initialSetup";
 const app = express();
 createRoles();
-
+app.use(cookieParser());
 app.use(express.json());
 
 app.use(bodyParser.urlencoded({ extended: false, limit: "50mb" }));
 app.use(bodyParser.json({ limit: "50mb" }));
-app.use(cookieParser());
+
 app.use(morgan("dev"));
 app.use((_req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
@@ -23,9 +23,9 @@ app.use((_req, res, next) => {
 });
 
 //CONFIGURACION DE RUTAS
-
 app.use("/", routes);
 app.use(cors());
+
 app.use((err: any, _req: any, res: any, _next: any) => {
   const status = err.status || 500;
   const message = err.message || err;

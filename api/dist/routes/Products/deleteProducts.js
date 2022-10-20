@@ -13,10 +13,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
-const middlewares_1 = require("../Auth/middlewares");
+const auth_1 = require("../../middlewares/auth");
 const products_1 = __importDefault(require("../../models/products"));
 const router = (0, express_1.Router)();
-router.delete("/delete", middlewares_1.verifyToken, middlewares_1.isAdmin, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.delete("/delete", auth_1.verifyToken, auth_1.isAdmin, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.body;
     try {
         const deletedProduct = yield products_1.default.findOneAndDelete({ _id: id });
