@@ -46,6 +46,26 @@ router.get("/filter/:categoryName", async (req, res) => {
             return (el["available"] = Object.values(obj)[0]);
           });
         }
+        if (Object.keys(obj)[0] === "name-asc") {
+          respuesta = respuesta.sort((a: Object, b: Object) => {
+            return a["name"].localeCompare(b["name"]);
+          });
+        }
+        if (Object.keys(obj)[0] === "name-desc") {
+          respuesta = respuesta.sort((a: Object, b: Object) => {
+            return b["name"].localeCompare(a["name"]);
+          });
+        }
+        if (Object.keys(obj)[0] === "price-asc") {
+          respuesta = respuesta.sort((a: Object, b: Object) => {
+            return a["price"] - b["price"];
+          });
+        }
+        if (Object.keys(obj)[0] === "price-desc") {
+          respuesta = respuesta.sort((a: Object, b: Object) => {
+            return b["price"] - a["price"];
+          });
+        }
       });
 
       res.status(200).send(respuesta);
