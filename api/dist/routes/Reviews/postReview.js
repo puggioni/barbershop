@@ -13,16 +13,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
-const productReviews_1 = __importDefault(require("../../models/productReviews"));
+const ProductReviews_1 = __importDefault(require("../../models/ProductReviews"));
 const products_1 = __importDefault(require("../../models/products"));
-const middlewares_1 = require("../Auth/middlewares");
+const auth_1 = require("../../middlewares/auth");
 const router = (0, express_1.Router)();
-router.post("/create", middlewares_1.verifyToken, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.post("/create", auth_1.verifyToken, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     let { rating, comment, productId } = req.body;
     //save review, get returned reviewId
     //edit product, add reviewId to reviews[]
     try {
-        const review = new productReviews_1.default({
+        const review = new ProductReviews_1.default({
             comment: comment,
             rating: rating,
         });
