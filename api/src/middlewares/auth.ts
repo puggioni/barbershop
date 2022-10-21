@@ -5,12 +5,11 @@ import { Request, Response, NextFunction } from "express";
 import { getGoogleOAuthTokens, getGoogleUser } from "./googleAuth";
 export const verifyToken = async (req, res, next) => {
   try {
-    const token = req.headers["x-access-token"];
+    const token = req.headers["token"];
     if (!token) return res.status(403).json({ message: "No hay token" });
     const decoded = jwt.verify(token, "token");
     req.userId = decoded["_id"];
     const user = await User.findById(req.userId, { password: 0 });
-    console.log(user);
     if (!user)
       return res.status(404).json({ message: "No se encontro ningun usuario" });
     next();
