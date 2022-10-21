@@ -1,9 +1,10 @@
 import axios from "axios";
 import { Router } from "express";
-
+import { checkStock } from "../../middlewares/checkStock";
+import { verifyToken } from "../../middlewares/auth";
 const router = Router();
 
-router.post("/create-order", async (req, res) => {
+router.post("/create-order", checkStock, verifyToken, async (req, res) => {
   try {
     const order = {
       intent: "CAPTURE",
@@ -17,8 +18,8 @@ router.post("/create-order", async (req, res) => {
         brand_name: "Henry BarberShop",
         landing_page: "LOGIN",
         user_action: "PAY_NOW",
-        return_url: `http://localhost:${process.env.PORT}/payments/capture-order`,
-        cancel_url: `http://localhost:${process.env.PORT}/payments/cancel-order`,
+        return_url: "http://localhost:5000/payments/capture-order",
+        cancel_url: "http://localhost:5000/payments/cancel-order",
       },
     };
 

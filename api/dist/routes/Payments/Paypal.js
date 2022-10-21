@@ -14,8 +14,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const axios_1 = __importDefault(require("axios"));
 const express_1 = require("express");
+const checkStock_1 = require("../../middlewares/checkStock");
+const auth_1 = require("../../middlewares/auth");
 const router = (0, express_1.Router)();
-router.post("/create-order", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.post("/create-order", checkStock_1.checkStock, auth_1.verifyToken, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const order = {
             intent: "CAPTURE",
@@ -29,8 +31,8 @@ router.post("/create-order", (req, res) => __awaiter(void 0, void 0, void 0, fun
                 brand_name: "Henry BarberShop",
                 landing_page: "LOGIN",
                 user_action: "PAY_NOW",
-                return_url: `http://localhost:${process.env.PORT}/payments/capture-order`,
-                cancel_url: `http://localhost:${process.env.PORT}/payments/cancel-order`,
+                return_url: "http://localhost:5000/payments/capture-order",
+                cancel_url: "http://localhost:5000/payments/cancel-order",
             },
         };
         const response = yield axios_1.default.post(`https://api-m.sandbox.paypal.com/v2/checkout/orders`, order, {
