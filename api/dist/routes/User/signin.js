@@ -33,7 +33,6 @@ router.post("/login", (req, res) => __awaiter(void 0, void 0, void 0, function* 
             user: userFound,
             token,
         };
-        console.log(userFound);
         res.header("auth-token", token).send(response);
     }
     catch (err) {

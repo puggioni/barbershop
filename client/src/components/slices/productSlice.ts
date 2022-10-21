@@ -24,6 +24,11 @@ interface ProductState {
   favs: Object[];
   categorias: Array<{ name: string; id: string }> | null;
 }
+interface comp {
+  id: string;
+  status: string;
+  links: Array<{ href: string; rel: string; method: string }>;
+}
 const initialState: ProductState = {
   allProducts: [],
   product: null,
@@ -136,6 +141,19 @@ export const clearProducDetail: any = () => {
   };
 };
 
+
+export const comprar = (compra: object) => {
+  return async () => {
+    const response: any = await axios.post(
+      "http://localhost:5000/payments/create-order",
+      compra
+    );
+
+    window.location.href = `${response.data.links[1].href}`;
+  };
+};
+//window.open(url, '_blank').focus();
+
 export const reviewProduct = (review:object,config:object ): AppThunk => {
   return async (dispatch) => {
     try {
@@ -149,6 +167,7 @@ export const reviewProduct = (review:object,config:object ): AppThunk => {
     }
   };
 };
+
 
 //================reducer===================
 export const getAllProductsSlice = createSlice({

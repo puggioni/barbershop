@@ -1,12 +1,15 @@
 import jwt from "jsonwebtoken";
 import User from "../models/user";
 import Role from "../models/role";
+import { Request, Response, NextFunction } from "express";
+
 
 export const verifyToken = async (req, res, next) => {
   try {
     const token = req.headers["token"];
     if (!token) return res.status(403).json({ message: "No hay token" });
     const decoded = jwt.verify(token, "token");
+    console.log(decoded);
     req.userId = decoded["_id"];
     const user = await User.findById(req.userId, { password: 0 });
     if (!user)
@@ -18,25 +21,36 @@ export const verifyToken = async (req, res, next) => {
 };
 
 export const isCommon = async (req, res, next) => {
+  const token = req.headers["token"];
+  if (!token) return res.status(403).json({ message: "No hay token" });
+  const decoded = jwt.verify(token, "token");
+  console.log(decoded);
+  req.userId = decoded["_id"];
   const user = await User.findById(req.userId);
   const roles = await Role.find({ _id: { $in: user.role } });
-  for (let i = 0; i < roles.length; i++) {
-    if (roles[i].name === "moderator") {
-      next();
-      return;
-    }
+
+  if (roles[0].name === "user") {
+    next();
+    return;
   }
   return res.status(403).json({ message: "Requiere ser moderador" });
 };
 
 export const isAdmin = async (req, res, next) => {
+  const token = req.headers["token"];
+  if (!token) return res.status(403).json({ message: "No hay token" });
+  const decoded = jwt.verify(token, "token");
+  console.log(decoded);
+  req.userId = decoded["_id"];
   const user = await User.findById(req.userId);
   const roles = await Role.find({ _id: { $in: user?.role } });
-  for (let i = 0; i < roles.length; i++) {
-    if (roles[i].name === "admin") {
-      next();
-      return;
-    }
+
+
+  if (roles[0].name === "admin") {
+    next();
+    return;
   }
+
+
   return res.status(403).json({ isAdmin: false });
 };

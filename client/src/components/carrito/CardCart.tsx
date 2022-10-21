@@ -16,6 +16,7 @@ const ProductCard = (producto: any) => {
       return p.productos._id !== id;
     });
     window.localStorage.setItem("product", JSON.stringify(prod));
+    window.location.reload();
   };
 
   if (producto) {

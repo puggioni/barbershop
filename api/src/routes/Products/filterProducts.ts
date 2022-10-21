@@ -45,6 +45,7 @@ router.get("/filter/:categoryName", async (req, res) => {
             return (el["available"] = Object.values(obj)[0]);
           });
         }
+
         if (Object.keys(obj)[0] === "name-asc") {
           respuesta = respuesta.sort((a: Object, b: Object) => {
             console.log(Object.keys(obj[0]))
@@ -67,6 +68,7 @@ router.get("/filter/:categoryName", async (req, res) => {
             return b["price"] - a["price"];
           });
         }
+
       });
 
       res.status(200).send(respuesta);

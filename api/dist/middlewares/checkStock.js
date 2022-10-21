@@ -12,18 +12,28 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const express_1 = require("express");
-const products_1 = __importDefault(require("../../models/products"));
-const router = (0, express_1.Router)();
-router.get("/all", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        yield products_1.default.find()
-            .populate("categories", "name -_id")
-            .then((products) => res.status(200).send(products));
+exports.checkStock = void 0;
+const products_1 = __importDefault(require("../models/products"));
+const checkStock = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const { products } = req.body;
+    const arr = [];
+    const productFinded = yield products_1.default.findById(products[0]._id);
+    const prfind = yield products_1.default.find((_id) => {
+        products[0]._id;
+        return products[0]._id;
+    });
+    console.log(prfind);
+    for (let i = 0; i < products.length; i++) {
+        const product = yield products_1.default.findById(products[i].id);
+        if (product["stock"] >= products[i].cantidad) {
+            arr.push(product);
+        }
     }
-    catch (err) {
-        console.log(err);
-        res.status(500).send(err);
+    if (arr.length === products.length) {
+        next();
     }
-}));
-exports.default = router;
+    else {
+        res.status(400).send({ message: "No hay stock suficiente" });
+    }
+});
+exports.checkStock = checkStock;
