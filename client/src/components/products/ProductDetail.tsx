@@ -45,11 +45,22 @@ export default function ProductDetail() {
     _id: product?._id,
   };
   const handleClick = (event: any) => {
+    event.preventDefault();
     let productos: any = JSON.parse(
       window.localStorage.getItem("product") || "[]"
     );
-    productos.push(paraCarrito);
-    window.localStorage.setItem("product", JSON.stringify(productos));
+    const prod = productos.findIndex(
+      (prod: { productos: any; _id: string | undefined }) =>
+        prod.productos._id === paraCarrito._id
+    );
+
+    if (prod !== -1) {
+      productos[prod].cantidad = cantidad;
+      window.localStorage.setItem("product", JSON.stringify(productos));
+    } else {
+      productos.push({ productos: paraCarrito, cantidad: cantidad });
+      window.localStorage.setItem("product", JSON.stringify(productos));
+    }
   };
 
   const handleChange = (event: any) => {

@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { useAppDispatch } from "../../app/hooks";
 import { addFavoriteProduct, products } from "../slices/productSlice";
 import { AiOutlineShoppingCart } from "react-icons/ai";
+
 const ProductCard = (producto: products) => {
   const added = (
     <BsFillBookmarkFill
@@ -26,23 +27,20 @@ const ProductCard = (producto: products) => {
     setBookMarkactive(active);
     dispatch(addFavoriteProduct(producto));
   }
-
   const handleClick = (event: any) => {
-    /*  dispatch(
-      agregarACarrito({
-        cantidad: 1,
-        productos: producto,
-      })
-    ); 
-    localStorage.setItem(
-      "product",
-      JSON.stringify({ cantidad: 1, productos: producto })
-    ); */
+    event.preventDefault();
+
     let productos: any = JSON.parse(
       window.localStorage.getItem("product") || "[]"
     );
-    productos.push(producto);
-    window.localStorage.setItem("product", JSON.stringify(productos));
+    const prod = productos.findIndex(
+      (prod: { productos: any; _id: string | undefined }) =>
+        prod.productos._id === producto._id
+    );
+    if (prod === -1) {
+      productos.push({ productos: producto, cantidad: 1 });
+      window.localStorage.setItem("product", JSON.stringify(productos));
+    }
   };
 
   if (producto) {
