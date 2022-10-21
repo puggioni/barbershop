@@ -7,6 +7,8 @@ import Paginate from "./Paginate";
 import { categorias, fetchAllProducts } from "../slices/productSlice";
 import Categorias from "./FilterCategorias";
 import ProductCard from "./ProductCard";
+import NavBar from "../NavBar";
+import{ OrderingByName, OrderingByPrice } from "../products/Order"
 
 interface prodCard {
   _id: string;
@@ -29,6 +31,7 @@ const Products = () => {
   const inicializar = useCallback(async () => {
     dispatch(fetchAllProducts(""));
     dispatch(categorias());
+
   }, [dispatch]);
 
   useEffect(() => {
@@ -49,10 +52,22 @@ const Products = () => {
 
     return (
       <div className="">
-        <VscArrowLeft
-          onClick={() => goBack()}
-          className="ml-12 my-3 h-6 w-6 fill-white"
-        />
+
+        <div className=" p-2 grid grid-flow-col justify-items-center items-center grid-cols-3">
+          <div  className="block"> 
+          <VscArrowLeft
+            onClick={() => goBack()}
+            className="h-7 w-7 fill-white justify-self-start "
+          />
+          </div>
+          <div className="flex justify-self-end ">
+            <OrderingByName />
+            <OrderingByPrice />
+          </div>
+        </div>
+
+
+
         <div>
           <Categorias />
         </div>

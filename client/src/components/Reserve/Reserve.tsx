@@ -1,5 +1,6 @@
 import { VscArrowLeft } from "react-icons/vsc";
 import { useNavigate, Link } from "react-router-dom";
+import MapView from "./Map/MapView";
 
 const Reserve = () => {
   let navigate = useNavigate();
@@ -26,20 +27,26 @@ const Reserve = () => {
         Mapa
       </div>
 
-      <h2 className="text-center font-bold p-2 text-2xl text-white mt-8">
-        Barberos mas valorados:
-      </h2>
+      <div className=" flex justify-center min m-auto">
+        <MapView />
+      </div>
 
-      <div className="flex justify-center min">
-        <Link className={cardBarber} to="/reserve/barber">
-          <div>Barbero 4.8</div>
-        </Link>
-        <Link className={cardBarber} to="/reserve/barber">
-          <div>Barbero 4.8</div>
-        </Link>
-        <Link className={cardBarber} to="/reserve/barber">
-          <div>Barbero 5.0</div>
-        </Link>
+      <div className=" justify-center min block m-auto">
+        <h2 className="text-center font-bold p-2 text-2xl text-white mt-8">
+          Barberos mas valorados:
+        </h2>
+
+        <div className="flex justify-center min">
+          <Link className={cardBarber} to="/reserve/barber">
+            <div>Barbero 4.8</div>
+          </Link>
+          <Link className={cardBarber} to="/reserve/barber">
+            <div>Barbero 4.8</div>
+          </Link>
+          <Link className={cardBarber} to="/reserve/barber">
+            <div>Barbero 5.0</div>
+          </Link>
+        </div>
       </div>
     </div>
   );
