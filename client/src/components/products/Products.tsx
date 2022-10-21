@@ -43,7 +43,6 @@ const Products = () => {
   const goBack = () => {
     navigate("/");
   };
-
   if (data?.allProducts instanceof Array) {
     const currentProducts = data.allProducts.slice(
       firstPostIndex,
