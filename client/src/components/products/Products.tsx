@@ -4,11 +4,7 @@ import { useNavigate } from "react-router";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { RootState } from "../../app/store";
 import Paginate from "./Paginate";
-import {
-  categorias,
-  fetchAllProducts,
-  getCaterogias,
-} from "../slices/productSlice";
+import { categorias, fetchAllProducts} from "../slices/productSlice";
 import Categorias from "./FilterCategorias";
 import ProductCard from "./ProductCard";
 
