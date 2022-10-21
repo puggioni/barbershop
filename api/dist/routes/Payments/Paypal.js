@@ -16,6 +16,7 @@ const axios_1 = __importDefault(require("axios"));
 const express_1 = require("express");
 const router = (0, express_1.Router)();
 router.post("/create-order", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log(req.body);
     try {
         const order = {
             intent: "CAPTURE",
@@ -58,6 +59,6 @@ router.get("/capture-order", (req, res) => __awaiter(void 0, void 0, void 0, fun
     res.status(200).send("capture");
 }));
 router.get("/cancel-order", (req, res) => {
-    res.redirect("http://localhost:5000/products");
+    res.redirect("http://localhost:3000/product");
 });
 exports.default = router;

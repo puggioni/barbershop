@@ -20,6 +20,10 @@ const router = (0, express_1.Router)();
 router.post("/signup", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { name: name, lastname: lastname, email: email, password: password, phone_number: phone_number, role: role, } = req.body;
     try {
+        const userFound = yield user_1.default.findOne({ email: email });
+        if (userFound) {
+            res.status(400).send("User already exists");
+        }
         const user = new user_1.default({
             name: name,
             lastname: lastname,

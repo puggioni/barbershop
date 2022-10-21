@@ -1,10 +1,12 @@
 import axios from "axios";
 import { Router } from "express";
-import * as env from "dotenv";
+import { checkStock } from "../../middlewares/checkStock";
+import { verifyToken } from "../../middlewares/auth";
 
 const router = Router();
 
 router.post("/create-order", async (req, res) => {
+  console.log(req.body);
   try {
     const order = {
       intent: "CAPTURE",
@@ -63,7 +65,7 @@ router.get("/capture-order", async (req, res) => {
 });
 
 router.get("/cancel-order", (req, res) => {
-  res.redirect("http://localhost:5000/products");
+  res.redirect("http://localhost:3000/product");
 });
 
 export default router;

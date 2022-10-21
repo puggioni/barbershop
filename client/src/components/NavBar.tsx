@@ -42,14 +42,16 @@ const NavBar = () => {
           <li className="p-4 mx-4">Contacto</li>
         </ul>
       </div>
-      <h2
-        className={`gap-4 font-mono  align-center ${hideTitle} lg:text-3xl lg:font-extrabold`}
-      >
-        Henry Barber
-      </h2>
+      <Link to={"/"}>
+        <h2
+          className={`gap-4 font-mono  align-center ${hideTitle} lg:text-3xl lg:font-extrabold`}
+        >
+          Henry Barber
+        </h2>
+      </Link>
       <SearchBar expandSearch={expandSearch} setSearch={setExpand} />
 
-      <Link to={"/products/shooping-cart"}>
+      <Link to={"/products/shopping-cart"}>
         <AiOutlineShoppingCart size={40} className="mx-4" />
       </Link>
     </div>
