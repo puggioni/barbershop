@@ -8,7 +8,7 @@ const Caregorias = () => {
   const handleClick = (event: any) => {
     if (event.target.value.length) dispatch(filter(event.target.value));
   };
-
+  console.log(categorias);
   return (
     <div
       className="grid fixed justify-items-start
@@ -27,47 +27,6 @@ const Caregorias = () => {
           </button>
         );
       })}
-
-      {/* <button
-        name="Cabello"
-        value="Cabello"
-        onClick={(event) => handleClick(event)}
-        className="my-4 px-4 border-b border-gray-600 hover:text-white"
-      >
-        Cabello
-      </button>
-      <button
-        name="Barba"
-        value="Barba"
-        onClick={(event) => handleClick(event)}
-        className="my-4 px-4 border-b border-gray-600 hover:text-white"
-      >
-        Barba
-      </button>
-      <button
-        name="Afeitado"
-        value="Afeitado"
-        onClick={(event) => handleClick(event)}
-        className="my-4 px-4 border-b border-gray-600 hover:text-white"
-      >
-        Afeitado
-      </button>
-      <button
-        name="Facial"
-        value="Facial"
-        onClick={(event) => handleClick(event)}
-        className="my-4 px-4 border-b border-gray-600 hover:text-white"
-      >
-        Facial
-      </button>
-      <button
-        name="Accesorios"
-        value="Accesorios"
-        onClick={(event) => handleClick(event)}
-        className="my-4 px-4 border-b border-gray-600 hover:text-white"
-      >
-        Accesorios
-      </button> */}
     </div>
   );
 };
