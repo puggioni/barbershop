@@ -1,52 +1,21 @@
-import { prop, getModelForClass, Ref } from "@typegoose/typegoose";
-import Office from "./office";
-class Comment {
-  @prop({
-    type: String,
-  })
-  public text: string;
+import { Schema, model, Types } from "mongoose";
 
-  @prop({
-    type: Number,
-  })
-  public rating: number;
-}
-class Schelude {
-  @prop({
-    type: String,
-  })
-  public day: string;
+export interface IBarber {
+  name: number;
+  office: Types.ObjectId;
+  rating: number;
 }
 
-export class Barber {
-  @prop({
-    required: true,
-    trim: true,
-    type: String,
-  })
-  public name: string;
+const barberSchema = new Schema(
+  {
+    name: { required: true, type: String },
+    office: { type: Types.ObjectId, ref: 'Office' },
+    rating: { required: true, type: Number, default: 0 }
+  },
+  {
+    versionKey: false,
+    timestamps: false,
+  }
+);
 
-  @prop({
-    required: true,
-    type: String,
-  })
-  public shift: string;
-
-  @prop({
-    type: () => [Comment],
-  })
-  public comments: Comment[];
-
-  @prop({
-    ref: () => Office,
-  })
-  public office: Ref<typeof Office>;
-  @prop({
-    type: () => [Schelude],
-  })
-  public schelude: Schelude[];
-}
-
-const BarberModel = getModelForClass(Barber);
-
-export default BarberModel;
+export default model<IBarber>("Barber", barberSchema);
