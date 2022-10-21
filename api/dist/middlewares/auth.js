@@ -49,7 +49,7 @@ const isCommon = (req, res, next) => __awaiter(void 0, void 0, void 0, function*
 exports.isCommon = isCommon;
 const isAdmin = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const user = yield user_1.default.findById(req.userId);
-    const roles = yield role_1.default.find({ _id: { $in: user.role } });
+    const roles = yield role_1.default.find({ _id: { $in: user === null || user === void 0 ? void 0 : user.role } });
     for (let i = 0; i < roles.length; i++) {
         if (roles[i].name === "admin") {
             next();

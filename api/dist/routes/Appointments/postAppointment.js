@@ -27,6 +27,7 @@ router.post("/create", (req, res) => __awaiter(void 0, void 0, void 0, function*
         });
         //obtener los appointments del dia y ver que no este tomado
         const existingApmnt = yield appointments_1.default.findOne({ date: date, block: block });
+        console.log(`Existing appointment: ${existingApmnt}`);
         if (existingApmnt === null) {
             apmt.save()
                 .then(savedApmt => res.status(200).send(savedApmt));
