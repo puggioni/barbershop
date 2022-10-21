@@ -7,7 +7,7 @@ import Paginate from "./Paginate";
 import { fetchAllProducts } from "../slices/productSlice";
 import Categorias from "./FilterCategorias";
 import ProductCard from "./ProductCard";
-import Ordering from "../products/Order"
+import NavBar from "../NavBar";
 
 interface prodCard {
   _id: string;
@@ -54,7 +54,7 @@ const Products = () => {
           className="ml-12 my-3 h-6 w-6 fill-white"
         />
 
-        <Ordering />
+        {/* <Ordering /> */}
 
         <div>
           <Categorias />
