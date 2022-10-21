@@ -13,6 +13,7 @@ export interface products {
   available: boolean;
   favorite?: boolean;
   category?: Array<any>;
+  reviews?: Array<any>;
   __v?: number;
 }
 interface ProductState {

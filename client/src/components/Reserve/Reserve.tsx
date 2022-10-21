@@ -1,7 +1,6 @@
 import NavBar from "../NavBar"
 import { VscArrowLeft } from "react-icons/vsc"
 import { useNavigate, Link } from "react-router-dom";
-
 const Reserve = ()=>{
 
     let navigate = useNavigate();
@@ -24,7 +23,7 @@ return (
 
         <h2 className="text-center font-bold p-2 text-2xl text-white">Seleccione una sucursal para reservar su turno:</h2>
 
-        <div className="h-60 w-60 text-center font-bold flex justify-center min text-2xl text-white  bg-gray-800	inline-block m-auto">Mapa</div>
+        <div className="h-60 w-60 text-center font-bold justify-center min text-2xl text-white  bg-gray-800	inline-block m-auto">Map</div>
 
         <h2 className="text-center font-bold p-2 text-2xl text-white mt-8">Barberos mas valorados:</h2>
 
