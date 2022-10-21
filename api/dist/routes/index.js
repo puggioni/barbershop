@@ -26,6 +26,16 @@ const getAllCategories_1 = __importDefault(require("./Categories/getAllCategorie
 const postReview_1 = __importDefault(require("./Reviews/postReview"));
 const deleteReview_1 = __importDefault(require("./Reviews/deleteReview"));
 const editReview_1 = __importDefault(require("./Reviews/editReview"));
+/* ============APPOINTMENTS============ */
+const postAppointment_1 = __importDefault(require("./Appointments/postAppointment"));
+const getAppontments_1 = __importDefault(require("./Appointments/getAppontments"));
+const deleteAppointment_1 = __importDefault(require("./Appointments/deleteAppointment"));
+/* ============OFFICES============ */
+const postbarber_1 = __importDefault(require("./Barbers/postbarber"));
+const getbarbers_1 = __importDefault(require("./Barbers/getbarbers"));
+/* ============BARBERS============ */
+const postOffice_1 = __importDefault(require("./Offices/postOffice"));
+const getOffices_1 = __importDefault(require("./Offices/getOffices"));
 const router = (0, express_1.Router)();
 /* ============PRODUCTS============ */
 router.use("/products", postProducts_1.default);
@@ -49,4 +59,14 @@ router.use("/categories", getAllCategories_1.default);
 router.use("/reviews", postReview_1.default);
 router.use("/reviews", deleteReview_1.default);
 router.use("/reviews", editReview_1.default);
+/* ============APPOINTMENTS============ */
+router.use("/agenda/", postAppointment_1.default);
+router.use("/agenda/", deleteAppointment_1.default);
+router.use("/agenda/", getAppontments_1.default);
+/* ============OFFICES============ */
+router.use("/office/", postOffice_1.default);
+router.use("/office/", getOffices_1.default);
+/* ============BARBERS============ */
+router.use("/barber/", postbarber_1.default);
+router.use("/barber/", getbarbers_1.default);
 exports.default = router;
