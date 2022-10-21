@@ -80,6 +80,18 @@ export const filter = (categoria: string): AppThunk => {
     }
   };
 };
+export const sortByName = (name:string): AppThunk => {
+  return async (dispatch)=> {
+    try {
+      const ordered = await axios.get (
+        `http:localhost:5000/products/order?name=${name}`
+      );
+      dispatch(sortProductsByName(ordered.data));
+    } catch (error) {
+      return error;
+    }
+  }
+  }
 
 export const productDetail = (idProduct: string): AppThunk => {
   return async (dispatch) => {
@@ -93,6 +105,7 @@ export const productDetail = (idProduct: string): AppThunk => {
     }
   };
 };
+
 
 export const clearProducDetail: any = () => {
   return (dispatch: any) => {
@@ -114,6 +127,11 @@ export const getAllProductsSlice = createSlice({
       state.allProducts = action.payload;
       state.loading = false;
     },
+    
+    sortProductsByName: (state,action: PayloadAction<products[]>) => {
+      state.allProducts = action.payload;
+      state.loading = false;
+    },
 
     detail: (state, action: PayloadAction<products>) => {
       state.product = action.payload;
@@ -123,9 +141,11 @@ export const getAllProductsSlice = createSlice({
     clearDetail: (state) => {
       Object.assign(state, initialState);
     },
-  },
+
+  }
 });
 
+
 export default getAllProductsSlice.reducer;
-export const { allProducts, filterByCaregory, detail, clearDetail } =
+export const { allProducts, filterByCaregory, detail, clearDetail, sortProductsByName } =
   getAllProductsSlice.actions;

@@ -7,7 +7,7 @@ import Paginate from "./Paginate";
 import { fetchAllProducts } from "../slices/productSlice";
 import Categorias from "./FilterCategorias";
 import ProductCard from "./ProductCard";
-import NavBar from "../NavBar";
+import Ordering from "../products/Order"
 
 interface prodCard {
   _id: string;
@@ -53,6 +53,9 @@ const Products = () => {
           onClick={() => goBack()}
           className="ml-12 my-3 h-6 w-6 fill-white"
         />
+
+        <Ordering />
+
         <div>
           <Categorias />
         </div>
