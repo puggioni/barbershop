@@ -23,7 +23,6 @@ router.post("/login", async (req, res) => {
       user: userFound,
       token,
     };
-    console.log(userFound);
     res.header("auth-token", token).send(response);
   } catch (err) {
     res.status(500).json(err);

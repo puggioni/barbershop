@@ -5,7 +5,6 @@ import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { RootState } from "../../app/store";
 import Paginate from "./Paginate";
 import { categorias, fetchAllProducts } from "../slices/productSlice";
-
 import Categorias from "./FilterCategorias";
 import ProductCard from "./ProductCard";
 
@@ -39,7 +38,7 @@ const Products = () => {
   const data = useAppSelector((state: RootState) => state.products);
 
   const goBack = () => {
-    navigate(-1);
+    navigate("/");
   };
 
   if (data?.allProducts instanceof Array) {
