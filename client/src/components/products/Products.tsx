@@ -5,6 +5,7 @@ import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { RootState } from "../../app/store";
 import Paginate from "./Paginate";
 import { categorias, fetchAllProducts } from "../slices/productSlice";
+
 import Categorias from "./FilterCategorias";
 import ProductCard from "./ProductCard";
 
