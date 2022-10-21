@@ -4,7 +4,11 @@ import { useNavigate } from "react-router";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { RootState } from "../../app/store";
 import Paginate from "./Paginate";
-import { fetchAllProducts } from "../slices/productSlice";
+import {
+  categorias,
+  fetchAllProducts,
+  getCaterogias,
+} from "../slices/productSlice";
 import Categorias from "./FilterCategorias";
 import ProductCard from "./ProductCard";
 
@@ -28,6 +32,7 @@ const Products = () => {
 
   const inicializar = useCallback(async () => {
     dispatch(fetchAllProducts(""));
+    dispatch(categorias());
   }, [dispatch]);
 
   useEffect(() => {
@@ -39,7 +44,7 @@ const Products = () => {
   const goBack = () => {
     navigate(-1);
   };
-  console.log(data);
+
   if (data?.allProducts instanceof Array) {
     const currentProducts = data.allProducts.slice(
       firstPostIndex,
