@@ -11,7 +11,7 @@ import populatedProducts from "./Products/postPopulateProducts";
 /* ============USERS FILES============ */
 import signUp from "./User/signup";
 import login from "./User/signin";
-import google from "./User/googlesignin";
+
 import { isAdmin } from "../middlewares/auth";
 /* ============CATEGORIES============ */
 import postCategories from "./Categories/postCategories";
@@ -40,7 +40,6 @@ router.use("/products", populatedProducts);
 router.use("/users", signUp);
 router.use("/users", login);
 router.use("/users", isAdmin);
-router.use("/users", google);
 
 /* ============CATEGORIES============ */
 router.use("/categories", postCategories);

@@ -16,14 +16,15 @@ router.post("/login", async (req, res) => {
     if (!matchPassword)
       return res.status(401).json({ token: null, message: "Invalid Password" });
 
-    const token: string = jwt.sign({ _id: userFound["._id"] }, "token", {
+    const token: string = jwt.sign({ _id: userFound["_id"] }, "token", {
       expiresIn: 60 * 60 * 24,
     });
+
     const response = {
       user: userFound,
       token,
     };
-    console.log(userFound);
+
     res.header("auth-token", token).send(response);
   } catch (err) {
     res.status(500).json(err);

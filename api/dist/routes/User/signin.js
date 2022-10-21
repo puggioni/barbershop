@@ -26,14 +26,13 @@ router.post("/login", (req, res) => __awaiter(void 0, void 0, void 0, function* 
         const matchPassword = yield user_1.default.comparePassword(req.body.password, userFound["password"]);
         if (!matchPassword)
             return res.status(401).json({ token: null, message: "Invalid Password" });
-        const token = jsonwebtoken_1.default.sign({ _id: userFound["._id"] }, "token", {
+        const token = jsonwebtoken_1.default.sign({ _id: userFound["_id"] }, "token", {
             expiresIn: 60 * 60 * 24,
         });
         const response = {
             user: userFound,
             token,
         };
-        console.log(userFound);
         res.header("auth-token", token).send(response);
     }
     catch (err) {
