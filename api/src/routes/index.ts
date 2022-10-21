@@ -21,6 +21,8 @@ import getCategories from "./Categories/getAllCategories";
 import postReview from "./Reviews/postReview";
 import deleteReview from "./Reviews/deleteReview";
 import editReview from "./Reviews/editReview";
+/* ============PAYMENTS============*/
+import Paypal from "./Payments/Paypal";
 
 const router = Router();
 
@@ -50,5 +52,7 @@ router.use("/reviews", postReview);
 router.use("/reviews", deleteReview);
 router.use("/reviews", editReview);
 
+/* ============PAYMENTS============*/
+router.use("/payments", Paypal);
 
 export default router;
