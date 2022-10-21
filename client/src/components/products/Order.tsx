@@ -1,24 +1,36 @@
-import { useAppDispatch } from "../../app/hooks"
-import { sortByName } from "../slices/productSlice";
+import { useAppDispatch, useAppSelector } from "../../app/hooks"
+import { sortProductsByName, sortProductsByPrice } from "../slices/productSlice";
 
-const Ordering = ()=>{
+export const OrderingByName = ()=>{
     const dispatch=useAppDispatch();
 
-    const handleSort = (event:any) => {
-        if (event.target.value) 
-        dispatch(sortByName(event.target.value))
-    }
-    
+    const handleClick = (event: any) => {
+      if (event.target.value.length) dispatch(sortProductsByName(event.target.value));
+    };
+
     return (
-    <select className='' onChange={event=>handleSort(event)}>
-    <option>ORDERING</option>
-    <option value='asc'>A-Z</option>
-    <option value='desc'>Z-A</option>
-  </select>
-  
+    <select className='' onChange={(event)=>handleClick(event)}>
+      <option>ORDERING</option>
+      <option value='name-asc'>A-Z</option>
+      <option value='name-desc'>Z-A</option>
+  </select>  
   )
 }
 
+export const OrderingByPrice = ()=>{
+  const dispatch=useAppDispatch();
 
+  const handleClick = (event: any) => {
+    if (event.target.value.length) dispatch(sortProductsByPrice(event.target.value));
+  };
 
-export default Ordering
+  return (
+  <select className='' onChange={(event)=>handleClick(event)}>
+    <option>PRICE</option>
+    <option value='caro'>caro</option>
+    <option value='barato'>barato</option>
+</select>  
+)
+}
+
+// export default {OrderingByName, OrderingByPrice}

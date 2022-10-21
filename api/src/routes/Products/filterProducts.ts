@@ -7,7 +7,6 @@ const router = Router();
 router.get("/filter/:categoryName", async (req, res) => {
   const { categoryName } = req.params;
   const query = req.query;
-
   const arrayQuery = [];
 
   for (let property in query) {
@@ -48,7 +47,9 @@ router.get("/filter/:categoryName", async (req, res) => {
         }
         if (Object.keys(obj)[0] === "name-asc") {
           respuesta = respuesta.sort((a: Object, b: Object) => {
+            console.log(Object.keys(obj[0]))
             return a["name"].localeCompare(b["name"]);
+
           });
         }
         if (Object.keys(obj)[0] === "name-desc") {

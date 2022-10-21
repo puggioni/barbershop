@@ -64,7 +64,7 @@ const ProductCard = (producto: products) => {
           />
         </div>
         <div className="p-4 flex flex-col justify-between font-display text-lg text-[#000300] ">
-          <h3>{producto.name}</h3>
+          <h3>{producto.name.toUpperCase()}</h3>
           <h2 className="font-medium text-2xl">${producto.price}</h2>
           <div className="lg:absolute lg:left-1 lg:bottom-1">
             {producto.rating}
