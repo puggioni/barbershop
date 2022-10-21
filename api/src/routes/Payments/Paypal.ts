@@ -1,5 +1,6 @@
 import axios from "axios";
 import { Router } from "express";
+import * as env from "dotenv";
 
 const router = Router();
 
