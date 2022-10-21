@@ -5,6 +5,7 @@ import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { RootState } from "../../app/store";
 import Paginate from "./Paginate";
 import { categorias, fetchAllProducts } from "../slices/productSlice";
+
 import Categorias from "./FilterCategorias";
 import ProductCard from "./ProductCard";
 import NavBar from "../NavBar";
@@ -30,7 +31,8 @@ const Products = () => {
 
   const inicializar = useCallback(async () => {
     dispatch(fetchAllProducts(""));
-    dispatch(categorias())
+    dispatch(categorias());
+
   }, [dispatch]);
 
   useEffect(() => {
@@ -42,7 +44,7 @@ const Products = () => {
   const goBack = () => {
     navigate(-1);
   };
-  console.log(data);
+
   if (data?.allProducts instanceof Array) {
     const currentProducts = data.allProducts.slice(
       firstPostIndex,

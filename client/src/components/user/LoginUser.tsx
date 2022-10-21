@@ -13,7 +13,7 @@ export default function LoginUser() {
   const handleSubmit = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
     dispatch(logIn(email, password));
-    navigate(-1);
+    navigate('/');
     setPassword("");
     setUserName("");
   };
