@@ -26,7 +26,7 @@ export default function ProductDetail() {
   }, [dispatch, idProduct]);
 
   const [cantidad, setCantidad] = useState(0);
-  console.log(cantidad);
+ 
   useEffect(() => {
     inicializar();
     return () => {

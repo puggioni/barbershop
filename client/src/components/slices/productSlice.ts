@@ -46,7 +46,6 @@ export const fetchAllProducts = (tosearch: string): AppThunk => {
         const productos = await axios.get(
           "http://localhost:5000/products/search?name=" + tosearch
         );
-        console.log(productos.data);
         dispatch(allProducts(productos.data));
       } catch (error) {
         return error;
@@ -98,6 +97,20 @@ export const productDetail = (idProduct: string): AppThunk => {
 export const clearProducDetail: any = () => {
   return (dispatch: any) => {
     dispatch(clearDetail());
+  };
+};
+
+export const reviewProduct = (review:object,config:object ): AppThunk => {
+  return async (dispatch) => {
+    try {
+      const producto = await axios.post(
+        `http://localhost:5000/reviews/create`,review, config
+      );
+      dispatch(productDetail(producto.data._id));
+    } catch (error) {
+      console.log(error)
+      return error;
+    }
   };
 };
 

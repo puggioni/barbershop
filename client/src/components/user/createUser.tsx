@@ -3,6 +3,7 @@ import { useState } from "react";
 import { logUp } from "../slices/logIn";
 import { useAppDispatch } from "../../app/hooks";
 
+
 export default function CreateUser() {
   const dispatch = useAppDispatch();
   const initialFormUser={ 
@@ -39,6 +40,8 @@ export default function CreateUser() {
         dispatch(logUp(formUser));
         setFormUser(initialFormUser);
         setWarnToPrint(initialWarnToPrint);
+       
+
 }
   }
   function loadForm(e: any) {
