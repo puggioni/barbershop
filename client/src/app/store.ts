@@ -9,7 +9,6 @@ const store = configureStore({
     products: getAllProducts,
     logIn: logInReducer,
     admin: adminReducer,
-    
   },
 });
 

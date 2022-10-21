@@ -1,6 +1,8 @@
 import NavBar from "../NavBar"
 import { VscArrowLeft } from "react-icons/vsc"
 import { useNavigate, Link } from "react-router-dom";
+import MapView from "./Map/MapView";
+
 const Reserve = ()=>{
 
     let navigate = useNavigate();
@@ -14,7 +16,6 @@ const Reserve = ()=>{
 
 return (
     <div>
-        <NavBar/>
 
         <VscArrowLeft
           onClick={() => goBack()}
@@ -23,8 +24,12 @@ return (
 
         <h2 className="text-center font-bold p-2 text-2xl text-white">Seleccione una sucursal para reservar su turno:</h2>
 
-        <div className="h-60 w-60 text-center font-bold justify-center min text-2xl text-white  bg-gray-800	inline-block m-auto">Map</div>
+        <div className=" flex justify-center min block m-auto">
+        <MapView />
+        </div> 
 
+
+        <div className=" justify-center min block m-auto">
         <h2 className="text-center font-bold p-2 text-2xl text-white mt-8">Barberos mas valorados:</h2>
 
         <div className="flex justify-center min">
@@ -39,7 +44,7 @@ return (
           </Link>
         </div>
 
-
+        </div>
 
 
 

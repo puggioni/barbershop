@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { useAppDispatch } from "../../app/hooks";
 import { addFavoriteProduct, products } from "../slices/productSlice";
 import { AiOutlineShoppingCart } from "react-icons/ai";
+
 const ProductCard = (producto: products) => {
   const added = (
     <BsFillBookmarkFill
@@ -26,23 +27,20 @@ const ProductCard = (producto: products) => {
     setBookMarkactive(active);
     dispatch(addFavoriteProduct(producto));
   }
-
   const handleClick = (event: any) => {
-    /*  dispatch(
-      agregarACarrito({
-        cantidad: 1,
-        productos: producto,
-      })
-    ); 
-    localStorage.setItem(
-      "product",
-      JSON.stringify({ cantidad: 1, productos: producto })
-    ); */
+    event.preventDefault();
+
     let productos: any = JSON.parse(
       window.localStorage.getItem("product") || "[]"
     );
-    productos.push(producto);
-    window.localStorage.setItem("product", JSON.stringify(productos));
+    const prod = productos.findIndex(
+      (prod: { productos: any; _id: string | undefined }) =>
+        prod.productos._id === producto._id
+    );
+    if (prod === -1) {
+      productos.push({ productos: producto, cantidad: 1 });
+      window.localStorage.setItem("product", JSON.stringify(productos));
+    }
   };
 
   if (producto) {
@@ -66,7 +64,7 @@ const ProductCard = (producto: products) => {
           />
         </div>
         <div className="p-4 flex flex-col justify-between font-display text-lg text-[#000300] ">
-          <h3>{producto.name}</h3>
+          <h3>{producto.name.toUpperCase()}</h3>
           <h2 className="font-medium text-2xl">${producto.price}</h2>
           <div className="lg:absolute lg:left-1 lg:bottom-1">
             {producto.rating}

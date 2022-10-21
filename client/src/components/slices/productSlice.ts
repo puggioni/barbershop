@@ -22,6 +22,7 @@ interface ProductState {
   loading: boolean;
   errors: any;
   favs: Object[];
+  categorias: Array<{ name: string; id: string }> | null;
 }
 const initialState: ProductState = {
   allProducts: [],
@@ -29,9 +30,12 @@ const initialState: ProductState = {
   loading: false,
   errors: null,
   favs: [],
+  categorias: [],
 };
 
 //==========action==================
+
+
 export const fetchAllProducts = (tosearch: string): AppThunk => {
   return async (dispatch) => {
     if (!tosearch) {
@@ -71,10 +75,41 @@ export const addFavoriteProduct = (productoFav: products): AppThunk => {
 export const filter = (categoria: string): AppThunk => {
   return async (dispatch) => {
     try {
+      console.log(categoria)
       const product = await axios.get(
         `http://localhost:5000/products/filter/${categoria}`
       );
       dispatch(filterByCaregory(product.data));
+    } catch (error) {
+      return error;
+    }
+  };
+};
+
+export const orderByName = (): AppThunk => {
+  return async (dispatch) => {
+    try {
+      const ordered = await axios.get("http://localhost:5000/products/all")
+      dispatch(sortProductsByName(ordered.data))
+    } catch (error) { return error }
+  }
+}
+export const orderByPrice = (): AppThunk => {
+  return async (dispatch) => {
+    try {
+      const ordered = await axios.get("http://localhost:5000/products/all")
+      dispatch(sortProductsByPrice(ordered.data))
+    } catch (error) { return error }
+  }
+}
+
+export const categorias = (): AppThunk => {
+  return async (dispatch) => {
+    try {
+      const categorias = await axios.get(
+        `http://localhost:5000/categories/all`
+      );
+      dispatch(getCaterogias(categorias.data));
     } catch (error) {
       return error;
     }
@@ -93,6 +128,7 @@ export const productDetail = (idProduct: string): AppThunk => {
     }
   };
 };
+
 
 export const clearProducDetail: any = () => {
   return (dispatch: any) => {
@@ -128,6 +164,56 @@ export const getAllProductsSlice = createSlice({
       state.allProducts = action.payload;
       state.loading = false;
     },
+    
+    sortProductsByName: (state, action: PayloadAction<string>) => {
+      const arrays: any = state.allProducts
+        let sortedArray = action.payload === 'name-asc' ? arrays.sort(function (a: any, b: any){
+            if(a.name < b.name) {
+                return -1;
+            }
+            if(a.name > b.name) {
+                return 1;
+            }
+            return 0;
+        }) :
+        arrays.sort(function(a: any, b: any){
+            if(a.name > b.name) {
+                return -1;
+            }
+            if(b.name > a.name) {
+                return 1;
+            }
+            return 0;
+        })
+
+      state.allProducts = sortedArray;
+      state.loading = false;
+    },
+
+    sortProductsByPrice: (state, action: PayloadAction<string>) => {
+      const arrays: any = state.allProducts
+        let sortedArray = action.payload === 'barato' ? arrays.sort(function (a: any, b: any){
+            if(a.price < b.price) {
+                return -1;
+            }
+            if(a.price > b.price) {
+                return 1;
+            }
+            return 0;
+        }) :
+        arrays.sort(function(a: any, b: any){
+            if(a.price > b.price) {
+                return -1;
+            }
+            if(b.price > a.price) {
+                return 1;
+            }
+            return 0;
+        })
+
+      state.allProducts = sortedArray;
+      state.loading = false;
+    },
 
     detail: (state, action: PayloadAction<products>) => {
       state.product = action.payload;
@@ -137,9 +223,25 @@ export const getAllProductsSlice = createSlice({
     clearDetail: (state) => {
       Object.assign(state, initialState);
     },
-  },
+
+
+    getCaterogias: (
+      state,
+      action: PayloadAction<Array<{ name: string; id: string }>>
+    ) => {
+      state.categorias = action.payload;
+    },
+  }
 });
 
+
 export default getAllProductsSlice.reducer;
-export const { allProducts, filterByCaregory, detail, clearDetail } =
-  getAllProductsSlice.actions;
+export const {
+  allProducts,
+  filterByCaregory,
+  detail,
+  clearDetail,
+  sortProductsByName,
+  sortProductsByPrice,
+  getCaterogias,
+} = getAllProductsSlice.actions;
