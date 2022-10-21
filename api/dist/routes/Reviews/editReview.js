@@ -13,27 +13,27 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
-const productReviews_1 = __importDefault(require("../../models/productReviews"));
+const ProductReviews_1 = __importDefault(require("../../models/ProductReviews"));
 const products_1 = __importDefault(require("../../models/products"));
-const middlewares_1 = require("../Auth/middlewares");
+const auth_1 = require("../../middlewares/auth");
 const router = (0, express_1.Router)();
-router.patch("/edit/:IdReview", middlewares_1.verifyToken, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.patch("/edit/:IdReview", auth_1.verifyToken, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     let { rating, comment } = req.body;
     const { IdReview } = req.params;
     let oldRating;
     try {
-        yield productReviews_1.default.findById(IdReview)
+        yield ProductReviews_1.default.findById(IdReview)
             .then((review) => {
             oldRating = review.rating;
             rating ? (review.rating = rating) : {};
             comment ? (review.comment = comment) : {};
             return review.save();
         })
-            .then(savedReview => {
+            .then((savedReview) => {
             res.status(200).send(savedReview);
             return products_1.default.findOne({ reviews: IdReview });
         })
-            .then(product => {
+            .then((product) => {
             product.rating_sum -= oldRating;
             product.rating_sum += rating;
             product.rating = product.rating_sum / product.reviews.length;
