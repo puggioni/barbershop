@@ -12,7 +12,7 @@ export interface products {
   stock?: number;
   available: boolean;
   favorite?: boolean;
-  category?: Array<any>;
+  category?: Array<{ name: string; id: string }>;
   __v?: number;
 }
 interface ProductState {
@@ -21,6 +21,7 @@ interface ProductState {
   loading: boolean;
   errors: any;
   favs: Object[];
+  categorias: Array<{ name: string; id: string }> | null;
 }
 const initialState: ProductState = {
   allProducts: [],
@@ -28,6 +29,7 @@ const initialState: ProductState = {
   loading: false,
   errors: null,
   favs: [],
+  categorias: [],
 };
 
 //==========action==================
@@ -80,6 +82,18 @@ export const filter = (categoria: string): AppThunk => {
     }
   };
 };
+export const categorias = (): AppThunk => {
+  return async (dispatch) => {
+    try {
+      const categorias = await axios.get(
+        `http://localhost:5000/categories/all`
+      );
+      dispatch(getCaterogias(categorias.data));
+    } catch (error) {
+      return error;
+    }
+  };
+};
 
 export const productDetail = (idProduct: string): AppThunk => {
   return async (dispatch) => {
@@ -123,9 +137,21 @@ export const getAllProductsSlice = createSlice({
     clearDetail: (state) => {
       Object.assign(state, initialState);
     },
+
+    getCaterogias: (
+      state,
+      action: PayloadAction<Array<{ name: string; id: string }>>
+    ) => {
+      state.categorias = action.payload;
+    },
   },
 });
 
 export default getAllProductsSlice.reducer;
-export const { allProducts, filterByCaregory, detail, clearDetail } =
-  getAllProductsSlice.actions;
+export const {
+  allProducts,
+  filterByCaregory,
+  detail,
+  clearDetail,
+  getCaterogias,
+} = getAllProductsSlice.actions;

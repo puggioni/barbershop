@@ -1,29 +1,34 @@
-import ProductCard from "../products/ProductCard";
-
+import CardCart from "./CardCart";
 const Compra = () => {
-  const products: any = JSON.parse(
+  let products: any = JSON.parse(
     window.localStorage.getItem("product") || "[]"
   );
 
-  const total = products.reduce((acc: number, product: any) => {
-    return acc + product.price * products.cantidad;
-  });
+  const cantidadTotal = products.reduce((acc: any, prod: any) => {
+    return acc + prod.cantidad;
+  }, 0);
 
-  console.log(products, products.cantidad, total);
+  const precioTotal = products.reduce((acc: any, prod: any) => {
+    return acc + prod.productos.price * prod.cantidad;
+  }, 0);
+
   return (
     <div>
-      {products?.products.map((data: any) => (
-        <ProductCard
-          key={data._id}
-          _id={data._id}
-          name={data.name}
-          image={data.image}
-          price={data.price}
-          rating={data.rating}
-          available={data.available}
-        />
-      ))}
-      <p>{products.cantidad}</p>
+      {products &&
+        products.map((data: any) => (
+          <div>
+            <CardCart
+              key={data.productos._id}
+              _id={data.productos._id}
+              name={data.productos.name}
+              image={data.productos.image}
+              price={data.productos.price}
+              cantidad={data.cantidad}
+            />
+          </div>
+        ))}
+      <p>cantidad total: {cantidadTotal}</p>
+      <p>precio total: {precioTotal}</p>
     </div>
   );
 };
