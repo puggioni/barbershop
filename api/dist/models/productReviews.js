@@ -8,7 +8,7 @@ const reviewsSchema = new mongoose_1.Schema({
         min: 0,
         max: 5
     },
-    comment: { //comment
+    comment: {
         type: String,
         required: true,
         validate: {

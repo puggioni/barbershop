@@ -5,7 +5,7 @@ const appointmentSchema = new mongoose_1.Schema({
     user: { type: mongoose_1.Types.ObjectId, ref: 'User' },
     date: {
         type: Date,
-        default: Date.now
+        required: true,
         /* validate: function(input) {
             return new Date(input) >= new Date();
         },

@@ -13,7 +13,7 @@ const appointmentSchema = new Schema(
         user: { type: Types.ObjectId, ref: 'User' },
         date: { 
             type: Date,
-            default: Date.now
+            required: true,
             /* validate: function(input) {
                 return new Date(input) >= new Date();
             },
