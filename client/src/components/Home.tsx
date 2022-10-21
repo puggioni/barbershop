@@ -28,7 +28,7 @@ const Home = () => {
             Log In/Sign Up
           </button>
         </Link>
-      )}
+      )} 
 
       <div className="flex flex-col gap-y-10 font-semibold translate-y-1/2">
         <h1 className="my-auto text-5xl text-center">

@@ -51,7 +51,9 @@ router.use("/reviews", postReview);
 router.use("/reviews", deleteReview);
 router.use("/reviews", editReview);
 
+
 /* ============PAYMENTS============*/
 router.use("/payments", Paypal);
+
 
 export default router;

@@ -3,6 +3,7 @@ import User from "../models/user";
 import Role from "../models/role";
 import { Request, Response, NextFunction } from "express";
 
+
 export const verifyToken = async (req, res, next) => {
   try {
     const token = req.headers["token"];
@@ -11,7 +12,6 @@ export const verifyToken = async (req, res, next) => {
     console.log(decoded);
     req.userId = decoded["_id"];
     const user = await User.findById(req.userId, { password: 0 });
-    console.log(user);
     if (!user)
       return res.status(404).json({ message: "No se encontro ningun usuario" });
     next();
@@ -45,10 +45,12 @@ export const isAdmin = async (req, res, next) => {
   const user = await User.findById(req.userId);
   const roles = await Role.find({ _id: { $in: user?.role } });
 
+
   if (roles[0].name === "admin") {
     next();
     return;
   }
+
 
   return res.status(403).json({ isAdmin: false });
 };
