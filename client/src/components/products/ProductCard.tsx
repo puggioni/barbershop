@@ -3,7 +3,7 @@ import { BsBookmarkHeart, BsFillBookmarkFill } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import { useAppDispatch } from "../../app/hooks";
 import { addFavoriteProduct, products } from "../slices/productSlice";
-
+import { AiOutlineShoppingCart } from "react-icons/ai";
 const ProductCard = (producto: products) => {
   const added = (
     <BsFillBookmarkFill
@@ -26,6 +26,24 @@ const ProductCard = (producto: products) => {
     setBookMarkactive(active);
     dispatch(addFavoriteProduct(producto));
   }
+
+  const handleClick = (event: any) => {
+    /*  dispatch(
+      agregarACarrito({
+        cantidad: 1,
+        productos: producto,
+      })
+    ); 
+    localStorage.setItem(
+      "product",
+      JSON.stringify({ cantidad: 1, productos: producto })
+    ); */
+    let productos: any = JSON.parse(
+      window.localStorage.getItem("product") || "[]"
+    );
+    productos.push(producto);
+    window.localStorage.setItem("product", JSON.stringify(productos));
+  };
 
   if (producto) {
     return (
@@ -54,6 +72,13 @@ const ProductCard = (producto: products) => {
             {producto.rating}
           </div>
         </div>
+        <AiOutlineShoppingCart
+          size={30}
+          className="mx-4"
+          onClick={(event) => {
+            handleClick(event);
+          }}
+        />
         <Link to={`/product/${producto._id}`}>
           <button className="text-blue absolute right-0 bottom-0 m-4">
             Ver más

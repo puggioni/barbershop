@@ -91,7 +91,7 @@ export default function CreateUser() {
             }
             break;
             case "password":
-                if (!/^[a-z]*[0-9][a-z0-9]*$/.test(e.target.value)) {
+                if (!/^[A-Za-z]*[0-9][a-z0-9]*$/.test(e.target.value)) {
                   setWarnToPrint({
                     ...warnToPrint,
                     password:"*Debe tener letras y números",
