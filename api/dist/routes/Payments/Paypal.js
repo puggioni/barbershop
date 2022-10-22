@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const axios_1 = __importDefault(require("axios"));
 const express_1 = require("express");
 const checkStock_1 = require("../../middlewares/checkStock");
+const deleteStock_1 = require("../../middlewares/deleteStock");
 const router = (0, express_1.Router)();
 router.post("/create-order", checkStock_1.checkStock, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { purchase_units, products } = req.body;
@@ -37,6 +38,7 @@ router.post("/create-order", checkStock_1.checkStock, (req, res) => __awaiter(vo
             },
         });
         //                  ACA DEBERIA CAMBIAR EL ESTADO DE LA ORDEN DE CAPTURANDO - PAGADA - ENVIADA
+        (0, deleteStock_1.deleteStock)(products);
         res.status(200).json(response.data);
     }
     catch (error) {
