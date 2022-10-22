@@ -41,10 +41,26 @@ const UserSchema = new Schema({
         type: String,
         default: "",
     },
+    banned: {
+        type: Boolean,
+        default: false,
+    },
     role: [
         {
             type: Schema.Types.ObjectId,
             ref: "Role",
+        },
+    ],
+    purchases: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: "PurchaseOrder",
+        },
+    ],
+    favorites_products: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: "Product",
         },
     ],
 }, {

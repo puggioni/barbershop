@@ -55,6 +55,13 @@ const productSchema = new mongoose_1.Schema({
             ref: "Reviews",
         },
     ],
+    purchases: [
+        {
+            required: true,
+            type: mongoose_1.Schema.Types.ObjectId,
+            ref: "PurchaseOrder",
+        },
+    ],
 }, {
     versionKey: false,
     timestamps: true,
