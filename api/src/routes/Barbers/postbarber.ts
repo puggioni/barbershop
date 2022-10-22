@@ -6,13 +6,14 @@ import { verifyToken, isAdmin } from "../../middlewares/auth";
 const router = Router();
 
 router.post("/create", async (req, res) => {
-    let { name, office, rating } = req.body;
+    let { name, office, rating, image } = req.body;
 
     try {
         const brb = new Barber({
             name: name,
             office: office,
-            rating: rating
+            rating: rating,
+            image: image
         });
         brb.save().then(savedBarber => res.status(200).send(savedBarber));
     }

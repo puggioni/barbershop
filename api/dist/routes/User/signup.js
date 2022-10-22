@@ -18,7 +18,7 @@ const user_1 = __importDefault(require("../../models/user"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const router = (0, express_1.Router)();
 router.post("/signup", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { name: name, lastname: lastname, email: email, password: password, phone_number: phone_number, role: role, } = req.body;
+    const { name, lastname, email, password, phone_number, image, role } = req.body;
     try {
         const userFound = yield user_1.default.findOne({ email: email });
         if (userFound) {
@@ -30,6 +30,7 @@ router.post("/signup", (req, res) => __awaiter(void 0, void 0, void 0, function*
             email: email,
             password: yield user_1.default.encryptPassword(password),
             phone_number: phone_number,
+            user_image: image,
             role: role,
         });
         if (role) {
