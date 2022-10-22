@@ -16,12 +16,13 @@ const express_1 = require("express");
 const barber_1 = __importDefault(require("../../models/barber"));
 const router = (0, express_1.Router)();
 router.post("/create", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    let { name, office, rating } = req.body;
+    let { name, office, rating, image } = req.body;
     try {
         const brb = new barber_1.default({
             name: name,
             office: office,
-            rating: rating
+            rating: rating,
+            image: image
         });
         brb.save().then(savedBarber => res.status(200).send(savedBarber));
     }
