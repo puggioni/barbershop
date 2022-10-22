@@ -12,7 +12,7 @@ const Auth: React.FunctionComponent<any> = (props) => {
     AuthCheck();
     return AuthCheck();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [auth]);
+  }, []);
 
   const AuthCheck = onAuthStateChanged(auth, (user) => {
     if (user) {

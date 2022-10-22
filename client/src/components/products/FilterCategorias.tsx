@@ -1,12 +1,15 @@
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { filter } from "../slices/productSlice";
 
-const Caregorias = () => {
+const Caregorias = ({ resetPage }: any) => {
   const dispatch = useAppDispatch();
   const { categorias } = useAppSelector((state) => state.products);
 
   const handleClick = (event: any) => {
-    if (event.target.value.length) dispatch(filter(event.target.value));
+    if (event.target.value.length) {
+      dispatch(filter(event.target.value));
+      resetPage();
+    }
   };
   return (
     <div

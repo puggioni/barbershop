@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+
 module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
@@ -6,22 +7,27 @@ module.exports = {
       transitionProperty: {
         width: "width",
       },
+      fontFamily: {
+        homenaje: ["Homenaje"],
+        display: ["Quicksand"],
+        body: ["Open Sans"],
+      },
+      gridTemplateColumns: {
+        nav: ".2fr 1fr .2fr .1fr",
+      },
     },
-    fontFamily: {
-      'display': ['Quicksand'],
-      'body': ['Open Sans'],
-    },
+
     backgroundImage: {
-      'home': "url('https://images.unsplash.com/photo-1592647420148-bfcc177e2117?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=839&q=80')",
-      'body': "url('https://images.unsplash.com/photo-1621605815971-fbc98d665033?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80')",
+      home: "url('./imagenes/landing-bg-img.png')",
+      body: "url('./imagenes/landing-bg-img.png')",
     },
     backgroundSize: {
-      'auto': 'auto',
-      'cover': 'cover',
-      'contain': 'contain',
-      '100%': '100%',
-      '16': '4rem',
-    }
+      auto: "auto",
+      cover: "cover",
+      contain: "contain",
+      "100%": "100%",
+      16: "4rem",
+    },
   },
   plugins: [],
 };

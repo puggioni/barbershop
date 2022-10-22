@@ -5,11 +5,9 @@ import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { RootState } from "../../app/store";
 import Paginate from "./Paginate";
 import { categorias, fetchAllProducts } from "../slices/productSlice";
-
 import Categorias from "./FilterCategorias";
 import ProductCard from "./ProductCard";
-import NavBar from "../NavBar";
-import{ OrderingByName, OrderingByPrice } from "../products/Order"
+import { OrderingByName, OrderingByPrice } from "../products/Order";
 
 interface prodCard {
   _id: string;
@@ -24,7 +22,7 @@ const Products = () => {
   const dispatch = useAppDispatch();
   let navigate = useNavigate();
 
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState<number>(1);
   const [productsPerPage] = useState(8);
   const lastPostIndex = currentPage * productsPerPage;
   const firstPostIndex = lastPostIndex - productsPerPage;
@@ -32,7 +30,6 @@ const Products = () => {
   const inicializar = useCallback(async () => {
     dispatch(fetchAllProducts(""));
     dispatch(categorias());
-
   }, [dispatch]);
 
   useEffect(() => {
@@ -40,6 +37,9 @@ const Products = () => {
   }, [inicializar]);
 
   const data = useAppSelector((state: RootState) => state.products);
+  const resetPage = () => {
+    setCurrentPage(1);
+  };
 
   const goBack = () => {
     navigate(-1);
@@ -52,13 +52,12 @@ const Products = () => {
 
     return (
       <div className="">
-
         <div className=" p-2 grid grid-flow-col justify-items-center items-center grid-cols-3">
-          <div  className="block"> 
-          <VscArrowLeft
-            onClick={() => goBack()}
-            className="h-7 w-7 fill-white justify-self-start "
-          />
+          <div className="block">
+            <VscArrowLeft
+              onClick={() => goBack()}
+              className="h-7 w-7 fill-white justify-self-start "
+            />
           </div>
           <div className="flex justify-self-end ">
             <OrderingByName />
@@ -66,10 +65,8 @@ const Products = () => {
           </div>
         </div>
 
-
-
         <div>
-          <Categorias />
+          <Categorias resetPage={resetPage} />
         </div>
         <div className="font-display lg:grid lg:grid-cols-4 lg:mr-24 lg:ml-48 lg:gap-8">
           {currentProducts?.map((data: prodCard) => (
