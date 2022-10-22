@@ -4,6 +4,7 @@ import { AppThunk } from "../../app/store";
 
 interface userFound {
   user: Object;
+  savedUser: object;
   token: string;
   logeado: boolean;
 }
@@ -15,7 +16,7 @@ const initialState = {
 };
 
 type dataUser = {
-  data: string;
+  data: userFound;
 };
 
 //==========actions==================
@@ -27,8 +28,11 @@ export const logIn = (email: string, password: string): AppThunk => {
         password,
       });
       dispatch(userLogIn(res.data));
-    } catch (error) {
-      return error;
+    } catch (error: any) {
+      if (error.response.status === 400) {
+        alert("La cuenta no existe");
+        window.location.pathname = "/user/create";
+      }
     }
   };
 };
@@ -53,9 +57,12 @@ export const logUp = (user: object): AppThunk => {
       );
       dispatch(userCreate(credenciales.data));
       alert("Usuario creado exitosamente");
-    } catch (error) {
-      console.log(error);
-      return error;
+      window.location.pathname = "/";
+    } catch (error: any) {
+      if (error.response.status === 400) {
+        alert("La cuenta ya existe");
+        window.location.pathname = "/user/login";
+      }
     }
   };
 };
@@ -85,8 +92,14 @@ export const logInReducerSlice = createSlice({
       state.logeado = true;
     },
 
-    userCreate: (state, action: PayloadAction<string>) => {
-      state.user = action.payload;
+    userCreate: (state: any, action: PayloadAction<userFound>) => {
+      state.token = action.payload.token;
+      localStorage.setItem("token", JSON.stringify(action.payload.token));
+
+      state.userFound = action.payload.savedUser;
+      localStorage.setItem("user", JSON.stringify(action.payload.savedUser));
+
+      state.logeado = true;
     },
   },
 });

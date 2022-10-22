@@ -11,6 +11,14 @@ import Reserve from "./components/Reserve/Reserve";
 import BarberDetail from "./components/Reserve/BarberDetail";
 import NavBar from "./components/NavBar";
 import Compra from "./components/carrito/Compra";
+import { initializeApp } from "firebase/app";
+import { getAuth } from "firebase/auth";
+import { firebaseConfig } from "./firebase";
+
+// Initialize Firebase
+export const app = initializeApp(firebaseConfig);
+// Initialize Firebase Authentication and get a reference to the service
+export const auth = getAuth(app);
 
 function App() {
   return (

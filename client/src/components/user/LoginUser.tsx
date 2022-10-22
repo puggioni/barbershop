@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../../app/hooks";
 import { logIn } from "../slices/logIn";
+import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 
 export default function LoginUser() {
   const [password, setPassword] = useState("");
@@ -9,13 +10,27 @@ export default function LoginUser() {
 
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-
+  const user: any = JSON.parse(window.localStorage.getItem("user") || "{}");
+  const auth = getAuth();
   const handleSubmit = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
     dispatch(logIn(email, password));
-    navigate(-1);
+    console.log(user);
+
+    if (user.name) {
+      navigate("/");
+    }
     setPassword("");
     setUserName("");
+  };
+
+  const handleLogInWithGoogle = async (e: any) => {
+    e.preventDefault();
+
+    const response: any = await signInWithPopup(auth, new GoogleAuthProvider());
+    navigate("/");
+
+    dispatch(logIn(response.user.email, response.user.email));
   };
 
   return (
@@ -76,7 +91,12 @@ export default function LoginUser() {
                   Facebook
                 </button>
 
-                <button className="bg-red-500 border-none px-4 py-2 rounded-xl cursor-pointer text-white shadow-xl hover:shadow-inner transition duration-500 ease-in-out  transform hover:-translate-x hover:scale-105">
+                <button
+                  onClick={(e) => {
+                    handleLogInWithGoogle(e);
+                  }}
+                  className="bg-red-500 border-none px-4 py-2 rounded-xl cursor-pointer text-white shadow-xl hover:shadow-inner transition duration-500 ease-in-out  transform hover:-translate-x hover:scale-105"
+                >
                   Google
                 </button>
               </div>

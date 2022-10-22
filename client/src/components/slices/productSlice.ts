@@ -12,7 +12,8 @@ export interface products {
   stock?: number;
   available: boolean;
   favorite?: boolean;
-  category?: Array<{ name: string; id: string }>;
+  category?: Array<any>;
+  reviews?: Array<any>;
   __v?: number;
 }
 interface ProductState {
@@ -23,11 +24,7 @@ interface ProductState {
   favs: Object[];
   categorias: Array<{ name: string; id: string }> | null;
 }
-interface comp {
-  id: string;
-  status: string;
-  links: Array<{ href: string; rel: string; method: string }>;
-}
+
 const initialState: ProductState = {
   allProducts: [],
   product: null,
@@ -38,6 +35,7 @@ const initialState: ProductState = {
 };
 
 //==========action==================
+
 export const fetchAllProducts = (tosearch: string): AppThunk => {
   return async (dispatch) => {
     if (!tosearch) {
@@ -52,7 +50,6 @@ export const fetchAllProducts = (tosearch: string): AppThunk => {
         const productos = await axios.get(
           "http://localhost:5000/products/search?name=" + tosearch
         );
-        console.log(productos.data);
         dispatch(allProducts(productos.data));
       } catch (error) {
         return error;
@@ -78,6 +75,7 @@ export const addFavoriteProduct = (productoFav: products): AppThunk => {
 export const filter = (categoria: string): AppThunk => {
   return async (dispatch) => {
     try {
+      console.log(categoria);
       const product = await axios.get(
         `http://localhost:5000/products/filter/${categoria}`
       );
@@ -87,6 +85,28 @@ export const filter = (categoria: string): AppThunk => {
     }
   };
 };
+
+export const orderByName = (): AppThunk => {
+  return async (dispatch) => {
+    try {
+      const ordered = await axios.get("http://localhost:5000/products/all");
+      dispatch(sortProductsByName(ordered.data));
+    } catch (error) {
+      return error;
+    }
+  };
+};
+export const orderByPrice = (): AppThunk => {
+  return async (dispatch) => {
+    try {
+      const ordered = await axios.get("http://localhost:5000/products/all");
+      dispatch(sortProductsByPrice(ordered.data));
+    } catch (error) {
+      return error;
+    }
+  };
+};
+
 export const categorias = (): AppThunk => {
   return async (dispatch) => {
     try {
@@ -130,6 +150,23 @@ export const comprar = (compra: object) => {
   };
 };
 //window.open(url, '_blank').focus();
+
+export const reviewProduct = (review: object, config: object): AppThunk => {
+  return async (dispatch) => {
+    try {
+      const producto = await axios.post(
+        `http://localhost:5000/reviews/create`,
+        review,
+        config
+      );
+      dispatch(productDetail(producto.data._id));
+    } catch (error) {
+      console.log(error);
+      return error;
+    }
+  };
+};
+
 //================reducer===================
 export const getAllProductsSlice = createSlice({
   name: "allProducts",
@@ -142,6 +179,60 @@ export const getAllProductsSlice = createSlice({
 
     filterByCaregory: (state, action: PayloadAction<products[]>) => {
       state.allProducts = action.payload;
+      state.loading = false;
+    },
+
+    sortProductsByName: (state, action: PayloadAction<string>) => {
+      const arrays: any = state.allProducts;
+      let sortedArray =
+        action.payload === "name-asc"
+          ? arrays.sort(function (a: any, b: any) {
+              if (a.name < b.name) {
+                return -1;
+              }
+              if (a.name > b.name) {
+                return 1;
+              }
+              return 0;
+            })
+          : arrays.sort(function (a: any, b: any) {
+              if (a.name > b.name) {
+                return -1;
+              }
+              if (b.name > a.name) {
+                return 1;
+              }
+              return 0;
+            });
+
+      state.allProducts = sortedArray;
+      state.loading = false;
+    },
+
+    sortProductsByPrice: (state, action: PayloadAction<string>) => {
+      const arrays: any = state.allProducts;
+      let sortedArray =
+        action.payload === "barato"
+          ? arrays.sort(function (a: any, b: any) {
+              if (a.price < b.price) {
+                return -1;
+              }
+              if (a.price > b.price) {
+                return 1;
+              }
+              return 0;
+            })
+          : arrays.sort(function (a: any, b: any) {
+              if (a.price > b.price) {
+                return -1;
+              }
+              if (b.price > a.price) {
+                return 1;
+              }
+              return 0;
+            });
+
+      state.allProducts = sortedArray;
       state.loading = false;
     },
 
@@ -169,5 +260,7 @@ export const {
   filterByCaregory,
   detail,
   clearDetail,
+  sortProductsByName,
+  sortProductsByPrice,
   getCaterogias,
 } = getAllProductsSlice.actions;
