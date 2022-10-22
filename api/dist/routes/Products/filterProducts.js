@@ -53,6 +53,7 @@ router.get("/filter/:categoryName", (req, res) => __awaiter(void 0, void 0, void
                 }
                 if (Object.keys(obj)[0] === "name-asc") {
                     respuesta = respuesta.sort((a, b) => {
+                        console.log(Object.keys(obj[0]));
                         return a["name"].localeCompare(b["name"]);
                     });
                 }
