@@ -1,48 +1,71 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { MouseEvent, useState } from "react";
 import { logUp } from "../slices/logIn";
 import { useAppDispatch } from "../../app/hooks";
-
+import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 
 export default function CreateUser() {
   const dispatch = useAppDispatch();
-  const initialFormUser={ 
-  name: "",
-  lastname: "",
-  email: "",
-  password: "",
-  phone_number: "",
-  role: "",
-  repassword: "",}  
+  const initialFormUser = {
+    name: "",
+    lastname: "",
+    email: "",
+    password: "",
+    phone_number: "",
+    role: "",
+    repassword: "",
+  };
 
-  const initialWarnToPrint={
+  const initialWarnToPrint = {
     name: "*El nombre es obligatorio",
     lastname: "*Apellidos son obligatorios",
     email: "*Email obligatorio",
-    password: "La contraseña debe tener múmeros y letras y mínimo de 6 caracteres",
+    password:
+      "La contraseña debe tener múmeros y letras y mínimo de 6 caracteres",
     phone_number: "",
-    repassword:""}  
+    repassword: "",
+  };
 
   const [formUser, setFormUser] = useState(initialFormUser);
   const [warnToPrint, setWarnToPrint] = useState(initialWarnToPrint);
 
+  const auth = getAuth();
+
+  const handleGoogleSignIn = async (e: any) => {
+    e.preventDefault();
+    const response = await signInWithPopup(auth, new GoogleAuthProvider());
+    const datos = {
+      name: response.user.displayName,
+      email: response.user.email,
+      password: response.user.email,
+      phone_number: response.user.phoneNumber,
+      image: response.user.photoURL,
+    };
+    dispatch(logUp(datos));
+  };
   function handleSubmit(
     e:
       | React.FormEvent<HTMLInputElement>
       | React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) {
     e.preventDefault();
-    //console.log(formUser);
-    if(warnToPrint.name||warnToPrint.lastname||warnToPrint.email||
-        warnToPrint.password||warnToPrint.phone_number||warnToPrint.repassword){
-            alert("Por favor asegurese que los campos requeridos esten llenos correctamente")
-    }else {
-        dispatch(logUp(formUser));
-        setFormUser(initialFormUser);
-        setWarnToPrint(initialWarnToPrint);
-       
 
-}
+    if (
+      warnToPrint.name ||
+      warnToPrint.lastname ||
+      warnToPrint.email ||
+      warnToPrint.password ||
+      warnToPrint.phone_number ||
+      warnToPrint.repassword
+    ) {
+      alert(
+        "Por favor asegurese que los campos requeridos esten llenos correctamente"
+      );
+    } else {
+      dispatch(logUp(formUser));
+      setFormUser(initialFormUser);
+      setWarnToPrint(initialWarnToPrint);
+    }
   }
   function loadForm(e: any) {
     if (e.target.name && typeof e.target.value === "string") {
@@ -67,63 +90,69 @@ export default function CreateUser() {
         if (!/^[A-Za-z\s]+$/g.test(e.target.value)) {
           setWarnToPrint({
             ...warnToPrint,
-            lastname:"*No debe tener Caracteres especiales ni números",
+            lastname: "*No debe tener Caracteres especiales ni números",
           });
         } else {
           setWarnToPrint({ ...warnToPrint, lastname: "" });
         }
         break;
-        case "email":
-        if (!/^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/.test(e.target.value)) {
-            setWarnToPrint({
+      case "email":
+        if (
+          !/^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/.test(e.target.value)
+        ) {
+          setWarnToPrint({
             ...warnToPrint,
-             email:"*Debe ser un correo eletrónico valido",
-            });
+            email: "*Debe ser un correo eletrónico valido",
+          });
         } else {
-              setWarnToPrint({ ...warnToPrint, email: "" });
+          setWarnToPrint({ ...warnToPrint, email: "" });
         }
-         break;
-         case "phone_number":
-            if (!/^[0-9\s]+$/g.test(e.target.value)||e.target.value.length!==10) {
-              setWarnToPrint({
-                ...warnToPrint,
-                phone_number:"*Solo números son admitidos con un tamaño de 10 dígitos",
-              });
-            } else {
-              setWarnToPrint({ ...warnToPrint, phone_number: "" });
-            }
-            break;
-            case "password":
-                if (!/^[A-Za-z]*[0-9][a-z0-9]*$/.test(e.target.value)) {
-                  setWarnToPrint({
-                    ...warnToPrint,
-                    password:"*Debe tener letras y números",
-                  });
-                } else if(e.target.value.length<6||e.target.value.length>12){
-                    setWarnToPrint({
-                        ...warnToPrint,
-                        password:"*Debe tener mas de 6 y menos de 12 digitos",
-                      });
-                }else if(formUser.repassword!==e.target.value){
-                    setWarnToPrint({
-                        ...warnToPrint,
-                        repassword:"*Las contraseñas deben ser iguales",
-                        password:""
-                      });
-                }else{
-                  setWarnToPrint({ ...warnToPrint, password: "",repassword: ""  });
-                } 
-                break;
-            case "repassword":
-                    if(formUser.password!==e.target.value){
-                        setWarnToPrint({
-                            ...warnToPrint,
-                            repassword:"*Las contraseñas deben ser iguales",
-                          });
-                    }else{
-                      setWarnToPrint({ ...warnToPrint, repassword: "" });
-                    }
-            break;
+        break;
+      case "phone_number":
+        if (
+          !/^[0-9\s]+$/g.test(e.target.value) ||
+          e.target.value.length !== 10
+        ) {
+          setWarnToPrint({
+            ...warnToPrint,
+            phone_number:
+              "*Solo números son admitidos con un tamaño de 10 dígitos",
+          });
+        } else {
+          setWarnToPrint({ ...warnToPrint, phone_number: "" });
+        }
+        break;
+      case "password":
+        if (!/^[A-Za-z]*[0-9][a-z0-9]*$/.test(e.target.value)) {
+          setWarnToPrint({
+            ...warnToPrint,
+            password: "*Debe tener letras y números",
+          });
+        } else if (e.target.value.length < 6 || e.target.value.length > 12) {
+          setWarnToPrint({
+            ...warnToPrint,
+            password: "*Debe tener mas de 6 y menos de 12 digitos",
+          });
+        } else if (formUser.repassword !== e.target.value) {
+          setWarnToPrint({
+            ...warnToPrint,
+            repassword: "*Las contraseñas deben ser iguales",
+            password: "",
+          });
+        } else {
+          setWarnToPrint({ ...warnToPrint, password: "", repassword: "" });
+        }
+        break;
+      case "repassword":
+        if (formUser.password !== e.target.value) {
+          setWarnToPrint({
+            ...warnToPrint,
+            repassword: "*Las contraseñas deben ser iguales",
+          });
+        } else {
+          setWarnToPrint({ ...warnToPrint, repassword: "" });
+        }
+        break;
 
       default:
         break;
@@ -175,12 +204,10 @@ export default function CreateUser() {
                     {warnToPrint.lastname}
                   </span>
                 )}
-
               </div>
 
               <div className="mt-7">
                 <input
-
                   value={formUser.email}
                   name="email"
                   type="email"
@@ -201,7 +228,7 @@ export default function CreateUser() {
                   placeholder="Número telefónico"
                   className="mt-1 block w-full border-none bg-gray-100 h-11 rounded-xl shadow-lg hover:bg-blue-100 focus:bg-blue-100 focus:ring-0"
                 />
-                   {!warnToPrint.phone_number ? null : (
+                {!warnToPrint.phone_number ? null : (
                   <span className=" text-red-700 font-semibold">
                     {warnToPrint.phone_number}
                   </span>
@@ -217,10 +244,10 @@ export default function CreateUser() {
                 />
               </div>
               {!warnToPrint.password ? null : (
-                  <span className=" text-red-700 font-semibold">
-                    {warnToPrint.password}
-                  </span>
-                )}
+                <span className=" text-red-700 font-semibold">
+                  {warnToPrint.password}
+                </span>
+              )}
 
               <div className="mt-7">
                 <input
@@ -230,7 +257,7 @@ export default function CreateUser() {
                   placeholder="Confirmar contraseña"
                   className="mt-1 block w-full border-none bg-gray-100 h-11 rounded-xl shadow-lg hover:bg-blue-100 focus:bg-blue-100 focus:ring-0"
                 />
-                   {!warnToPrint.repassword ? null : (
+                {!warnToPrint.repassword ? null : (
                   <span className=" text-red-700 font-semibold">
                     {warnToPrint.repassword}
                   </span>
@@ -240,7 +267,7 @@ export default function CreateUser() {
               <div className="mt-7">
                 <button
                   type="submit"
-                  onClick={(event) => {
+                  onClick={(event: any) => {
                     handleSubmit(event);
                   }}
                   className="bg-blue-500 w-full py-3 rounded-xl text-white shadow-xl hover:shadow-inner focus:outline-none transition duration-500 ease-in-out  transform hover:-translate-x hover:scale-105"
@@ -258,11 +285,17 @@ export default function CreateUser() {
               </div>
 
               <div className="flex mt-7 justify-center w-full">
-                <button onSubmit={e=>(e.preventDefault())} className="mr-5 bg-blue-500 border-none px-4 py-2 rounded-xl cursor-pointer text-white shadow-xl hover:shadow-inner transition duration-500 ease-in-out  transform hover:-translate-x hover:scale-105">
+                <button
+                  onSubmit={(e) => e.preventDefault()}
+                  className="mr-5 bg-blue-500 border-none px-4 py-2 rounded-xl cursor-pointer text-white shadow-xl hover:shadow-inner transition duration-500 ease-in-out  transform hover:-translate-x hover:scale-105"
+                >
                   Facebook
                 </button>
 
-                <button onSubmit={e=>(e.preventDefault())} className="bg-red-500 border-none px-4 py-2 rounded-xl cursor-pointer text-white shadow-xl hover:shadow-inner transition duration-500 ease-in-out  transform hover:-translate-x hover:scale-105">
+                <button
+                  onClick={(e) => handleGoogleSignIn(e)}
+                  className="bg-red-500 border-none px-4 py-2 rounded-xl cursor-pointer text-white shadow-xl hover:shadow-inner transition duration-500 ease-in-out  transform hover:-translate-x hover:scale-105"
+                >
                   Google
                 </button>
               </div>
@@ -270,13 +303,11 @@ export default function CreateUser() {
               <div className="mt-7">
                 <div className="flex justify-center items-center">
                   <label className="mr-2">¿Ya tienes una cuenta?</label>
-                  <Link to={"/user/login"}>
-                    <a
-                      href="#"
-                      className=" text-white-500 transition duration-500 ease-in-out  transform hover:-translate-x hover:scale-105"
-                    >
-                      Iniciar sesion
-                    </a>
+                  <Link
+                    to={"/user/login"}
+                    className=" text-white-500 transition duration-500 ease-in-out  transform hover:-translate-x hover:scale-105"
+                  >
+                    Iniciar sesion
                   </Link>
                 </div>
               </div>

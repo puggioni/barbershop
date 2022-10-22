@@ -4,7 +4,7 @@ import { AppThunk } from "../../app/store";
 
 interface userFound {
   user: Object;
-  savedUser:object;
+  savedUser: object;
   token: string;
   logeado: boolean;
 }
@@ -28,8 +28,11 @@ export const logIn = (email: string, password: string): AppThunk => {
         password,
       });
       dispatch(userLogIn(res.data));
-    } catch (error) {
-      return error;
+    } catch (error: any) {
+      if (error.response.status === 400) {
+        alert("La cuenta no existe");
+        window.location.pathname = "/user/create";
+      }
     }
   };
 };
@@ -54,10 +57,12 @@ export const logUp = (user: object): AppThunk => {
       );
       dispatch(userCreate(credenciales.data));
       alert("Usuario creado exitosamente");
-      window.location.pathname=("/")
-    } catch (error) {
-      console.log(error);
-      return error;
+      window.location.pathname = "/";
+    } catch (error: any) {
+      if (error.response.status === 400) {
+        alert("La cuenta ya existe");
+        window.location.pathname = "/user/login";
+      }
     }
   };
 };

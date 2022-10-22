@@ -1,3 +1,4 @@
+import { getAuth, signOut } from "firebase/auth";
 import { Link } from "react-router-dom";
 import { useAppDispatch } from "../../app/hooks";
 import { logOut } from "../slices/logIn";
@@ -6,8 +7,10 @@ const Logeado = () => {
   const user: any = JSON.parse(window.localStorage.getItem("user") || "{}");
 
   const dispatch = useAppDispatch();
+  const auth = getAuth()
 
-  function handleClick() {
+  function handleLogOut() {
+    signOut(auth)
     dispatch(logOut());
   }
   const img = user?.user_image?.length
@@ -25,7 +28,7 @@ const Logeado = () => {
       <Link to={"/user/perfil"} className=" text-cyan-600 mt-2">
         perfil
       </Link>
-      <button onClick={() => handleClick()}>Log Out</button>
+      <button onClick={() => handleLogOut()}>Log Out</button>
     </div>
   );
 };
