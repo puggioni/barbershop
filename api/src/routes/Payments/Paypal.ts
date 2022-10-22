@@ -2,20 +2,16 @@ import axios from "axios";
 import { Router } from "express";
 import { checkStock } from "../../middlewares/checkStock";
 import { verifyToken } from "../../middlewares/auth";
+import { deleteStock } from "../../middlewares/deleteStock";
 
 const router = Router();
 
-router.post("/create-order", async (req, res) => {
-  console.log(req.body);
+router.post("/create-order", checkStock, async (req, res) => {
+  const { purchase_units, products } = req.body;
   try {
     const order = {
       intent: "CAPTURE",
-      purchase_units: [
-        {
-          amount: { currency_code: "USD", value: "333" },
-          description: "VENTA",
-        },
-      ],
+      purchase_units,
       application_context: {
         brand_name: "Henry BarberShop",
         landing_page: "LOGIN",
@@ -38,6 +34,7 @@ router.post("/create-order", async (req, res) => {
       }
     );
     //                  ACA DEBERIA CAMBIAR EL ESTADO DE LA ORDEN DE CAPTURANDO - PAGADA - ENVIADA
+    deleteStock(products);
     res.status(200).json(response.data);
   } catch (error) {
     res.status(500).send(error);
