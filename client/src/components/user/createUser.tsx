@@ -39,7 +39,7 @@ export default function CreateUser() {
       email: response.user.email,
       password: response.user.email,
       phone_number: response.user.phoneNumber,
-      user_image: response.user.photoURL,
+      image: response.user.photoURL,
     };
     dispatch(logUp(datos));
   };
