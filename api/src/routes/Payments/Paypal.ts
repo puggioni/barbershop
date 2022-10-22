@@ -5,17 +5,12 @@ import { verifyToken } from "../../middlewares/auth";
 
 const router = Router();
 
-router.post("/create-order", async (req, res) => {
-  console.log(req.body);
+router.post("/create-order", checkStock, async (req, res) => {
+  const { purchase_units, products } = req.body;
   try {
     const order = {
       intent: "CAPTURE",
-      purchase_units: [
-        {
-          amount: { currency_code: "USD", value: "333" },
-          description: "VENTA",
-        },
-      ],
+      purchase_units,
       application_context: {
         brand_name: "Henry BarberShop",
         landing_page: "LOGIN",

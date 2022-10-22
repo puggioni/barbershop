@@ -14,18 +14,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const axios_1 = __importDefault(require("axios"));
 const express_1 = require("express");
+const checkStock_1 = require("../../middlewares/checkStock");
 const router = (0, express_1.Router)();
-router.post("/create-order", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log(req.body);
+router.post("/create-order", checkStock_1.checkStock, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { purchase_units, products } = req.body;
     try {
         const order = {
             intent: "CAPTURE",
-            purchase_units: [
-                {
-                    amount: { currency_code: "USD", value: "333" },
-                    description: "VENTA",
-                },
-            ],
+            purchase_units,
             application_context: {
                 brand_name: "Henry BarberShop",
                 landing_page: "LOGIN",

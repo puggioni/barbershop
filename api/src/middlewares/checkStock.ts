@@ -1,25 +1,22 @@
+import { isAccessor } from "typescript";
 import Product from "../models/products";
 
 export const checkStock = async (req: any, res: any, next) => {
   const { products } = req.body;
-
-  const arr: any = [];
-  const productFinded: Object = await Product.findById(products[0]._id);
-  const prfind: Object = await Product.find((_id: any) => {
-    products[0]._id;
-    return products[0]._id;
-  });
-
-  console.log(prfind);
-  for (let i = 0; i < products.length; i++) {
-    const product: Object = await Product.findById(products[i].id);
-    if (product["stock"] >= products[i].cantidad) {
-      arr.push(product);
+  let error = 0;
+  products.reduce(async (acc: any, prod: Object) => {
+    const producto = await Product.findById(prod["productos"]["_id"]);
+    if (prod["cantidad"] > producto.stock) {
+      error++;
+      return producto;
     }
-  }
-  if (arr.length === products.length) {
-    next();
-  } else {
-    res.status(400).send({ message: "No hay stock suficiente" });
-  }
+  }, []);
+
+  setTimeout(function () {
+    if (error === 0) {
+      next();
+    } else {
+      return res.status(500).send("No hay stock");
+    }
+  }, 1000);
 };

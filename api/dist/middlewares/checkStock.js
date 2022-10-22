@@ -16,24 +16,21 @@ exports.checkStock = void 0;
 const products_1 = __importDefault(require("../models/products"));
 const checkStock = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const { products } = req.body;
-    const arr = [];
-    const productFinded = yield products_1.default.findById(products[0]._id);
-    const prfind = yield products_1.default.find((_id) => {
-        products[0]._id;
-        return products[0]._id;
-    });
-    console.log(prfind);
-    for (let i = 0; i < products.length; i++) {
-        const product = yield products_1.default.findById(products[i].id);
-        if (product["stock"] >= products[i].cantidad) {
-            arr.push(product);
+    let error = 0;
+    products.reduce((acc, prod) => __awaiter(void 0, void 0, void 0, function* () {
+        const producto = yield products_1.default.findById(prod["productos"]["_id"]);
+        if (prod["cantidad"] > producto.stock) {
+            error++;
+            return producto;
         }
-    }
-    if (arr.length === products.length) {
-        next();
-    }
-    else {
-        res.status(400).send({ message: "No hay stock suficiente" });
-    }
+    }), []);
+    setTimeout(function () {
+        if (error === 0) {
+            next();
+        }
+        else {
+            return res.status(500).send("No hay stock");
+        }
+    }, 1000);
 });
 exports.checkStock = checkStock;
