@@ -31,11 +31,17 @@ export default function CreateUser() {
 
   const auth = getAuth();
 
-  const handleGoogleSignIn = (e: any) => {
+  const handleGoogleSignIn = async (e: any) => {
     e.preventDefault();
-    signInWithPopup(auth, new GoogleAuthProvider()).then((response) =>
-      console.log(response)
-    );
+    const response = await signInWithPopup(auth, new GoogleAuthProvider());
+    const datos = {
+      name: response.user.displayName,
+      email: response.user.email,
+      password: response.user.email,
+      phone_number: response.user.phoneNumber,
+      user_image: response.user.photoURL,
+    };
+    dispatch(logUp(datos));
   };
   function handleSubmit(
     e:
@@ -43,7 +49,7 @@ export default function CreateUser() {
       | React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) {
     e.preventDefault();
-    //console.log(formUser);
+
     if (
       warnToPrint.name ||
       warnToPrint.lastname ||
