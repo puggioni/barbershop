@@ -21,8 +21,19 @@ import getCategories from "./Categories/getAllCategories";
 import postReview from "./Reviews/postReview";
 import deleteReview from "./Reviews/deleteReview";
 import editReview from "./Reviews/editReview";
+/* ============APPOINTMENTS============ */
+import postAppointment from "./Appointments/postAppointment";
+import getAppointments from "./Appointments/getAppontments";
+import deleteAppointment from "./Appointments/deleteAppointment";
+/* ============OFFICES============ */
+import postbarber from "./Barbers/postbarber";
+import getbarbers from "./Barbers/getbarbers"
+/* ============BARBERS============ */
+import postOffice from "./Offices/postOffice";
+import getOffices from "./Offices/getOffices";
 /* ============PAYMENTS============*/
 import Paypal from "./Payments/Paypal";
+
 
 const router = Router();
 
@@ -51,6 +62,18 @@ router.use("/reviews", postReview);
 router.use("/reviews", deleteReview);
 router.use("/reviews", editReview);
 
+/* ============APPOINTMENTS============ */
+router.use("/agenda/", postAppointment);
+router.use("/agenda/", deleteAppointment);
+router.use("/agenda/", getAppointments);
+
+/* ============OFFICES============ */
+router.use("/office/", postOffice);
+router.use("/office/", getOffices);
+
+/* ============BARBERS============ */
+router.use("/barber/", postbarber);
+router.use("/barber/", getbarbers);
 
 /* ============PAYMENTS============*/
 router.use("/payments", Paypal);
