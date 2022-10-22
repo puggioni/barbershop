@@ -8,6 +8,9 @@ import getProduct from "./Products/getProduct";
 import filterProducts from "./Products/filterProducts";
 import editProducts from "./Products/editProduct";
 import populatedProducts from "./Products/postPopulateProducts";
+import addToFavorite from "./Products/addToFavorite";
+import removeFromFavorite from "./Products/removeFromFavorite";
+import getAllFavorites from "./Products/getAllFavorites";
 /* ============USERS FILES============ */
 import signUp from "./User/signup";
 import login from "./User/signin";
@@ -27,13 +30,12 @@ import getAppointments from "./Appointments/getAppontments";
 import deleteAppointment from "./Appointments/deleteAppointment";
 /* ============OFFICES============ */
 import postbarber from "./Barbers/postbarber";
-import getbarbers from "./Barbers/getbarbers"
+import getbarbers from "./Barbers/getbarbers";
 /* ============BARBERS============ */
 import postOffice from "./Offices/postOffice";
 import getOffices from "./Offices/getOffices";
 /* ============PAYMENTS============*/
 import Paypal from "./Payments/Paypal";
-
 
 const router = Router();
 
@@ -46,7 +48,9 @@ router.use("/products", deleteProducts);
 router.use("/products", filterProducts);
 router.use("/products", editProducts);
 router.use("/products", populatedProducts);
-
+router.use("/products", addToFavorite);
+router.use("/products", removeFromFavorite);
+router.use("/products", getAllFavorites);
 /* ============USERS============ */
 router.use("/users", signUp);
 router.use("/users", login);
@@ -77,6 +81,5 @@ router.use("/barber/", getbarbers);
 
 /* ============PAYMENTS============*/
 router.use("/payments", Paypal);
-
 
 export default router;
