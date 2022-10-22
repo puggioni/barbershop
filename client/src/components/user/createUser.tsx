@@ -3,6 +3,7 @@ import { useState } from "react";
 import { logUp } from "../slices/logIn";
 import { useAppDispatch } from "../../app/hooks";
 
+
 export default function CreateUser() {
   const dispatch = useAppDispatch();
   const initialFormUser={ 
@@ -39,6 +40,8 @@ export default function CreateUser() {
         dispatch(logUp(formUser));
         setFormUser(initialFormUser);
         setWarnToPrint(initialWarnToPrint);
+       
+
 }
   }
   function loadForm(e: any) {
@@ -91,7 +94,7 @@ export default function CreateUser() {
             }
             break;
             case "password":
-                if (!/^[a-z]*[0-9][a-z0-9]*$/.test(e.target.value)) {
+                if (!/^[A-Za-z]*[0-9][a-z0-9]*$/.test(e.target.value)) {
                   setWarnToPrint({
                     ...warnToPrint,
                     password:"*Debe tener letras y números",

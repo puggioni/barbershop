@@ -10,7 +10,7 @@ export const isAdmin = (
   token: AxiosRequestConfig<any> | undefined
 ): AppThunk => {
   return async (dispatch) => {
-    const res = await axios.get("http://localhost:5000/users/isAdmin", token);
+    const res = await axios.get("http://localhost:5000/users/isAdmin");
     dispatch(adminCred(res.data.name));
   };
 };

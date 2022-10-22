@@ -16,7 +16,6 @@ const postPopulateProducts_1 = __importDefault(require("./Products/postPopulateP
 /* ============USERS FILES============ */
 const signup_1 = __importDefault(require("./User/signup"));
 const signin_1 = __importDefault(require("./User/signin"));
-const googlesignin_1 = __importDefault(require("./User/googlesignin"));
 const auth_1 = require("../middlewares/auth");
 /* ============CATEGORIES============ */
 const postCategories_1 = __importDefault(require("./Categories/postCategories"));
@@ -36,6 +35,10 @@ const getbarbers_1 = __importDefault(require("./Barbers/getbarbers"));
 /* ============BARBERS============ */
 const postOffice_1 = __importDefault(require("./Offices/postOffice"));
 const getOffices_1 = __importDefault(require("./Offices/getOffices"));
+/* ============PAYMENTS============*/
+const Paypal_1 = __importDefault(require("./Payments/Paypal"));
+
+
 const router = (0, express_1.Router)();
 /* ============PRODUCTS============ */
 router.use("/products", postProducts_1.default);
@@ -50,7 +53,6 @@ router.use("/products", postPopulateProducts_1.default);
 router.use("/users", signup_1.default);
 router.use("/users", signin_1.default);
 router.use("/users", auth_1.isAdmin);
-router.use("/users", googlesignin_1.default);
 /* ============CATEGORIES============ */
 router.use("/categories", postCategories_1.default);
 router.use("/categories", deleteCategory_1.default);
@@ -69,4 +71,7 @@ router.use("/office/", getOffices_1.default);
 /* ============BARBERS============ */
 router.use("/barber/", postbarber_1.default);
 router.use("/barber/", getbarbers_1.default);
+/* ============PAYMENTS============*/
+router.use("/payments", Paypal_1.default);
+
 exports.default = router;

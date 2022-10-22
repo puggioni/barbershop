@@ -8,8 +8,7 @@ router.get("/all", async (req, res) => {
   try {
     const categories = await CategoryModel.find();
     res.send(categories);
-  }
-  catch (err) {
+  } catch (err) {
     console.log(err);
     res.status(500).send(err);
   }

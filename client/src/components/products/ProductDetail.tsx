@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { RootState } from "../../app/store";
 import { clearProducDetail, productDetail } from "../slices/productSlice";
+import ReviewsProduct from "./ReviewsProduct"
 
 type QuizParams = {
   idProduct: string;
@@ -25,7 +26,7 @@ export default function ProductDetail() {
   }, [dispatch, idProduct]);
 
   const [cantidad, setCantidad] = useState(0);
-  console.log(cantidad);
+ 
   useEffect(() => {
     inicializar();
     return () => {
@@ -45,11 +46,22 @@ export default function ProductDetail() {
     _id: product?._id,
   };
   const handleClick = (event: any) => {
+    event.preventDefault();
     let productos: any = JSON.parse(
       window.localStorage.getItem("product") || "[]"
     );
-    productos.push(paraCarrito);
-    window.localStorage.setItem("product", JSON.stringify(productos));
+    const prod = productos.findIndex(
+      (prod: { productos: any; _id: string | undefined }) =>
+        prod.productos._id === paraCarrito._id
+    );
+
+    if (prod !== -1) {
+      productos[prod].cantidad = cantidad;
+      window.localStorage.setItem("product", JSON.stringify(productos));
+    } else {
+      productos.push({ productos: paraCarrito, cantidad: cantidad });
+      window.localStorage.setItem("product", JSON.stringify(productos));
+    }
   };
 
   const handleChange = (event: any) => {
@@ -57,8 +69,9 @@ export default function ProductDetail() {
   };
 
   return (
-    <>
-      <div className=" bg-slate-200/50  flex  flex-col md:flex-row">
+
+<div className=" bg-slate-200/50 ">
+      <div className=" flex  flex-col md:flex-row">
         <VscArrowLeft
           className=" ml-4 mt-3 h-12 w-12 fill-black"
           onClick={goBack}
@@ -116,11 +129,23 @@ export default function ProductDetail() {
                 Stock: {product.stock} Unidades
               </label>
             </div>
-          </>
-        ) : (
-          <h1>El producto requerido no existe o no esta activo🤔</h1>
-        )}
+          
+          
+        </>
+      ) : (
+        <h1>El producto requerido no existe o no esta activo🤔</h1>
+      )}
+     
+    </div>
+    <div className=" bg-slate-200/50">
+    <div className="flex flex-col ml-4 md:ml-16">
+        {product?<ReviewsProduct reviews={product.reviews} idProduct={idProduct}></ReviewsProduct>
+        :<>Agrega un review al producto</>
+        }
       </div>
-    </>
+      </div>
+    </div>
+    
+
   );
 }

@@ -11,7 +11,7 @@ import populatedProducts from "./Products/postPopulateProducts";
 /* ============USERS FILES============ */
 import signUp from "./User/signup";
 import login from "./User/signin";
-import google from "./User/googlesignin";
+
 import { isAdmin } from "../middlewares/auth";
 /* ============CATEGORIES============ */
 import postCategories from "./Categories/postCategories";
@@ -31,6 +31,9 @@ import getbarbers from "./Barbers/getbarbers"
 /* ============BARBERS============ */
 import postOffice from "./Offices/postOffice";
 import getOffices from "./Offices/getOffices";
+/* ============PAYMENTS============*/
+import Paypal from "./Payments/Paypal";
+
 
 const router = Router();
 
@@ -48,7 +51,6 @@ router.use("/products", populatedProducts);
 router.use("/users", signUp);
 router.use("/users", login);
 router.use("/users", isAdmin);
-router.use("/users", google);
 
 /* ============CATEGORIES============ */
 router.use("/categories", postCategories);
@@ -72,5 +74,9 @@ router.use("/office/", getOffices);
 /* ============BARBERS============ */
 router.use("/barber/", postbarber);
 router.use("/barber/", getbarbers);
+
+/* ============PAYMENTS============*/
+router.use("/payments", Paypal);
+
 
 export default router;

@@ -4,7 +4,8 @@ const mongoose_1 = require("mongoose");
 const barberSchema = new mongoose_1.Schema({
     name: { required: true, type: String },
     office: { type: mongoose_1.Types.ObjectId, ref: 'Office' },
-    rating: { required: true, type: Number, default: 0 }
+    rating: { required: true, type: Number, default: 0 },
+    image: { type: String, default: "" }
 }, {
     versionKey: false,
     timestamps: false,
