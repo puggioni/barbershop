@@ -19,7 +19,9 @@ const getAllFavorites_1 = __importDefault(require("./Products/getAllFavorites"))
 /* ============USERS FILES============ */
 const signup_1 = __importDefault(require("./User/signup"));
 const signin_1 = __importDefault(require("./User/signin"));
+const changeToAdmin_1 = __importDefault(require("./User/changeToAdmin"));
 const auth_1 = require("../middlewares/auth");
+const changeToCommon_1 = __importDefault(require("./User/changeToCommon"));
 /* ============CATEGORIES============ */
 const postCategories_1 = __importDefault(require("./Categories/postCategories"));
 const deleteCategory_1 = __importDefault(require("./Categories/deleteCategory"));
@@ -57,6 +59,8 @@ router.use("/products", getAllFavorites_1.default);
 router.use("/users", signup_1.default);
 router.use("/users", signin_1.default);
 router.use("/users", auth_1.isAdmin);
+router.use("/users", changeToAdmin_1.default);
+router.use("/users", changeToCommon_1.default);
 /* ============CATEGORIES============ */
 router.use("/categories", postCategories_1.default);
 router.use("/categories", deleteCategory_1.default);

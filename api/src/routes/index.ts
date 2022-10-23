@@ -14,8 +14,9 @@ import getAllFavorites from "./Products/getAllFavorites";
 /* ============USERS FILES============ */
 import signUp from "./User/signup";
 import login from "./User/signin";
-
+import changeToAdmin from "./User/changeToAdmin";
 import { isAdmin } from "../middlewares/auth";
+import changeToCommon from "./User/changeToCommon";
 /* ============CATEGORIES============ */
 import postCategories from "./Categories/postCategories";
 import deleteCategory from "./Categories/deleteCategory";
@@ -55,7 +56,8 @@ router.use("/products", getAllFavorites);
 router.use("/users", signUp);
 router.use("/users", login);
 router.use("/users", isAdmin);
-
+router.use("/users", changeToAdmin);
+router.use("/users", changeToCommon);
 /* ============CATEGORIES============ */
 router.use("/categories", postCategories);
 router.use("/categories", deleteCategory);
