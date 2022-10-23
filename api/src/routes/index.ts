@@ -17,6 +17,8 @@ import login from "./User/signin";
 import changeToAdmin from "./User/changeToAdmin";
 import { isAdmin } from "../middlewares/auth";
 import changeToCommon from "./User/changeToCommon";
+import banUser from "./User/banUser";
+import desbanearUser from "./User/desbanearUser";
 /* ============CATEGORIES============ */
 import postCategories from "./Categories/postCategories";
 import deleteCategory from "./Categories/deleteCategory";
@@ -58,6 +60,8 @@ router.use("/users", login);
 router.use("/users", isAdmin);
 router.use("/users", changeToAdmin);
 router.use("/users", changeToCommon);
+router.use("/users", banUser);
+router.use("/users", desbanearUser);
 /* ============CATEGORIES============ */
 router.use("/categories", postCategories);
 router.use("/categories", deleteCategory);

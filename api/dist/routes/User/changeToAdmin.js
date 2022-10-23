@@ -24,6 +24,7 @@ router.patch("/changeToAdmin/:id", auth_1.isAdmin, (req, res) => __awaiter(void 
         const user = yield user_1.default.findById(id);
         const roleFound = yield role_1.default.findOne({ name: role });
         user["role"][0] = roleFound["_id"];
+        user.save();
         res.status(200).send("User updated");
     }
     catch (error) {

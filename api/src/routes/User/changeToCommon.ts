@@ -8,14 +8,14 @@ router.patch("/changeToCommon/:id", isAdmin, async (req, res) => {
   const { id } = req.params;
   const { role } = req.body;
   try {
-    const user: Object = await UserModel.findById(id);
+    const user: any = await UserModel.findById(id);
     const roleFound: Object = await RoleModel.findOne({ name: role });
     user["role"][0] = roleFound["_id"];
     console.log(
       "🚀 ~ file: changeToCommon.ts ~ line 14 ~ router.patch ~ user",
       user
     );
-
+    user.save();
     res.status(200).send("User updated");
   } catch (error) {
     res.status(500).send({ error });
