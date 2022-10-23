@@ -3,7 +3,6 @@ import { Router } from "express";
 import { checkStock } from "../../middlewares/checkStock";
 import { verifyToken } from "../../middlewares/auth";
 import { deleteStock } from "../../middlewares/deleteStock";
-
 const router = Router();
 
 router.post("/create-order", checkStock, async (req, res) => {
@@ -35,6 +34,7 @@ router.post("/create-order", checkStock, async (req, res) => {
     );
     //                  ACA DEBERIA CAMBIAR EL ESTADO DE LA ORDEN DE CAPTURANDO - PAGADA - ENVIADA
     deleteStock(products);
+
     res.status(200).json(response.data);
   } catch (error) {
     res.status(500).send(error);

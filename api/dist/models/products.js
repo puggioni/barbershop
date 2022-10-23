@@ -31,7 +31,6 @@ const productSchema = new mongoose_1.Schema({
         default: 0,
     },
     image: {
-        required: true,
         type: String,
         default: "",
     },
@@ -53,6 +52,13 @@ const productSchema = new mongoose_1.Schema({
             required: true,
             type: mongoose_1.Schema.Types.ObjectId,
             ref: "Reviews",
+        },
+    ],
+    purchases: [
+        {
+            required: true,
+            type: mongoose_1.Schema.Types.ObjectId,
+            ref: "PurchaseOrder",
         },
     ],
 }, {

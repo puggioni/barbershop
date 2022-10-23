@@ -11,8 +11,8 @@ import Reserve from "./components/Reserve/Reserve";
 import BarberDetail from "./components/Reserve/BarberDetail";
 import NavBar from "./components/NavBar";
 import Compra from "./components/carrito/Compra";
-import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
+import { initializeApp } from "@firebase/app";
+import { getAuth } from "@firebase/auth";
 import { firebaseConfig } from "./firebase";
 
 // Initialize Firebase
