@@ -35,7 +35,7 @@ export default function LoginUser() {
 
   return (
     <div className="bg-white">
-      <div className="z-1 w-[100vw] h-[40vh] bg-[#222222] flex justify-center items-center">
+      <div className="z-10 w-[100vw] h-[40vh] bg-[#222222] flex justify-center items-center">
         <label className=" font-bold text-white text-5xl	">Log In</label>
       </div>
 

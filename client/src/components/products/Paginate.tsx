@@ -20,7 +20,7 @@ const Paginate = (props: props) => {
       {pageNumbers.map((page, index) => {
         return (
           <button
-            className=" text-base bg-white text-gray-800 border border-gray-400 rounded py-1 px-3 my-10 mx-3 hover:bg-stone-900 hover:text-white"
+            className=" text-base border border-black bg-white text-gray-800  rounded py-1 px-3 my-10 mx-3 hover:bg-stone-900 hover:text-white"
             key={index}
             onClick={() => props.setCurrentPage(page)}
           >

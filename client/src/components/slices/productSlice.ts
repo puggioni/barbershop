@@ -5,12 +5,12 @@ import { AppThunk } from "../../app/store";
 export interface products {
   _id: string;
   image: string;
-  rating: number;
+  rating?: number;
   name: string;
   description?: string;
   price: number;
   stock?: number;
-  available: boolean;
+  available?: boolean;
   favorite?: boolean;
   category?: Array<any>;
   reviews?: Array<any>;

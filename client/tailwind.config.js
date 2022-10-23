@@ -9,18 +9,21 @@ module.exports = {
       },
       fontFamily: {
         homenaje: ["Homenaje"],
+        Hubballi: ["Hubballi"],
         display: ["Quicksand"],
         body: ["Open Sans"],
       },
       gridTemplateColumns: {
         nav: ".2fr 1fr .2fr .1fr",
       },
+      gridAutoColumns: {
+        categorias: "minmax(0,8)",
+      },
+      backgroundImage: {
+        "store-banner": "url('/src/imagenes/Store-banner.png')",
+      },
     },
 
-    backgroundImage: {
-      home: "url('./imagenes/landing-bg-img.png')",
-      body: "url('./imagenes/landing-bg-img.png')",
-    },
     backgroundSize: {
       auto: "auto",
       cover: "cover",
