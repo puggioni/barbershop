@@ -3,7 +3,6 @@ import User from "../models/user";
 import Role from "../models/role";
 import { Request, Response, NextFunction } from "express";
 
-
 export const verifyToken = async (req, res, next) => {
   try {
     const token = req.headers["token"];
@@ -45,12 +44,10 @@ export const isAdmin = async (req, res, next) => {
   const user = await User.findById(req.userId);
   const roles = await Role.find({ _id: { $in: user?.role } });
 
-
   if (roles[0].name === "admin") {
     next();
     return;
   }
-
 
   return res.status(403).json({ isAdmin: false });
 };
