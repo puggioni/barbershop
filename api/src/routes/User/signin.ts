@@ -13,6 +13,9 @@ router.post("/login", async (req, res) => {
       req.body.password,
       userFound["password"]
     );
+    if (userFound["banned"] === true) {
+      return res.status(400).json({ message: "User banned" });
+    }
     if (!matchPassword)
       return res.status(401).json({ token: null, message: "Invalid Password" });
 

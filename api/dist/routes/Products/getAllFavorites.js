@@ -14,32 +14,17 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const user_1 = __importDefault(require("../../models/user"));
-const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+const auth_1 = require("../../middlewares/auth");
 const router = (0, express_1.Router)();
-router.post("/login", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.get("/favorites", auth_1.verifyToken, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { user } = req.body;
     try {
-        const userFound = yield user_1.default.findOne({
-            email: req.body.email,
-        }).populate("role", "name -_id");
-        if (!userFound)
-            return res.status(400).json({ message: "User not found" });
-        const matchPassword = yield user_1.default.comparePassword(req.body.password, userFound["password"]);
-        if (userFound["banned"] === true) {
-            return res.status(400).json({ message: "User banned" });
-        }
-        if (!matchPassword)
-            return res.status(401).json({ token: null, message: "Invalid Password" });
-        const token = jsonwebtoken_1.default.sign({ _id: userFound["_id"] }, "token", {
-            expiresIn: 60 * 60 * 24,
-        });
-        const response = {
-            user: userFound,
-            token,
-        };
-        res.header("auth-token", token).send(response);
+        const userFound = yield user_1.default.findById(user._id).populate("favorites_products");
+        const allProducts = userFound["favorites_products"];
+        res.status(200).json(allProducts);
     }
-    catch (err) {
-        res.status(500).json(err);
+    catch (error) {
+        res.status(500).json({ message: "Error al obtener favoritos" });
     }
 }));
 exports.default = router;

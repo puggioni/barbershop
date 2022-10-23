@@ -22,7 +22,6 @@ const verifyToken = (req, res, next) => __awaiter(void 0, void 0, void 0, functi
         if (!token)
             return res.status(403).json({ message: "No hay token" });
         const decoded = jsonwebtoken_1.default.verify(token, "token");
-        console.log(decoded);
         req.userId = decoded["_id"];
         const user = yield user_1.default.findById(req.userId, { password: 0 });
         if (!user)
@@ -39,7 +38,6 @@ const isCommon = (req, res, next) => __awaiter(void 0, void 0, void 0, function*
     if (!token)
         return res.status(403).json({ message: "No hay token" });
     const decoded = jsonwebtoken_1.default.verify(token, "token");
-    console.log(decoded);
     req.userId = decoded["_id"];
     const user = yield user_1.default.findById(req.userId);
     const roles = yield role_1.default.find({ _id: { $in: user.role } });

@@ -15,6 +15,9 @@ export interface IProduct {
   reviews: {
     [key: string]: any;
   };
+  purchases: {
+    [key: string]: any;
+  };
   favorite: boolean;
 }
 
@@ -49,7 +52,6 @@ const productSchema = new Schema(
       default: 0,
     },
     image: {
-      required: true,
       type: String,
       default: "",
     },
@@ -71,6 +73,13 @@ const productSchema = new Schema(
         required: true,
         type: Schema.Types.ObjectId,
         ref: "Reviews",
+      },
+    ],
+    purchases: [
+      {
+        required: true,
+        type: Schema.Types.ObjectId,
+        ref: "PurchaseOrder",
       },
     ],
   },

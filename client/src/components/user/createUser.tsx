@@ -1,8 +1,8 @@
-import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import { MouseEvent, useState } from "react";
 import { Link } from "react-router-dom";
-import { useAppDispatch } from "../../app/hooks";
+import { MouseEvent, useState } from "react";
 import { logUp } from "../slices/logIn";
+import { useAppDispatch } from "../../app/hooks";
+import { getAuth, GoogleAuthProvider, signInWithPopup } from "@firebase/auth";
 
 export default function CreateUser() {
   const dispatch = useAppDispatch();

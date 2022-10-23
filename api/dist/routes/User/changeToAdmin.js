@@ -13,33 +13,22 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
+const auth_1 = require("../../middlewares/auth");
 const user_1 = __importDefault(require("../../models/user"));
-const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+const role_1 = __importDefault(require("../../models/role"));
 const router = (0, express_1.Router)();
-router.post("/login", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.patch("/changeToAdmin/:id", auth_1.isAdmin, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { id } = req.params;
+    const { role } = req.body;
     try {
-        const userFound = yield user_1.default.findOne({
-            email: req.body.email,
-        }).populate("role", "name -_id");
-        if (!userFound)
-            return res.status(400).json({ message: "User not found" });
-        const matchPassword = yield user_1.default.comparePassword(req.body.password, userFound["password"]);
-        if (userFound["banned"] === true) {
-            return res.status(400).json({ message: "User banned" });
-        }
-        if (!matchPassword)
-            return res.status(401).json({ token: null, message: "Invalid Password" });
-        const token = jsonwebtoken_1.default.sign({ _id: userFound["_id"] }, "token", {
-            expiresIn: 60 * 60 * 24,
-        });
-        const response = {
-            user: userFound,
-            token,
-        };
-        res.header("auth-token", token).send(response);
+        const user = yield user_1.default.findById(id);
+        const roleFound = yield role_1.default.findOne({ name: role });
+        user["role"][0] = roleFound["_id"];
+        user.save();
+        res.status(200).send("User updated");
     }
-    catch (err) {
-        res.status(500).json(err);
+    catch (error) {
+        res.status(500).send({ error });
     }
 }));
 exports.default = router;
