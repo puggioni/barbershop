@@ -1,16 +1,14 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import axios, { AxiosRequestConfig } from "axios";
+import axios from "axios";
 import { AppThunk } from "../../app/store";
 
 const initialState = {
   adminAuth: false,
 };
 //==========action==================
-export const isAdmin = (
-  token: AxiosRequestConfig<any> | undefined
-): AppThunk => {
+export const isAdmin = (headers: object): AppThunk => {
   return async (dispatch) => {
-    const res = await axios.get("http://localhost:5000/users/isAdmin");
+    const res = await axios.get("http://localhost:5000/users", headers);
     dispatch(adminCred(res.data.name));
   };
 };

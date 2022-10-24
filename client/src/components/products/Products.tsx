@@ -3,6 +3,7 @@ import { BsPlus } from "react-icons/bs";
 import { HiMinus } from "react-icons/hi";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { RootState } from "../../app/store";
+
 import { OrderingByName, OrderingByPrice } from "../products/Order";
 import {
   categorias,
@@ -13,6 +14,7 @@ import Categorias from "./FilterCategorias";
 import Paginate from "./Paginate";
 import ProductCard from "./ProductCard";
 import SearchBar from "./Searchbar";
+
 
 interface prodCard {
   _id: string;
@@ -57,8 +59,10 @@ const Products = () => {
   }, [inicializar]);
 
   const data = useAppSelector((state: RootState) => state.products);
+
   const resetPage = () => {
     setCurrentPage(1);
+
   };
 
   if (data?.allProducts instanceof Array) {
