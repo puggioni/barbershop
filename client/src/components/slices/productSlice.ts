@@ -41,7 +41,9 @@ export const fetchAllProducts = (tosearch: string): AppThunk => {
   return async (dispatch) => {
     if (!tosearch) {
       try {
-        const productos = await axios.get("http://localhost:5000/products/all");
+        const productos = await axios.get(
+          "https://barbershop-roan.vercel.app/products/all"
+        );
         dispatch(allProducts(productos.data));
       } catch (error) {
         return error;
@@ -49,7 +51,7 @@ export const fetchAllProducts = (tosearch: string): AppThunk => {
     } else {
       try {
         const productos = await axios.get(
-          "http://localhost:5000/products/search?name=" + tosearch
+          "https://barbershop-roan.vercel.app/products/search?name=" + tosearch
         );
         dispatch(allProducts(productos.data));
       } catch (error) {
@@ -67,7 +69,7 @@ export const addFavoriteProduct = (
   return async (dispatch) => {
     try {
       const res = await axios.post(
-        "http://localhost:5000/products/addFavorite",
+        "https://barbershop-roan.vercel.app/products/addFavorite",
         { product: { _id: idProduct }, user: { _id: IdUser } },
         { headers: { token: token } }
       );
@@ -88,7 +90,7 @@ export const deleteFavoriteProduct = (
   return async (dispatch) => {
     try {
       const res = await axios.post(
-        "http://localhost:5000/products/removeFavorite",
+        "https://barbershop-roan.vercel.app/products/removeFavorite",
         { product: { _id: idProduct }, user: { _id: IdUser } },
         { headers: { token: token } }
       );
@@ -109,7 +111,7 @@ export const getFavoritesProducts = (
   return async (dispatch) => {
     try {
       const res = await axios.get(
-        "http://localhost:5000/products/favorites/" + IdUser,
+        "https://barbershop-roan.vercel.app/products/favorites/" + IdUser,
         { headers: { token: token } }
       );
       dispatch(setFavorites(res.data));
@@ -125,7 +127,7 @@ export const filter = (categoria: string): AppThunk => {
     try {
       console.log(categoria);
       const product = await axios.get(
-        `http://localhost:5000/products/filter/${categoria}`
+        `https://barbershop-roan.vercel.app/products/filter/${categoria}`
       );
       dispatch(filterByCaregory(product.data));
     } catch (error) {
@@ -137,7 +139,9 @@ export const filter = (categoria: string): AppThunk => {
 export const orderByName = (): AppThunk => {
   return async (dispatch) => {
     try {
-      const ordered = await axios.get("http://localhost:5000/products/all");
+      const ordered = await axios.get(
+        "https://barbershop-roan.vercel.app/products/all"
+      );
       dispatch(sortProductsByName(ordered.data));
     } catch (error) {
       return error;
@@ -147,7 +151,9 @@ export const orderByName = (): AppThunk => {
 export const orderByPrice = (): AppThunk => {
   return async (dispatch) => {
     try {
-      const ordered = await axios.get("http://localhost:5000/products/all");
+      const ordered = await axios.get(
+        "https://barbershop-roan.vercel.app/products/all"
+      );
       dispatch(sortProductsByPrice(ordered.data));
     } catch (error) {
       return error;
@@ -159,7 +165,7 @@ export const categorias = (): AppThunk => {
   return async (dispatch) => {
     try {
       const categorias = await axios.get(
-        `http://localhost:5000/categories/all`
+        `https://barbershop-roan.vercel.app/categories/all`
       );
       dispatch(getCaterogias(categorias.data));
     } catch (error) {
@@ -172,7 +178,7 @@ export const productDetail = (idProduct: string): AppThunk => {
   return async (dispatch) => {
     try {
       const producto = await axios.get(
-        `http://localhost:5000/products/${idProduct}`
+        `https://barbershop-roan.vercel.app/products/${idProduct}`
       );
       dispatch(detail(producto.data));
     } catch (error) {
@@ -190,7 +196,7 @@ export const clearProducDetail: any = () => {
 export const comprar = (compra: object) => {
   return async () => {
     const response: any = await axios.post(
-      "http://localhost:5000/payments/create-order",
+      "https://barbershop-roan.vercel.app/payments/create-order",
       compra
     );
 
@@ -203,7 +209,7 @@ export const reviewProduct = (review: object, config: object): AppThunk => {
   return async (dispatch) => {
     try {
       const producto = await axios.post(
-        `http://localhost:5000/reviews/create`,
+        `https://barbershop-roan.vercel.app/reviews/create`,
         review,
         config
       );
