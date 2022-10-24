@@ -4,10 +4,13 @@ import { HiMinus } from "react-icons/hi";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { RootState } from "../../app/store";
 import { OrderingByName, OrderingByPrice } from "../products/Order";
-import { categorias, fetchAllProducts } from "../slices/productSlice";
+import { categorias, fetchAllProducts,getFavoritesProducts } from "../slices/productSlice";
 import Categorias from "./FilterCategorias";
 import Paginate from "./Paginate";
 import ProductCard from "./ProductCard";
+import NavBar from "../NavBar";
+import { tokenToString } from "typescript";
+
 interface prodCard {
   _id: string;
   name: string;
@@ -25,10 +28,28 @@ const Products = () => {
   const firstPostIndex = lastPostIndex - productsPerPage;
   const [hideAlfa, setAlfa] = useState(false);
   const [hidePrecio, setPrecio] = useState(false);
-
+  const {favs}=useAppSelector((state: RootState)=>state.products)
+  const favoritos=JSON.stringify(favs); 
   const inicializar = useCallback(async () => {
     dispatch(fetchAllProducts(""));
     dispatch(categorias());
+    const aux=window.localStorage.getItem("user");
+    const aux2=window.localStorage.getItem("token");
+    const aux3=window.localStorage.getItem("favoritos");
+    if(aux && aux2 && aux3){
+     const user=JSON.parse(aux);
+     const token=JSON.parse(aux2);
+     const favoritos=JSON.parse(aux3);
+
+   // dispatch(getFavoritesProducts(user._id,token));
+   
+  }else if(aux && aux2 ){
+      
+      const user=JSON.parse(aux);
+      const token=JSON.parse(aux2);
+     dispatch(getFavoritesProducts(user._id,token));
+    
+  }
   }, [dispatch]);
 
   useEffect(() => {
@@ -111,6 +132,7 @@ const Products = () => {
                     name={data.name}
                     image={data.image}
                     price={data.price}
+                    userFavorite={favoritos.includes(data._id)}
                   />
                 );
               } else return null;

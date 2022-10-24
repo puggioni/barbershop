@@ -1,6 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { Action } from "@remix-run/router";
 import axios from "axios";
 import { AppThunk } from "../../app/store";
+import Products from "../products/Products";
 
 export interface products {
   _id: string;
@@ -12,6 +14,7 @@ export interface products {
   stock?: number;
   available?: boolean;
   favorite?: boolean;
+  userFavorite?:boolean;
   category?: Array<any>;
   reviews?: Array<any>;
   __v?: number;
@@ -58,13 +61,50 @@ export const fetchAllProducts = (tosearch: string): AppThunk => {
   };
 };
 
-export const addFavoriteProduct = (productoFav: products): AppThunk => {
-  return async () => {
+export const addFavoriteProduct = (idProduct: string,IdUser:string,token: string): AppThunk => {
+  return async (dispatch) => {
     try {
       const res = await axios.post(
-        "http://localhost:5000/products/",
-        productoFav
-      ); // agregar url de back
+        "http://localhost:5000/products/addFavorite",
+        {product:{_id:idProduct}, user:{_id:IdUser}},
+        {headers:{token:token}}
+      ); 
+      console.log(res.data)
+      dispatch(setFavorites(res.data));
+      
+      return res;
+    } catch (error) {
+      return error;
+    }
+  };
+};
+export const deleteFavoriteProduct = (idProduct: string,IdUser:string,token: string): AppThunk => {
+  return async (dispatch) => {
+    try {
+      const res = await axios.post(
+        "http://localhost:5000/products/removeFavorite",
+        {product:{_id:idProduct}, user:{_id:IdUser}},
+        {headers:{token:token}}
+      ); 
+      console.log(res.data)
+      dispatch(setFavorites(res.data));
+      
+      return res;
+    } catch (error) {
+      return error;
+    }
+  };
+};
+
+export const getFavoritesProducts = (IdUser:string,token: string): AppThunk => {
+  return async (dispatch) => {
+    try {
+      const res = await axios.get(
+        "http://localhost:5000/products/favorites/"+IdUser,
+        {headers:{token:token}}
+      ); 
+      console.log(res.data)
+      dispatch(setFavorites(res.data));
       return res;
     } catch (error) {
       return error;
@@ -242,7 +282,7 @@ export const getAllProductsSlice = createSlice({
     },
 
     clearDetail: (state) => {
-      Object.assign(state, initialState);
+      state.product= null;
     },
 
     getCaterogias: (
@@ -250,6 +290,21 @@ export const getAllProductsSlice = createSlice({
       action: PayloadAction<Array<{ name: string; id: string }>>
     ) => {
       state.categorias = action.payload;
+    },
+
+    setFavorites:(state, action: PayloadAction<Array<products>>)=>{
+      state.favs=action.payload
+    },
+    addFavoritoLocal:(state, action: PayloadAction<products>)=>{
+      state.favs.push(action.payload)
+      window.localStorage.setItem("favoritos",JSON.stringify(state.favs))
+    },
+    deleteFavoritoLocal:(state, action: PayloadAction<string>)=>{
+      const idx = state.favs.findIndex((p:any)=>(p._id===action.payload))
+      let aux=state.favs
+      aux.splice(idx,1)
+      state.favs=aux
+      window.localStorage.setItem("favoritos",JSON.stringify(state.favs))
     },
   },
 });
@@ -263,4 +318,7 @@ export const {
   sortProductsByName,
   sortProductsByPrice,
   getCaterogias,
+  setFavorites,
+  addFavoritoLocal,
+  deleteFavoritoLocal,
 } = getAllProductsSlice.actions;

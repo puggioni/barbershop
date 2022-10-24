@@ -9,6 +9,7 @@ import Reserve from "./components/Reserve/Reserve";
 import BarberDetail from "./components/Reserve/BarberDetail";
 import NavBar from "./components/NavBar";
 import Compra from "./components/carrito/Compra";
+import Favorites from "./components/products/Favorites";
 import { initializeApp } from "@firebase/app";
 import { getAuth } from "@firebase/auth";
 import { firebaseConfig } from "./firebase";
@@ -32,6 +33,7 @@ function App() {
         <Route path="/reserve" element={<Reserve />} />
         <Route path="/reserve/barber" element={<BarberDetail />} />
         <Route path="/products/shopping-cart" element={<Compra />} />
+        <Route path="/products/favorites" element={<Favorites />} />
       </Routes>
     </div>
   );

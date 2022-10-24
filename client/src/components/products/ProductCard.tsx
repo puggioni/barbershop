@@ -6,23 +6,45 @@ import {
 } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import { useAppDispatch } from "../../app/hooks";
-import { addFavoriteProduct } from "../slices/productSlice";
+import { addFavoriteProduct, products,deleteFavoriteProduct,addFavoritoLocal,deleteFavoritoLocal } from "../slices/productSlice";
 
-interface prodCard {
-  _id: string;
-  name: string;
-  image: string;
-  price: number;
-}
 
-const ProductCard = (producto: prodCard) => {
-  const [active, setBookMarkactive] = useState(false);
+const ProductCard = (producto: products) => {
+  const added = (
+    <AiTwotoneHeart
+      title="Quitar de Favoritos"
+      size={25}
+      fill="#be0027"
+    />
+  );
+
+  const notAdded = (
+    <AiTwotoneHeart title="Agregar a Favoritos" 
+    size={25}
+    />
+  );
 
   const dispatch = useAppDispatch();
-  function handleBookmark() {
-    setBookMarkactive(!active);
-    dispatch(addFavoriteProduct(producto));
+  function handleBookmark(e:any) {
+    e.preventDefault();
+    const aux=window.localStorage.getItem("user");
+    const aux2=window.localStorage.getItem("token");
+    if(aux && aux2){
+     const user=JSON.parse(aux);
+     const token=JSON.parse(aux2);
+     if(!producto.userFavorite){
+        dispatch(addFavoriteProduct(producto._id,user._id,token));
+     }else{
+        dispatch(deleteFavoriteProduct(producto._id,user._id,token));
+     }
+    }else{
+      !producto.userFavorite?
+      dispatch(addFavoritoLocal(producto)):
+      dispatch(deleteFavoritoLocal(producto._id));
+    } 
   }
+
+
   const handleClick = (event: any) => {
     event.preventDefault();
     let productos: any = JSON.parse(
@@ -58,7 +80,10 @@ const ProductCard = (producto: prodCard) => {
       <h2 className="font-medium text-2xl">${producto.price}</h2>
 
       <div className="grid grid-cols-2 w-full justify-items-center">
-        {active ? (
+       <div onClick={handleBookmark}>
+      {producto.userFavorite ? added : notAdded}
+      </div> 
+        {/* {active ? (
           <AiTwotoneHeart
             size={25}
             fill="#be0027"
@@ -73,7 +98,7 @@ const ProductCard = (producto: prodCard) => {
               handleBookmark();
             }}
           />
-        )}
+        )} */}
 
         <AiOutlineShoppingCart
           size={25}

@@ -1,3 +1,8 @@
+import { useState } from "react";
+import { VscChromeClose, VscMenu } from "react-icons/vsc";
+import { MdFavoriteBorder } from "react-icons/md";
+import SearchBar from "./products/Searchbar";
+import { AiOutlineShoppingCart } from "react-icons/ai";
 import { RiShoppingBasket2Line } from "react-icons/ri";
 import { Link, useNavigate } from "react-router-dom";
 import { useAppSelector } from "../app/hooks";
@@ -65,8 +70,11 @@ const NavBar = () => {
         </Link>
       )}
 
-      <Link className="hover:text-[#855C20] " to={"/products/shopping-cart"}>
+      <Link title="ir al Carrito" className="hover:text-[#855C20] " to={"/products/shopping-cart"}>
         <RiShoppingBasket2Line size={40} />
+      </Link>
+      <Link title="ir a Favoritos" to={"/products/favorites"}>
+        <MdFavoriteBorder size={40} className="mx-4" />
       </Link>
     </div>
   );
