@@ -21,7 +21,7 @@ const Home = () => {
     <div className=" h-[75vh] text-white">
       <div className="h-[75vh]">
         <Link
-          className="bg-[#855C20] py-4 px-4 font-bold text-3xl absolute left-16 bottom-40"
+          className="bg-[#855C20] py-4 px-4 font-bold text-3xl absolute left-16 bottom-48"
           to="/reserve"
         >
           Pedi tu turno
