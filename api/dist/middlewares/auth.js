@@ -18,13 +18,12 @@ const user_1 = __importDefault(require("../models/user"));
 const role_1 = __importDefault(require("../models/role"));
 const verifyToken = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const token = req.headers["x-access-token"];
+        const token = req.headers["token"];
         if (!token)
             return res.status(403).json({ message: "No hay token" });
         const decoded = jsonwebtoken_1.default.verify(token, "token");
         req.userId = decoded["_id"];
         const user = yield user_1.default.findById(req.userId, { password: 0 });
-        console.log(user);
         if (!user)
             return res.status(404).json({ message: "No se encontro ningun usuario" });
         next();
@@ -35,25 +34,32 @@ const verifyToken = (req, res, next) => __awaiter(void 0, void 0, void 0, functi
 });
 exports.verifyToken = verifyToken;
 const isCommon = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const token = req.headers["token"];
+    if (!token)
+        return res.status(403).json({ message: "No hay token" });
+    const decoded = jsonwebtoken_1.default.verify(token, "token");
+    req.userId = decoded["_id"];
     const user = yield user_1.default.findById(req.userId);
     const roles = yield role_1.default.find({ _id: { $in: user.role } });
-    for (let i = 0; i < roles.length; i++) {
-        if (roles[i].name === "moderator") {
-            next();
-            return;
-        }
+    if (roles[0].name === "user") {
+        next();
+        return;
     }
     return res.status(403).json({ message: "Requiere ser moderador" });
 });
 exports.isCommon = isCommon;
 const isAdmin = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const token = req.headers["token"];
+    if (!token)
+        return res.status(403).json({ message: "No hay token" });
+    const decoded = jsonwebtoken_1.default.verify(token, "token");
+    console.log(decoded);
+    req.userId = decoded["_id"];
     const user = yield user_1.default.findById(req.userId);
     const roles = yield role_1.default.find({ _id: { $in: user === null || user === void 0 ? void 0 : user.role } });
-    for (let i = 0; i < roles.length; i++) {
-        if (roles[i].name === "admin") {
-            next();
-            return;
-        }
+    if (roles[0].name === "admin") {
+        next();
+        return;
     }
     return res.status(403).json({ isAdmin: false });
 });

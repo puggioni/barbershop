@@ -4,6 +4,7 @@ import bodyParser from "body-parser";
 import morgan from "morgan";
 import cookieParser from "cookie-parser";
 import cors from "cors";
+import fileUpload from "express-fileupload";
 import { createRoles } from "./libs/initialSetup";
 const app = express();
 createRoles();
@@ -12,7 +13,13 @@ app.use(express.json());
 
 app.use(bodyParser.urlencoded({ extended: false, limit: "50mb" }));
 app.use(bodyParser.json({ limit: "50mb" }));
-
+app.use(
+  fileUpload({
+    limits: { fileSize: 50 * 1024 * 1024 },
+    useTempFiles: true,
+    tempFileDir: "./uploads",
+  })
+);
 app.use(morgan("dev"));
 app.use((_req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");

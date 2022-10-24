@@ -4,16 +4,19 @@ import ProductDetail from "./components/products/ProductDetail";
 import Products from "./components/products/Products";
 import CreateUser from "./components/user/createUser";
 import LoginUser from "./components/user/LoginUser";
-
 import Perfil from "./components/user/Perfil";
-
 import Reserve from "./components/Reserve/Reserve";
 import BarberDetail from "./components/Reserve/BarberDetail";
 import NavBar from "./components/NavBar";
 import Compra from "./components/carrito/Compra";
-import Users from "./components/admin/Users";
-import Categorias from "./components/admin/Categorias";
-import Prod from "./components/admin/Products";
+import Favorites from "./components/products/Favorites";
+import { initializeApp } from "@firebase/app";
+import { getAuth } from "@firebase/auth";
+import { firebaseConfig } from "./firebase";
+
+export const app = initializeApp(firebaseConfig);
+export const auth = getAuth(app);
+
 
 function App() {
   return (
@@ -25,6 +28,8 @@ function App() {
         <Route path="/product" element={<Products />}></Route>
         <Route path="/product/:idProduct" element={<ProductDetail />} />
         <Route path="/products/shopping-cart" element={<Compra />} />
+        <Route path="/products/shopping-cart" element={<Compra />} />
+        <Route path="/products/favorites" element={<Favorites />} />
         {/*=====================user===============================*/}
         <Route path="/user/create" element={<CreateUser />} />
         <Route path="/user/login" element={<LoginUser />} />
@@ -32,11 +37,9 @@ function App() {
         {/*===================turno=================================*/}
         <Route path="/reserve" element={<Reserve />} />
         <Route path="/reserve/barber" element={<BarberDetail />} />
-        {/*===================admin=================================*/}
-        <Route path="/admin/user" element={<Users />} />
-        <Route path="/admin/products" element={<Prod />} />
-        <Route path="/admin/categorias" element={<Categorias />} />
-        <Route path="/admin/compras" element={<Compra />} />
+
+        
+
       </Routes>
     </div>
   );

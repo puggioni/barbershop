@@ -1,61 +1,3 @@
-/* import { prop, getModelForClass, Ref } from "@typegoose/typegoose";
-import { Schema } from "mongoose";
-import { Role } from "./role";
-
-export class User {
-  @prop({
-    required: true,
-    type: String,
-  })
-  public name: string;
-
-  @prop({
-    required: true,
-    type: String,
-  })
-  public last_name: string;
-
-  @prop({
-    required: true,
-    type: String,
-  })
-  public email: string;
-
-  @prop({
-    required: true,
-    type: String,
-  })
-  public password: string;
-
-  @prop({
-    required: true,
-    type: String,
-  })
-  public phone_number: string;
-
-  @prop({
-    ref: () => Role,
-    type: Schema.Types.ObjectId,
-  })
-  public role: Ref<typeof Role>;
-
-  @prop({
-    type: Boolean,
-  })
-  public confirm: boolean;
-}
-
-
-
-const UserModel = getModelForClass(User);
-
-
-
-
-
-export default UserModel;
- */
-
 import mongoose, { Model } from "mongoose";
 import bCrypt from "bcryptjs";
 const { Schema, model } = mongoose;
@@ -68,6 +10,13 @@ export interface IUser {
   user_image: string;
   phone_number: string;
   role: {
+    [key: string]: any;
+  };
+  banned: boolean;
+  purchases: {
+    [key: string]: any;
+  };
+  favorites_products: {
     [key: string]: any;
   };
 }
@@ -104,11 +53,26 @@ const UserSchema = new Schema<IUser, UserModel>(
       type: String,
       default: "",
     },
-
+    banned: {
+      type: Boolean,
+      default: false,
+    },
     role: [
       {
         type: Schema.Types.ObjectId,
         ref: "Role",
+      },
+    ],
+    purchases: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "PurchaseOrder",
+      },
+    ],
+    favorites_products: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Product",
       },
     ],
   },

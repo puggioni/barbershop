@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { RootState } from "../../app/store";
 import { clearProducDetail, productDetail } from "../slices/productSlice";
-import ReviewsProduct from "./ReviewsProduct"
+import ReviewsProduct from "./ReviewsProduct";
 
 type QuizParams = {
   idProduct: string;
@@ -26,7 +26,7 @@ export default function ProductDetail() {
   }, [dispatch, idProduct]);
 
   const [cantidad, setCantidad] = useState(0);
- 
+
   useEffect(() => {
     inicializar();
     return () => {
@@ -69,8 +69,7 @@ export default function ProductDetail() {
   };
 
   return (
-
-<div className=" bg-slate-200/50 ">
+    <div className=" bg-slate-200/50 ">
       <div className=" flex  flex-col md:flex-row">
         <VscArrowLeft
           className=" ml-4 mt-3 h-12 w-12 fill-black"
@@ -121,7 +120,7 @@ export default function ProductDetail() {
                 <label htmlFor="" className=" font-bold ml-3">
                   Descripción:{" "}
                 </label>
-                <p className="ml-3 text-justify self-center p-4">
+                <p className=" ml-3 text-justify self-center p-4">
                   {product.description}
                 </p>
               </div>
@@ -129,23 +128,23 @@ export default function ProductDetail() {
                 Stock: {product.stock} Unidades
               </label>
             </div>
-          
-          
-        </>
-      ) : (
-        <h1>El producto requerido no existe o no esta activo🤔</h1>
-      )}
-     
-    </div>
-    <div className=" bg-slate-200/50">
-    <div className="flex flex-col ml-4 md:ml-16">
-        {product?<ReviewsProduct reviews={product.reviews} idProduct={idProduct}></ReviewsProduct>
-        :<>Agrega un review al producto</>
-        }
+          </>
+        ) : (
+          <h1>El producto requerido no existe o no esta activo🤔</h1>
+        )}
       </div>
+      <div className=" bg-slate-200/50">
+        <div className="flex flex-col ml-4 md:ml-16">
+          {product ? (
+            <ReviewsProduct
+              reviews={product.reviews}
+              idProduct={idProduct}
+            ></ReviewsProduct>
+          ) : (
+            <>Agrega un review al producto</>
+          )}
+        </div>
       </div>
     </div>
-    
-
   );
 }

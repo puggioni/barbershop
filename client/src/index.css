@@ -1,14 +1,15 @@
+@import url("https://fonts.googleapis.com/css2?family=Homenaje&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Hubballi&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 body {
-  background-image: url("https://images.unsplash.com/photo-1592647420148-bfcc177e2117?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=839&q=80");
+  background-image: url("../src/imagenes/landing-bg-img.png");
   background-size: 100% 100%;
   background-position: center;
   background-repeat: no-repeat;
-  background-attachment: fixed;
-  height: 100%;
+  background-color: black;
 }
 .leaflet-container {
   width: 500px;

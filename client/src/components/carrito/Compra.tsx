@@ -1,16 +1,36 @@
 import CardCart from "./CardCart";
+import { useAppDispatch } from "../../app/hooks";
+import { comprar } from "../slices/productSlice";
 const Compra = () => {
   let products: any = JSON.parse(
     window.localStorage.getItem("product") || "[]"
   );
-
-  const cantidadTotal = products.reduce((acc: any, prod: any) => {
-    return acc + prod.cantidad;
-  }, 0);
-
-  const precioTotal = products.reduce((acc: any, prod: any) => {
+  console.log(products);
+  const cantidadTotal = products.reduce(
+    (acc: number, prod: { cantidad: number }) => {
+      return acc + prod.cantidad;
+    },
+    0
+  );
+  const dispatch = useAppDispatch();
+  const precioTotal = products.reduce((acc: number, prod: any) => {
     return acc + prod.productos.price * prod.cantidad;
   }, 0);
+  const compra: any = {
+    purchase_units: [
+      {
+        amount: {
+          currency_code: "USD",
+          value: precioTotal,
+        },
+      },
+    ],
+    products: products,
+  };
+  const handleClick = (e: any) => {
+    e.preventDefault();
+    dispatch(comprar(compra));
+  };
 
   return (
     <div>
@@ -29,6 +49,8 @@ const Compra = () => {
         ))}
       <p>cantidad total: {cantidadTotal}</p>
       <p>precio total: {precioTotal}</p>
+
+      <button onClick={(e) => handleClick(e)}>Comprar</button>
     </div>
   );
 };

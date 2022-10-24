@@ -1,19 +1,25 @@
-import { prop, getModelForClass } from "@typegoose/typegoose";
+import { Schema, model } from "mongoose";
 
-export class Office {
-  @prop({
-    required: true,
-    type: String,
-  })
-  public location: String;
-
-  @prop({
-    required: true,
-    type: String,
-  })
-  public shift: String;
+export interface IOffice {
+    lat: number;
+    long: number;
 }
 
-const OfficeModel = getModelForClass(Office);
+const officeSchema = new Schema(
+    {
+      lat: {
+        required: true,
+        type: Number,
+      },
+      long: {
+        required: true,
+        type: Number,
+      },
+    },
+    {
+        versionKey: false,
+        timestamps: false,
+    }
+);
 
-export default OfficeModel;
+export default model<IOffice>("Office", officeSchema);

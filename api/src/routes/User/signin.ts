@@ -13,16 +13,21 @@ router.post("/login", async (req, res) => {
       req.body.password,
       userFound["password"]
     );
+    if (userFound["banned"] === true) {
+      return res.status(400).json({ message: "User banned" });
+    }
     if (!matchPassword)
       return res.status(401).json({ token: null, message: "Invalid Password" });
 
     const token: string = jwt.sign({ _id: userFound["_id"] }, "token", {
       expiresIn: 60 * 60 * 24,
     });
+
     const response = {
       user: userFound,
       token,
     };
+
     res.header("auth-token", token).send(response);
   } catch (err) {
     res.status(500).json(err);
