@@ -21,7 +21,7 @@ const ProductCard = (producto: any) => {
 
   if (producto) {
     return (
-      <div className="grid grid-cols-[.5fr_1fr_.2fr_.2fr_.2fr] mx-8">
+      <div className="grid grid-cols-[.5fr_1fr_.2fr_.2fr_.2fr] mx-8 items-center">
         <img className="h-32 " src={producto.image} alt="product" />
 
         <Link to={`/product/${producto._id}`}>{producto.name}</Link>
