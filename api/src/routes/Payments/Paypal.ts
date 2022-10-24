@@ -33,7 +33,7 @@ router.post("/create-order", checkStock, async (req, res) => {
       }
     );
     //                  ACA DEBERIA CAMBIAR EL ESTADO DE LA ORDEN DE CAPTURANDO - PAGADA - ENVIADA
-    deleteStock(products);
+    // deleteStock(products);
 
     res.status(200).json(response.data);
   } catch (error) {
