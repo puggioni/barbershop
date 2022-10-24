@@ -2,31 +2,42 @@ import { useState } from "react";
 import { BsBookmarkHeart, BsFillBookmarkFill } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import { useAppDispatch } from "../../app/hooks";
-import { addFavoriteProduct, products } from "../slices/productSlice";
+import { addFavoriteProduct, products,deleteFavoriteProduct,addFavoritoLocal,deleteFavoritoLocal } from "../slices/productSlice";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 
 const ProductCard = (producto: products) => {
   const added = (
     <BsFillBookmarkFill
-      onClick={() => {
-        handleBookmark();
-      }}
+      title="Quitar de Favoritos"
       className="absolute top-5 right-5 w-6 h-6 pointer-events-auto fill-amber-200"
     />
   );
 
   const notAdded = (
-    <BsBookmarkHeart className="absolute top-5 right-5 w-6 h-6 pointer-events-auto hover:fill-amber-200" />
+    <BsBookmarkHeart title="Agregar a Favoritos" className="absolute top-5 right-5 w-6 h-6 pointer-events-auto hover:fill-amber-200" />
   );
 
-  const [activated, setBookMarkactive] = useState(false);
-
   const dispatch = useAppDispatch();
-  function handleBookmark() {
-    const active = activated === true ? false : true;
-    setBookMarkactive(active);
-    dispatch(addFavoriteProduct(producto));
+  function handleBookmark(e:any) {
+    e.preventDefault();
+    const aux=window.localStorage.getItem("user");
+    const aux2=window.localStorage.getItem("token");
+    if(aux && aux2){
+     const user=JSON.parse(aux);
+     const token=JSON.parse(aux2);
+     if(!producto.userFavorite){
+        dispatch(addFavoriteProduct(producto._id,user._id,token));
+     }else{
+        dispatch(deleteFavoriteProduct(producto._id,user._id,token));
+     }
+    }else{
+      !producto.userFavorite?
+      dispatch(addFavoritoLocal(producto)):
+      dispatch(deleteFavoritoLocal(producto._id));
+    } 
   }
+
+
   const handleClick = (event: any) => {
     event.preventDefault();
 
@@ -51,11 +62,11 @@ const ProductCard = (producto: products) => {
       >
         <div className=" h-full w-2/5 lg:w-[90%] lg:h-72 lg:mt-4 mr-4 rounded-lg object-center relative">
           <div
-            onClick={() => {
-              handleBookmark();
+            onClick={(e) => {
+              handleBookmark(e);
             }}
           >
-            {activated ? added : notAdded}
+            {producto.userFavorite ? added : notAdded}
           </div>
           <img
             className="h-32 m-4 object-cover bg-white rounded-xl lg:h-full lg:m-0"

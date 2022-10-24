@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { VscChromeClose, VscMenu } from "react-icons/vsc";
+import { MdFavoriteBorder } from "react-icons/md";
 import SearchBar from "./products/Searchbar";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { Link } from "react-router-dom";
@@ -51,8 +52,11 @@ const NavBar = () => {
       </Link>
       <SearchBar expandSearch={expandSearch} setSearch={setExpand} />
 
-      <Link to={"/products/shopping-cart"}>
+      <Link title="ir al Carrito" to={"/products/shopping-cart"}>
         <AiOutlineShoppingCart size={40} className="mx-4" />
+      </Link>
+      <Link title="ir a Favoritos" to={"/products/favorites"}>
+        <MdFavoriteBorder size={40} className="mx-4" />
       </Link>
     </div>
   );

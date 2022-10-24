@@ -4,12 +4,13 @@ import { useNavigate } from "react-router";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { RootState } from "../../app/store";
 import Paginate from "./Paginate";
-import { categorias, fetchAllProducts } from "../slices/productSlice";
+import { categorias, fetchAllProducts,getFavoritesProducts} from "../slices/productSlice";
 
 import Categorias from "./FilterCategorias";
 import ProductCard from "./ProductCard";
 import NavBar from "../NavBar";
 import{ OrderingByName, OrderingByPrice } from "../products/Order"
+import { tokenToString } from "typescript";
 
 interface prodCard {
   _id: string;
@@ -18,9 +19,10 @@ interface prodCard {
   price: number;
   rating: number;
   available: boolean;
+  
 }
 
-const Products = () => {
+  const Products = () => {
   const dispatch = useAppDispatch();
   let navigate = useNavigate();
 
@@ -28,11 +30,28 @@ const Products = () => {
   const [productsPerPage] = useState(8);
   const lastPostIndex = currentPage * productsPerPage;
   const firstPostIndex = lastPostIndex - productsPerPage;
-
+  const {favs}=useAppSelector((state: RootState)=>state.products)
+  const favoritos=JSON.stringify(favs); 
   const inicializar = useCallback(async () => {
     dispatch(fetchAllProducts(""));
     dispatch(categorias());
+    const aux=window.localStorage.getItem("user");
+    const aux2=window.localStorage.getItem("token");
+    const aux3=window.localStorage.getItem("favoritos");
+    if(aux && aux2 && aux3){
+     const user=JSON.parse(aux);
+     const token=JSON.parse(aux2);
+     const favoritos=JSON.parse(aux3);
 
+   // dispatch(getFavoritesProducts(user._id,token));
+   
+  }else if(aux && aux2 ){
+      
+      const user=JSON.parse(aux);
+      const token=JSON.parse(aux2);
+     dispatch(getFavoritesProducts(user._id,token));
+    
+  }
   }, [dispatch]);
 
   useEffect(() => {
@@ -80,6 +99,7 @@ const Products = () => {
               image={data.image}
               price={data.price}
               rating={10}
+              userFavorite={favoritos.includes(data._id)}
               available={data.available}
             />
           ))}
