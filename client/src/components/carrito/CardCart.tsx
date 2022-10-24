@@ -22,8 +22,8 @@ const ProductCard = (producto: any) => {
   };
 
   const handleCantidadChange = (event: any, num: number) => {
-    event?.preventDefault();
-    setCantidad((prev: number) => prev + num);
+    event.preventDefault();
+
     console.log(cantidad);
 
     const index = prodLocalStorage.findIndex((p: any) => {
@@ -31,10 +31,14 @@ const ProductCard = (producto: any) => {
     });
     prodLocalStorage[index] = { productos: producto, cantidad: cantidad };
 
-    window.localStorage.setItem("product", JSON.stringify(prodLocalStorage));
-
+    updateLocal(prodLocalStorage);
     producto.forceUpdate();
   };
+
+  const updateLocal = (updated: any) => {
+    window.localStorage.setItem("product", JSON.stringify(updated));
+  };
+
   if (producto) {
     return (
       <div className="grid grid-cols-[.5fr_1fr_.2fr_.2fr_.2fr] mx-8 items-center">
@@ -46,6 +50,7 @@ const ProductCard = (producto: any) => {
           <div>{cantidad}</div>
           <HiOutlineArrowLongDown
             onClick={(e) => {
+              setCantidad((prev: number) => prev - 1);
               handleCantidadChange(e, -1);
             }}
             size={10}
@@ -53,6 +58,7 @@ const ProductCard = (producto: any) => {
           />
           <HiOutlineArrowLongUp
             onClick={(e) => {
+              setCantidad((prev: number) => prev + 1);
               handleCantidadChange(e, 1);
             }}
             size={10}

@@ -43,7 +43,7 @@ const Compra = () => {
   };
 
   return (
-    <div className="bg-white bg-carrito-banner bg-no-repeat pt-[15rem] ">
+    <div className="bg-white bg-carrito-banner bg-no-repeat pt-[15rem] bg-contain	">
       <div className="flex flex-col items-center pb-[4rem] bg-white/50 rounded-xl mx-12">
         <div className="font-semibold text-2xl pt-2 pb-6">Tu Carrito</div>
         <div className="content-none w-1/4 border-b border-black"></div>
