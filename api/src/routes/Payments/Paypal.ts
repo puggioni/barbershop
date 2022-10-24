@@ -62,7 +62,7 @@ router.get("/capture-order", async (req, res) => {
 });
 
 router.get("/cancel-order", (req, res) => {
-  res.redirect("http://localhost:3000/product");
+  res.redirect("https://barbershop-front.vercel.app/product");
 });
 
 export default router;
