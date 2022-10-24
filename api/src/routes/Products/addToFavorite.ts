@@ -3,6 +3,8 @@ import User from "../../models/user";
 import Product from "../../models/products";
 import { verifyToken } from "../../middlewares/auth";
 import { Request, Response } from "express";
+import ProductModel from "../../models/products";
+
 const router = Router();
 
 router.post(
@@ -15,7 +17,11 @@ router.post(
       const userFound: any = await User.findById(user._id);
       userFound["favorites_products"].push(productFound["_id"]);
       await userFound.save();
-      res.status(200).json(userFound);
+      const productsIds = userFound["favorites_products"];
+      const allProducts = await ProductModel.find({
+        _id: { $in: productsIds },
+      });
+      res.status(200).json(allProducts);
     } catch (error) {
       res.status(500).json({ message: "Error al agregar a favoritos" });
     }

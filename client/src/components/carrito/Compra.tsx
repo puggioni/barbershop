@@ -1,6 +1,6 @@
-import CardCart from "./CardCart";
 import { useAppDispatch } from "../../app/hooks";
 import { comprar } from "../slices/productSlice";
+import CardCart from "./CardCart";
 const Compra = () => {
   let products: any = JSON.parse(
     window.localStorage.getItem("product") || "[]"
@@ -33,24 +33,33 @@ const Compra = () => {
   };
 
   return (
-    <div>
-      {products &&
-        products.map((data: any) => (
-          <div>
-            <CardCart
-              key={data.productos._id}
-              _id={data.productos._id}
-              name={data.productos.name}
-              image={data.productos.image}
-              price={data.productos.price}
-              cantidad={data.cantidad}
-            />
-          </div>
-        ))}
-      <p>cantidad total: {cantidadTotal}</p>
-      <p>precio total: {precioTotal}</p>
+    <div className="bg-white bg-carrito-banner bg-no-repeat pt-[15rem]">
+      <div className="flex flex-col items-center pb-[4rem] bg-white/50 rounded-xl mx-12">
+        <div className="font-semibold text-2xl pt-2 pb-6">Tu Carrito</div>
+        <div className="content-none w-1/4 border-b border-black"></div>
+      </div>
 
-      <button onClick={(e) => handleClick(e)}>Comprar</button>
+      <div className="grid grid-cols-[1.5fr_1fr] ">
+        <div className="">
+          {products &&
+            products.map((data: any) => (
+              <CardCart
+                key={data.productos._id}
+                _id={data.productos._id}
+                name={data.productos.name}
+                image={data.productos.image}
+                price={data.productos.price}
+                cantidad={data.cantidad}
+              />
+            ))}
+        </div>
+
+        <div className="border border-black mx-20 h-1/4 relative flex flex-row">
+          <p>cantidad total: {cantidadTotal}</p>
+          <p>precio total: {precioTotal}</p>
+          <button onClick={(e) => handleClick(e)}>Comprar</button>
+        </div>
+      </div>
     </div>
   );
 };
