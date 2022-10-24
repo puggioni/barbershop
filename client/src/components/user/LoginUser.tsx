@@ -17,9 +17,8 @@ export default function LoginUser() {
     dispatch(logIn(email, password));
     console.log(user);
 
-    if (user.name) {
-      navigate("/");
-    }
+    navigate("/");
+
     setPassword("");
     setUserName("");
   };
@@ -32,9 +31,11 @@ export default function LoginUser() {
 
     dispatch(logIn(response.user.email, response.user.email));
   };
+  let string = "Log In" + email + password;
+  console.log(string);
 
   return (
-    <div className="bg-white">
+    <div className="bg-white h-[100vh]">
       <div className="z-10 w-[100vw] h-[40vh] bg-[#222222] flex justify-center items-center">
         <label className=" font-bold text-white text-5xl	">Log In</label>
       </div>
