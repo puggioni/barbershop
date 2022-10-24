@@ -1,7 +1,10 @@
+import { useReducer } from "react";
 import { useAppDispatch } from "../../app/hooks";
 import { comprar } from "../slices/productSlice";
 import CardCart from "./CardCart";
 const Compra = () => {
+  const [, forceUpdate] = useReducer((x) => x + 1, 0);
+
   let products: any = JSON.parse(
     window.localStorage.getItem("product") || "[]"
   );
@@ -15,7 +18,7 @@ const Compra = () => {
   );
   const dispatch = useAppDispatch();
   const precioTotal = products.reduce((acc: number, prod: any) => {
-    return acc + prod.productos.price * prod.cantidad;
+    return Number((acc + prod.productos.price * prod.cantidad).toFixed(2));
   }, 0);
 
   const compra = products?.map((productos: any) => {
@@ -33,7 +36,6 @@ const Compra = () => {
     },
     compra,
   };
-  console.log(laCompra);
 
   const handleClick = (e: any) => {
     e.preventDefault();
@@ -58,11 +60,12 @@ const Compra = () => {
                 image={data.productos.image}
                 price={data.productos.price}
                 cantidad={data.cantidad}
+                forceUpdate={forceUpdate}
               />
             ))}
         </div>
 
-        <div className="border h-[65%] border-black mx-20 grid grid-cols-2  gap-8 ">
+        <div className="border h-60 border-black mx-20 grid grid-cols-2 p-8 gap-8 ">
           <p className="justify-self-center font-semibold mt-8">
             {cantidadTotal} articulos
           </p>
