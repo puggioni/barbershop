@@ -7,12 +7,12 @@ import Products from "../products/Products";
 export interface products {
   _id: string;
   image: string;
-  rating: number;
+  rating?: number;
   name: string;
   description?: string;
   price: number;
   stock?: number;
-  available: boolean;
+  available?: boolean;
   favorite?: boolean;
   userFavorite?:boolean;
   category?: Array<any>;

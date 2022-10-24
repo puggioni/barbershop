@@ -160,159 +160,160 @@ export default function CreateUser() {
   }
 
   return (
-    <div className="font-sans">
-      <Link to={"/"}>
-        <h1 className=" ml-8 text-white">Home</h1>
-      </Link>
-      <div className="relative min-h-screen flex flex-col sm:justify-center items-center">
-        <div className="relative sm:max-w-sm w-full">
-          <div className="relative w-full rounded-3xl  px-6 py-4  bg-slate-200/50  shadow-md">
-            <label className="block mt-3 text-sm text-700 text-center font-semibold">
-              Registrate
-            </label>
-            <form
-              name="form"
-              onChange={loadForm}
-              method="#"
-              action="#"
-              className="mt-10"
-            >
-              <div>
-                <input
-                  value={formUser.name}
-                  name="name"
-                  type="text"
-                  placeholder="Nombre"
-                  className="mt-1 block w-full border-none bg-gray-100 h-11 rounded-xl shadow-lg hover:bg-blue-100 focus:bg-blue-100 focus:ring-0"
-                />
-                {!warnToPrint.name ? null : (
-                  <span className=" text-red-700 font-semibold">
-                    {warnToPrint.name}
-                  </span>
-                )}
-              </div>
-              <div className="mt-7">
-                <input
-                  value={formUser.lastname}
-                  name="lastname"
-                  type="text"
-                  placeholder="Apellidos"
-                  className="mt-1 block w-full border-none bg-gray-100 h-11 rounded-xl shadow-lg hover:bg-blue-100 focus:bg-blue-100 focus:ring-0"
-                />
-                {!warnToPrint.lastname ? null : (
-                  <span className=" text-red-700 font-semibold">
-                    {warnToPrint.lastname}
-                  </span>
-                )}
-              </div>
+    <div className="bg-white">
+      <div className="z-1 w-[100vw] h-[40vh] bg-[#222222] flex justify-center items-center">
+        <label className=" font-bold text-white text-5xl	">Sign Up</label>
+      </div>
 
-              <div className="mt-7">
-                <input
-                  value={formUser.email}
-                  name="email"
-                  type="email"
-                  placeholder="Correo electronico"
-                  className="mt-1 block w-full border-none bg-gray-100 h-11 rounded-xl shadow-lg hover:bg-blue-100 focus:bg-blue-100 focus:ring-0"
-                />
-                {!warnToPrint.email ? null : (
-                  <span className=" text-red-700 font-semibold">
-                    {warnToPrint.email}
-                  </span>
-                )}
-              </div>
-              <div className="mt-7">
-                <input
-                  value={formUser.phone_number}
-                  name="phone_number"
-                  type="number"
-                  placeholder="Número telefónico"
-                  className="mt-1 block w-full border-none bg-gray-100 h-11 rounded-xl shadow-lg hover:bg-blue-100 focus:bg-blue-100 focus:ring-0"
-                />
-                {!warnToPrint.phone_number ? null : (
-                  <span className=" text-red-700 font-semibold">
-                    {warnToPrint.phone_number}
-                  </span>
-                )}
-              </div>
-              <div className="mt-7">
-                <input
-                  value={formUser.password}
-                  name="password"
-                  type="password"
-                  placeholder="Contraseña"
-                  className="mt-1 block w-full border-none bg-gray-100 h-11 rounded-xl shadow-lg hover:bg-blue-100 focus:bg-blue-100 focus:ring-0"
-                />
-              </div>
+      <div className="-mt-20 border-2 border-[#222222] flex flex-col sm:justify-center w-1/2 mx-auto items-center">
+        <div className=" w-full rounded-lg px-6 py-4 bg-white">
+          <form
+            name="form"
+            onChange={loadForm}
+            className="grid grid-cols-2 gap-8 mt-10"
+          >
+            {/* ======= */}
+            <div>
+              <input
+                value={formUser.name}
+                name="name"
+                type="text"
+                placeholder="Nombre"
+                className=" border-2 border-[#222222] pl-4 block w-full  bg-gray-100 h-11 rounded-lg shadow-lg hover:bg-blue-100 focus:bg-blue-100 focus:ring-0"
+              />
+              {!warnToPrint.name ? null : (
+                <span className=" text-red-700 font-semibold">
+                  {warnToPrint.name}
+                </span>
+              )}
+            </div>
+            {/* ======== */}
+
+            <div className="">
+              <input
+                value={formUser.lastname}
+                name="lastname"
+                type="text"
+                placeholder="Apellidos"
+                className=" border-2 border-[#222222] pl-4 block w-full  bg-gray-100 h-11 rounded-lg shadow-lg hover:bg-blue-100 focus:bg-blue-100 focus:ring-0"
+              />
+              {!warnToPrint.lastname ? null : (
+                <span className=" text-red-700 font-semibold">
+                  {warnToPrint.lastname}
+                </span>
+              )}
+            </div>
+            {/* ======= */}
+
+            <div className="">
+              <input
+                value={formUser.email}
+                name="email"
+                type="email"
+                placeholder="Correo electronico"
+                className=" border-2 border-[#222222] pl-4 block w-full  bg-gray-100 h-11 rounded-lg shadow-lg hover:bg-blue-100 focus:bg-blue-100 focus:ring-0"
+              />
+              {!warnToPrint.email ? null : (
+                <span className=" text-red-700 font-semibold">
+                  {warnToPrint.email}
+                </span>
+              )}
+            </div>
+            {/* ======= */}
+
+            <div className="">
+              <input
+                value={formUser.phone_number}
+                name="phone_number"
+                type="number"
+                placeholder="Número telefónico"
+                className=" border-2 border-[#222222] pl-4 block w-full  bg-gray-100 h-11 rounded-lg shadow-lg hover:bg-blue-100 focus:bg-blue-100 focus:ring-0"
+              />
+              {!warnToPrint.phone_number ? null : (
+                <span className=" text-red-700 font-semibold">
+                  {warnToPrint.phone_number}
+                </span>
+              )}
+            </div>
+            {/* ======= */}
+
+            <div className="">
+              <input
+                value={formUser.password}
+                name="password"
+                type="password"
+                placeholder="Contraseña"
+                className=" border-2 border-[#222222] pl-4 block w-full  bg-gray-100 h-11 rounded-lg shadow-lg hover:bg-blue-100 focus:bg-blue-100 focus:ring-0"
+              />
+
               {!warnToPrint.password ? null : (
                 <span className=" text-red-700 font-semibold">
                   {warnToPrint.password}
                 </span>
               )}
+            </div>
+            {/* ======= */}
 
-              <div className="mt-7">
-                <input
-                  value={formUser.repassword}
-                  name="repassword"
-                  type="password"
-                  placeholder="Confirmar contraseña"
-                  className="mt-1 block w-full border-none bg-gray-100 h-11 rounded-xl shadow-lg hover:bg-blue-100 focus:bg-blue-100 focus:ring-0"
-                />
-                {!warnToPrint.repassword ? null : (
-                  <span className=" text-red-700 font-semibold">
-                    {warnToPrint.repassword}
-                  </span>
-                )}
-              </div>
+            <div className="">
+              <input
+                value={formUser.repassword}
+                name="repassword"
+                type="password"
+                placeholder="Confirmar contraseña"
+                className=" border-2 border-[#222222] pl-4 block w-full  bg-gray-100 h-11 rounded-lg shadow-lg hover:bg-blue-100 focus:bg-blue-100 focus:ring-0"
+              />
+              {!warnToPrint.repassword ? null : (
+                <span className=" text-red-700 font-semibold">
+                  {warnToPrint.repassword}
+                </span>
+              )}
+            </div>
+            {/* ======= */}
 
-              <div className="mt-7">
-                <button
-                  type="submit"
-                  onClick={(event: any) => {
-                    handleSubmit(event);
-                  }}
-                  className="bg-blue-500 w-full py-3 rounded-xl text-white shadow-xl hover:shadow-inner focus:outline-none transition duration-500 ease-in-out  transform hover:-translate-x hover:scale-105"
-                >
-                  Registrar
-                </button>
-              </div>
+            <button
+              type="submit"
+              onClick={(event: any) => {
+                handleSubmit(event);
+              }}
+              className=" col-span-2 bg-[#855C20] w-[75%] mx-10 justify-self-center py-3 rounded-lg text-white shadow-xl focus:outline-none transition duration-500 ease-in-out  transform hover:-translate-x hover:scale-105"
+            >
+              Registrar
+            </button>
 
-              <div className="flex mt-7 items-center text-center">
-                <hr className="border-gray-300 border-1 w-full rounded-md" />
-                <label className="block font-medium text-sm text-600 w-full">
-                  Registrate con
-                </label>
-                <hr className="border-gray-300 border-1 w-full rounded-md" />
-              </div>
+            <div className="col-span-2 flex  items-center text-center">
+              <hr className="border-gray-300 border-1 w-full rounded-md" />
+              <label className="block font-medium text-sm text-600 w-full">
+                Registrate con
+              </label>
+              <hr className="border-gray-300 border-1 w-full rounded-md" />
+            </div>
 
-              <div className="flex mt-7 justify-center w-full">
-                <button
-                  onSubmit={(e) => e.preventDefault()}
-                  className="mr-5 bg-blue-500 border-none px-4 py-2 rounded-xl cursor-pointer text-white shadow-xl hover:shadow-inner transition duration-500 ease-in-out  transform hover:-translate-x hover:scale-105"
-                >
-                  Facebook
-                </button>
+            <div className="col-span-2 flex gap-10 justify-center w-full">
+              <button
+                onSubmit={(e) => e.preventDefault()}
+                className=" bg-blue-500 border-none px-4 py-2 rounded-xl cursor-pointer text-white shadow-xl hover:shadow-inner transition duration-500 ease-in-out  transform hover:-translate-x hover:scale-105"
+              >
+                Facebook
+              </button>
 
-                <button
-                  onClick={(e) => handleGoogleSignIn(e)}
-                  className="bg-red-500 border-none px-4 py-2 rounded-xl cursor-pointer text-white shadow-xl hover:shadow-inner transition duration-500 ease-in-out  transform hover:-translate-x hover:scale-105"
-                >
-                  Google
-                </button>
-              </div>
+              <button
+                onClick={(e) => handleGoogleSignIn(e)}
+                className="bg-red-500 border-none px-4 py-2 rounded-xl cursor-pointer text-white shadow-xl hover:shadow-inner transition duration-500 ease-in-out  transform hover:-translate-x hover:scale-105"
+              >
+                Google
+              </button>
+            </div>
 
-              <div className="mt-7">
-                <div className="flex justify-center items-center">
-                  <label className="mr-2">¿Ya tienes una cuenta?</label>
-                  <Link
-                    to={"/user/login"}
-                    className=" text-white-500 transition duration-500 ease-in-out  transform hover:-translate-x hover:scale-105"
-                  >
-                    Iniciar sesion
-                  </Link>
-                </div>
-              </div>
-            </form>
-          </div>
+            <div className="col-span-2  flex justify-center items-center">
+              <label className="mr-2">¿Ya tienes una cuenta?</label>
+              <Link
+                to={"/user/login"}
+                className=" text-white-500 transition duration-500 ease-in-out  transform hover:-translate-x hover:scale-105"
+              >
+                Iniciar sesion
+              </Link>
+            </div>
+          </form>
         </div>
       </div>
     </div>

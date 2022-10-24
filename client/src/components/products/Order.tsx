@@ -1,36 +1,47 @@
-import { useAppDispatch, useAppSelector } from "../../app/hooks"
-import { sortProductsByName, sortProductsByPrice } from "../slices/productSlice";
+import { useAppDispatch } from "../../app/hooks";
+import {
+  sortProductsByName,
+  sortProductsByPrice,
+} from "../slices/productSlice";
 
-export const OrderingByName = ()=>{
-    const dispatch=useAppDispatch();
-
-    const handleClick = (event: any) => {
-      if (event.target.value.length) dispatch(sortProductsByName(event.target.value));
-    };
-
-    return (
-    <select className='' onChange={(event)=>handleClick(event)}>
-      <option>ORDERING</option>
-      <option value='name-asc'>A-Z</option>
-      <option value='name-desc'>Z-A</option>
-  </select>  
-  )
-}
-
-export const OrderingByPrice = ()=>{
-  const dispatch=useAppDispatch();
+export const OrderingByName = (hidden: { hidden: boolean }) => {
+  const dispatch = useAppDispatch();
 
   const handleClick = (event: any) => {
-    if (event.target.value.length) dispatch(sortProductsByPrice(event.target.value));
+    if (event.target.value.length)
+      dispatch(sortProductsByName(event.target.value));
   };
+  const h = hidden.hidden ? "" : "hidden";
 
   return (
-  <select className='' onChange={(event)=>handleClick(event)}>
-    <option>PRICE</option>
-    <option value='caro'>caro</option>
-    <option value='barato'>barato</option>
-</select>  
-)
-}
+    <div className={`flex flex-col items-start gap-8 ${h}`}>
+      <button onClick={(event) => handleClick(event)} value="name-asc">
+        A-Z
+      </button>
+      <button onClick={(event) => handleClick(event)} value="name-desc">
+        Z-A
+      </button>
+    </div>
+  );
+};
 
-// export default {OrderingByName, OrderingByPrice}
+export const OrderingByPrice = (hidden: { hidden: boolean }) => {
+  const dispatch = useAppDispatch();
+
+  const handleClick = (event: any) => {
+    if (event.target.value.length)
+      dispatch(sortProductsByPrice(event.target.value));
+  };
+  const h = hidden.hidden ? "" : "hidden";
+
+  return (
+    <div className={`flex flex-col items-start gap-8 ${h}`}>
+      <button onClick={(event) => handleClick(event)} value="caro">
+        Mayor precio
+      </button>
+      <button onClick={(event) => handleClick(event)} value="barato">
+        Menor precio
+      </button>
+    </div>
+  );
+};

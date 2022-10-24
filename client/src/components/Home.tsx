@@ -1,14 +1,13 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "../app/hooks";
+import { useAppDispatch } from "../app/hooks";
+import Footer from "./Footer";
 import { yaLog } from "./slices/logIn";
-import Logeado from "./user/Logeado";
 
 export const buttonStyle =
   "m-auto px-3 py-1.5 bg-white rounded-lg border-2 border-black text-black hover:bg-black hover:text-white";
 
 const Home = () => {
-  const logeado = useAppSelector((state) => state.logIn.logeado);
   const dispatch = useAppDispatch();
   const user: any = JSON.parse(window.localStorage.getItem("user") || "{}");
 
@@ -19,30 +18,16 @@ const Home = () => {
   }, [dispatch, user]);
 
   return (
-    <div className=" h-screen text-white">
-      {logeado ? (
-        <Logeado />
-      ) : (
-        <Link to={"/user/login"}>
-          <button className="absolute top-15 right-0 m-4 ">
-            Log In/Sign Up
-          </button>
+    <div className=" h-[75vh] text-white">
+      <div className="h-[75vh]">
+        <Link
+          className="bg-[#855C20] py-4 px-4 font-bold text-3xl absolute left-16 bottom-40"
+          to="/reserve"
+        >
+          Pedi tu turno
         </Link>
-      )} 
-
-      <div className="flex flex-col gap-y-10 font-semibold translate-y-1/2">
-        <h1 className="my-auto text-5xl text-center">
-          Henry Barber <br />
-          Shop
-        </h1>
-        <Link className={buttonStyle} to="/product">
-          Store
-        </Link>
-        <Link className={buttonStyle} to="/reserve">
-          Pedi tu Turno
-        </Link>
-        <button className={buttonStyle}>Conocenos</button>
       </div>
+      <Footer />
     </div>
   );
 };

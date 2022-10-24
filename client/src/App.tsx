@@ -4,9 +4,7 @@ import ProductDetail from "./components/products/ProductDetail";
 import Products from "./components/products/Products";
 import CreateUser from "./components/user/createUser";
 import LoginUser from "./components/user/LoginUser";
-
 import Perfil from "./components/user/Perfil";
-
 import Reserve from "./components/Reserve/Reserve";
 import BarberDetail from "./components/Reserve/BarberDetail";
 import NavBar from "./components/NavBar";
