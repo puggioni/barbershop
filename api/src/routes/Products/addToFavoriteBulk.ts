@@ -7,22 +7,21 @@ import ProductModel from "../../models/products";
 const router = Router();
 
 router.post(
-  "/removeFavorite",
+  "/addFavoriteBulk",
   verifyToken,
   async (req: Request, res: Response) => {
     const { product, user } = req.body;
     try {
       const productFound: Object = await Product.findById(product._id);
       const userFound: any = await User.findById(user._id);
-      userFound["favorites_products"].pull(productFound["_id"]);
+      userFound["favorites_products"].push(productFound["_id"]);
       await userFound.save();
       const productsIds = userFound["favorites_products"];
       const allProducts=await ProductModel.find({_id : { $in : productsIds} });
       res.status(200).json(allProducts);
     } catch (error) {
-      res.status(500).json({ message: "Error al eliminar de favoritos" });
+      res.status(500).json({ message: "Error al agregar a favoritos" });
     }
   }
 );
-
 export default router;

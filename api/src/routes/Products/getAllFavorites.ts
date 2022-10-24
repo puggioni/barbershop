@@ -12,11 +12,9 @@ router.get(
   async (req: Request, res: Response) => {
     const { id } = req.params;
     try {
-      const userFound: any = await User.findById(id);
+      const userFound :any = await User.findById(id);
       const productsIds = userFound["favorites_products"];
-      const allProducts = await ProductModel.find({
-        _id: { $in: productsIds },
-      });
+      const allProducts=await ProductModel.find({_id : { $in : productsIds} })
       res.status(200).json(allProducts);
     } catch (error) {
       res.status(500).json({ message: "Error al obtener favoritos" });

@@ -4,7 +4,6 @@ import Product from "../../models/products";
 import { verifyToken } from "../../middlewares/auth";
 import { Request, Response } from "express";
 import ProductModel from "../../models/products";
-
 const router = Router();
 
 router.post(
@@ -27,5 +26,4 @@ router.post(
     }
   }
 );
-
 export default router;
