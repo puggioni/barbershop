@@ -1,10 +1,9 @@
-import { useState } from "react";
 import { FaTrash } from "react-icons/fa";
 import { HiOutlineArrowLongDown, HiOutlineArrowLongUp } from "react-icons/hi2";
 import { Link } from "react-router-dom";
 
 const ProductCard = (producto: any) => {
-  const [cantidad, setCantidad] = useState(producto.cantidad);
+  let cantidad: number = producto.cantidad;
   const prodLocalStorage: any = JSON.parse(
     window.localStorage.getItem("product") || "[]"
   );
@@ -20,13 +19,13 @@ const ProductCard = (producto: any) => {
     window.localStorage.setItem("product", JSON.stringify(prod));
     producto.forceUpdate();
   };
-
-  const handleCantidadChange = (event: any, num: number) => {
+  const handleCantidadChange = (event: any, cantidad: number) => {
     event.preventDefault();
     const index = prodLocalStorage.findIndex((p: any) => {
       return p.productos._id === producto._id;
     });
-    prodLocalStorage[index] = { productos: producto, cantidad: cantidad };
+    debugger;
+    prodLocalStorage[index] = { productos: producto, cantidad };
 
     updateLocal(prodLocalStorage);
     producto.forceUpdate();
@@ -47,16 +46,16 @@ const ProductCard = (producto: any) => {
           <div>{producto.cantidad}</div>
           <HiOutlineArrowLongDown
             onClick={(e) => {
-              setCantidad((prev: number) => prev - 1);
-              handleCantidadChange(e, -1);
+              cantidad = cantidad - 1;
+              handleCantidadChange(e, cantidad);
             }}
             size={10}
             className="absolute bottom-0 right-0 cursor-pointer mb-1"
           />
           <HiOutlineArrowLongUp
             onClick={(e) => {
-              setCantidad((prev: number) => prev + 1);
-              handleCantidadChange(e, 1);
+              cantidad = cantidad + 1;
+              handleCantidadChange(e, cantidad);
             }}
             size={10}
             className="absolute top-0 right-0 cursor-pointer mt-1"
