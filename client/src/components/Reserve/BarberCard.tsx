@@ -1,3 +1,7 @@
+<<<<<<< Updated upstream
+=======
+import React from "react";
+>>>>>>> Stashed changes
 import { Link } from "react-router-dom";
 
 interface barberCard {
