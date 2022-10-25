@@ -12,6 +12,7 @@ export interface IPurchaseOrder {
       quantity: number;
     }
   ];
+  state: String;
 }
 
 const PurchaseOrderSchema = new Schema<IPurchaseOrder>(
@@ -33,6 +34,10 @@ const PurchaseOrderSchema = new Schema<IPurchaseOrder>(
         },
       },
     ],
+    state: {
+      type: String,
+      default: "Created",
+    },
   },
   {
     versionKey: false,
