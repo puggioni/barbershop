@@ -3,11 +3,18 @@ import { BsPlus } from "react-icons/bs";
 import { HiMinus } from "react-icons/hi";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { RootState } from "../../app/store";
+
 import { OrderingByName, OrderingByPrice } from "../products/Order";
-import { categorias, fetchAllProducts } from "../slices/productSlice";
+import {
+  categorias,
+  fetchAllProducts,
+  getFavoritesProducts,
+} from "../slices/productSlice";
 import Categorias from "./FilterCategorias";
 import Paginate from "./Paginate";
 import ProductCard from "./ProductCard";
+import SearchBar from "./Searchbar";
+
 interface prodCard {
   _id: string;
   name: string;
@@ -25,10 +32,25 @@ const Products = () => {
   const firstPostIndex = lastPostIndex - productsPerPage;
   const [hideAlfa, setAlfa] = useState(false);
   const [hidePrecio, setPrecio] = useState(false);
-
+  const { favs } = useAppSelector((state: RootState) => state.products);
+  const favoritos = JSON.stringify(favs);
   const inicializar = useCallback(async () => {
     dispatch(fetchAllProducts(""));
     dispatch(categorias());
+    const aux = window.localStorage.getItem("user");
+    const aux2 = window.localStorage.getItem("token");
+    const aux3 = window.localStorage.getItem("favoritos");
+    if (aux && aux2 && aux3) {
+      const user = JSON.parse(aux);
+      const token = JSON.parse(aux2);
+      const favoritos = JSON.parse(aux3);
+
+      // dispatch(getFavoritesProducts(user._id,token));
+    } else if (aux && aux2) {
+      const user = JSON.parse(aux);
+      const token = JSON.parse(aux2);
+      dispatch(getFavoritesProducts(user._id, token));
+    }
   }, [dispatch]);
 
   useEffect(() => {
@@ -36,6 +58,7 @@ const Products = () => {
   }, [inicializar]);
 
   const data = useAppSelector((state: RootState) => state.products);
+
   const resetPage = () => {
     setCurrentPage(1);
   };
@@ -47,61 +70,65 @@ const Products = () => {
     );
 
     return (
-      <div className=" bg-white bg-store-banner bg-no-repeat pt-52 pb-8">
+      <div className=" bg-white bg-store-banner bg-no-repeat pt-52 pb-8 bg-contain">
         <div className="border bg-white border-black rounded-xl mx-40">
           <h1 className="flex justify-center py-8 text-5xl">STORE</h1>
           <div className="content-none border-b mx-40 border-black"></div>
           <Categorias resetPage={resetPage} />
 
           <div className="font-Hubballi grid grid-cols-4 gap-8 pr-8 ">
-            <div className="flex flex-col px-4 py-8 gap-10 row-span-3 mt-40 mx-8 border border-black h-fit rounded-md">
-              <label className="underline underline-offset-4 ">ORDENAR:</label>
+            <div className="row-span-3">
+              <SearchBar />
+              <div className="flex flex-col px-4 py-8 gap-10 mt-8 mx-8 border border-black h-fit rounded-md">
+                <label className="underline underline-offset-4 ">
+                  ORDENAR:
+                </label>
 
-              <div className="relative">
-                <p className="underline underline-offset-2">Alfabetico</p>
-                {!hideAlfa ? (
-                  <BsPlus
-                    className="absolute top-1 right-5 cursor-pointer"
-                    size={15}
-                    onClick={() => {
-                      setAlfa(!hideAlfa);
-                    }}
-                  />
-                ) : (
-                  <HiMinus
-                    className="absolute top-1 right-5 cursor-pointer"
-                    size={15}
-                    onClick={() => {
-                      setAlfa(!hideAlfa);
-                    }}
-                  />
-                )}
+                <div className="relative">
+                  <p className="underline underline-offset-2">Alfabetico</p>
+                  {!hideAlfa ? (
+                    <BsPlus
+                      className="absolute top-1 right-5 cursor-pointer"
+                      size={15}
+                      onClick={() => {
+                        setAlfa(!hideAlfa);
+                      }}
+                    />
+                  ) : (
+                    <HiMinus
+                      className="absolute top-1 right-5 cursor-pointer"
+                      size={15}
+                      onClick={() => {
+                        setAlfa(!hideAlfa);
+                      }}
+                    />
+                  )}
+                </div>
+                <OrderingByName hidden={hideAlfa} />
+                {/* <span className="content-none border-b mx-4 border-black"></span> */}
+                <div className="relative">
+                  <p className="underline underline-offset-2">Precio</p>
+                  {!hidePrecio ? (
+                    <BsPlus
+                      className="absolute top-1 right-5 cursor-pointer "
+                      size={15}
+                      onClick={() => {
+                        setPrecio(!hidePrecio);
+                      }}
+                    />
+                  ) : (
+                    <HiMinus
+                      className="absolute top-1 right-5 cursor-pointer "
+                      size={15}
+                      onClick={() => {
+                        setPrecio(!hidePrecio);
+                      }}
+                    />
+                  )}
+                </div>
+                <OrderingByPrice hidden={hidePrecio} />
               </div>
-              <OrderingByName hidden={hideAlfa} />
-              {/* <span className="content-none border-b mx-4 border-black"></span> */}
-              <div className="relative">
-                <p className="underline underline-offset-2">Precio</p>
-                {!hidePrecio ? (
-                  <BsPlus
-                    className="absolute top-1 right-5 cursor-pointer "
-                    size={15}
-                    onClick={() => {
-                      setPrecio(!hidePrecio);
-                    }}
-                  />
-                ) : (
-                  <HiMinus
-                    className="absolute top-1 right-5 cursor-pointer "
-                    size={15}
-                    onClick={() => {
-                      setPrecio(!hidePrecio);
-                    }}
-                  />
-                )}
-              </div>
-              <OrderingByPrice hidden={hidePrecio} />
             </div>
-
             {currentProducts?.map((data: prodCard) => {
               if (data.available) {
                 return (
@@ -111,6 +138,7 @@ const Products = () => {
                     name={data.name}
                     image={data.image}
                     price={data.price}
+                    userFavorite={favoritos.includes(data._id)}
                   />
                 );
               } else return null;

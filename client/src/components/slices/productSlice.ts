@@ -1,6 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { Action } from "@remix-run/router";
 import axios from "axios";
 import { AppThunk } from "../../app/store";
+import Products from "../products/Products";
 
 export interface products {
   _id: string;
@@ -12,6 +14,7 @@ export interface products {
   stock?: number;
   available?: boolean;
   favorite?: boolean;
+  userFavorite?: boolean;
   category?: Array<any>;
   reviews?: Array<any>;
   __v?: number;
@@ -44,7 +47,9 @@ export const fetchAllProducts = (tosearch: string): AppThunk => {
   return async (dispatch) => {
     if (!tosearch) {
       try {
-        const productos = await axios.get("http://localhost:5000/products/all");
+        const productos = await axios.get(
+          "https://barbershop-roan.vercel.app/products/all"
+        );
         dispatch(allProducts(productos.data));
       } catch (error) {
         return error;
@@ -52,7 +57,7 @@ export const fetchAllProducts = (tosearch: string): AppThunk => {
     } else {
       try {
         const productos = await axios.get(
-          "http://localhost:5000/products/search?name=" + tosearch
+          "https://barbershop-roan.vercel.app/products/search?name=" + tosearch
         );
         dispatch(allProducts(productos.data));
       } catch (error) {
@@ -62,13 +67,60 @@ export const fetchAllProducts = (tosearch: string): AppThunk => {
   };
 };
 
-export const addFavoriteProduct = (productoFav: products): AppThunk => {
-  return async () => {
+export const addFavoriteProduct = (
+  idProduct: string,
+  IdUser: string,
+  token: string
+): AppThunk => {
+  return async (dispatch) => {
     try {
       const res = await axios.post(
-        "http://localhost:5000/products/",
-        productoFav
-      ); // agregar url de back
+        "https://barbershop-roan.vercel.app/products/addFavorite",
+        { product: { _id: idProduct }, user: { _id: IdUser } },
+        { headers: { token: token } }
+      );
+      console.log(res.data);
+      dispatch(setFavorites(res.data));
+
+      return res;
+    } catch (error) {
+      return error;
+    }
+  };
+};
+export const deleteFavoriteProduct = (
+  idProduct: string,
+  IdUser: string,
+  token: string
+): AppThunk => {
+  return async (dispatch) => {
+    try {
+      const res = await axios.post(
+        "https://barbershop-roan.vercel.app/products/removeFavorite",
+        { product: { _id: idProduct }, user: { _id: IdUser } },
+        { headers: { token: token } }
+      );
+      console.log(res.data);
+      dispatch(setFavorites(res.data));
+
+      return res;
+    } catch (error) {
+      return error;
+    }
+  };
+};
+
+export const getFavoritesProducts = (
+  IdUser: string,
+  token: string
+): AppThunk => {
+  return async (dispatch) => {
+    try {
+      const res = await axios.get(
+        "https://barbershop-roan.vercel.app/products/favorites/" + IdUser,
+        { headers: { token: token } }
+      );
+      dispatch(setFavorites(res.data));
       return res;
     } catch (error) {
       return error;
@@ -81,7 +133,7 @@ export const filter = (categoria: string): AppThunk => {
     try {
       console.log(categoria);
       const product = await axios.get(
-        `http://localhost:5000/products/filter/${categoria}`
+        `https://barbershop-roan.vercel.app/products/filter/${categoria}`
       );
       dispatch(filterByCaregory(product.data));
     } catch (error) {
@@ -93,7 +145,9 @@ export const filter = (categoria: string): AppThunk => {
 export const orderByName = (): AppThunk => {
   return async (dispatch) => {
     try {
-      const ordered = await axios.get("http://localhost:5000/products/all");
+      const ordered = await axios.get(
+        "https://barbershop-roan.vercel.app/products/all"
+      );
       dispatch(sortProductsByName(ordered.data));
     } catch (error) {
       return error;
@@ -103,7 +157,9 @@ export const orderByName = (): AppThunk => {
 export const orderByPrice = (): AppThunk => {
   return async (dispatch) => {
     try {
-      const ordered = await axios.get("http://localhost:5000/products/all");
+      const ordered = await axios.get(
+        "https://barbershop-roan.vercel.app/products/all"
+      );
       dispatch(sortProductsByPrice(ordered.data));
     } catch (error) {
       return error;
@@ -115,7 +171,7 @@ export const categorias = (): AppThunk => {
   return async (dispatch) => {
     try {
       const categorias = await axios.get(
-        `http://localhost:5000/categories/all`
+        `https://barbershop-roan.vercel.app/categories/all`
       );
       dispatch(getCaterogias(categorias.data));
     } catch (error) {
@@ -128,7 +184,7 @@ export const productDetail = (idProduct: string): AppThunk => {
   return async (dispatch) => {
     try {
       const producto = await axios.get(
-        `http://localhost:5000/products/${idProduct}`
+        `https://barbershop-roan.vercel.app/products/${idProduct}`
       );
       dispatch(detail(producto.data));
     } catch (error) {
@@ -146,7 +202,7 @@ export const clearProducDetail: any = () => {
 export const comprar = (compra: object) => {
   return async () => {
     const response: any = await axios.post(
-      "http://localhost:5000/payments/create-order",
+      "https://barbershop-roan.vercel.app/payments/create-order",
       compra
     );
 
@@ -159,7 +215,7 @@ export const reviewProduct = (review: object, config: object): AppThunk => {
   return async (dispatch) => {
     try {
       const producto = await axios.post(
-        `http://localhost:5000/reviews/create`,
+        `https://barbershop-roan.vercel.app/reviews/create`,
         review,
         config
       );
@@ -248,7 +304,7 @@ export const getAllProductsSlice = createSlice({
     },
 
     clearDetail: (state) => {
-      Object.assign(state, initialState);
+      state.product = null;
     },
 
     getCaterogias: (
@@ -256,6 +312,21 @@ export const getAllProductsSlice = createSlice({
       action: PayloadAction<Array<{ name: string; id: string }>>
     ) => {
       state.categorias = action.payload;
+    },
+
+    setFavorites: (state, action: PayloadAction<Array<products>>) => {
+      state.favs = action.payload;
+    },
+    addFavoritoLocal: (state, action: PayloadAction<products>) => {
+      state.favs.push(action.payload);
+      window.localStorage.setItem("favoritos", JSON.stringify(state.favs));
+    },
+    deleteFavoritoLocal: (state, action: PayloadAction<string>) => {
+      const idx = state.favs.findIndex((p: any) => p._id === action.payload);
+      let aux = state.favs;
+      aux.splice(idx, 1);
+      state.favs = aux;
+      window.localStorage.setItem("favoritos", JSON.stringify(state.favs));
     },
   },
 });
@@ -270,4 +341,7 @@ export const {
   sortProductsByName,
   sortProductsByPrice,
   getCaterogias,
+  setFavorites,
+  addFavoritoLocal,
+  deleteFavoritoLocal,
 } = getAllProductsSlice.actions;

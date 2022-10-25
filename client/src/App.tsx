@@ -9,14 +9,14 @@ import Reserve from "./components/Reserve/Reserve";
 import BarberDetail from "./components/Reserve/BarberDetail";
 import NavBar from "./components/NavBar";
 import Compra from "./components/carrito/Compra";
+import Favorites from "./components/products/Favorites";
 import { initializeApp } from "@firebase/app";
 import { getAuth } from "@firebase/auth";
 import { firebaseConfig } from "./firebase";
 
-// Initialize Firebase
 export const app = initializeApp(firebaseConfig);
-// Initialize Firebase Authentication and get a reference to the service
 export const auth = getAuth(app);
+
 
 function App() {
   return (
@@ -24,14 +24,26 @@ function App() {
       <NavBar />
       <Routes>
         <Route path="/" element={<Home />} />
+        {/*=====================productos===============================*/}
         <Route path="/product" element={<Products />}></Route>
         <Route path="/product/:idProduct" element={<ProductDetail />} />
+        <Route path="/products/shopping-cart" element={<Compra />} />
+        <Route path="/products/shopping-cart" element={<Compra />} />
+        <Route path="/products/favorites" element={<Favorites />} />
+        {/*=====================user===============================*/}
         <Route path="/user/create" element={<CreateUser />} />
         <Route path="/user/login" element={<LoginUser />} />
         <Route path="/user/perfil" element={<Perfil />} />
+
         <Route path="/sucursales" element={<Reserve />} />
+
+        {/*===================turno=================================*/}
+        <Route path="/reserve" element={<Reserve />} />
+
         <Route path="/reserve/barber" element={<BarberDetail />} />
-        <Route path="/products/shopping-cart" element={<Compra />} />
+
+        
+
       </Routes>
     </div>
   );

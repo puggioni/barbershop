@@ -11,24 +11,15 @@ type eventarget = {
   name: string;
 };
 
-const SearchBar = (expand: any) => {
+const SearchBar = () => {
   const [tosearch, setTosearch] = useState("");
-  const [colExpand, setCol] = useState("");
   const dispatch = useAppDispatch();
 
   function search(e: any) {
     e.preventDefault();
-    if (!tosearch.length && !expand.expandSearch.length) {
-      expand.setSearch("!w-full cursor-text border-black !pl-16 pr-4 ");
-      setCol("col-start-2 col-end-4");
-    } else if (!tosearch.length) {
-      expand.setSearch("");
-      setCol("");
-    }
+
     if (tosearch.length) {
       setTosearch("");
-      expand.setSearch("");
-      setCol("");
       dispatch(fetchAllProducts(tosearch));
     }
   }
@@ -38,18 +29,18 @@ const SearchBar = (expand: any) => {
   }
 
   return (
-    <div className={`mx-auto max-w-md relative ${colExpand} `}>
+    <div className="relative mx-8">
       <input
         onChange={handleChange}
         name="tosearch"
-        className={`peer ${expand.expandSearch} transition-all cursor-pointer z-10 h-8  rounded-full border bg-transparent pl-5 outline-none w-12`}
+        className="border border-black rounded-md w-full pl-2 "
         value={tosearch}
-        type="search"
-        placeholder=""
+        type="text"
+        placeholder="Search"
       />
 
       <BsSearch
-        className="absolute top-1 my-auto h-6 w-12 border-r rounded-lg border-transparent stroke-gray-500  peer-focus:border-black peer-focus:stroke-black"
+        className="absolute  top-1 right-1 cursor-pointer"
         stroke="currentColor"
         onClick={(event) => {
           search(event);
