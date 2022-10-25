@@ -1,51 +1,70 @@
-import { Link } from "react-router-dom";
+import { useState } from "react";
 import { FaTrash } from "react-icons/fa";
+import { HiOutlineArrowLongDown, HiOutlineArrowLongUp } from "react-icons/hi2";
+import { Link } from "react-router-dom";
 
 const ProductCard = (producto: any) => {
-  const handleClick = (
+  const [cantidad, setCantidad] = useState(producto.cantidad);
+  const prodLocalStorage: any = JSON.parse(
+    window.localStorage.getItem("product") || "[]"
+  );
+  const handleDelete = (
     event: React.MouseEvent<SVGElement, MouseEvent>,
     id: string
   ) => {
     event.preventDefault();
 
-    let productos: any = JSON.parse(
-      window.localStorage.getItem("product") || "[]"
-    );
-
-    const prod = productos.filter((p: any) => {
+    const prod = prodLocalStorage.filter((p: any) => {
       return p.productos._id !== id;
     });
     window.localStorage.setItem("product", JSON.stringify(prod));
-    window.location.reload();
+    producto.forceUpdate();
   };
 
+  const handleCantidadChange = (event: any, num: number) => {
+    event?.preventDefault();
+    setCantidad((prev: number) => prev + num);
+    console.log(cantidad);
+
+    const index = prodLocalStorage.findIndex((p: any) => {
+      return p.productos._id === producto._id;
+    });
+    prodLocalStorage[index] = { productos: producto, cantidad: cantidad };
+
+    window.localStorage.setItem("product", JSON.stringify(prodLocalStorage));
+
+    producto.forceUpdate();
+  };
   if (producto) {
     return (
-      <div
-        className=" flex bg-slate-200/50 m-4 rounded-lg max-w-3xl lg:max-h-full lg:m-0 max-h-40 relative 
-      lg:grid lg:grid-row-2  lg:justify-items-center lg:gap-8 lg:pl-4 shadow-xl "
-      >
-        <div className=" h-full w-2/5 lg:w-[90%] lg:h-72 lg:mt-4 mr-4 rounded-lg object-center relative">
-          <img
-            className="h-32 m-4 object-cover bg-white rounded-xl lg:h-full lg:m-0"
-            src={producto.image}
-            alt="product"
+      <div className="grid grid-cols-[.5fr_1fr_.2fr_.2fr_.2fr] mx-8 items-center">
+        <img className="h-32 " src={producto.image} alt="product" />
+
+        <Link to={`/product/${producto._id}`}>{producto.name}</Link>
+        <h2>${producto.price}</h2>
+        <div className="relative border border-black py-1 pr-2 mr-4 items-center text-center">
+          <div>{cantidad}</div>
+          <HiOutlineArrowLongDown
+            onClick={(e) => {
+              handleCantidadChange(e, -1);
+            }}
+            size={10}
+            className="absolute bottom-0 right-0 cursor-pointer mb-1"
+          />
+          <HiOutlineArrowLongUp
+            onClick={(e) => {
+              handleCantidadChange(e, 1);
+            }}
+            size={10}
+            className="absolute top-0 right-0 cursor-pointer mt-1"
           />
         </div>
-        <div className="p-4 flex flex-col justify-between font-display text-lg text-[#000300] ">
-          <Link to={`/product/${producto._id}`}>
-            <h3>{producto.name}</h3>
-          </Link>
-          <h2 className="font-medium text-2xl">${producto.price}</h2>
-          <div className="lg:absolute lg:left-1 lg:bottom-1">
-            {producto.cantidad}
-          </div>
-        </div>
+
         <FaTrash
           onClick={(e) => {
-            handleClick(e, producto._id);
+            handleDelete(e, producto._id);
           }}
-          size={30}
+          size={25}
         />
       </div>
     );

@@ -15,8 +15,8 @@ router.post("/create-order", checkStock, async (req, res) => {
         brand_name: "Henry BarberShop",
         landing_page: "LOGIN",
         user_action: "PAY_NOW",
-        return_url: "http://localhost:5000/payments/capture-order",
-        cancel_url: "http://localhost:5000/payments/cancel-order",
+        return_url: "https://barbershop-roan.vercel.app/payments/capture-order",
+        cancel_url: "https://barbershop-roan.vercel.app/payments/cancel-order",
       },
     };
 
@@ -33,7 +33,7 @@ router.post("/create-order", checkStock, async (req, res) => {
       }
     );
     //                  ACA DEBERIA CAMBIAR EL ESTADO DE LA ORDEN DE CAPTURANDO - PAGADA - ENVIADA
-    deleteStock(products);
+    // deleteStock(products);
 
     res.status(200).json(response.data);
   } catch (error) {
@@ -62,7 +62,7 @@ router.get("/capture-order", async (req, res) => {
 });
 
 router.get("/cancel-order", (req, res) => {
-  res.redirect("http://localhost:3000/product");
+  res.redirect("https://barbershop-front.vercel.app/product");
 });
 
 export default router;

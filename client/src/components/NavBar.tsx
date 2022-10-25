@@ -20,7 +20,7 @@ const NavBar = () => {
     navigate("/");
   };
   return (
-    <div className="bg-stone-50/90 p-2 grid grid-flow-col justify-items-center items-center grid-cols-nav">
+    <div className="bg-stone-50/90 p-2 grid grid-flow-col justify-items-center items-center grid-cols-nav ">
       <img
         className="h-12 hover:cursor-pointer"
         onClick={() => {
@@ -70,7 +70,11 @@ const NavBar = () => {
         </Link>
       )}
 
-      <Link title="ir al Carrito" className="hover:text-[#855C20] " to={"/products/shopping-cart"}>
+      <Link
+        title="ir al Carrito"
+        className="hover:text-[#855C20] "
+        to={"/products/shopping-cart"}
+      >
         <RiShoppingBasket2Line size={40} />
       </Link>
       <Link title="ir a Favoritos" to={"/products/favorites"}>

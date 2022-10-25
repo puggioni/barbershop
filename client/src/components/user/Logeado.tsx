@@ -14,6 +14,7 @@ const Logeado = () => {
     dispatch(clearFavorites())
     dispatch(logOut());
   }
+
   const img = user?.user_image.length
   ? user.user_image
     : "https://media.istockphoto.com/vectors/black-hipster-vector-mustache-vector-id485318064?k=20&m=485318064&s=170667a&w=0&h=krFPiCXz9kaEOS3gmFxGwYSOzTIxgOXqos7hEELiaTY=";
@@ -25,7 +26,9 @@ const Logeado = () => {
       <img
         onClick={() => navigate("/user/perfil")}
         src={img}
-        className="h-8 bg-center bg-content rounded-full"
+        alt="user"
+        className="h-8 w-8 object-center bg-content rounded-full"
+
       />
 
       <button onClick={() => handleLogOut()}>Log Out</button>
