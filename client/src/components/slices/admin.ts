@@ -1,18 +1,29 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 import { AppThunk } from "../../app/store";
+import { products } from "./productSlice";
 
 const initialState = {
-  adminAuth: false,
+  deleteProd: {},
 };
+// axios.delete(URL, {
+//   headers: {
+//     Authorization: authorizationToken
+//   },
+//   data: {
+//     source: source
+//   }
+// });
 //==========action==================
-export const isAdmin = (headers: object): AppThunk => {
+export const deleteProd = (header: object, id: string): AppThunk => {
   return async (dispatch) => {
-    const res = await axios.get(
-      "https://barbershop-roan.vercel.app/users",
-      headers
+
+    const res: products = await axios.delete(
+      "http://localhost:5000/products/delete",
+      { headers: header, data: { id } }
     );
-    dispatch(adminCred(res.data.name));
+    dispatch(adminDeleteProd(res));
+
   };
 };
 
@@ -21,11 +32,11 @@ export const adminReducerSlice = createSlice({
   name: "admin",
   initialState,
   reducers: {
-    adminCred: (state: any, action: PayloadAction<{ name: boolean }>) => {
-      state.adminAuth = action.payload;
+    adminDeleteProd: (state: any, action: PayloadAction<products>) => {
+      state.deleteProd = action.payload;
     },
   },
 });
 
 export default adminReducerSlice.reducer;
-export const { adminCred } = adminReducerSlice.actions;
+export const { adminDeleteProd } = adminReducerSlice.actions;

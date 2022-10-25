@@ -1,14 +1,12 @@
 import jwt from "jsonwebtoken";
-import User from "../models/user";
 import Role from "../models/role";
-import { Request, Response, NextFunction } from "express";
+import User from "../models/user";
 
 export const verifyToken = async (req, res, next) => {
   try {
     const token = req.headers["token"];
     if (!token) return res.status(403).json({ message: "No hay token" });
     const decoded = jwt.verify(token, "token");
-
     req.userId = decoded["_id"];
     const user = await User.findById(req.userId, { password: 0 });
     if (!user)
@@ -39,7 +37,6 @@ export const isAdmin = async (req, res, next) => {
   const token = req.headers["token"];
   if (!token) return res.status(403).json({ message: "No hay token" });
   const decoded = jwt.verify(token, "token");
-  console.log(decoded);
   req.userId = decoded["_id"];
   const user = await User.findById(req.userId);
   const roles = await Role.find({ _id: { $in: user?.role } });
