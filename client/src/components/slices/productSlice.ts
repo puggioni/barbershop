@@ -382,6 +382,7 @@ export const getAllProductsSlice = createSlice({
       });
       state.allProducts = deleted;
     },
+
     clearFavorites: (state: any) => {
       state.favs = [];
     },
