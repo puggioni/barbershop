@@ -12,8 +12,6 @@ import {
   orderByName,
   orderByPrice,
   orderByStock,
-  sortProductsByName,
-  sortProductsByStock,
 } from "../slices/productSlice";
 
 import { categorias, fetchAllProducts, filter } from "../slices/productSlice";
@@ -108,7 +106,7 @@ const Productos = () => {
                   onChange={(e) => handleOrder(e)}
                 >
                   <option value="placeholder" disabled hidden>
-                    Order
+                    Order by
                   </option>
                   <option value="alfa">Alfabetico</option>
                   <option value="stock">Stock</option>
