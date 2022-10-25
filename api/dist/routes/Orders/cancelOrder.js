@@ -13,19 +13,19 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
-const axios_1 = __importDefault(require("axios"));
+const purchaseOrder_1 = __importDefault(require("../../models/purchaseOrder"));
 const router = (0, express_1.Router)();
-router.get("/capture-order", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { token, PayerID } = req.query;
-    const response = yield axios_1.default.post(`https://api-m.sandbox.paypal.com/v2/checkout/orders/${token}/capture`, {}, {
-        auth: {
-            username: "AVwlVSANTKRUrYDVQ0bmVEjUqaC9-RHw8qn3uRVp-xr4SzQae-1GmM4-B-V4y_bP2tCw7gKH2S8SfeKx",
-            password: "EG_ZGG1BcPvJhGKbU0HafZRgg1mFMRGk0kZVULdRAL-ECDr5IYVzvA1aWNPXiWQHcSRHqxooNZnyoy6Z",
-        },
-    });
-    const idOrder = response.data.purchase_units[0].reference_id;
-    console.log("IDORDER", idOrder);
-    console.log(response.data);
-    res.status(200).send(response.data);
+router.get("/cancel-order", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { idOrder } = req.query;
+    try {
+        const order = yield purchaseOrder_1.default.findById(idOrder);
+        order["state"] = "Cancelada";
+        order.save();
+        res.status(200).send(order);
+    }
+    catch (error) {
+        console.log(error);
+        res.status(500).send(error);
+    }
 }));
 exports.default = router;

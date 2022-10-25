@@ -8,10 +8,12 @@ const initialState = {
 //==========action==================
 export const isAdmin = (headers: object): AppThunk => {
   return async (dispatch) => {
+
     const res = await axios.get(
       "http://localhost:5000/users",
       headers
     );
+
     dispatch(adminCred(res.data.name));
   };
 };
