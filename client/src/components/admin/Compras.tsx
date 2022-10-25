@@ -1,9 +1,7 @@
-import React from 'react'
+import React from "react";
 
-const compras = () => {
-  return (
-    <div>compras</div>
-  )
-}
+const Compras = () => {
+  return <div>Compras</div>;
+};
 
-export default compras
+export default Compras;
