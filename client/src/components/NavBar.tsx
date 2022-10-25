@@ -51,7 +51,7 @@ const NavBar = () => {
             to={"/sucursales"}
             className={`${buttonHover} px-4 py-1 rounded-lg`}
           >
-            sucursales
+            Sucursales
           </Link>
           <Link
             to={"/reserve"}
