@@ -7,6 +7,7 @@ import logo from "../imagenes/Logo.png";
 import { yaLog } from "./slices/logIn";
 import Logeado from "./user/Logeado";
 
+
 export const buttonHover =
   "hover:shadow-md hover:shadow-slate-500	hover:bg-[#855C20] hover:text-white hover:ease-in-out hover:duration-300";
 
@@ -51,7 +52,7 @@ const NavBar = () => {
             to={"/sucursales"}
             className={`${buttonHover} px-4 py-1 rounded-lg`}
           >
-            sucursales
+            Sucursales
           </Link>
           <Link
             to={"/reserve"}

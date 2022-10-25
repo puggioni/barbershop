@@ -4,6 +4,8 @@ import { RootState } from "../../app/store";
 import ProductCard from "./ProductCard";
 import { VscArrowLeft } from "react-icons/vsc";
 import { useNavigate } from "react-router";
+import { getFavoritesProducts, setFavosBulk } from "../slices/productSlice";
+import { setFavorites } from "../slices/productSlice";
 
 export default function Favorites() {
   const dispatch = useAppDispatch();
@@ -11,7 +13,42 @@ export default function Favorites() {
   let navigate = useNavigate();
   const favoritosUser = JSON.stringify(favoritos);
 
-  const inicializar = useCallback(async () => {}, [dispatch, favoritos]);
+    const  cargarFavs=()=>{
+      const aux=window.localStorage.getItem("user");
+      const aux2=window.localStorage.getItem("token");
+      const aux3=window.localStorage.getItem("favoritos");
+  
+      if(aux && aux2 && aux3){   // esta parte es para traerse los favoritos si el usuario se logueo
+       const user=JSON.parse(aux);
+       const token=JSON.parse(aux2);
+       const favos=JSON.parse(aux3);
+       const arrayIdsfavos=favos.map((p:any)=>(p._id));
+
+    window.localStorage.removeItem('favoritos');
+    dispatch(setFavosBulk(user._id,token, arrayIdsfavos));
+     
+    }else if(aux && aux2 ){
+        const user=JSON.parse(aux);
+        const token=JSON.parse(aux2);
+       dispatch(getFavoritesProducts(user._id,token));
+      
+    }else if(aux3){
+      const favos=JSON.parse(aux3)
+      dispatch(setFavorites(favos))
+    }
+    }
+
+    const inicializar = useCallback(async () => {
+      cargarFavs();
+      }, [dispatch]);
+
+      useEffect(() => {
+        inicializar();
+        
+        return () => {
+          
+        };
+      }, [dispatch]);
 
   useEffect(() => {
     inicializar();
