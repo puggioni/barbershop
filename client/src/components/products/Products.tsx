@@ -130,7 +130,7 @@ const Products = () => {
                 <OrderingByPrice hidden={hidePrecio} />
               </div>
             </div>
-            {currentProducts?.map((data: prodCard) => {
+            {currentProducts?.map((data: any) => {
               if (data.available) {
                 return (
                   <ProductCard

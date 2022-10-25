@@ -1,15 +1,11 @@
 import { useAppDispatch } from "../../app/hooks";
-import {
-  sortProductsByName,
-  sortProductsByPrice,
-} from "../slices/productSlice";
+import { orderByName, orderByPrice } from "../slices/productSlice";
 
 export const OrderingByName = (hidden: { hidden: boolean }) => {
   const dispatch = useAppDispatch();
 
   const handleClick = (event: any) => {
-    if (event.target.value.length)
-      dispatch(sortProductsByName(event.target.value));
+    if (event.target.value.length) dispatch(orderByName(event.target.value));
   };
   const h = hidden.hidden ? "" : "hidden";
 
@@ -29,8 +25,7 @@ export const OrderingByPrice = (hidden: { hidden: boolean }) => {
   const dispatch = useAppDispatch();
 
   const handleClick = (event: any) => {
-    if (event.target.value.length)
-      dispatch(sortProductsByPrice(event.target.value));
+    if (event.target.value.length) dispatch(orderByPrice(event.target.value));
   };
   const h = hidden.hidden ? "" : "hidden";
 
