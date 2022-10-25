@@ -97,7 +97,7 @@ export const setFavosBulk = (IdUser:string,token: string,IdsProducts:Array<strin
       ); 
       
       dispatch(setFavorites(res.data));
-      
+
       return res;
     } catch (error) {
       return error;

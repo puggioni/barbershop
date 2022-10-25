@@ -7,11 +7,11 @@ import { useNavigate } from "react-router";
 import { getFavoritesProducts, setFavosBulk } from "../slices/productSlice";
 import { setFavorites } from "../slices/productSlice";
 
-export default function Favorites(){
-    const dispatch = useAppDispatch();
-    var favoritos=useAppSelector((state:RootState)=>state.products.favs)
-    let navigate = useNavigate();
-    const favoritosUser=JSON.stringify(favoritos);     
+export default function Favorites() {
+  const dispatch = useAppDispatch();
+  var favoritos = useAppSelector((state: RootState) => state.products.favs);
+  let navigate = useNavigate();
+  const favoritosUser = JSON.stringify(favoritos);
 
     const  cargarFavs=()=>{
       const aux=window.localStorage.getItem("user");

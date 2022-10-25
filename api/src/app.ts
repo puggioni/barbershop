@@ -1,11 +1,11 @@
-import express from "express";
-import routes from "./routes/index";
 import bodyParser from "body-parser";
-import morgan from "morgan";
 import cookieParser from "cookie-parser";
 import cors from "cors";
+import express from "express";
 import fileUpload from "express-fileupload";
+import morgan from "morgan";
 import { createRoles } from "./libs/initialSetup";
+import routes from "./routes/index";
 const app = express();
 createRoles();
 app.use(cookieParser());
