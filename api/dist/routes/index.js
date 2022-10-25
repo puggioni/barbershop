@@ -16,6 +16,7 @@ const postPopulateProducts_1 = __importDefault(require("./Products/postPopulateP
 const addToFavorite_1 = __importDefault(require("./Products/addToFavorite"));
 const removeFromFavorite_1 = __importDefault(require("./Products/removeFromFavorite"));
 const getAllFavorites_1 = __importDefault(require("./Products/getAllFavorites"));
+const addToFavoriteBulk_1 = __importDefault(require("./Products/addToFavoriteBulk"));
 /* ============USERS FILES============ */
 const signup_1 = __importDefault(require("./User/signup"));
 const signin_1 = __importDefault(require("./User/signin"));
@@ -58,6 +59,7 @@ router.use("/products", postPopulateProducts_1.default);
 router.use("/products", addToFavorite_1.default);
 router.use("/products", removeFromFavorite_1.default);
 router.use("/products", getAllFavorites_1.default);
+router.use("/products", addToFavoriteBulk_1.default);
 /* ============USERS============ */
 router.use("/users", signup_1.default);
 router.use("/users", signin_1.default);

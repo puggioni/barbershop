@@ -26,9 +26,7 @@ router.post("/addFavorite", auth_1.verifyToken, (req, res) => __awaiter(void 0, 
         userFound["favorites_products"].push(productFound["_id"]);
         yield userFound.save();
         const productsIds = userFound["favorites_products"];
-        const allProducts = yield products_2.default.find({
-            _id: { $in: productsIds },
-        });
+        const allProducts = yield products_2.default.find({ _id: { $in: productsIds } });
         res.status(200).json(allProducts);
     }
     catch (error) {

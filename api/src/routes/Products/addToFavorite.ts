@@ -17,9 +17,7 @@ router.post(
       userFound["favorites_products"].push(productFound["_id"]);
       await userFound.save();
       const productsIds = userFound["favorites_products"];
-      const allProducts = await ProductModel.find({
-        _id: { $in: productsIds },
-      });
+      const allProducts = await ProductModel.find({_id: { $in: productsIds }});
       res.status(200).json(allProducts);
     } catch (error) {
       res.status(500).json({ message: "Error al agregar a favoritos" });

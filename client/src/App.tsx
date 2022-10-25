@@ -16,6 +16,7 @@ import { firebaseConfig } from "./firebase";
 import Users from "./components/admin/Users";
 import Compras from "./components/admin/Compras";
 import Productos from "./components/admin/Productos";
+import Sucursales from "./components/Reserve/Sucursales";
 
 export const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
@@ -26,16 +27,17 @@ function App() {
       <NavBar />
       <Routes>
         <Route path="/" element={<Home />} />
-        {/*=====================productos===============================*/}
+        {/*=====================productos==========================*/}
         <Route path="/product" element={<Products />}></Route>
         <Route path="/product/:idProduct" element={<ProductDetail />} />
-        <Route path="/products/shopping-cart" element={<Compra />} />
         <Route path="/products/shopping-cart" element={<Compra />} />
         <Route path="/products/favorites" element={<Favorites />} />
         {/*=====================user===============================*/}
         <Route path="/user/create" element={<CreateUser />} />
         <Route path="/user/login" element={<LoginUser />} />
         <Route path="/user/perfil" element={<Perfil />} />
+        {/*===================sucursales============================*/}
+        <Route path="/sucursales" element={<Sucursales />} />
         {/*===================turno=================================*/}
         <Route path="/reserve" element={<Reserve />} />
         <Route path="/reserve/barber" element={<BarberDetail />} />

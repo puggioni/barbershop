@@ -10,11 +10,13 @@ router.post(
   "/addFavoriteBulk",
   verifyToken,
   async (req: Request, res: Response) => {
-    const { product, user } = req.body;
+    const { products, user } = req.body;
+    
     try {
-      const productFound: Object = await Product.findById(product._id);
-      const userFound: any = await User.findById(user._id);
-      userFound["favorites_products"].push(productFound["_id"]);
+      const productsFounds: Array<object> = await Product.find({_id : { $in : products._id} });
+      let userFound: any = await User.findById(user._id);
+      const productsToAdd=productsFounds.map((p:any)=>(p._id));
+      userFound["favorites_products"]=userFound["favorites_products"].concat(productsToAdd) ;  
       await userFound.save();
       const productsIds = userFound["favorites_products"];
       const allProducts=await ProductModel.find({_id : { $in : productsIds} });

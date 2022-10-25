@@ -19,11 +19,12 @@ const auth_1 = require("../../middlewares/auth");
 const products_2 = __importDefault(require("../../models/products"));
 const router = (0, express_1.Router)();
 router.post("/addFavoriteBulk", auth_1.verifyToken, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { product, user } = req.body;
+    const { products, user } = req.body;
     try {
-        const productFound = yield products_1.default.findById(product._id);
-        const userFound = yield user_1.default.findById(user._id);
-        userFound["favorites_products"].push(productFound["_id"]);
+        const productsFounds = yield products_1.default.find({ _id: { $in: products._id } });
+        let userFound = yield user_1.default.findById(user._id);
+        const productsToAdd = productsFounds.map((p) => (p._id));
+        userFound["favorites_products"] = userFound["favorites_products"].concat(productsToAdd);
         yield userFound.save();
         const productsIds = userFound["favorites_products"];
         const allProducts = yield products_2.default.find({ _id: { $in: productsIds } });
