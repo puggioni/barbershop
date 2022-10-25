@@ -15,12 +15,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const user_1 = __importDefault(require("../../models/user"));
 const auth_1 = require("../../middlewares/auth");
+const products_1 = __importDefault(require("../../models/products"));
 const router = (0, express_1.Router)();
-router.get("/favorites", auth_1.verifyToken, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { user } = req.body;
+router.get("/favorites/:id", auth_1.verifyToken, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { id } = req.params;
     try {
-        const userFound = yield user_1.default.findById(user._id).populate("favorites_products");
-        const allProducts = userFound["favorites_products"];
+        const userFound = yield user_1.default.findById(id);
+        const productsIds = userFound["favorites_products"];
+        const allProducts = yield products_1.default.find({ _id: { $in: productsIds } });
         res.status(200).json(allProducts);
     }
     catch (error) {

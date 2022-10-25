@@ -39,6 +39,9 @@ import postOffice from "./Offices/postOffice";
 import getOffices from "./Offices/getOffices";
 /* ============PAYMENTS============*/
 import Paypal from "./Payments/Paypal";
+import captureOrder from "./Payments/captureOrder";
+import cancelOrder from "./Payments/cancelOrder";
+import createOrder from "./Payments/createOrder";
 
 const router = Router();
 
@@ -86,6 +89,8 @@ router.use("/barber/", postbarber);
 router.use("/barber/", getbarbers);
 
 /* ============PAYMENTS============*/
-router.use("/payments", Paypal);
-
+//router.use("/payments", Paypal);
+router.use("/payments", captureOrder);
+router.use("/payments", cancelOrder);
+router.use("/payments", createOrder);
 export default router;

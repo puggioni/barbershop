@@ -13,26 +13,17 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
-const user_1 = __importDefault(require("../../models/user"));
-const products_1 = __importDefault(require("../../models/products"));
-const auth_1 = require("../../middlewares/auth");
-const products_2 = __importDefault(require("../../models/products"));
+const axios_1 = __importDefault(require("axios"));
 const router = (0, express_1.Router)();
-router.post("/addFavorite", auth_1.verifyToken, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { product, user } = req.body;
-    try {
-        const productFound = yield products_1.default.findById(product._id);
-        const userFound = yield user_1.default.findById(user._id);
-        userFound["favorites_products"].push(productFound["_id"]);
-        yield userFound.save();
-        const productsIds = userFound["favorites_products"];
-        const allProducts = yield products_2.default.find({
-            _id: { $in: productsIds },
-        });
-        res.status(200).json(allProducts);
-    }
-    catch (error) {
-        res.status(500).json({ message: "Error al agregar a favoritos" });
-    }
+router.get("/capture-order", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { token, PayerID } = req.query;
+    const response = yield axios_1.default.post(`https://api-m.sandbox.paypal.com/v2/checkout/orders/${token}/capture`, {}, {
+        auth: {
+            username: "AVwlVSANTKRUrYDVQ0bmVEjUqaC9-RHw8qn3uRVp-xr4SzQae-1GmM4-B-V4y_bP2tCw7gKH2S8SfeKx",
+            password: "EG_ZGG1BcPvJhGKbU0HafZRgg1mFMRGk0kZVULdRAL-ECDr5IYVzvA1aWNPXiWQHcSRHqxooNZnyoy6Z",
+        },
+    });
+    console.log(response.data);
+    res.status(200).send("capture");
 }));
 exports.default = router;
