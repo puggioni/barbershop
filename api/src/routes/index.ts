@@ -11,6 +11,7 @@ import populatedProducts from "./Products/postPopulateProducts";
 import addToFavorite from "./Products/addToFavorite";
 import removeFromFavorite from "./Products/removeFromFavorite";
 import getAllFavorites from "./Products/getAllFavorites";
+import addToFavotiteBulk from "./Products/addToFavoriteBulk"
 /* ============USERS FILES============ */
 import signUp from "./User/signup";
 import login from "./User/signin";
@@ -54,6 +55,7 @@ router.use("/products", populatedProducts);
 router.use("/products", addToFavorite);
 router.use("/products", removeFromFavorite);
 router.use("/products", getAllFavorites);
+router.use("/products", addToFavotiteBulk);
 /* ============USERS============ */
 router.use("/users", signUp);
 router.use("/users", login);

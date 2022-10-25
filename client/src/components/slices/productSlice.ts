@@ -43,7 +43,9 @@ export const fetchAllProducts = (tosearch: string): AppThunk => {
   return async (dispatch) => {
     if (!tosearch) {
       try {
-        const productos = await axios.get("http://localhost:5000/products/all");
+        const productos = await axios.get(
+          "http://localhost:5000/products/all"
+        );
         dispatch(allProducts(productos.data));
       } catch (error) {
         return error;
@@ -82,6 +84,28 @@ export const addFavoriteProduct = (
     }
   };
 };
+
+
+export const setFavosBulk = (IdUser:string,token: string,IdsProducts:Array<string>): AppThunk => {
+  return async (dispatch) => {
+    try {
+      const res = await axios.post(
+        "http://localhost:5000/products/addFavoriteBulk",
+        {products:{_id:IdsProducts},
+          user:{_id:IdUser}},
+        {headers:{token:token}}
+      ); 
+      
+      dispatch(setFavorites(res.data));
+
+      return res;
+    } catch (error) {
+      return error;
+    }
+  };
+};
+
+
 export const deleteFavoriteProduct = (
   idProduct: string,
   IdUser: string,
@@ -125,7 +149,7 @@ export const getFavoritesProducts = (
 export const filter = (categoria: string): AppThunk => {
   return async (dispatch) => {
     try {
-      console.log(categoria);
+     
       const product = await axios.get(
         `http://localhost:5000/products/filter/${categoria}`
       );
@@ -139,7 +163,9 @@ export const filter = (categoria: string): AppThunk => {
 export const orderByName = (): AppThunk => {
   return async (dispatch) => {
     try {
-      const ordered = await axios.get("http://localhost:5000/products/all");
+      const ordered = await axios.get(
+        "http://localhost:5000/products/all"
+      );
       dispatch(sortProductsByName(ordered.data));
     } catch (error) {
       return error;
@@ -149,7 +175,9 @@ export const orderByName = (): AppThunk => {
 export const orderByPrice = (): AppThunk => {
   return async (dispatch) => {
     try {
-      const ordered = await axios.get("http://localhost:5000/products/all");
+      const ordered = await axios.get(
+        "http://localhost:5000/products/all"
+      );
       dispatch(sortProductsByPrice(ordered.data));
     } catch (error) {
       return error;
@@ -316,6 +344,9 @@ export const getAllProductsSlice = createSlice({
       state.favs = aux;
       window.localStorage.setItem("favoritos", JSON.stringify(state.favs));
     },
+    clearFavorites:(state)=>{
+      state.favs=[]
+    },
   },
 });
 
@@ -331,4 +362,5 @@ export const {
   setFavorites,
   addFavoritoLocal,
   deleteFavoritoLocal,
+  clearFavorites,
 } = getAllProductsSlice.actions;
