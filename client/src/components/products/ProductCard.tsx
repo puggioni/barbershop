@@ -83,23 +83,6 @@ const ProductCard = (producto: products) => {
        <div onClick={handleBookmark}>
       {producto.userFavorite ? added : notAdded}
       </div> 
-        {/* {active ? (
-          <AiTwotoneHeart
-            size={25}
-            fill="#be0027"
-            onClick={() => {
-              handleBookmark();
-            }}
-          />
-        ) : (
-          <AiOutlineHeart
-            size={25}
-            onClick={() => {
-              handleBookmark();
-            }}
-          />
-        )} */}
-
         <AiOutlineShoppingCart
           size={25}
           onClick={(event) => {

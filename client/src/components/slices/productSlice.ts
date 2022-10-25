@@ -69,7 +69,6 @@ export const addFavoriteProduct = (idProduct: string,IdUser:string,token: string
         {product:{_id:idProduct}, user:{_id:IdUser}},
         {headers:{token:token}}
       ); 
-      console.log(res.data)
       dispatch(setFavorites(res.data));
       
       return res;
@@ -78,6 +77,26 @@ export const addFavoriteProduct = (idProduct: string,IdUser:string,token: string
     }
   };
 };
+
+export const setFavosBulk = (IdUser:string,token: string,IdsProducts:Array<string>): AppThunk => {
+  return async (dispatch) => {
+    try {
+      const res = await axios.post(
+        "http://localhost:5000/products/addFavoriteBulk",
+        {products:{_id:IdsProducts},
+          user:{_id:IdUser}},
+        {headers:{token:token}}
+      ); 
+      
+      dispatch(setFavorites(res.data));
+      
+      return res;
+    } catch (error) {
+      return error;
+    }
+  };
+};
+
 export const deleteFavoriteProduct = (idProduct: string,IdUser:string,token: string): AppThunk => {
   return async (dispatch) => {
     try {
@@ -86,7 +105,7 @@ export const deleteFavoriteProduct = (idProduct: string,IdUser:string,token: str
         {product:{_id:idProduct}, user:{_id:IdUser}},
         {headers:{token:token}}
       ); 
-      console.log(res.data)
+     
       dispatch(setFavorites(res.data));
       
       return res;
@@ -103,7 +122,7 @@ export const getFavoritesProducts = (IdUser:string,token: string): AppThunk => {
         "http://localhost:5000/products/favorites/"+IdUser,
         {headers:{token:token}}
       ); 
-      console.log(res.data)
+     
       dispatch(setFavorites(res.data));
       return res;
     } catch (error) {
@@ -115,7 +134,7 @@ export const getFavoritesProducts = (IdUser:string,token: string): AppThunk => {
 export const filter = (categoria: string): AppThunk => {
   return async (dispatch) => {
     try {
-      console.log(categoria);
+     
       const product = await axios.get(
         `http://localhost:5000/products/filter/${categoria}`
       );
@@ -306,6 +325,9 @@ export const getAllProductsSlice = createSlice({
       state.favs=aux
       window.localStorage.setItem("favoritos",JSON.stringify(state.favs))
     },
+    clearFavorites:(state)=>{
+      state.favs=[]
+    },
   },
 });
 
@@ -321,4 +343,5 @@ export const {
   setFavorites,
   addFavoritoLocal,
   deleteFavoritoLocal,
+  clearFavorites,
 } = getAllProductsSlice.actions;

@@ -28,7 +28,6 @@ function App() {
         <Route path="/product" element={<Products />}></Route>
         <Route path="/product/:idProduct" element={<ProductDetail />} />
         <Route path="/products/shopping-cart" element={<Compra />} />
-        <Route path="/products/shopping-cart" element={<Compra />} />
         <Route path="/products/favorites" element={<Favorites />} />
         {/*=====================user===============================*/}
         <Route path="/user/create" element={<CreateUser />} />

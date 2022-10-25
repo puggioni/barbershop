@@ -86,6 +86,7 @@ export const logInReducerSlice = createSlice({
       state.user = "";
       state.logeado = false;
       localStorage.clear();
+      
     },
 
     yaLogeado: (state) => {
