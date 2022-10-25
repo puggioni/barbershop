@@ -16,6 +16,7 @@ const postPopulateProducts_1 = __importDefault(require("./Products/postPopulateP
 const addToFavorite_1 = __importDefault(require("./Products/addToFavorite"));
 const removeFromFavorite_1 = __importDefault(require("./Products/removeFromFavorite"));
 const getAllFavorites_1 = __importDefault(require("./Products/getAllFavorites"));
+const addToFavoriteBulk_1 = __importDefault(require("./Products/addToFavoriteBulk"));
 /* ============USERS FILES============ */
 const signup_1 = __importDefault(require("./User/signup"));
 const signin_1 = __importDefault(require("./User/signin"));
@@ -42,8 +43,9 @@ const getbarbers_1 = __importDefault(require("./Barbers/getbarbers"));
 /* ============BARBERS============ */
 const postOffice_1 = __importDefault(require("./Offices/postOffice"));
 const getOffices_1 = __importDefault(require("./Offices/getOffices"));
-/* ============PAYMENTS============*/
-const Paypal_1 = __importDefault(require("./Payments/Paypal"));
+const captureOrder_1 = __importDefault(require("./Payments/captureOrder"));
+const cancelOrder_1 = __importDefault(require("./Payments/cancelOrder"));
+const createOrder_1 = __importDefault(require("./Payments/createOrder"));
 const router = (0, express_1.Router)();
 /* ============PRODUCTS============ */
 router.use("/products", postProducts_1.default);
@@ -57,6 +59,7 @@ router.use("/products", postPopulateProducts_1.default);
 router.use("/products", addToFavorite_1.default);
 router.use("/products", removeFromFavorite_1.default);
 router.use("/products", getAllFavorites_1.default);
+router.use("/products", addToFavoriteBulk_1.default);
 /* ============USERS============ */
 router.use("/users", signup_1.default);
 router.use("/users", signin_1.default);
@@ -84,5 +87,8 @@ router.use("/office/", getOffices_1.default);
 router.use("/barber/", postbarber_1.default);
 router.use("/barber/", getbarbers_1.default);
 /* ============PAYMENTS============*/
-router.use("/payments", Paypal_1.default);
+//router.use("/payments", Paypal);
+router.use("/payments", captureOrder_1.default);
+router.use("/payments", cancelOrder_1.default);
+router.use("/payments", createOrder_1.default);
 exports.default = router;

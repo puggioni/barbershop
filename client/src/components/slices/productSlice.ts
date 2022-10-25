@@ -82,6 +82,29 @@ export const addFavoriteProduct = (
     }
   };
 };
+
+export const setFavosBulk = (
+  IdUser: string,
+  token: string,
+  IdsProducts: Array<string>
+): AppThunk => {
+  return async (dispatch) => {
+    try {
+      const res = await axios.post(
+        "http://localhost:5000/products/addFavoriteBulk",
+        { products: { _id: IdsProducts }, user: { _id: IdUser } },
+        { headers: { token: token } }
+      );
+
+      dispatch(setFavorites(res.data));
+
+      return res;
+    } catch (error) {
+      return error;
+    }
+  };
+};
+
 export const deleteFavoriteProduct = (
   idProduct: string,
   IdUser: string,
@@ -359,6 +382,9 @@ export const getAllProductsSlice = createSlice({
       });
       state.allProducts = deleted;
     },
+    clearFavorites: (state: any) => {
+      state.favs = [];
+    },
   },
 });
 
@@ -377,4 +403,5 @@ export const {
   adminDeleteProd,
   sortProductsByStock,
   sortProductsByDisponible,
+  clearFavorites,
 } = getAllProductsSlice.actions;
