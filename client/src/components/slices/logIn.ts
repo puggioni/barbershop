@@ -23,13 +23,10 @@ type dataUser = {
 export const logIn = (email: string, password: string): AppThunk => {
   return async (dispatch) => {
     try {
-      const res: any = await axios.post(
-        "https://barbershop-roan.vercel.app/users/login",
-        {
-          email,
-          password,
-        }
-      );
+      const res: any = await axios.post("https://localhost:5000/users/login", {
+        email,
+        password,
+      });
       dispatch(userLogIn(res.data));
     } catch (error: any) {
       if (error.response.status === 400) {
@@ -55,7 +52,7 @@ export const logUp = (user: object): AppThunk => {
   return async (dispatch) => {
     try {
       const credenciales: dataUser = await axios.post(
-        "https://barbershop-roan.vercel.app/users/signup",
+        "https://localhost:5000/users/signup",
         user
       );
       dispatch(userCreate(credenciales.data));
@@ -89,7 +86,6 @@ export const logInReducerSlice = createSlice({
       state.user = "";
       state.logeado = false;
       localStorage.clear();
-      
     },
 
     yaLogeado: (state) => {

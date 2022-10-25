@@ -1,25 +1,46 @@
 import axios from "axios";
 import { Router } from "express";
+import purchaseOrder from "../../models/purchaseOrder";
 import { checkStock } from "../../middlewares/checkStock";
 import { verifyToken } from "../../middlewares/auth";
 import { deleteStock } from "../../middlewares/deleteStock";
 const router = Router();
 
-router.post("/create-order", checkStock, async (req, res) => {
-  const { purchase_units, products } = req.body;
+router.post("/create-order", async (req, res) => {
+  const { user, compra } = req.body;
+  let value = compra.reduce((acc: any, curr: any) => {
+    return acc["price"] + curr["price"];
+  });
+  let productos = compra.map((obj: Object) => {
+    return { id: obj["id"], quantity: obj["cantidad"] };
+  });
+
+  const newOrder = new purchaseOrder({
+    user: { id: user["user"] },
+    products: productos,
+  });
+  newOrder.save();
+  const idOrder = newOrder["_id"];
   try {
     const order = {
       intent: "CAPTURE",
-      purchase_units,
+      purchase_units: [
+        {
+          reference_id: `${idOrder}`,
+          amount: {
+            currency_code: "USD",
+            value: value,
+          },
+        },
+      ],
       application_context: {
         brand_name: "Henry BarberShop",
         landing_page: "LOGIN",
         user_action: "PAY_NOW",
-        return_url: "https://barbershop-roan.vercel.app/payments/capture-order",
-        cancel_url: "https://barbershop-roan.vercel.app/payments/cancel-order",
+        return_url: "https://localhost:5000/payments/capture-order",
+        cancel_url: "https://localhost:5000/payments/cancel-order",
       },
     };
-
     const response = await axios.post(
       `https://api-m.sandbox.paypal.com/v2/checkout/orders`,
       order,
@@ -33,8 +54,9 @@ router.post("/create-order", checkStock, async (req, res) => {
       }
     );
     //                  ACA DEBERIA CAMBIAR EL ESTADO DE LA ORDEN DE CAPTURANDO - PAGADA - ENVIADA
-    // deleteStock(products);
-
+    //deleteStock(products);
+    console.log("NEW ORDER", newOrder);
+    console.log(response.data);
     res.status(200).json(response.data);
   } catch (error) {
     res.status(500).send(error);
@@ -42,8 +64,8 @@ router.post("/create-order", checkStock, async (req, res) => {
 });
 
 router.get("/capture-order", async (req, res) => {
-  const { token, PayerID } = req.query;
-
+  const { token } = req.query;
+  console.log(token);
   const response = await axios.post(
     `https://api-m.sandbox.paypal.com/v2/checkout/orders/${token}/capture`,
     {},
@@ -57,12 +79,13 @@ router.get("/capture-order", async (req, res) => {
     }
   );
 
-  console.log(response.data);
+  console.log("PURCHASE", response.data.purchase_units[0].shipping);
+
   res.status(200).send("capture");
 });
 
 router.get("/cancel-order", (req, res) => {
-  res.redirect("https://barbershop-front.vercel.app/product");
+  res.redirect("http://localhost:3000/product");
 });
 
 export default router;

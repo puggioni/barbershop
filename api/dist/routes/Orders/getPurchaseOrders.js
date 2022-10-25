@@ -13,24 +13,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
-const user_1 = __importDefault(require("../../models/user"));
-const products_1 = __importDefault(require("../../models/products"));
-const auth_1 = require("../../middlewares/auth");
-const products_2 = __importDefault(require("../../models/products"));
+const purchaseOrder_1 = __importDefault(require("../../models/purchaseOrder"));
 const router = (0, express_1.Router)();
-router.post("/addFavorite", auth_1.verifyToken, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { product, user } = req.body;
+router.get("/all", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const productFound = yield products_1.default.findById(product._id);
-        const userFound = yield user_1.default.findById(user._id);
-        userFound["favorites_products"].push(productFound["_id"]);
-        yield userFound.save();
-        const productsIds = userFound["favorites_products"];
-        const allProducts = yield products_2.default.find({ _id: { $in: productsIds } });
-        res.status(200).json(allProducts);
+        const orders = yield purchaseOrder_1.default.find();
+        res.send(orders);
     }
-    catch (error) {
-        res.status(500).json({ message: "Error al agregar a favoritos" });
+    catch (err) {
+        console.log(err);
+        res.status(500).send(err);
     }
 }));
 exports.default = router;

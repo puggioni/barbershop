@@ -23,6 +23,10 @@ const PurchaseOrderSchema = new Schema({
             },
         },
     ],
+    state: {
+        type: String,
+        default: "Created",
+    },
 }, {
     versionKey: false,
     timestamps: true,
