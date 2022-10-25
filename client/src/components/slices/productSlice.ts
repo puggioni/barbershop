@@ -1,12 +1,10 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Action } from "@remix-run/router";
 import axios from "axios";
 import { AppThunk } from "../../app/store";
-import Products from "../products/Products";
 
 export interface products {
   _id: string;
-  image: string;
+  image?: string;
   rating?: number;
   name: string;
   description?: string;
@@ -26,6 +24,7 @@ interface ProductState {
   errors: any;
   favs: Object[];
   categorias: Array<{ name: string; id: string }>;
+  deleteProd: {};
 }
 
 const initialState: ProductState = {
@@ -35,6 +34,7 @@ const initialState: ProductState = {
   errors: null,
   favs: [],
   categorias: [],
+  deleteProd: {},
 };
 
 //==========action==================
@@ -216,6 +216,15 @@ export const reviewProduct = (review: object, config: object): AppThunk => {
     }
   };
 };
+export const deleteProd = (header: object, id: string): AppThunk => {
+  return async (dispatch) => {
+    const res: products = await axios.delete(
+      "http://localhost:5000/products/delete",
+      { headers: header, data: { id } }
+    );
+    dispatch(adminDeleteProd(res));
+  };
+};
 
 //================reducer===================
 export const getAllProductsSlice = createSlice({
@@ -316,6 +325,13 @@ export const getAllProductsSlice = createSlice({
       state.favs = aux;
       window.localStorage.setItem("favoritos", JSON.stringify(state.favs));
     },
+    adminDeleteProd: (state: any, action: PayloadAction<any>) => {
+      state.deleteProd = action.payload;
+      const deleted = state.allProducts.filter((prod: { _id: string }) => {
+        return action.payload.data._id !== prod._id;
+      });
+      state.allProducts = deleted;
+    },
   },
 });
 
@@ -331,4 +347,5 @@ export const {
   setFavorites,
   addFavoritoLocal,
   deleteFavoritoLocal,
+  adminDeleteProd,
 } = getAllProductsSlice.actions;
