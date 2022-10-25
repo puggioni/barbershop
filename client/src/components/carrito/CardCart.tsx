@@ -23,9 +23,6 @@ const ProductCard = (producto: any) => {
 
   const handleCantidadChange = (event: any, num: number) => {
     event.preventDefault();
-
-    console.log(cantidad);
-
     const index = prodLocalStorage.findIndex((p: any) => {
       return p.productos._id === producto._id;
     });
@@ -47,7 +44,7 @@ const ProductCard = (producto: any) => {
         <Link to={`/product/${producto._id}`}>{producto.name}</Link>
         <h2>${producto.price}</h2>
         <div className="relative border border-black py-1 pr-2 mr-4 items-center text-center">
-          <div>{cantidad}</div>
+          <div>{producto.cantidad}</div>
           <HiOutlineArrowLongDown
             onClick={(e) => {
               setCantidad((prev: number) => prev - 1);
