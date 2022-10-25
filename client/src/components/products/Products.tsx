@@ -15,7 +15,6 @@ import Paginate from "./Paginate";
 import ProductCard from "./ProductCard";
 import SearchBar from "./Searchbar";
 
-
 interface prodCard {
   _id: string;
   name: string;
@@ -62,7 +61,6 @@ const Products = () => {
 
   const resetPage = () => {
     setCurrentPage(1);
-
   };
 
   if (data?.allProducts instanceof Array) {
@@ -72,7 +70,7 @@ const Products = () => {
     );
 
     return (
-      <div className=" bg-white bg-store-banner bg-no-repeat pt-52 pb-8">
+      <div className=" bg-white bg-store-banner bg-no-repeat pt-52 pb-8 bg-contain">
         <div className="border bg-white border-black rounded-xl mx-40">
           <h1 className="flex justify-center py-8 text-5xl">STORE</h1>
           <div className="content-none border-b mx-40 border-black"></div>
