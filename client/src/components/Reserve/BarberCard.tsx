@@ -7,28 +7,24 @@ interface barberCard {
   office: string
 }
 
+
+
 const BarberCard = (barber: barberCard) => {
 
   return (
-    <div
-      className=" flex flex-col bg-white items-center max-w-3xl max-h-full    
-        justify-items-center rounded-xl hover:outline hover:outline-1	hover:outline-gray-300  m-auto my-3"
-    >
+    <div className="h-86 border rounded-lg align-center p-3 my-2 border-black">
+
       <img
-        className=" object-cover bg-white rounded-xl h-full m-0"
-        src={barber.image}
-        alt="barber-image"
-      />
+        className="h-48 w-48 object-cover bg-white  rounded-xl h-full m-auto mt-2"
+        src="https://web-ontime.com/wp-content/uploads/2020/02/19-min.jpg"
+        alt="barber-image" />
 
-      <h3>{barber.name.toUpperCase()}</h3>
+      <h3 className="font-medium align-center inline-block text-2xl">{barber.name.toUpperCase()}</h3>
 
-      <Link to={`/reserve/barber`} className="">
-        Pedir Turno 
-      </Link>
-
-      <h2 className="font-medium text-2xl">{barber.rating}</h2>
-
-      <h2 className="font-medium text-2xl">{barber.office}</h2>
+      
+      <h2 className="text-2xl">{barber.rating} Stars</h2>
+    
+      <h2 className="mb-4 text-l">Office</h2>
 
     </div>
   );
