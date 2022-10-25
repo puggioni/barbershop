@@ -56,8 +56,13 @@ const createOrder = (req, res) =>
       application_context: { brand_name: "Henry BarberShop" },
       landing_page: "NO PREFERENCE",
       user_action: "PAY_NOW",
+<<<<<<< HEAD
       return_url: "https://localhost:5000/payments/capture-order",
       cancel_url: "https://localhost:5000/payments/cancel-order",
+=======
+      return_url: "http://localhost:5000/payments/capture-order",
+      cancel_url: "http://localhost:5000/payments/cancel-order",
+>>>>>>> 60d924f893ed2a447f1cd8c86a9c142f6b115b20
     };
     const response = yield axios_1.default.post(
       `${PAYPAL_API}/v2/checkout/orders`,
