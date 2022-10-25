@@ -2,6 +2,7 @@ import { FaTrash } from "react-icons/fa";
 import { HiOutlineArrowLongDown, HiOutlineArrowLongUp } from "react-icons/hi2";
 import { Link } from "react-router-dom";
 
+
 const ProductCard = (producto: any) => {
   let cantidad: number = producto.cantidad;
   const prodLocalStorage: any = JSON.parse(

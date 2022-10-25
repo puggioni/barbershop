@@ -52,7 +52,9 @@ export const logUp = (user: object): AppThunk => {
   return async (dispatch) => {
     try {
       const credenciales: dataUser = await axios.post(
-        "https://localhost:5000/users/signup",
+
+        "http://localhost:5000/users/signup",
+
         user
       );
       dispatch(userCreate(credenciales.data));
