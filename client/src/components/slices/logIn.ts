@@ -52,7 +52,9 @@ export const logUp = (user: object): AppThunk => {
   return async (dispatch) => {
     try {
       const credenciales: dataUser = await axios.post(
-        "https://barbershop-roan.vercel.app/users/signup",
+
+        "http://localhost:5000/users/signup",
+
         user
       );
       dispatch(userCreate(credenciales.data));
@@ -86,7 +88,6 @@ export const logInReducerSlice = createSlice({
       state.user = "";
       state.logeado = false;
       localStorage.clear();
-      
     },
 
     yaLogeado: (state) => {

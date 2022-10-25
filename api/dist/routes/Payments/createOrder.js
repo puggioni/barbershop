@@ -12,19 +12,33 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const express_1 = require("express");
 const axios_1 = __importDefault(require("axios"));
+const express_1 = require("express");
+const purchaseOrder_1 = __importDefault(require("../../models/purchaseOrder"));
 const router = (0, express_1.Router)();
 router.post("/create-order", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    //const { purchase_units, products } = req.body;
+    const { user, compra } = req.body;
+    let value = compra.reduce((acc, curr) => {
+        return acc["price"] + curr["price"];
+    });
+    let productos = compra.map((obj) => {
+        return { id: obj["id"], quantity: obj["cantidad"] };
+    });
+    const newOrder = new purchaseOrder_1.default({
+        user: { id: user["user"] },
+        products: productos,
+    });
+    newOrder.save();
+    const idOrder = newOrder["_id"];
     try {
         const order = {
             intent: "CAPTURE",
-            purhcase_units: [
+            purchase_units: [
                 {
+                    reference_id: `${idOrder}`,
                     amount: {
                         currency_code: "USD",
-                        value: "100.00",
+                        value: value,
                     },
                 },
             ],
@@ -42,8 +56,7 @@ router.post("/create-order", (req, res) => __awaiter(void 0, void 0, void 0, fun
                 password: "EG_ZGG1BcPvJhGKbU0HafZRgg1mFMRGk0kZVULdRAL-ECDr5IYVzvA1aWNPXiWQHcSRHqxooNZnyoy6Z",
             },
         });
-        //                  ACA DEBERIA CAMBIAR EL ESTADO DE LA ORDEN DE CAPTURANDO - PAGADA - ENVIADA
-        // deleteStock(products);
+        //deleteStock(products);
         res.status(200).json(response.data);
     }
     catch (error) {

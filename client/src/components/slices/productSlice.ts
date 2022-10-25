@@ -161,7 +161,9 @@ export const filter = (categoria: string): AppThunk => {
 export const orderByName = (payload: string) => {
   return (dispatch: any) => {
     try {
+
       dispatch(sortProductsByName(payload));
+
     } catch (error) {
       return error;
     }
@@ -170,7 +172,9 @@ export const orderByName = (payload: string) => {
 export const orderByPrice = (payload: string) => {
   return (dispatch: any) => {
     try {
+
       dispatch(sortProductsByPrice(payload));
+
     } catch (error) {
       return error;
     }
@@ -375,6 +379,7 @@ export const getAllProductsSlice = createSlice({
       state.favs = aux;
       window.localStorage.setItem("favoritos", JSON.stringify(state.favs));
     },
+
     adminDeleteProd: (state: any, action: PayloadAction<any>) => {
       state.deleteProd = action.payload;
       const deleted = state.allProducts.filter((prod: { _id: string }) => {
@@ -384,6 +389,7 @@ export const getAllProductsSlice = createSlice({
     },
 
     clearFavorites: (state: any) => {
+
       state.favs = [];
     },
   },

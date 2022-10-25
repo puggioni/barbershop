@@ -11,7 +11,7 @@ import populatedProducts from "./Products/postPopulateProducts";
 import addToFavorite from "./Products/addToFavorite";
 import removeFromFavorite from "./Products/removeFromFavorite";
 import getAllFavorites from "./Products/getAllFavorites";
-import addToFavotiteBulk from "./Products/addToFavoriteBulk"
+import addToFavotiteBulk from "./Products/addToFavoriteBulk";
 /* ============USERS FILES============ */
 import signUp from "./User/signup";
 import login from "./User/signin";
@@ -39,10 +39,11 @@ import getbarbers from "./Barbers/getbarbers";
 import postOffice from "./Offices/postOffice";
 import getOffices from "./Offices/getOffices";
 /* ============PAYMENTS============*/
-import Paypal from "./Payments/Paypal";
 import captureOrder from "./Payments/captureOrder";
 import cancelOrder from "./Payments/cancelOrder";
 import createOrder from "./Payments/createOrder";
+/*============ORDERS=============*/
+import completeOrder from "./Orders/completeOrder";
 
 const router = Router();
 
@@ -91,8 +92,11 @@ router.use("/barber/", postbarber);
 router.use("/barber/", getbarbers);
 
 /* ============PAYMENTS============*/
-//router.use("/payments", Paypal);
 router.use("/payments", captureOrder);
 router.use("/payments", cancelOrder);
 router.use("/payments", createOrder);
+
+/*============ORDERS=============*/
+router.use("/orders", completeOrder);
+
 export default router;

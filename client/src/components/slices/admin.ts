@@ -17,11 +17,13 @@ const initialState = {
 //==========action==================
 export const deleteProd = (header: object, id: string): AppThunk => {
   return async (dispatch) => {
+
     const res: products = await axios.delete(
       "http://localhost:5000/products/delete",
       { headers: header, data: { id } }
     );
     dispatch(adminDeleteProd(res));
+
   };
 };
 

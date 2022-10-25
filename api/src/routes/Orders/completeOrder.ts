@@ -3,13 +3,13 @@ import Orders from "../../models/purchaseOrder";
 
 const router = Router();
 
-router.get("/cancel-order", async (req, res) => {
+router.get("/complete-order", async (req, res) => {
   const { idOrder } = req.query;
   try {
     const order = await Orders.findById(idOrder);
-    order["state"] = "Cancelada";
+    order["state"] = "Completa";
     order.save();
-    res.send(order).redirect("htpp://localhost:5000/product");
+    res.status(200).send(order);
   } catch (error) {
     console.log(error);
     res.status(500).send(error);
