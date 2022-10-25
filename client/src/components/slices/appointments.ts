@@ -2,10 +2,6 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 import { AppThunk } from "../../app/store";
 
-<<<<<<< Updated upstream
-=======
-
->>>>>>> Stashed changes
 export interface appointmentData {
     user: string,
     block: number,
