@@ -1,6 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { Action } from "@remix-run/router";
 import axios from "axios";
 import { AppThunk } from "../../app/store";
+import Products from "../products/Products";
 
 export interface products {
   _id: string;
