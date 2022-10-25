@@ -3,21 +3,26 @@ import { useNavigate, Link } from "react-router-dom";
 import MapView from "./Map/MapView";
 import BarberCard from "./BarberCard";
 import { fetchAllBarbers } from "../slices/barbers";
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { RootState } from "../../app/store";
 import { buttonHover } from "../NavBar";
+import Calendar from 'react-calendar';
+
 
 const Reserve = () => {
   const dispatch=useAppDispatch();
   const inicializar = useCallback(async () => {
     dispatch(fetchAllBarbers());}, [dispatch]);
+
   useEffect(() => {
     inicializar();
   }, [inicializar]);
 
+  const [value, onChange] = useState(new Date());
   const data = useAppSelector((state: RootState) => state.barbers);
-
+  const [turno, setTurno]=useState({});
+  
 return(
   <div className=" bg-white bg-store-banner justify-center bg-no-repeat pt-32 pb-8">
     <h2 className="flex justify-center my-auto text-5xl text-white mb-12">PEDI TU TURNO</h2>
@@ -50,7 +55,10 @@ return(
       <div className=" justify-center inline-block min  block grow" >
       <h2 className="flex justify-center my-auto text-2xl text-black"> SELECCION DEL HORARIO<br /></h2>
       <br />
-      <input  className="justify-center justify-center my-auto   text-xl  text-black" type="date" />
+      <div className=" w-80 bg-white border border-black p-4 pt-2 rounded-lg text-black text-center">
+      <Calendar onChange={onChange} value={value} />
+      </div>
+      {/* <input  className="justify-center justify-center my-auto   text-xl  text-black" type="date" /> */}
       <br />
       <select className="inline justify-center p-2  mt-5 py-1 rounded-lg border border-black" name="horario" id="">
       <option value="none">SELECCIONE UN HORARIO:</option>
