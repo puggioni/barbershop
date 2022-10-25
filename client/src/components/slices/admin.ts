@@ -9,7 +9,7 @@ const initialState = {
 export const isAdmin = (headers: object): AppThunk => {
   return async (dispatch) => {
     const res = await axios.get(
-      "https://barbershop-roan.vercel.app/users",
+      `${process.env.REACT_APP_BASE_URL}/users`,
       headers
     );
     dispatch(adminCred(res.data.name));

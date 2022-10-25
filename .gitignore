@@ -12,4 +12,4 @@ node_modules
 .gitignore
 api/package-lock.json
 api/package.json
-```
+client/config.ts

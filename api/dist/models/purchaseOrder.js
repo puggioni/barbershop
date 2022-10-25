@@ -23,6 +23,9 @@ const PurchaseOrderSchema = new Schema({
             },
         },
     ],
+    state: {
+        type: String,
+    },
 }, {
     versionKey: false,
     timestamps: true,

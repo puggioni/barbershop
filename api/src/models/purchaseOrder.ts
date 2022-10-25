@@ -12,8 +12,8 @@ export interface IPurchaseOrder {
       quantity: number;
     }
   ];
+  state: string;
 }
-
 const PurchaseOrderSchema = new Schema<IPurchaseOrder>(
   {
     user: {
@@ -33,6 +33,9 @@ const PurchaseOrderSchema = new Schema<IPurchaseOrder>(
         },
       },
     ],
+    state: {
+      type: String,
+    },
   },
   {
     versionKey: false,
