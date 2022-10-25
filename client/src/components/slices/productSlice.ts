@@ -14,7 +14,7 @@ export interface products {
   stock?: number;
   available?: boolean;
   favorite?: boolean;
-  userFavorite?:boolean;
+  userFavorite?: boolean;
   category?: Array<any>;
   reviews?: Array<any>;
   __v?: number;
@@ -43,7 +43,9 @@ export const fetchAllProducts = (tosearch: string): AppThunk => {
   return async (dispatch) => {
     if (!tosearch) {
       try {
-        const productos = await axios.get("http://localhost:5000/products/all");
+        const productos = await axios.get(
+          "http://localhost:5000/products/all"
+        );
         dispatch(allProducts(productos.data));
       } catch (error) {
         return error;
@@ -61,22 +63,28 @@ export const fetchAllProducts = (tosearch: string): AppThunk => {
   };
 };
 
-export const addFavoriteProduct = (idProduct: string,IdUser:string,token: string): AppThunk => {
+export const addFavoriteProduct = (
+  idProduct: string,
+  IdUser: string,
+  token: string
+): AppThunk => {
   return async (dispatch) => {
     try {
       const res = await axios.post(
         "http://localhost:5000/products/addFavorite",
-        {product:{_id:idProduct}, user:{_id:IdUser}},
-        {headers:{token:token}}
-      ); 
+        { product: { _id: idProduct }, user: { _id: IdUser } },
+        { headers: { token: token } }
+      );
+      console.log(res.data);
       dispatch(setFavorites(res.data));
-      
+
       return res;
     } catch (error) {
       return error;
     }
   };
 };
+
 
 export const setFavosBulk = (IdUser:string,token: string,IdsProducts:Array<string>): AppThunk => {
   return async (dispatch) => {
@@ -97,17 +105,22 @@ export const setFavosBulk = (IdUser:string,token: string,IdsProducts:Array<strin
   };
 };
 
-export const deleteFavoriteProduct = (idProduct: string,IdUser:string,token: string): AppThunk => {
+
+export const deleteFavoriteProduct = (
+  idProduct: string,
+  IdUser: string,
+  token: string
+): AppThunk => {
   return async (dispatch) => {
     try {
       const res = await axios.post(
         "http://localhost:5000/products/removeFavorite",
-        {product:{_id:idProduct}, user:{_id:IdUser}},
-        {headers:{token:token}}
-      ); 
-     
+        { product: { _id: idProduct }, user: { _id: IdUser } },
+        { headers: { token: token } }
+      );
+      console.log(res.data);
       dispatch(setFavorites(res.data));
-      
+
       return res;
     } catch (error) {
       return error;
@@ -115,14 +128,16 @@ export const deleteFavoriteProduct = (idProduct: string,IdUser:string,token: str
   };
 };
 
-export const getFavoritesProducts = (IdUser:string,token: string): AppThunk => {
+export const getFavoritesProducts = (
+  IdUser: string,
+  token: string
+): AppThunk => {
   return async (dispatch) => {
     try {
       const res = await axios.get(
-        "http://localhost:5000/products/favorites/"+IdUser,
-        {headers:{token:token}}
-      ); 
-     
+        "http://localhost:5000/products/favorites/" + IdUser,
+        { headers: { token: token } }
+      );
       dispatch(setFavorites(res.data));
       return res;
     } catch (error) {
@@ -148,7 +163,9 @@ export const filter = (categoria: string): AppThunk => {
 export const orderByName = (): AppThunk => {
   return async (dispatch) => {
     try {
-      const ordered = await axios.get("http://localhost:5000/products/all");
+      const ordered = await axios.get(
+        "http://localhost:5000/products/all"
+      );
       dispatch(sortProductsByName(ordered.data));
     } catch (error) {
       return error;
@@ -158,7 +175,9 @@ export const orderByName = (): AppThunk => {
 export const orderByPrice = (): AppThunk => {
   return async (dispatch) => {
     try {
-      const ordered = await axios.get("http://localhost:5000/products/all");
+      const ordered = await axios.get(
+        "http://localhost:5000/products/all"
+      );
       dispatch(sortProductsByPrice(ordered.data));
     } catch (error) {
       return error;
@@ -301,7 +320,7 @@ export const getAllProductsSlice = createSlice({
     },
 
     clearDetail: (state) => {
-      state.product= null;
+      state.product = null;
     },
 
     getCaterogias: (
@@ -311,19 +330,19 @@ export const getAllProductsSlice = createSlice({
       state.categorias = action.payload;
     },
 
-    setFavorites:(state, action: PayloadAction<Array<products>>)=>{
-      state.favs=action.payload
+    setFavorites: (state, action: PayloadAction<Array<products>>) => {
+      state.favs = action.payload;
     },
-    addFavoritoLocal:(state, action: PayloadAction<products>)=>{
-      state.favs.push(action.payload)
-      window.localStorage.setItem("favoritos",JSON.stringify(state.favs))
+    addFavoritoLocal: (state, action: PayloadAction<products>) => {
+      state.favs.push(action.payload);
+      window.localStorage.setItem("favoritos", JSON.stringify(state.favs));
     },
-    deleteFavoritoLocal:(state, action: PayloadAction<string>)=>{
-      const idx = state.favs.findIndex((p:any)=>(p._id===action.payload))
-      let aux=state.favs
-      aux.splice(idx,1)
-      state.favs=aux
-      window.localStorage.setItem("favoritos",JSON.stringify(state.favs))
+    deleteFavoritoLocal: (state, action: PayloadAction<string>) => {
+      const idx = state.favs.findIndex((p: any) => p._id === action.payload);
+      let aux = state.favs;
+      aux.splice(idx, 1);
+      state.favs = aux;
+      window.localStorage.setItem("favoritos", JSON.stringify(state.favs));
     },
     clearFavorites:(state)=>{
       state.favs=[]

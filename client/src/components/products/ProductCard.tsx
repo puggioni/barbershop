@@ -1,4 +1,3 @@
-import { useState } from "react";
 import {
   AiOutlineHeart,
   AiOutlineShoppingCart,
@@ -6,44 +5,40 @@ import {
 } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import { useAppDispatch } from "../../app/hooks";
-import { addFavoriteProduct, products,deleteFavoriteProduct,addFavoritoLocal,deleteFavoritoLocal } from "../slices/productSlice";
-
+import {
+  addFavoriteProduct,
+  products,
+  deleteFavoriteProduct,
+  addFavoritoLocal,
+  deleteFavoritoLocal,
+} from "../slices/productSlice";
 
 const ProductCard = (producto: products) => {
   const added = (
-    <AiTwotoneHeart
-      title="Quitar de Favoritos"
-      size={25}
-      fill="#be0027"
-    />
+    <AiTwotoneHeart title="Quitar de Favoritos" size={25} fill="#be0027" />
   );
 
-  const notAdded = (
-    <AiTwotoneHeart title="Agregar a Favoritos" 
-    size={25}
-    />
-  );
+  const notAdded = <AiOutlineHeart title="Agregar a Favoritos" size={25} />;
 
   const dispatch = useAppDispatch();
-  function handleBookmark(e:any) {
+  function handleBookmark(e: any) {
     e.preventDefault();
-    const aux=window.localStorage.getItem("user");
-    const aux2=window.localStorage.getItem("token");
-    if(aux && aux2){
-     const user=JSON.parse(aux);
-     const token=JSON.parse(aux2);
-     if(!producto.userFavorite){
-        dispatch(addFavoriteProduct(producto._id,user._id,token));
-     }else{
-        dispatch(deleteFavoriteProduct(producto._id,user._id,token));
-     }
-    }else{
-      !producto.userFavorite?
-      dispatch(addFavoritoLocal(producto)):
-      dispatch(deleteFavoritoLocal(producto._id));
-    } 
+    const aux = window.localStorage.getItem("user");
+    const aux2 = window.localStorage.getItem("token");
+    if (aux && aux2) {
+      const user = JSON.parse(aux);
+      const token = JSON.parse(aux2);
+      if (!producto.userFavorite) {
+        dispatch(addFavoriteProduct(producto._id, user._id, token));
+      } else {
+        dispatch(deleteFavoriteProduct(producto._id, user._id, token));
+      }
+    } else {
+      !producto.userFavorite
+        ? dispatch(addFavoritoLocal(producto))
+        : dispatch(deleteFavoritoLocal(producto._id));
+    }
   }
-
 
   const handleClick = (event: any) => {
     event.preventDefault();
@@ -85,6 +80,7 @@ const ProductCard = (producto: products) => {
       </div> 
         <AiOutlineShoppingCart
           size={25}
+          title="Store"
           onClick={(event) => {
             handleClick(event);
           }}

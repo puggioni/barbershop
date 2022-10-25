@@ -4,7 +4,6 @@ import User from "../../models/user";
 import { verifyToken } from "../../middlewares/auth";
 import ProductModel from "../../models/products";
 
-
 const router = Router();
 
 router.get(

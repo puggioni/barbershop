@@ -1,4 +1,4 @@
-import {useEffect, useCallback} from "react"
+import { useEffect, useCallback } from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { RootState } from "../../app/store";
 import ProductCard from "./ProductCard";
@@ -6,6 +6,7 @@ import { VscArrowLeft } from "react-icons/vsc";
 import { useNavigate } from "react-router";
 import { getFavoritesProducts, setFavosBulk } from "../slices/productSlice";
 import { setFavorites } from "../slices/productSlice";
+
 export default function Favorites(){
     const dispatch = useAppDispatch();
     var favoritos=useAppSelector((state:RootState)=>state.products.favs)
@@ -39,7 +40,7 @@ export default function Favorites(){
 
     const inicializar = useCallback(async () => {
       cargarFavs();
-      }, [dispatch, cargarFavs]);
+      }, [dispatch]);
 
       useEffect(() => {
         inicializar();
@@ -49,30 +50,36 @@ export default function Favorites(){
         };
       }, [dispatch]);
 
-      const goBack = () => {
-        navigate(-1);
-      };
-    return(
-        <div>
-                <VscArrowLeft
-            onClick={() => goBack()}
-            className="h-7 w-7 fill-white justify-self-start "
-          />
-            <label htmlFor="" className=" font-bold text-white text-center ">Mis Productos Favoritos</label>
-            {favoritos?.map((Favoritos: any) => (
-            <ProductCard
-              key={Favoritos._id}
-              _id={Favoritos._id}
-              name={Favoritos.name}
-              image={Favoritos.image}
-              price={Favoritos.price}
-              rating={10}
-              available={Favoritos.available}
-              userFavorite={favoritosUser.includes(Favoritos._id)}
-            />
-          ))}
+  useEffect(() => {
+    inicializar();
+    return () => {};
+  }, [dispatch, inicializar]);
 
-        </div>
-    )
-} 
+  const goBack = () => {
+    navigate(-1);
+  };
 
+  return (
+    <div>
+      <VscArrowLeft
+        onClick={() => goBack()}
+        className="h-7 w-7 fill-white justify-self-start "
+      />
+      <label htmlFor="" className=" font-bold text-white text-center ">
+        Mis Productos Favoritos
+      </label>
+      {favoritos?.map((Favoritos: any) => (
+        <ProductCard
+          key={Favoritos._id}
+          _id={Favoritos._id}
+          name={Favoritos.name}
+          image={Favoritos.image}
+          price={Favoritos.price}
+          rating={10}
+          available={Favoritos.available}
+          userFavorite={favoritosUser.includes(Favoritos._id)}
+        />
+      ))}
+    </div>
+  );
+}
