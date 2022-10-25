@@ -1,4 +1,5 @@
 import { useReducer } from "react";
+import { Link } from "react-router-dom";
 import { useAppDispatch } from "../../app/hooks";
 import { comprar } from "../slices/productSlice";
 import CardCart from "./CardCart";
@@ -43,7 +44,7 @@ const Compra = () => {
   };
 
   return (
-    <div className="bg-white bg-carrito-banner bg-no-repeat pt-[17%] bg-contain">
+    <div className="bg-white bg-carrito-banner bg-no-repeat pt-[17%] bg-contain h-[102%]">
       <div className="flex flex-col items-center pb-[4rem] bg-white/50 rounded-xl mx-12">
         <div className="font-semibold text-2xl pt-2 pb-6">Tu Carrito</div>
         <div className="content-none w-1/4 border-b border-black"></div>
@@ -79,7 +80,15 @@ const Compra = () => {
             FINALIZAR COMPRA
           </button>
         </div>
+        <Link
+          to="/product"
+          className="  bg-[#855C20] my-8 text-white w-1/4 font-semibold mt-16 mx-8 px-4 py-2"
+          onClick={(e) => handleClick(e)}
+        >
+          Seguí comprando
+        </Link>
       </div>
+      <div className=""></div>
     </div>
   );
 };

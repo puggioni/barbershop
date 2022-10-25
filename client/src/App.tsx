@@ -13,10 +13,12 @@ import Favorites from "./components/products/Favorites";
 import { initializeApp } from "@firebase/app";
 import { getAuth } from "@firebase/auth";
 import { firebaseConfig } from "./firebase";
+import Users from "./components/admin/Users";
+import Compras from "./components/admin/Compras";
+import Productos from "./components/admin/Productos";
 
 export const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
-
 
 function App() {
   return (
@@ -37,9 +39,10 @@ function App() {
         {/*===================turno=================================*/}
         <Route path="/reserve" element={<Reserve />} />
         <Route path="/reserve/barber" element={<BarberDetail />} />
-
-        
-
+        {/*===================admin=================================*/}
+        <Route path="/admin/products" element={<Productos />} />
+        <Route path="/admin/users" element={<Users />} />
+        <Route path="/admin/compras" element={<Compras />} />
       </Routes>
     </div>
   );

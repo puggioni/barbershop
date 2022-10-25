@@ -4,8 +4,8 @@ import { RiShoppingBasket2Line } from "react-icons/ri";
 import { Link, useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import logo from "../imagenes/Logo.png";
-import Logeado from "./user/Logeado";
 import { yaLog } from "./slices/logIn";
+import Logeado from "./user/Logeado";
 
 export const buttonHover =
   "hover:shadow-md hover:shadow-slate-500	hover:bg-[#855C20] hover:text-white hover:ease-in-out hover:duration-300";
@@ -20,7 +20,10 @@ const NavBar = () => {
 
   const dispatch = useAppDispatch();
   const user: any = JSON.parse(window.localStorage.getItem("user") || "{}");
-
+  let adminAuth = false;
+  if (Object.keys(user).length) {
+    adminAuth = user.role[0].name === "admin";
+  }
   useEffect(() => {
     if (Object.keys(user).length) {
       dispatch(yaLog());
@@ -37,7 +40,7 @@ const NavBar = () => {
         alt="logo"
       />
       <div className="justify-self-start	ml-16">
-        <div className="grid grid-flow-col gap-12 font-medium ">
+        <div className="grid grid-flow-col  font-medium ">
           <Link
             to={"/product"}
             className={`${buttonHover} px-4 py-1 rounded-lg`}
@@ -62,6 +65,28 @@ const NavBar = () => {
           >
             Contacto
           </Link>
+          {adminAuth && (
+            <>
+              <Link
+                to="/admin/products"
+                className={`${buttonHover} px-4 py-1 rounded-lg`}
+              >
+                Productos(A)
+              </Link>
+              <Link
+                to="/admin/users"
+                className={`${buttonHover} px-4 py-1 rounded-lg`}
+              >
+                Usuarios(A)
+              </Link>
+              <Link
+                to="/admin/compras"
+                className={`${buttonHover} px-4 py-1 rounded-lg`}
+              >
+                Compras(A)
+              </Link>
+            </>
+          )}
         </div>
       </div>
 
