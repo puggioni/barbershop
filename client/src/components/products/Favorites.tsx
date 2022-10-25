@@ -31,18 +31,23 @@ export default function Favorites() {
       <label htmlFor="" className=" font-bold text-white text-center ">
         Mis Productos Favoritos
       </label>
-      {favoritos?.map((Favoritos: any) => (
-        <ProductCard
-          key={Favoritos._id}
-          _id={Favoritos._id}
-          name={Favoritos.name}
-          image={Favoritos.image}
-          price={Favoritos.price}
-          rating={10}
-          available={Favoritos.available}
-          userFavorite={favoritosUser.includes(Favoritos._id)}
-        />
-      ))}
+
+      {favoritos ? (
+        favoritos.map((Favoritos: any) => (
+          <ProductCard
+            key={Favoritos._id}
+            _id={Favoritos._id}
+            name={Favoritos.name}
+            image={Favoritos.image}
+            price={Favoritos.price}
+            rating={10}
+            available={Favoritos.available}
+            userFavorite={favoritosUser.includes(Favoritos._id)}
+          />
+        ))
+      ) : (
+        <label className="text-white">No hay productos favoritos</label>
+      )}
     </div>
   );
 }
