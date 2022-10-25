@@ -15,7 +15,7 @@ interface prodCard {
   price: number;
   rating?: number;
   available?: boolean;
-}
+} 
 const Products = () => {
   const dispatch = useAppDispatch();
 

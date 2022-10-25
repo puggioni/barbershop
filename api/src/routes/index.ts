@@ -85,7 +85,7 @@ router.use("/office/", getOffices);
 router.use("/barber/", postbarber);
 router.use("/barber/", getbarbers);
 
-/* ============PAYMENTS============*/
+/* ============PAYMENTS============*/ 
 router.use("/payments", Paypal);
 
 export default router;

@@ -50,7 +50,6 @@ const express_1 = require("express");
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const passport_1 = __importDefault(require("passport"));
 const router = (0, express_1.Router)();
-<<<<<<< HEAD
 router.post("/login", (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     passport_1.default.authenticate("login", (err, user, info) => __awaiter(void 0, void 0, void 0, function* () {
         try {
@@ -77,29 +76,4 @@ router.post("/login", (req, res, next) => __awaiter(void 0, void 0, void 0, func
             return next(error);
         }
     }));
-=======
-router.post("/login", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const userFound = yield user_1.default.findOne({
-            email: req.body.email,
-        }).populate("role", "name -_id");
-        if (!userFound)
-            return res.status(400).json({ message: "User not found" });
-        const matchPassword = yield user_1.default.comparePassword(req.body.password, userFound["password"]);
-        if (!matchPassword)
-            return res.status(401).json({ token: null, message: "Invalid Password" });
-        const token = jsonwebtoken_1.default.sign({ _id: userFound["._id"] }, "token", {
-            expiresIn: 60 * 60 * 24,
-        });
-        const response = {
-            user: userFound,
-            token,
-        };
-        console.log(userFound);
-        res.header("auth-token", token).send(response);
-    }
-    catch (err) {
-        res.status(500).json(err);
-    }
->>>>>>> 29115234716c52afc995d78494faae3840c656b7
 }));

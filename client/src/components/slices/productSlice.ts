@@ -16,6 +16,9 @@ export interface products {
   reviews?: Array<any>;
   __v?: number;
 }
+
+
+
 interface ProductState {
   allProducts: Array<products> | null;
   product: products | null;
@@ -23,6 +26,7 @@ interface ProductState {
   errors: any;
   favs: Object[];
   categorias: Array<{ name: string; id: string }> | null;
+
 }
 
 const initialState: ProductState = {
@@ -168,6 +172,8 @@ export const reviewProduct = (review: object, config: object): AppThunk => {
 };
 
 //================reducer===================
+
+
 export const getAllProductsSlice = createSlice({
   name: "allProducts",
   initialState,
@@ -255,6 +261,7 @@ export const getAllProductsSlice = createSlice({
 });
 
 export default getAllProductsSlice.reducer;
+
 export const {
   allProducts,
   filterByCaregory,

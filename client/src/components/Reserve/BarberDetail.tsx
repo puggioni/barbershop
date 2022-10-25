@@ -1,7 +1,6 @@
-import NavBar from "../NavBar"
 import { VscArrowLeft } from "react-icons/vsc"
 import { useNavigate } from "react-router";
-import MapView from "./Map/MapView";
+
 
 const BarberDetail = ()=>{
 
