@@ -75,9 +75,9 @@ const ProductCard = (producto: products) => {
       <h2 className="font-medium text-2xl">${producto.price}</h2>
 
       <div className="grid grid-cols-2 w-full justify-items-center">
-        <div onClick={handleBookmark}>
-          {producto.userFavorite ? added : notAdded}
-        </div>
+       <div onClick={handleBookmark}>
+      {producto.userFavorite ? added : notAdded}
+      </div> 
         <AiOutlineShoppingCart
           size={25}
           title="Store"

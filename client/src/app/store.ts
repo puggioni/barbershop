@@ -2,6 +2,7 @@ import { Action, configureStore, ThunkAction } from "@reduxjs/toolkit";
 import logInReducer from "../components/slices/logIn";
 import getAllProducts from "../components/slices/productSlice";
 import adminReducer from "../components/slices/admin";
+import allBarbers  from "../components/slices/barbers";
 
 const store = configureStore({
   //aca se agregan los reducers
@@ -9,6 +10,7 @@ const store = configureStore({
     products: getAllProducts,
     logIn: logInReducer,
     admin: adminReducer,
+    barbers: allBarbers,
   },
 });
 

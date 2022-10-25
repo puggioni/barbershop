@@ -43,7 +43,9 @@ export const fetchAllProducts = (tosearch: string): AppThunk => {
   return async (dispatch) => {
     if (!tosearch) {
       try {
-        const productos = await axios.get("http://localhost:5000/products/all");
+        const productos = await axios.get(
+          "http://localhost:5000/products/all"
+        );
         dispatch(allProducts(productos.data));
       } catch (error) {
         return error;
@@ -82,6 +84,28 @@ export const addFavoriteProduct = (
     }
   };
 };
+
+
+export const setFavosBulk = (IdUser:string,token: string,IdsProducts:Array<string>): AppThunk => {
+  return async (dispatch) => {
+    try {
+      const res = await axios.post(
+        "http://localhost:5000/products/addFavoriteBulk",
+        {products:{_id:IdsProducts},
+          user:{_id:IdUser}},
+        {headers:{token:token}}
+      ); 
+      
+      dispatch(setFavorites(res.data));
+
+      return res;
+    } catch (error) {
+      return error;
+    }
+  };
+};
+
+
 export const deleteFavoriteProduct = (
   idProduct: string,
   IdUser: string,
@@ -352,7 +376,11 @@ export const getAllProductsSlice = createSlice({
       state.favs = aux;
       window.localStorage.setItem("favoritos", JSON.stringify(state.favs));
     },
-    adminDeleteProd: (state: any, action: PayloadAction<any>) => {
+
+    clearFavorites:(state)=>{
+      state.favs=[]
+
+      adminDeleteProd: (state: any, action: PayloadAction<any>) => {
       state.deleteProd = action.payload;
       const deleted = state.allProducts.filter((prod: { _id: string }) => {
         return action.payload.data._id !== prod._id;
@@ -374,7 +402,9 @@ export const {
   setFavorites,
   addFavoritoLocal,
   deleteFavoritoLocal,
+  admin-productos
   adminDeleteProd,
   sortProductsByStock,
   sortProductsByDisponible,
+  clearFavorites,
 } = getAllProductsSlice.actions;

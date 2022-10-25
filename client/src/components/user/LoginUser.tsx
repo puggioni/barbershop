@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../../app/hooks";
 import { logIn } from "../slices/logIn";
 import { getAuth, GoogleAuthProvider, signInWithPopup } from "@firebase/auth";
-
+import { getFavoritesProducts } from "../slices/productSlice";
 export default function LoginUser() {
   const [password, setPassword] = useState("");
   const [email, setUserName] = useState("");
@@ -17,8 +17,10 @@ export default function LoginUser() {
     dispatch(logIn(email, password));
     console.log(user);
 
-    navigate("/");
-
+    if (user.name) {
+      cargarFavs();
+      navigate("/");
+    }
     setPassword("");
     setUserName("");
   };
@@ -27,12 +29,34 @@ export default function LoginUser() {
     e.preventDefault();
 
     const response: any = await signInWithPopup(auth, new GoogleAuthProvider());
+    cargarFavs();
     navigate("/");
-
     dispatch(logIn(response.user.email, response.user.email));
   };
   let string = "Log In" + email + password;
   console.log(string);
+
+  function cargarFavs(){
+    const aux=window.localStorage.getItem("user");
+    const aux2=window.localStorage.getItem("token");
+    const aux3=window.localStorage.getItem("favoritos");
+
+    if(aux && aux2 && aux3){   // esta parte es para traerse los favoritos si el usuario se logueo
+     const user=JSON.parse(aux);
+     const token=JSON.parse(aux2);
+     const favoritos=JSON.parse(aux3);
+
+  window.localStorage.removeItem('favoritos');
+  dispatch(getFavoritesProducts(user._id,token));
+   
+  }else if(aux && aux2 ){
+      
+      const user=JSON.parse(aux);
+      const token=JSON.parse(aux2);
+     dispatch(getFavoritesProducts(user._id,token));
+    
+  }
+  }
 
   return (
     <div className="bg-white h-[100vh]">
