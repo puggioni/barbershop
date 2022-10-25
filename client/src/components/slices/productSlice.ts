@@ -25,7 +25,7 @@ interface ProductState {
   loading: boolean;
   errors: any;
   favs: Object[];
-  categorias: Array<{ name: string; id: string }> | null;
+  categorias: Array<{ name: string; id: string }>;
 }
 
 const initialState: ProductState = {
