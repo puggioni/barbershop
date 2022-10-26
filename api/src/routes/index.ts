@@ -32,6 +32,7 @@ import editReview from "./Reviews/editReview";
 import postAppointment from "./Appointments/postAppointment";
 import getAppointments from "./Appointments/getAppontments";
 import deleteAppointment from "./Appointments/deleteAppointment";
+import getAllAppointments from "./Appointments/getAllAppointments";
 /* ============OFFICES============ */
 import postbarber from "./Barbers/postbarber";
 import getbarbers from "./Barbers/getbarbers";
@@ -82,6 +83,7 @@ router.use("/reviews", editReview);
 router.use("/agenda/", postAppointment);
 router.use("/agenda/", deleteAppointment);
 router.use("/agenda/", getAppointments);
+router.use("/agenda/", getAllAppointments);
 
 /* ============OFFICES============ */
 router.use("/office/", postOffice);
