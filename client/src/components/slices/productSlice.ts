@@ -1,12 +1,10 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Action } from "@remix-run/router";
 import axios from "axios";
 import { AppThunk } from "../../app/store";
-import Products from "../products/Products";
 
 export interface products {
   _id: string;
-  image: string;
+  image?: string;
   rating?: number;
   name: string;
   description?: string;
@@ -20,12 +18,13 @@ export interface products {
   __v?: number;
 }
 interface ProductState {
-  allProducts: Array<products> | null;
+  allProducts: Array<products>;
   product: products | null;
   loading: boolean;
   errors: any;
   favs: Object[];
-  categorias: Array<{ name: string; id: string }> | null;
+  categorias: Array<{ name: string; id: string }>;
+  deleteProd: {};
 }
 
 const initialState: ProductState = {
@@ -35,6 +34,7 @@ const initialState: ProductState = {
   errors: null,
   favs: [],
   categorias: [],
+  deleteProd: {},
 };
 
 //==========action==================
@@ -44,7 +44,7 @@ export const fetchAllProducts = (tosearch: string): AppThunk => {
     if (!tosearch) {
       try {
         const productos = await axios.get(
-          "http://localhost:5000/products/all"
+          `${process.env.REACT_APP_BASE_URL}/products/all`
         );
         dispatch(allProducts(productos.data));
       } catch (error) {
@@ -53,7 +53,7 @@ export const fetchAllProducts = (tosearch: string): AppThunk => {
     } else {
       try {
         const productos = await axios.get(
-          "http://localhost:5000/products/search?name=" + tosearch
+          `${process.env.REACT_APP_BASE_URL}/products/search?name=` + tosearch
         );
         dispatch(allProducts(productos.data));
       } catch (error) {
@@ -71,7 +71,7 @@ export const addFavoriteProduct = (
   return async (dispatch) => {
     try {
       const res = await axios.post(
-        "http://localhost:5000/products/addFavorite",
+        `${process.env.REACT_APP_BASE_URL}/products/addFavorite`,
         { product: { _id: idProduct }, user: { _id: IdUser } },
         { headers: { token: token } }
       );
@@ -85,17 +85,19 @@ export const addFavoriteProduct = (
   };
 };
 
-
-export const setFavosBulk = (IdUser:string,token: string,IdsProducts:Array<string>): AppThunk => {
+export const setFavosBulk = (
+  IdUser: string,
+  token: string,
+  IdsProducts: Array<string>
+): AppThunk => {
   return async (dispatch) => {
     try {
       const res = await axios.post(
-        "http://localhost:5000/products/addFavoriteBulk",
-        {products:{_id:IdsProducts},
-          user:{_id:IdUser}},
-        {headers:{token:token}}
-      ); 
-      
+        `${process.env.REACT_APP_BASE_URL}/products/addFavoriteBulk`,
+        { products: { _id: IdsProducts }, user: { _id: IdUser } },
+        { headers: { token: token } }
+      );
+
       dispatch(setFavorites(res.data));
 
       return res;
@@ -105,7 +107,6 @@ export const setFavosBulk = (IdUser:string,token: string,IdsProducts:Array<strin
   };
 };
 
-
 export const deleteFavoriteProduct = (
   idProduct: string,
   IdUser: string,
@@ -114,7 +115,7 @@ export const deleteFavoriteProduct = (
   return async (dispatch) => {
     try {
       const res = await axios.post(
-        "http://localhost:5000/products/removeFavorite",
+        `${process.env.REACT_APP_BASE_URL}/products/removeFavorite`,
         { product: { _id: idProduct }, user: { _id: IdUser } },
         { headers: { token: token } }
       );
@@ -135,8 +136,10 @@ export const getFavoritesProducts = (
   return async (dispatch) => {
     try {
       const res = await axios.get(
-        "http://localhost:5000/products/favorites/" + IdUser,
-        { headers: { token: token } }
+        `${process.env.REACT_APP_BASE_URL}/products/favorites/` + IdUser,
+        {
+          headers: { token: token },
+        }
       );
       dispatch(setFavorites(res.data));
       return res;
@@ -149,9 +152,8 @@ export const getFavoritesProducts = (
 export const filter = (categoria: string): AppThunk => {
   return async (dispatch) => {
     try {
-     
       const product = await axios.get(
-        `http://localhost:5000/products/filter/${categoria}`
+        `${process.env.REACT_APP_BASE_URL}/products/filter/${categoria}`
       );
       dispatch(filterByCaregory(product.data));
     } catch (error) {
@@ -160,11 +162,11 @@ export const filter = (categoria: string): AppThunk => {
   };
 };
 
-export const orderByName = (): AppThunk => {
-  return async (dispatch) => {
+export const orderByName = (payload: string) => {
+  return async (dispatch: any) => {
     try {
       const ordered = await axios.get(
-        "http://localhost:5000/products/all"
+        `${process.env.REACT_APP_BASE_URL}/products/all`
       );
       dispatch(sortProductsByName(ordered.data));
     } catch (error) {
@@ -172,11 +174,11 @@ export const orderByName = (): AppThunk => {
     }
   };
 };
-export const orderByPrice = (): AppThunk => {
-  return async (dispatch) => {
+export const orderByPrice = (payload: string) => {
+  return async (dispatch: any) => {
     try {
       const ordered = await axios.get(
-        "http://localhost:5000/products/all"
+        `${process.env.REACT_APP_BASE_URL}/products/all`
       );
       dispatch(sortProductsByPrice(ordered.data));
     } catch (error) {
@@ -185,11 +187,23 @@ export const orderByPrice = (): AppThunk => {
   };
 };
 
+export const orderByStock = () => {
+  return (dispatch: any) => {
+    dispatch(sortProductsByStock());
+  };
+};
+
+export const orderByDisponible = () => {
+  return (dispatch: any) => {
+    dispatch(sortProductsByDisponible());
+  };
+};
+
 export const categorias = (): AppThunk => {
   return async (dispatch) => {
     try {
       const categorias = await axios.get(
-        `http://localhost:5000/categories/all`
+        `${process.env.REACT_APP_BASE_URL}/categories/all`
       );
       dispatch(getCaterogias(categorias.data));
     } catch (error) {
@@ -202,7 +216,7 @@ export const productDetail = (idProduct: string): AppThunk => {
   return async (dispatch) => {
     try {
       const producto = await axios.get(
-        `http://localhost:5000/products/${idProduct}`
+        `${process.env.REACT_APP_BASE_URL}/products/${idProduct}`
       );
       dispatch(detail(producto.data));
     } catch (error) {
@@ -220,7 +234,7 @@ export const clearProducDetail: any = () => {
 export const comprar = (compra: object) => {
   return async () => {
     const response: any = await axios.post(
-      "http://localhost:5000/payments/create-order",
+      `${process.env.REACT_APP_BASE_URL}/payments/create-order`,
       compra
     );
 
@@ -233,7 +247,7 @@ export const reviewProduct = (review: object, config: object): AppThunk => {
   return async (dispatch) => {
     try {
       const producto = await axios.post(
-        `http://localhost:5000/reviews/create`,
+        `${process.env.REACT_APP_BASE_URL}/reviews/create`,
         review,
         config
       );
@@ -242,6 +256,15 @@ export const reviewProduct = (review: object, config: object): AppThunk => {
       console.log(error);
       return error;
     }
+  };
+};
+export const deleteProd = (header: object, id: string): AppThunk => {
+  return async (dispatch) => {
+    const res: products = await axios.delete(
+      `${process.env.REACT_APP_BASE_URL}/products/delete`,
+      { headers: header, data: { id } }
+    );
+    dispatch(adminDeleteProd(res));
   };
 };
 
@@ -314,6 +337,24 @@ export const getAllProductsSlice = createSlice({
       state.loading = false;
     },
 
+    sortProductsByStock: (state) => {
+      const sortedArray = state.allProducts.sort((curr: any, prev: any) => {
+        if (curr.stock < prev.stock) {
+          return 1;
+        } else if (curr.stock > prev.stock) {
+          return -1;
+        } else return 0;
+      });
+      state.allProducts = sortedArray;
+    },
+
+    sortProductsByDisponible: (state) => {
+      const sortedArray = state.allProducts.sort((curr: any, prev: any) => {
+        return curr === prev ? 0 : curr ? -1 : 1;
+      });
+      state.allProducts = sortedArray;
+    },
+
     detail: (state, action: PayloadAction<products>) => {
       state.product = action.payload;
       state.loading = false;
@@ -337,6 +378,13 @@ export const getAllProductsSlice = createSlice({
       state.favs.push(action.payload);
       window.localStorage.setItem("favoritos", JSON.stringify(state.favs));
     },
+    adminDeleteProd: (state: any, action: PayloadAction<any>) => {
+      state.deleteProd = action.payload;
+      const deleted = state.allProducts.filter((prod: { _id: string }) => {
+        return action.payload.data._id !== prod._id;
+      });
+      state.allProducts = deleted;
+    },
     deleteFavoritoLocal: (state, action: PayloadAction<string>) => {
       const idx = state.favs.findIndex((p: any) => p._id === action.payload);
       let aux = state.favs;
@@ -344,8 +392,8 @@ export const getAllProductsSlice = createSlice({
       state.favs = aux;
       window.localStorage.setItem("favoritos", JSON.stringify(state.favs));
     },
-    clearFavorites:(state)=>{
-      state.favs=[]
+    clearFavorites: (state) => {
+      state.favs = [];
     },
   },
 });
@@ -362,5 +410,8 @@ export const {
   setFavorites,
   addFavoritoLocal,
   deleteFavoritoLocal,
+  adminDeleteProd,
+  sortProductsByStock,
+  sortProductsByDisponible,
   clearFavorites,
 } = getAllProductsSlice.actions;

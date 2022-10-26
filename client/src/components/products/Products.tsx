@@ -29,6 +29,7 @@ const Products = () => {
   const [hidePrecio, setPrecio] = useState(false);
   const { favs } = useAppSelector((state: RootState) => state.products);
   const favoritos = JSON.stringify(favs);
+
   const inicializar = useCallback(async () => {
     dispatch(fetchAllProducts(""));
     dispatch(categorias());
@@ -138,7 +139,7 @@ const Products = () => {
                 <OrderingByPrice hidden={hidePrecio} />
               </div>
             </div>
-            {currentProducts?.map((data: prodCard) => {
+            {currentProducts?.map((data: any) => {
               if (data.available) {
                 return (
                   <ProductCard
