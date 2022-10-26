@@ -5,15 +5,12 @@ const appointmentSchema = new mongoose_1.Schema({
     user: { type: mongoose_1.Types.ObjectId, ref: 'User' },
     date: {
         type: Date,
-        required: true,
-        /* validate: function(input) {
-            return new Date(input) >= new Date();
-        },
-        message: input => `${input} must be greater than or equal to the current date!` */
+        required: true, //la validacion de fecha se hace en la ruta
     },
-    block: { required: true, type: Number, min: 1, max: 4 },
+    block: { required: true, type: Number, min: 1, max: 8 },
     barber: { type: mongoose_1.Types.ObjectId, ref: 'Barber' },
-    office: { type: mongoose_1.Types.ObjectId, ref: 'Office' }
+    office: { type: mongoose_1.Types.ObjectId, ref: 'Office' },
+    service: [String]
 }, {
     versionKey: false,
     timestamps: false,
