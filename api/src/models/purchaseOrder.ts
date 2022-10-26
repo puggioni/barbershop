@@ -35,6 +35,7 @@ const PurchaseOrderSchema = new Schema<IPurchaseOrder>(
     ],
     state: {
       type: String,
+      default: "Creada",
     },
   },
   {

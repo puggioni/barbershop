@@ -1,8 +1,7 @@
-const useHeaders = (token: string | undefined) => {
+const useHeaders = (token: string | null) => {
   let headers = {
-    headers: {
-      token: `Bearer ${token}`,
-    },
+    // prettier-ignore
+    headers: { 'token': token },
   };
   return headers;
 };
