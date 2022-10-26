@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 import { AppThunk } from "../../app/store";
-
+import {PORT} from "./impor"
 interface userFound {
   user: Object;
   savedUser: object;
@@ -19,12 +19,14 @@ type dataUser = {
   data: userFound;
 };
 
+
+
 //==========actions==================
 export const logIn = (email: string, password: string): AppThunk => {
   return async (dispatch) => {
     try {
       const res: any = await axios.post(
-        "https://barbershop-roan.vercel.app/users/login",
+        `${PORT}/users/login`,
         {
           email,
           password,
@@ -55,7 +57,7 @@ export const logUp = (user: object): AppThunk => {
   return async (dispatch) => {
     try {
       const credenciales: dataUser = await axios.post(
-        "https://barbershop-roan.vercel.app/users/signup",
+        `${PORT}/users/signup`,
         user
       );
       dispatch(userCreate(credenciales.data));
