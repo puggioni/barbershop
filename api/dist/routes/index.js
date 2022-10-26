@@ -36,6 +36,7 @@ const editReview_1 = __importDefault(require("./Reviews/editReview"));
 const postAppointment_1 = __importDefault(require("./Appointments/postAppointment"));
 const getAppontments_1 = __importDefault(require("./Appointments/getAppontments"));
 const deleteAppointment_1 = __importDefault(require("./Appointments/deleteAppointment"));
+const getAllAppointments_1 = __importDefault(require("./Appointments/getAllAppointments"));
 /* ============OFFICES============ */
 const postbarber_1 = __importDefault(require("./Barbers/postbarber"));
 const getbarbers_1 = __importDefault(require("./Barbers/getbarbers"));
@@ -77,6 +78,7 @@ router.use("/reviews", editReview_1.default);
 router.use("/agenda/", postAppointment_1.default);
 router.use("/agenda/", deleteAppointment_1.default);
 router.use("/agenda/", getAppontments_1.default);
+router.use("/agenda/", getAllAppointments_1.default);
 /* ============OFFICES============ */
 router.use("/office/", postOffice_1.default);
 router.use("/office/", getOffices_1.default);
