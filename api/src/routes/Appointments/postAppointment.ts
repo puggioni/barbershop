@@ -6,7 +6,7 @@ import { verifyToken } from "../../middlewares/auth";
 const router = Router();
 
 router.post("/create", async (req, res) => {
-    let { user, date, block, barber, office } = req.body;
+    let { user, date, block, barber, office, service } = req.body;
 
     let todayDate = new Date();
     let todayDateString: string = todayDate.toISOString().split('T')[0];
@@ -20,7 +20,7 @@ router.post("/create", async (req, res) => {
     else if (todayDateString_year === date.split('-')[0] && todayDateString_month > date.split('-')[1]) res.status(500).send({ error: `Month cannot be less than ${todayDateString_month}` });
     else if (todayDateString_year === date.split('-')[0] && todayDateString_month === date.split('-')[1] && todayDateString_day > date.split('-')[2]) res.status(500).send({ error: `Day cannot be less than ${todayDateString_day}` });
     //check block
-    else if ((block <= 0) || (block >= 5)) res.status(500).send({ error: "schedule block must be a number between 1 and 4" });
+    else if ((block <= 0) || (block >= 9)) res.status(500).send({ error: "schedule block must be a number between 1 and 8" });
     //check apmnt availability 
     else {
         try {
@@ -29,7 +29,8 @@ router.post("/create", async (req, res) => {
                 date: date,
                 block: block,
                 barber: barber,
-                office: office
+                office: office,
+                service: service
             });
             const existingApmnt = await Appointment.findOne({ date: date, block: block, barber: barber, office: office })
             if (existingApmnt === null) {
