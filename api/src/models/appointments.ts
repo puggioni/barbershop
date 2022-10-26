@@ -6,6 +6,7 @@ export interface IAppointment {
     block: number;
     barber: Types.ObjectId;
     office: Types.ObjectId;
+    service: Types.Array<string>;
 }
 
 const appointmentSchema = new Schema(
@@ -13,15 +14,12 @@ const appointmentSchema = new Schema(
         user: { type: Types.ObjectId, ref: 'User' },
         date: { 
             type: Date,
-            required: true,
-            /* validate: function(input) {
-                return new Date(input) >= new Date();
-            },
-            message: input => `${input} must be greater than or equal to the current date!` */
+            required: true, //la validacion de fecha se hace en la ruta
         },
-        block: { required: true, type: Number, min: 1, max: 4 },
+        block: { required: true, type: Number, min: 1, max: 8 },
         barber: { type: Types.ObjectId, ref: 'Barber' },
-        office: { type: Types.ObjectId, ref: 'Office' }
+        office: { type: Types.ObjectId, ref: 'Office' },
+        service: [String]
     },
     {
         versionKey: false,
