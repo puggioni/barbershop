@@ -1,54 +1,95 @@
 import { VscArrowLeft } from "react-icons/vsc";
 import { useNavigate, Link } from "react-router-dom";
 import MapView from "./Map/MapView";
+import BarberCard from "./BarberCard";
+import { fetchAllBarbers } from "../slices/barbers";
+import { useCallback, useEffect, useState } from "react";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { RootState } from "../../app/store";
+import { buttonHover } from "../NavBar";
+import Calendar from 'react-calendar';
+
 
 const Reserve = () => {
-  let navigate = useNavigate();
+  const dispatch=useAppDispatch();
+  const inicializar = useCallback(async () => {
+    dispatch(fetchAllBarbers());}, [dispatch]);
 
-  function goBack(): void {
-    navigate(-1);
-  }
+  useEffect(() => {
+    inicializar();
+  }, [inicializar]);
 
-  const cardBarber =
-    "h-52 w-36 text-center rounded-lg font-bold  text-2xl text-black bg-slate-200/50	inline-block m-10";
+  const [value, onChange] = useState(new Date());
+  const data = useAppSelector((state: RootState) => state.barbers);
+  const [turno, setTurno]=useState({});
+  
+return(
+  <div className=" bg-white bg-store-banner justify-center bg-no-repeat pt-32 pb-8">
+    <h2 className="flex justify-center my-auto text-5xl text-white mb-12">PEDI TU TURNO</h2>
+    <div className="border bg-white border-black rounded-xl mx-40 my-auto">
+    <div className="flex items-center place-content-baseline text-black">
 
-  return (
-    <div>
-      <VscArrowLeft
-        onClick={() => goBack()}
-        className="ml-12 my-3 h-6 w-6 fill-white"
-      />
-
-      <h2 className="text-center font-bold p-2 text-2xl text-white">
-        Seleccione una sucursal para reservar su turno:
-      </h2>
-
-      <div className="h-60 w-60 text-center font-bold flex justify-center min text-2xl text-white  bg-gray-800	m-auto">
-        Mapa
+    <div className="flex flex-col-3 align-center justify-center pl-36 grow pb-12">
+      
+     <div className=" justify-center align-center min  border-r border-black pr-12 ">
+        <h2 className="flex justify-center my-auto text-2xl text-black pb-12"> SELECCION DEL SERVICIO <br /></h2>
+        <div className="m-auto">
+        <button className={`${buttonHover} px-4 py-1 rounded-lg m-auto my-3 border-b border-black`}> Corte</button> <br />
+        <button className={`${buttonHover} px-4 py-1 rounded-lg m-auto my-3 border-b border-black`}>Afeitado</button> <br />
+        <button className={`${buttonHover} px-4 py-1 rounded-lg m-auto my-3 border-b border-black`}>Corte y Afeitado</button> <br />
       </div>
-
-      <div className=" flex justify-center min m-auto">
-        <MapView />
-      </div>
-
-      <div className=" justify-center min block m-auto">
-        <h2 className="text-center font-bold p-2 text-2xl text-white mt-8">
-          Barberos mas valorados:
-        </h2>
-
-        <div className="flex justify-center min">
-          <Link className={cardBarber} to="/reserve/barber">
-            <div>Barbero 4.8</div>
-          </Link>
-          <Link className={cardBarber} to="/reserve/barber">
-            <div>Barbero 4.8</div>
-          </Link>
-          <Link className={cardBarber} to="/reserve/barber">
-            <div>Barbero 5.0</div>
-          </Link>
-        </div>
       </div>
     </div>
-  );
+    <div className="grid grid-cols-2  gap-4 m-10 mb-5">
+    {data.allBarbers?.map((datas: any) => (
+  <BarberCard
+    name={datas.name}
+    image={datas.image}
+    rating={datas.rating}
+    office={datas.office}
+  />
+
+))}
+    </div>
+    <div className=" justify-center inline-block min mr-12 block grow border-l border-black pl-10">
+      <div className=" justify-center inline-block min  block grow" >
+      <h2 className="flex justify-center my-auto text-2xl text-black"> SELECCION DEL HORARIO<br /></h2>
+      <br />
+      <div className=" w-80 bg-white border border-black p-4 pt-2 rounded-lg text-black text-center">
+      <Calendar onChange={onChange} value={value} />
+      </div>
+      {/* <input  className="justify-center justify-center my-auto   text-xl  text-black" type="date" /> */}
+      <br />
+      <select className="inline justify-center p-2  mt-5 py-1 rounded-lg border border-black" name="horario" id="">
+      <option value="none">SELECCIONE UN HORARIO:</option>
+      <option value="1">8:00hs</option>
+      <option value="2">9:00hs</option>
+      <option value="3">10:00hs</option>
+      <option value="4">11:00hs</option>
+      <option value="5">14:00hs</option>
+      <option value="6">15:00hs</option>
+      <option value="7">16:00hs</option>
+      <option value="8">17:00hs</option>
+      </select>
+
+
+      <select className="inline justify-center p-2  mt-5 py-1 rounded-lg  border border-black" name="sucursal" id="">SELECCIONE UNA SUCURSAL:
+      <option value="none">SELECCIONE UNA SUCURSAL:</option>
+      <option value="baires">Palermo, Buenos Aires</option>
+      <option value="cba">Cordoba, Capital</option>
+      </select>
+      </div>
+
+      <button className={`${buttonHover} px-4 py-1 rounded-lg m-auto mt-10 border-b border-black`}>AGENDAR</button>
+    </div>
+  </div>
+  </div>
+
+  </div>
+)
+
 };
 export default Reserve;
+
+
+

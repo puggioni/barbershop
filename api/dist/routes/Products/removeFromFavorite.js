@@ -16,6 +16,7 @@ const express_1 = require("express");
 const user_1 = __importDefault(require("../../models/user"));
 const products_1 = __importDefault(require("../../models/products"));
 const auth_1 = require("../../middlewares/auth");
+const products_2 = __importDefault(require("../../models/products"));
 const router = (0, express_1.Router)();
 router.post("/removeFavorite", auth_1.verifyToken, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { product, user } = req.body;
@@ -24,7 +25,9 @@ router.post("/removeFavorite", auth_1.verifyToken, (req, res) => __awaiter(void 
         const userFound = yield user_1.default.findById(user._id);
         userFound["favorites_products"].pull(productFound["_id"]);
         yield userFound.save();
-        res.status(200).json(userFound);
+        const productsIds = userFound["favorites_products"];
+        const allProducts = yield products_2.default.find({ _id: { $in: productsIds } });
+        res.status(200).json(allProducts);
     }
     catch (error) {
         res.status(500).json({ message: "Error al eliminar de favoritos" });

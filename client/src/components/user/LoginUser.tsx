@@ -19,10 +19,11 @@ export default function LoginUser() {
 
     if (user.name) {
       cargarFavs();
-      navigate("/");
     }
+
     setPassword("");
     setUserName("");
+    navigate("/");
   };
 
   const handleLogInWithGoogle = async (e: any) => {
@@ -36,26 +37,24 @@ export default function LoginUser() {
   let string = "Log In" + email + password;
   console.log(string);
 
-  function cargarFavs(){
-    const aux=window.localStorage.getItem("user");
-    const aux2=window.localStorage.getItem("token");
-    const aux3=window.localStorage.getItem("favoritos");
+  function cargarFavs() {
+    const aux = window.localStorage.getItem("user");
+    const aux2 = window.localStorage.getItem("token");
+    const aux3 = window.localStorage.getItem("favoritos");
 
-    if(aux && aux2 && aux3){   // esta parte es para traerse los favoritos si el usuario se logueo
-     const user=JSON.parse(aux);
-     const token=JSON.parse(aux2);
-     const favoritos=JSON.parse(aux3);
+    if (aux && aux2 && aux3) {
+      // esta parte es para traerse los favoritos si el usuario se logueo
+      const user = JSON.parse(aux);
+      const token = JSON.parse(aux2);
+      const favoritos = JSON.parse(aux3);
 
-  window.localStorage.removeItem('favoritos');
-  dispatch(getFavoritesProducts(user._id,token));
-   
-  }else if(aux && aux2 ){
-      
-      const user=JSON.parse(aux);
-      const token=JSON.parse(aux2);
-     dispatch(getFavoritesProducts(user._id,token));
-    
-  }
+      window.localStorage.removeItem("favoritos");
+      dispatch(getFavoritesProducts(user._id, token));
+    } else if (aux && aux2) {
+      const user = JSON.parse(aux);
+      const token = JSON.parse(aux2);
+      dispatch(getFavoritesProducts(user._id, token));
+    }
   }
 
   return (

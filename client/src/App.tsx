@@ -17,6 +17,9 @@ import Users from "./components/admin/Users";
 import Compras from "./components/admin/Compras";
 import Productos from "./components/admin/Productos";
 import Sucursales from "./components/Reserve/Sucursales";
+import OrdenDeCompra from "./components/carrito/OrdenDeCompra";
+import Confirmacion from "./components/carrito/Cofirmacion";
+import Cancelacion from "./components/carrito/Cancelacion";
 
 export const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
@@ -29,9 +32,12 @@ function App() {
         <Route path="/" element={<Home />} />
         {/*=====================productos==========================*/}
         <Route path="/product" element={<Products />}></Route>
-        <Route path="/product/:idProduct" element={<ProductDetail />} />
         <Route path="/products/shopping-cart" element={<Compra />} />
         <Route path="/products/favorites" element={<Favorites />} />
+        <Route path="/products/orden-de-compra" element={<OrdenDeCompra />} />
+        <Route path="/products/confirmacion" element={<Confirmacion />} />
+        <Route path="/products/cancelacion" element={<Cancelacion />} />
+        <Route path="/product/:idProduct" element={<ProductDetail />} />
         {/*=====================user===============================*/}
         <Route path="/user/create" element={<CreateUser />} />
         <Route path="/user/login" element={<LoginUser />} />
