@@ -103,19 +103,9 @@ const CrearProducto = () => {
         />
 
         <div className="w-[10%] my-8 ml-[10%]">
-          <input
-            type="file"
-            id="imagen"
-            accept="image/*"
-            className="hidden left-[10%] bottom-1 my-2"
-          />
-
-          <label
-            className="left-[10%] bottom-1 cursor-pointer my-2"
-            htmlFor="imagen"
-          >
-            <p className="bg-white/70 rounded-lg px-2">Choose file</p>
-          </label>
+          <button className="left-[10%] bottom-1 bg-white/70 rounded-lg px-2 cursor-pointer my-2">
+            Choose file
+          </button>
         </div>
 
         <div className="grid grid-cols-[.5fr_4fr] justify-self-center gap-4 w-[80%] m-auto">
