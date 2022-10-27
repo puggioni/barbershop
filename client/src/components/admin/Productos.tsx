@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { BsArrowCounterclockwise, BsCreditCardFill } from "react-icons/bs";
 import { FaEdit, FaTrashAlt } from "react-icons/fa";
+import { useNavigate } from "react-router";
 import useHeaders from "../../app/header";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { RootState } from "../../app/store";
@@ -25,7 +26,7 @@ const Productos = () => {
   const data = useAppSelector((state: RootState) => state.products);
   const cate = useAppSelector((state) => state.products.categorias);
   const token = JSON.parse(window.localStorage.getItem("token") || "{}");
-
+  const navigate = useNavigate();
   const header = useHeaders(token);
 
   //============use effect=================
@@ -138,7 +139,10 @@ const Productos = () => {
                 <button className="bg-[#855C20] mr-4 py-2 px-2 text-white rounded-lg font-semibold">
                   CREAR CATEGORIO
                 </button>
-                <button className="bg-[#855C20] py-2 px-2 text-white rounded-lg font-semibold">
+                <button
+                  onClick={() => navigate("/admin/products/crear-producto")}
+                  className="bg-[#855C20] py-2 px-2 text-white rounded-lg font-semibold"
+                >
                   CREAR PRODUCTO
                 </button>
               </div>
