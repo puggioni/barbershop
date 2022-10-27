@@ -17,6 +17,7 @@ const Cancelacion = () => {
     return window.localStorage.removeItem("product");
   }, []);
 
+  console.log(purchaseOrder);
   const inicializar = useCallback(async () => {
     if (idOrder) {
       dispatch(cancelOrders(idOrder));

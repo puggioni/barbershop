@@ -7,18 +7,18 @@ const mongoose_1 = __importDefault(require("mongoose"));
 const { Schema, model } = mongoose_1.default;
 const PurchaseOrderSchema = new Schema({
     user: {
-        id: {
-            type: Schema.Types.ObjectId,
-            ref: "User",
-        },
+        type: String,
     },
     products: [
         {
-            id: {
-                type: Schema.Types.ObjectId,
+            name: {
+                type: String,
                 ref: "Product",
             },
             quantity: {
+                type: Number,
+            },
+            price: {
                 type: Number,
             },
         },
@@ -33,6 +33,6 @@ const PurchaseOrderSchema = new Schema({
     },
 }, {
     versionKey: false,
-    timestamps: true,
+    timestamps: false,
 });
 exports.default = model("PurchaseOrder", PurchaseOrderSchema);

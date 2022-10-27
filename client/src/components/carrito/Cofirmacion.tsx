@@ -20,7 +20,7 @@ const Cofirmacion = () => {
     }
   }, [dispatch, idOrder]);
 
-  console.log(purchaseOrder?.products);
+  console.log(purchaseOrder);
 
   useEffect(() => {
     inicializar();

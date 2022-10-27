@@ -9,19 +9,24 @@ const router = Router();
 
 router.post("/create-order", async (req, res) => {
   const { user, compra } = req.body;
-
+  console.log(req.body);
   /* let value: number = compra.reduce((acc: any, curr: any) => {
     return acc["price"] + curr["price"];
   }); */
 
   let productos = compra.map((obj: Object) => {
-    return { id: obj["id"], quantity: obj["cantidad"] };
+    return {
+      name: obj["name"],
+      quantity: obj["cantidad"],
+      price: obj["price"],
+    };
   });
 
   const newOrder = new purchaseOrder({
-    user: { id: user["user"] },
+    user: user["email"],
     products: productos,
   });
+  console.log(newOrder);
 
   newOrder.save();
   const idOrder = newOrder["_id"];

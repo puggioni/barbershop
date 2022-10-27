@@ -18,16 +18,22 @@ const purchaseOrder_1 = __importDefault(require("../../models/purchaseOrder"));
 const router = (0, express_1.Router)();
 router.post("/create-order", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { user, compra } = req.body;
+    console.log(req.body);
     /* let value: number = compra.reduce((acc: any, curr: any) => {
       return acc["price"] + curr["price"];
     }); */
     let productos = compra.map((obj) => {
-        return { id: obj["id"], quantity: obj["cantidad"] };
+        return {
+            name: obj["name"],
+            quantity: obj["cantidad"],
+            price: obj["price"],
+        };
     });
     const newOrder = new purchaseOrder_1.default({
-        user: { id: user["user"] },
+        user: user["email"],
         products: productos,
     });
+    console.log(newOrder);
     newOrder.save();
     const idOrder = newOrder["_id"];
     const id = idOrder.toString();

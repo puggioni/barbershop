@@ -3,13 +3,12 @@ import mongoose, { Model } from "mongoose";
 const { Schema, model } = mongoose;
 
 export interface IPurchaseOrder {
-  user: {
-    id: string;
-  };
+  user: string;
   products: [
     {
-      id: string;
+      name: string;
       quantity: number;
+      price: number;
     }
   ];
   state: string;
@@ -18,18 +17,18 @@ export interface IPurchaseOrder {
 const PurchaseOrderSchema = new Schema<IPurchaseOrder>(
   {
     user: {
-      id: {
-        type: Schema.Types.ObjectId,
-        ref: "User",
-      },
+      type: String,
     },
     products: [
       {
-        id: {
-          type: Schema.Types.ObjectId,
+        name: {
+          type: String,
           ref: "Product",
         },
         quantity: {
+          type: Number,
+        },
+        price: {
           type: Number,
         },
       },
@@ -45,7 +44,7 @@ const PurchaseOrderSchema = new Schema<IPurchaseOrder>(
   },
   {
     versionKey: false,
-    timestamps: true,
+    timestamps: false,
   }
 );
 

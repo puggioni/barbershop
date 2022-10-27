@@ -3,11 +3,11 @@ import axios from "axios";
 import { AppThunk } from "../../app/store";
 
 export interface PurchaseOrders {
-  _id?: string;
+  _id: string;
   user?: string;
   products?: Array<any>;
   state?: string;
-  date: Date;
+  date?: Date;
 }
 
 interface PurchaseOrder {
