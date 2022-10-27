@@ -33,13 +33,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
-
+const dotenv = __importStar(require("dotenv"));
+dotenv.config();
 const router = (0, express_1.Router)();
 router.get("/cancel-order/:idOrder", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { idOrder } = req.params;
     console.log("🚀 ~ file: cancelOrder.ts ~ line 8 ~ router.get ~ idOrder", idOrder);
     try {
-
         res.redirect(`${process.env.PORT_FRONT}products/cancelacion/${idOrder}`);
     }
     catch (error) {
