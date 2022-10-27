@@ -4,7 +4,7 @@ import { useNavigate } from "react-router";
 import { useParams } from "react-router";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { RootState } from "../../app/store";
-import { confirmOrders, getPurchaseOrder } from "../slices/purchaseOrder";
+import { confirmOrders } from "../slices/purchaseOrder";
 const Cofirmacion = () => {
   type QuizParams = {
     idOrder: string;
@@ -18,10 +18,9 @@ const Cofirmacion = () => {
   const inicializar = useCallback(async () => {
     if (idOrder) {
       dispatch(confirmOrders(idOrder));
-      dispatch(getPurchaseOrder(idOrder));
     }
   }, [dispatch, idOrder]);
-
+  console.log(purchaseOrder);
   useEffect(() => {
     inicializar();
 

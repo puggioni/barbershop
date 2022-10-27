@@ -15,7 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const purchaseOrder_1 = __importDefault(require("../../models/purchaseOrder"));
 const router = (0, express_1.Router)();
-router.patch("/confirm/:idOrder", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.get("/confirm/:idOrder", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { idOrder } = req.params;
     try {
         const order = yield purchaseOrder_1.default.findById(idOrder);
@@ -27,7 +27,7 @@ router.patch("/confirm/:idOrder", (req, res) => __awaiter(void 0, void 0, void 0
         //   subject: "Hello ✔", // Subject line
         //   html: "<b>Orden completa! </b>", // html body
         // });
-        res.status(200).send(order);
+        res.status(200).json(order);
     }
     catch (error) {
         console.log(error);

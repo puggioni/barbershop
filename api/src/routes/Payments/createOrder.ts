@@ -25,7 +25,8 @@ router.post("/create-order", async (req, res) => {
 
   newOrder.save();
   const idOrder = newOrder["_id"];
-
+  const id = idOrder.toString();
+  console.log("🚀 ~ file: createOrder.ts ~ line 28 ~ router.post ~ id", id);
   try {
     const order = {
       intent: "CAPTURE",
@@ -43,7 +44,7 @@ router.post("/create-order", async (req, res) => {
         landing_page: "LOGIN",
         user_action: "PAY_NOW",
         return_url: `http://localhost:5000/payments/capture-order`,
-        cancel_url: `http://localhost:3000/products/cancelacion/${idOrder}`,
+        cancel_url: `http://localhost:5000/payments/cancel-order/${id}`,
       },
     };
     const response = await axios.post(

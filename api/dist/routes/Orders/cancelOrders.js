@@ -8,17 +8,28 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
+const purchaseOrder_1 = __importDefault(require("../../models/purchaseOrder"));
 const router = (0, express_1.Router)();
-router.get("/cancel-order/:idOrder", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.get("/cancel/:idOrder", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { idOrder } = req.params;
-    console.log("🚀 ~ file: cancelOrder.ts ~ line 8 ~ router.get ~ idOrder", idOrder);
     try {
-        res.redirect(`http://localhost:3000/products/cancelacion/${idOrder}`);
+        const order = yield purchaseOrder_1.default.findById(idOrder);
+        order["state"] = "Cancelada";
+        yield order.save();
+        // await transporter.sendMail({
+        //   from: '"Orden completada con éxito!" <grupo7henry@gmail.com', // sender address
+        //   to: "seisdedosmanuel2@gmail.com", // list of receivers
+        //   subject: "Hello ✔", // Subject line
+        //   html: "<b>Orden completa! </b>", // html body
+        // });
+        res.status(200).json(order);
     }
     catch (error) {
-        console.log(error);
         console.log(error);
         res.status(500).send(error);
     }

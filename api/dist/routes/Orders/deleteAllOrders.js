@@ -8,17 +8,26 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
+const purchaseOrder_1 = __importDefault(require("../../models/purchaseOrder"));
 const router = (0, express_1.Router)();
-router.get("/cancel-order/:idOrder", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { idOrder } = req.params;
-    console.log("🚀 ~ file: cancelOrder.ts ~ line 8 ~ router.get ~ idOrder", idOrder);
+/*
+!!======================IMPORTANTE !!!! ======================!!
+
+SOLAMENTE USAR EN POSTMAN PARA BORRAR TODAS LAS ORDENES DE LA BASE DE DATOS
+!!======================IMPORTANTE !!!! ======================!! */
+router.delete("/delete-all-orders", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        res.redirect(`http://localhost:3000/products/cancelacion/${idOrder}`);
+        const orders = yield purchaseOrder_1.default.deleteMany({
+            state: "Created",
+        });
+        res.status(200).json(orders);
     }
     catch (error) {
-        console.log(error);
         console.log(error);
         res.status(500).send(error);
     }

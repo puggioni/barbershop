@@ -3,11 +3,11 @@ import Orders from "../../models/purchaseOrder";
 import { transporter } from "../../middlewares/mailer";
 const router = Router();
 
-router.get("/confirm/:idOrder", async (req, res) => {
+router.get("/cancel/:idOrder", async (req, res) => {
   const { idOrder } = req.params;
   try {
     const order = await Orders.findById(idOrder);
-    order["state"] = "Completa";
+    order["state"] = "Cancelada";
     await order.save();
 
     // await transporter.sendMail({

@@ -30,6 +30,8 @@ router.post("/create-order", (req, res) => __awaiter(void 0, void 0, void 0, fun
     });
     newOrder.save();
     const idOrder = newOrder["_id"];
+    const id = idOrder.toString();
+    console.log("🚀 ~ file: createOrder.ts ~ line 28 ~ router.post ~ id", id);
     try {
         const order = {
             intent: "CAPTURE",
@@ -47,7 +49,7 @@ router.post("/create-order", (req, res) => __awaiter(void 0, void 0, void 0, fun
                 landing_page: "LOGIN",
                 user_action: "PAY_NOW",
                 return_url: `http://localhost:5000/payments/capture-order`,
-                cancel_url: `http://localhost:3000/products/cancelacion/${idOrder}`,
+                cancel_url: `http://localhost:5000/payments/cancel-order/${id}`,
             },
         };
         const response = yield axios_1.default.post("https://api-m.sandbox.paypal.com/v2/checkout/orders", order, {
