@@ -16,13 +16,14 @@ const express_1 = require("express");
 const office_1 = __importDefault(require("../../models/office"));
 const router = (0, express_1.Router)();
 router.post("/create", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    let { lat, long } = req.body;
+    let { lat, long, location } = req.body;
     try {
         const office = new office_1.default({
-            lat: lat,
-            long: long
+            lat,
+            long,
+            location,
         });
-        office.save().then(savedOffice => res.status(200).send(savedOffice));
+        office.save().then((savedOffice) => res.status(200).send(savedOffice));
     }
     catch (error) {
         res.status(500).send(error);

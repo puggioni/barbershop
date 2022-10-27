@@ -13,24 +13,25 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
-const user_1 = __importDefault(require("../../models/user"));
-const auth_1 = require("../../middlewares/auth");
-var mongoose = require('mongoose');
+const purchaseOrder_1 = __importDefault(require("../../models/purchaseOrder"));
 const router = (0, express_1.Router)();
-router.post("/addFavorite", auth_1.verifyToken, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { productId, userId } = req.body;
+router.get("/cancel/:idOrder", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { idOrder } = req.params;
     try {
-        user_1.default.findById(userId)
-            .then(user => {
-            user.favorites_products.push(mongoose.Types.ObjectId(productId));
-            return user.save();
-        })
-            .then(savedUser => user_1.default.findById(savedUser._id).populate("favorites_products"))
-            .then(completeUser => res.send(completeUser));
+        const order = yield purchaseOrder_1.default.findById(idOrder);
+        order["state"] = "Cancelada";
+        yield order.save();
+        // await transporter.sendMail({
+        //   from: '"Orden completada con éxito!" <grupo7henry@gmail.com', // sender address
+        //   to: "seisdedosmanuel2@gmail.com", // list of receivers
+        //   subject: "Hello ✔", // Subject line
+        //   html: "<b>Orden completa! </b>", // html body
+        // });
+        res.status(200).json(order);
     }
     catch (error) {
         console.log(error);
-        res.status(500).json({ message: "Error al agregar a favoritos" });
+        res.status(500).send(error);
     }
 }));
 exports.default = router;

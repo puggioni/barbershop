@@ -16,7 +16,7 @@ const express_1 = require("express");
 const appointments_1 = __importDefault(require("../../models/appointments"));
 const router = (0, express_1.Router)();
 router.post("/create", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    let { user, date, block, barber, office } = req.body;
+    let { user, date, block, barber, office, service } = req.body;
     let todayDate = new Date();
     let todayDateString = todayDate.toISOString().split('T')[0];
     let todayDateString_year = todayDateString.split('-')[0];
@@ -30,8 +30,8 @@ router.post("/create", (req, res) => __awaiter(void 0, void 0, void 0, function*
     else if (todayDateString_year === date.split('-')[0] && todayDateString_month === date.split('-')[1] && todayDateString_day > date.split('-')[2])
         res.status(500).send({ error: `Day cannot be less than ${todayDateString_day}` });
     //check block
-    else if ((block <= 0) || (block >= 5))
-        res.status(500).send({ error: "schedule block must be a number between 1 and 4" });
+    else if ((block <= 0) || (block >= 9))
+        res.status(500).send({ error: "schedule block must be a number between 1 and 8" });
     //check apmnt availability 
     else {
         try {
@@ -40,7 +40,8 @@ router.post("/create", (req, res) => __awaiter(void 0, void 0, void 0, function*
                 date: date,
                 block: block,
                 barber: barber,
-                office: office
+                office: office,
+                service: service
             });
             const existingApmnt = yield appointments_1.default.findOne({ date: date, block: block, barber: barber, office: office });
             if (existingApmnt === null) {

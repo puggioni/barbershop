@@ -8,18 +8,21 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.uploadImage = void 0;
-const cloudinary_1 = require("cloudinary");
-cloudinary_1.v2.config({
-    cloud_name: `${process.env.CLOUDINARY_NAME}`,
-    api_key: `${process.env.CLOUDINARY_API_KEY}`,
-    api_secret: `${process.env.CLOUDINARY_API_SECRET}`,
-    secure: true,
-});
-function uploadImage(fliePath) {
-    return __awaiter(this, void 0, void 0, function* () {
-        return yield cloudinary_1.v2.uploader.upload(fliePath);
-    });
-}
-exports.uploadImage = uploadImage;
+const express_1 = require("express");
+const appointments_1 = __importDefault(require("../../models/appointments"));
+const router = (0, express_1.Router)();
+router.get("/all", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const apmnts = yield appointments_1.default.find().populate({ path: 'barber', select: 'name' }).populate({ path: 'office', select: 'location' });
+        res.send(apmnts);
+    }
+    catch (err) {
+        console.log(err);
+        res.status(500).send(err);
+    }
+}));
+exports.default = router;

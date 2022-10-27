@@ -1,7 +1,9 @@
 import { Router } from "express";
 import axios from "axios";
-import { transporter } from "../../middlewares/mailer";
+
 const router = Router();
+import * as dotenv from "dotenv";
+dotenv.config();
 
 router.get("/capture-order", async (req, res) => {
   const { token, PayerID } = req.query;
@@ -11,10 +13,8 @@ router.get("/capture-order", async (req, res) => {
     {},
     {
       auth: {
-        username:
-          "AVwlVSANTKRUrYDVQ0bmVEjUqaC9-RHw8qn3uRVp-xr4SzQae-1GmM4-B-V4y_bP2tCw7gKH2S8SfeKx",
-        password:
-          "EG_ZGG1BcPvJhGKbU0HafZRgg1mFMRGk0kZVULdRAL-ECDr5IYVzvA1aWNPXiWQHcSRHqxooNZnyoy6Z",
+        username: `${process.env.PAYPAL_CLIENT_ID}`,
+        password: `${process.env.PAYPAL_CLIENT_SECRET}`,
       },
     }
   );
@@ -28,12 +28,10 @@ router.get("/capture-order", async (req, res) => {
   // });
 
   const idOrder = response.data.purchase_units[0].reference_id;
-  console.log("IDORDER", idOrder);
 
-  console.log(response.data);
   res
     .status(200)
-    .redirect(`http://localhost:3000/products/confirmacion/${idOrder}`);
+    .redirect(`${process.env.PORT_FRONT}products/confirmacion/${idOrder}`);
 });
 
 export default router;
