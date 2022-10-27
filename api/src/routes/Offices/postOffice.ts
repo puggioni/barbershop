@@ -6,12 +6,13 @@ import { verifyToken, isAdmin } from "../../middlewares/auth";
 const router = Router();
 
 router.post("/create", async (req, res) => {
-    let { lat, long } = req.body;
+    let { lat, long, location } = req.body;
 
     try {
         const office = new Office({
             lat: lat,
-            long: long
+            long: long,
+            location: location
         });
 
         office.save().then(savedOffice => res.status(200).send(savedOffice))
