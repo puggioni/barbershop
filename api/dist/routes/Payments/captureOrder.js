@@ -34,6 +34,6 @@ router.get("/capture-order", (req, res) => __awaiter(void 0, void 0, void 0, fun
     console.log(response.data);
     res
         .status(200)
-        .redirect(`http://localhost:3000/products/confirmacion/${idOrder}`);
+        .redirect(`${process.env.PORT_FRONT}products/confirmacion/${idOrder}`);
 }));
 exports.default = router;

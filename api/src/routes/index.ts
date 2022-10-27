@@ -49,6 +49,7 @@ import getOrder from "./Orders/getOrder";
 import confirmOrder from "./Orders/completeOrder";
 import cancelOrders from "./Orders/cancelOrders";
 import deleteOrders from "./Orders/deleteAllOrders";
+import getUserOrders from "./Orders/getUserOrders";
 const router = Router();
 
 /* ============PRODUCTS============ */
@@ -106,5 +107,6 @@ router.use("/orders", getOrder);
 router.use("/orders", confirmOrder);
 router.use("/orders", cancelOrders);
 router.use("/orders", deleteOrders);
+router.use("/orders", getUserOrders);
 
 export default router;

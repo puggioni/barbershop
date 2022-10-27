@@ -15,7 +15,7 @@ router.get("/cancel-order/:idOrder", (req, res) => __awaiter(void 0, void 0, voi
     const { idOrder } = req.params;
     console.log("🚀 ~ file: cancelOrder.ts ~ line 8 ~ router.get ~ idOrder", idOrder);
     try {
-        res.redirect(`http://localhost:3000/products/cancelacion/${idOrder}`);
+        res.redirect(`${process.env.PORT_FRONT}products/cancelacion/${idOrder}`);
     }
     catch (error) {
         console.log(error);

@@ -18,6 +18,7 @@ const PurchaseOrderSchema = new Schema<IPurchaseOrder>(
   {
     user: {
       type: String,
+      ref: "User",
     },
     products: [
       {

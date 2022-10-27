@@ -33,11 +33,9 @@ router.post("/create-order", (req, res) => __awaiter(void 0, void 0, void 0, fun
         user: user["email"],
         products: productos,
     });
-    console.log(newOrder);
     newOrder.save();
     const idOrder = newOrder["_id"];
     const id = idOrder.toString();
-    console.log("🚀 ~ file: createOrder.ts ~ line 28 ~ router.post ~ id", id);
     try {
         const order = {
             intent: "CAPTURE",

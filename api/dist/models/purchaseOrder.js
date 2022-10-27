@@ -8,6 +8,7 @@ const { Schema, model } = mongoose_1.default;
 const PurchaseOrderSchema = new Schema({
     user: {
         type: String,
+        ref: "User",
     },
     products: [
         {
