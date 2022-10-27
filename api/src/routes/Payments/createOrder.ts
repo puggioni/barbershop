@@ -4,6 +4,8 @@ import purchaseOrder from "../../models/purchaseOrder";
 import { checkStock } from "../../middlewares/checkStock";
 import { verifyToken } from "../../middlewares/auth";
 import { deleteStock } from "../../middlewares/deleteStock";
+import * as dotenv from "dotenv";
+dotenv.config();
 
 const router = Router();
 
@@ -46,8 +48,10 @@ router.post("/create-order", async (req, res) => {
         brand_name: "Henry BarberShop",
         landing_page: "LOGIN",
         user_action: "PAY_NOW",
+
         return_url: `http://localhost:5000/payments/capture-order`,
         cancel_url: `http://localhost:5000/payments/cancel-order/${id}`,
+
       },
     };
     const response = await axios.post(
@@ -56,9 +60,9 @@ router.post("/create-order", async (req, res) => {
       {
         auth: {
           username:
-            "AVwlVSANTKRUrYDVQ0bmVEjUqaC9-RHw8qn3uRVp-xr4SzQae-1GmM4-B-V4y_bP2tCw7gKH2S8SfeKx",
+          `${process.env.PAYPAL_CLIENT_ID}`,
           password:
-            "EG_ZGG1BcPvJhGKbU0HafZRgg1mFMRGk0kZVULdRAL-ECDr5IYVzvA1aWNPXiWQHcSRHqxooNZnyoy6Z",
+          `${process.env.PAYPAL_CLIENT_SECRET}`,
         },
       }
     );

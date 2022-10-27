@@ -1,5 +1,7 @@
 import { Router } from "express";
 import Orders from "../../models/purchaseOrder";
+import * as dotenv from "dotenv";
+dotenv.config();
 
 const router = Router();
 
@@ -11,7 +13,9 @@ router.get("/cancel-order/:idOrder", async (req, res) => {
   );
 
   try {
+
     res.redirect(`${process.env.PORT_FRONT}products/cancelacion/${idOrder}`);
+
   } catch (error) {
     console.log(error);
     console.log(error);

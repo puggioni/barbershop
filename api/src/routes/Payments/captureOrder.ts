@@ -2,6 +2,8 @@ import { Router } from "express";
 import axios from "axios";
 
 const router = Router();
+import * as dotenv from "dotenv";
+dotenv.config();
 
 router.get("/capture-order", async (req, res) => {
   const { token, PayerID } = req.query;
@@ -12,9 +14,9 @@ router.get("/capture-order", async (req, res) => {
     {
       auth: {
         username:
-          "AVwlVSANTKRUrYDVQ0bmVEjUqaC9-RHw8qn3uRVp-xr4SzQae-1GmM4-B-V4y_bP2tCw7gKH2S8SfeKx",
+        `${process.env.PAYPAL_CLIENT_ID}`,
         password:
-          "EG_ZGG1BcPvJhGKbU0HafZRgg1mFMRGk0kZVULdRAL-ECDr5IYVzvA1aWNPXiWQHcSRHqxooNZnyoy6Z",
+        `${process.env.PAYPAL_CLIENT_SECRET}`,
       },
     }
   );
