@@ -1,6 +1,6 @@
 import { Router } from "express";
 import axios from "axios";
-import { transporter } from "../../middlewares/mailer";
+
 const router = Router();
 
 router.get("/capture-order", async (req, res) => {

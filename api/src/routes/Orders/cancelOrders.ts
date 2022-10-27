@@ -1,6 +1,6 @@
 import { Router } from "express";
 import Orders from "../../models/purchaseOrder";
-import { transporter } from "../../middlewares/mailer";
+
 const router = Router();
 
 router.get("/cancel/:idOrder", async (req, res) => {
