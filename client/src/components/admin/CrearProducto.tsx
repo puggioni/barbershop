@@ -1,8 +1,11 @@
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { AiFillCloseCircle } from "react-icons/ai";
+// import { useNavigate } from "react-router";
+import useHeaders from "../../app/header";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { createProd } from "../slices/admin";
 import { categorias } from "../slices/productSlice";
-interface input {
+export interface input {
   nombre: string;
   precio: number;
   stock: number;
@@ -11,6 +14,9 @@ interface input {
 }
 
 const CrearProducto = () => {
+  const token = JSON.parse(window.localStorage.getItem("token") || "{}");
+  // const navigate = useNavigate();
+  const header = useHeaders(token);
   const dispatch = useAppDispatch();
   const categoriaProds = useAppSelector((state) => state.products.categorias);
   const [inputs, setInputs] = useState<input>({
@@ -20,6 +26,7 @@ const CrearProducto = () => {
     descripcion: "",
     categorias: [],
   });
+  const [img, setImg] = useState();
 
   useEffect(() => {
     dispatch(categorias());
@@ -51,7 +58,14 @@ const CrearProducto = () => {
       });
   };
 
-  const handleCreateOrder = () => {};
+  const handleImage = (e: ChangeEvent<any>) => {
+    setImg(e.target.files);
+  };
+
+  const handleCreateOrder = () => {
+    dispatch(createProd(header.headers, inputs, img));
+  };
+
   //===================render========================
   return (
     <div className="background flex bg-bg-prods bg-cover">
@@ -82,7 +96,7 @@ const CrearProducto = () => {
             />
           </div>
           <div>
-            <label htmlFor="precio">Precio: </label>
+            <label htmlFor="precio">Stock: </label>
             <input
               value={inputs.stock}
               type="number"
@@ -98,14 +112,40 @@ const CrearProducto = () => {
           value={inputs.descripcion}
           name="descripcion"
           onChange={(e) => handleInput(e)}
-          className="flex m-auto w-[80%] rounded-lg bg-white/70 p-4 h-[70%] mb-8"
+          className="flex m-auto w-[80%] rounded-lg bg-white/70 p-4 h-[30vh] mb-8"
           placeholder="Descripción"
         />
 
-        <div className="w-[10%] my-8 ml-[10%]">
-          <button className="left-[10%] bottom-1 bg-white/70 rounded-lg px-2 cursor-pointer my-2">
-            Choose file
-          </button>
+        <div className="grid grid-cols-[1fr_4fr] gap-4 w-[80%] mx-auto mb-4 ">
+          <input
+            type="file"
+            id="imagen"
+            accept="image/*"
+            className="hidden left-[10%] bottom-1 my-2"
+            onChange={(e) => {
+              handleImage(e);
+            }}
+          />
+
+          <label
+            className="left-[10%] bottom-1 cursor-pointer my-2"
+            htmlFor="imagen"
+          >
+            <p className="bg-white/70 rounded-lg px-2">Choose file</p>
+          </label>
+          {/* <div className="categoriasagregadas grid grid-cols-7 bg-white/70 rounded-lg gap-4">
+            {inputs.imagen.map((img) => {
+              return (
+                <div className="bg-white/70 flex flex-row rounded-lg gap-1">
+                  <p>{img}</p>
+                  <AiFillCloseCircle
+                    className=""
+                    onClick={() => deleteImg(img)}
+                  />
+                </div>
+              );
+            })}
+          </div> */}
         </div>
 
         <div className="grid grid-cols-[.5fr_4fr] justify-self-center gap-4 w-[80%] m-auto">
@@ -122,10 +162,10 @@ const CrearProducto = () => {
               );
             })}
           </select>
-          <div className="categoriasagregadas grid grid-cols-7 bg-white/70 rounded-lg gap-4">
+          <div className="categoriasagregadas grid grid-cols-7 bg-white/70 rounded-lg gap-4 ">
             {inputs.categorias.map((cate) => {
               return (
-                <div className="bg-white/70 flex flex-row rounded-lg gap-1">
+                <div className="bg-white/70 flex flex-row rounded-lg w-fit pl-2">
                   <p>{cate}</p>
                   <AiFillCloseCircle
                     className=""
