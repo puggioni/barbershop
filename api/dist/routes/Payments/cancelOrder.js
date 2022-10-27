@@ -21,7 +21,7 @@ router.get("/cancel-order", (req, res) => __awaiter(void 0, void 0, void 0, func
         const order = yield purchaseOrder_1.default.findById(idOrder);
         order["state"] = "Cancelada";
         order.save();
-        res.send(order).redirect("htpp://localhost:5000/product");
+        res.redirect("http://localhost:3000/products/cancelacion");
     }
     catch (error) {
         console.log(error);

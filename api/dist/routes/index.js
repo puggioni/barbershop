@@ -96,5 +96,5 @@ router.use("/payments", captureOrder_1.default);
 router.use("/payments", cancelOrder_1.default);
 router.use("/payments", createOrder_1.default);
 /*============ORDERS=============*/
-router.use("/orders", completeOrder_1.default);
+router.use("/complete-order", completeOrder_1.default);
 exports.default = router;

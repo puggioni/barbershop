@@ -15,10 +15,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.checkStock = void 0;
 const products_1 = __importDefault(require("../models/products"));
 const checkStock = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const { products } = req.body;
+    const { compra } = req.body;
     let error = 0;
-    products.reduce((acc, prod) => __awaiter(void 0, void 0, void 0, function* () {
-        const producto = yield products_1.default.findById(prod["productos"]["_id"]);
+    compra.reduce((acc, prod) => __awaiter(void 0, void 0, void 0, function* () {
+        const producto = yield products_1.default.findById(prod["id"]);
         if (prod["cantidad"] > producto.stock) {
             error++;
             return producto;
