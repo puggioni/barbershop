@@ -18,9 +18,9 @@ const purchaseOrder_1 = __importDefault(require("../../models/purchaseOrder"));
 const router = (0, express_1.Router)();
 router.post("/create-order", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { user, compra } = req.body;
-    let value = compra.reduce((acc, curr) => {
-        return acc["price"] + curr["price"];
-    });
+    /* let value: number = compra.reduce((acc: any, curr: any) => {
+      return acc["price"] + curr["price"];
+    }); */
     let productos = compra.map((obj) => {
         return { id: obj["id"], quantity: obj["cantidad"] };
     });
@@ -38,7 +38,7 @@ router.post("/create-order", (req, res) => __awaiter(void 0, void 0, void 0, fun
                     reference_id: `${idOrder}`,
                     amount: {
                         currency_code: "USD",
-                        value: value,
+                        value: 100,
                     },
                 },
             ],

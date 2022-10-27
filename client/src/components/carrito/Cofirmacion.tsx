@@ -1,11 +1,32 @@
-import { useEffect } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { RiArrowGoBackFill } from "react-icons/ri";
 import { useNavigate } from "react-router";
-
+import { useParams } from "react-router";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { RootState } from "../../app/store";
+import { confirmOrders, getPurchaseOrder } from "../slices/purchaseOrder";
 const Cofirmacion = () => {
+  type QuizParams = {
+    idOrder: string;
+  };
+  const { idOrder } = useParams<QuizParams>();
+
+  const dispatch = useAppDispatch();
+
+  const { purchaseOrder } = useAppSelector((state: RootState) => state.orders);
+
+  const inicializar = useCallback(async () => {
+    if (idOrder) {
+      dispatch(confirmOrders(idOrder));
+      dispatch(getPurchaseOrder(idOrder));
+    }
+  }, [dispatch, idOrder]);
+
   useEffect(() => {
-    return window.localStorage.removeItem("product");
-  }, []);
+    inicializar();
+
+    //return window.localStorage.removeItem("product");
+  }, [dispatch, inicializar]);
   let total = 0;
   let id = "id";
   const navigate = useNavigate();

@@ -13,6 +13,7 @@ export interface IPurchaseOrder {
     }
   ];
   state: string;
+  date: Date;
 }
 const PurchaseOrderSchema = new Schema<IPurchaseOrder>(
   {
@@ -36,6 +37,10 @@ const PurchaseOrderSchema = new Schema<IPurchaseOrder>(
     state: {
       type: String,
       default: "Creada",
+    },
+    date: {
+      type: Date,
+      default: Date.now(),
     },
   },
   {

@@ -50,6 +50,8 @@ const cancelOrder_1 = __importDefault(require("./Payments/cancelOrder"));
 const createOrder_1 = __importDefault(require("./Payments/createOrder"));
 /*============ORDERS=============*/
 const completeOrder_1 = __importDefault(require("./Orders/completeOrder"));
+const getOrder_1 = __importDefault(require("./Orders/getOrder"));
+const completeOrder_2 = __importDefault(require("./Orders/completeOrder"));
 const router = (0, express_1.Router)();
 /* ============PRODUCTS============ */
 router.use("/products", postProducts_1.default);
@@ -97,4 +99,6 @@ router.use("/payments", cancelOrder_1.default);
 router.use("/payments", createOrder_1.default);
 /*============ORDERS=============*/
 router.use("/complete-order", completeOrder_1.default);
+router.use("/orders", getOrder_1.default);
+router.use("/orders", completeOrder_2.default);
 exports.default = router;

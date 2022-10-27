@@ -9,9 +9,10 @@ const router = Router();
 
 router.post("/create-order", async (req, res) => {
   const { user, compra } = req.body;
-  let value = compra.reduce((acc: any, curr: any) => {
+
+  /* let value: number = compra.reduce((acc: any, curr: any) => {
     return acc["price"] + curr["price"];
-  });
+  }); */
 
   let productos = compra.map((obj: Object) => {
     return { id: obj["id"], quantity: obj["cantidad"] };
@@ -24,6 +25,7 @@ router.post("/create-order", async (req, res) => {
 
   newOrder.save();
   const idOrder = newOrder["_id"];
+
   try {
     const order = {
       intent: "CAPTURE",
@@ -32,7 +34,7 @@ router.post("/create-order", async (req, res) => {
           reference_id: `${idOrder}`,
           amount: {
             currency_code: "USD",
-            value: value,
+            value: 100,
           },
         },
       ],

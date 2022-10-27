@@ -27,6 +27,10 @@ const PurchaseOrderSchema = new Schema({
         type: String,
         default: "Creada",
     },
+    date: {
+        type: Date,
+        default: Date.now(),
+    },
 }, {
     versionKey: false,
     timestamps: true,

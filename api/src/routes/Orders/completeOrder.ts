@@ -3,7 +3,7 @@ import Orders from "../../models/purchaseOrder";
 import { transporter } from "../../middlewares/mailer";
 const router = Router();
 
-router.patch("/:idOrder", async (req, res) => {
+router.patch("/confirm/:idOrder", async (req, res) => {
   const { idOrder } = req.params;
   try {
     const order = await Orders.findById(idOrder);
