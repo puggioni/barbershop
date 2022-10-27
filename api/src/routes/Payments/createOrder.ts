@@ -12,7 +12,7 @@ router.post("/create-order", async (req, res) => {
   let value = compra.reduce((acc: any, curr: any) => {
     return acc["price"] + curr["price"];
   });
-  console.log(value);
+
   let productos = compra.map((obj: Object) => {
     return { id: obj["id"], quantity: obj["cantidad"] };
   });
@@ -21,7 +21,7 @@ router.post("/create-order", async (req, res) => {
     user: { id: user["user"] },
     products: productos,
   });
-  console.log(newOrder);
+
   newOrder.save();
   const idOrder = newOrder["_id"];
   try {
@@ -40,8 +40,8 @@ router.post("/create-order", async (req, res) => {
         brand_name: "Henry BarberShop",
         landing_page: "LOGIN",
         user_action: "PAY_NOW",
-        return_url: "http://localhost:5000/payments/capture-order",
-        cancel_url: "http://localhost:5000/payments/cancel-order",
+        return_url: `http://localhost:5000/payments/capture-order`,
+        cancel_url: `http://localhost:3000/products/cancelacion/${idOrder}`,
       },
     };
     const response = await axios.post(
@@ -56,7 +56,7 @@ router.post("/create-order", async (req, res) => {
         },
       }
     );
-    //deleteStock(products);
+
     res.status(200).json(response.data);
   } catch (error) {
     res.status(500).send(error);

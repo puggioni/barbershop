@@ -97,6 +97,6 @@ router.use("/payments", cancelOrder);
 router.use("/payments", createOrder);
 
 /*============ORDERS=============*/
-router.use("/orders", completeOrder);
+router.use("/complete-order", completeOrder);
 
 export default router;

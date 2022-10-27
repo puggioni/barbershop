@@ -1,14 +1,23 @@
 import { Router } from "express";
 import Orders from "../../models/purchaseOrder";
-
+import { transporter } from "../../middlewares/mailer";
 const router = Router();
 
-router.get("/complete-order", async (req, res) => {
-  const { idOrder } = req.query;
+router.patch("/:idOrder", async (req, res) => {
+  const { idOrder } = req.params;
   try {
     const order = await Orders.findById(idOrder);
     order["state"] = "Completa";
-    order.save();
+    await order.save();
+
+    // await transporter.sendMail({
+    //   from: '"Orden completada con éxito!" <grupo7henry@gmail.com', // sender address
+    //   to: "seisdedosmanuel2@gmail.com", // list of receivers
+    //   subject: "Hello ✔", // Subject line
+
+    //   html: "<b>Orden completa! </b>", // html body
+    // });
+
     res.status(200).send(order);
   } catch (error) {
     console.log(error);
