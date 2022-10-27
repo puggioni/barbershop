@@ -38,15 +38,17 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const axios_1 = __importDefault(require("axios"));
 const express_1 = require("express");
 const purchaseOrder_1 = __importDefault(require("../../models/purchaseOrder"));
+const checkStock_1 = require("../../middlewares/checkStock");
+const verifyUser_1 = require("../../middlewares/verifyUser");
 const dotenv = __importStar(require("dotenv"));
 dotenv.config();
 const router = (0, express_1.Router)();
-router.post("/create-order", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.post("/create-order", checkStock_1.checkStock, verifyUser_1.verifyUser, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { user, compra } = req.body;
-    let value = compra.reduce((acc, curr) => {
+    let value = compra["compra"].reduce((acc, curr) => {
         return acc["price"] + curr["price"];
     });
-    let productos = compra.map((obj) => {
+    let productos = compra["compra"].map((obj) => {
         return {
             name: obj["name"],
             quantity: obj["cantidad"],
@@ -54,7 +56,7 @@ router.post("/create-order", (req, res) => __awaiter(void 0, void 0, void 0, fun
         };
     });
     const newOrder = new purchaseOrder_1.default({
-        user: user["email"],
+        user: compra.user["email"],
         products: productos,
     });
     newOrder.save();
