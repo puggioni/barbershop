@@ -12,13 +12,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.isAdmin = exports.isCommon = exports.verifyToken = void 0;
+exports.isAdmin = exports.isCommon = exports.verifyUser = void 0;
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const role_1 = __importDefault(require("../models/role"));
 const user_1 = __importDefault(require("../models/user"));
-const verifyToken = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+const verifyUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const token = req.body.header["token"];
+    console.log("TOKEN", token);
+    console.log(req.body.header["token"]);
     try {
-        const token = req.headers["token"];
         console.log(token);
         if (!token)
             return res.status(403).json({ message: "No hay token" });
@@ -33,7 +35,7 @@ const verifyToken = (req, res, next) => __awaiter(void 0, void 0, void 0, functi
         return res.status(401).json({ message: "No Autorizado!" });
     }
 });
-exports.verifyToken = verifyToken;
+exports.verifyUser = verifyUser;
 const isCommon = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const token = req.headers["token"];
     if (!token)
