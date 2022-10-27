@@ -3,6 +3,7 @@ import { Schema, model } from "mongoose";
 export interface IOffice {
     lat: number;
     long: number;
+    location: string;
 }
 
 const officeSchema = new Schema(
@@ -15,6 +16,10 @@ const officeSchema = new Schema(
         required: true,
         type: Number,
       },
+      location: {
+        required: true,
+        type: String,
+      }
     },
     {
         versionKey: false,

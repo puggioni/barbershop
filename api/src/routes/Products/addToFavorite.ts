@@ -1,27 +1,24 @@
-import { Router } from "express";
-import User from "../../models/user";
-import Product from "../../models/products";
-import { verifyToken } from "../../middlewares/auth";
-import { Request, Response } from "express";
-import ProductModel from "../../models/products";
-const router = Router();
-
-router.post(
-  "/addFavorite",
-  verifyToken,
-  async (req: Request, res: Response) => {
-    const { product, user } = req.body;
-    try {
-      const productFound: Object = await Product.findById(product._id);
-      const userFound: any = await User.findById(user._id);
-      userFound["favorites_products"].push(productFound["_id"]);
-      await userFound.save();
-      const productsIds = userFound["favorites_products"];
-      const allProducts = await ProductModel.find({_id: { $in: productsIds }});
-      res.status(200).json(allProducts);
-    } catch (error) {
-      res.status(500).json({ message: "Error al agregar a favoritos" });
-    }
-  }
-);
-export default router;
+import { Router } from "express"; 
+import User from "../../models/user";  
+import { verifyToken } from "../../middlewares/auth"; 
+import { Request, Response } from "express"; 
+var mongoose = require('mongoose');
+const router = Router(); 
+  
+ router.post("/addFavorite",verifyToken, async (req: Request, res: Response) => { 
+     const { productId, userId } = req.body; 
+     try {
+       User.findById(userId)
+       .then(user => {
+         user.favorites_products.push(mongoose.Types.ObjectId(productId));
+         return user.save();     
+       })
+       .then(savedUser => 
+         User.findById(savedUser._id).populate("favorites_products"))
+       .then(completeUser => res.send(completeUser));
+     } catch (error) { 
+       console.log(error);
+       res.status(500).json({ message: "Error al agregar a favoritos" }); 
+     } 
+   });
+ export default router;
