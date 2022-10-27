@@ -55,8 +55,6 @@ router.get("/capture-order", (req, res) => __awaiter(void 0, void 0, void 0, fun
     //   html: "<b>Orden completa! </b>", // html body
     // });
     const idOrder = response.data.purchase_units[0].reference_id;
-    console.log("IDORDER", idOrder);
-    console.log(response.data);
     res
         .status(200)
         .redirect(`${process.env.PORT_FRONT}products/confirmacion/${idOrder}`);

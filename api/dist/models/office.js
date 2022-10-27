@@ -13,7 +13,7 @@ const officeSchema = new mongoose_1.Schema({
     location: {
         required: true,
         type: String,
-    }
+    },
 }, {
     versionKey: false,
     timestamps: false,

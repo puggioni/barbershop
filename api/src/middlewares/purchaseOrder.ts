@@ -8,15 +8,9 @@ export const purchaseOrder = async (user: Object, products: any, next) => {
   products.reduce(async (acc: any, obj: Object) => {
     const producto = await Product.findById(obj["productos"]["_id"]);
     userFound.purchases.push(producto);
-    console.log(
-      "🚀 ~ file: purchaseOrder.ts ~ line 11 ~ products.reduce ~ userFound",
-      userFound
-    );
+
     producto.purchases.push(userFound);
-    console.log(
-      "🚀 ~ file: purchaseOrder.ts ~ line 12 ~ products.reduce ~ producto",
-      producto
-    );
+
     const purchaseOrder = new PurchaseOrder({
       user: userFound["_id"],
       products: {

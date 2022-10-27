@@ -43,10 +43,9 @@ dotenv.config();
 const router = (0, express_1.Router)();
 router.post("/create-order", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { user, compra } = req.body;
-    console.log(req.body);
-    /* let value: number = compra.reduce((acc: any, curr: any) => {
-      return acc["price"] + curr["price"];
-    }); */
+    let value = compra.reduce((acc, curr) => {
+        return acc["price"] + curr["price"];
+    });
     let productos = compra.map((obj) => {
         return {
             name: obj["name"],
@@ -69,7 +68,7 @@ router.post("/create-order", (req, res) => __awaiter(void 0, void 0, void 0, fun
                     reference_id: `${idOrder}`,
                     amount: {
                         currency_code: "USD",
-                        value: 100,
+                        value: value,
                     },
                 },
             ],
@@ -77,10 +76,8 @@ router.post("/create-order", (req, res) => __awaiter(void 0, void 0, void 0, fun
                 brand_name: "Henry BarberShop",
                 landing_page: "LOGIN",
                 user_action: "PAY_NOW",
-
-                return_url: `${process.env.CLIENT_URL}/payments/capture-order`,
-                cancel_url: `${process.env.CLIENT_URL}/payments/cancel-order`,
-
+                return_url: `http://localhost:${process.env.PORT}/payments/capture-order`,
+                cancel_url: `http://localhost:${process.env.PORT}/payments/cancel-order/${id}`,
             },
         };
         const response = yield axios_1.default.post("https://api-m.sandbox.paypal.com/v2/checkout/orders", order, {
