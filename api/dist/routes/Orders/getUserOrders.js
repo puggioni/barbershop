@@ -12,25 +12,21 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.checkStock = void 0;
-const products_1 = __importDefault(require("../models/products"));
-const checkStock = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const { compra } = req.body;
-    let error = 0;
-    compra.reduce((acc, prod) => __awaiter(void 0, void 0, void 0, function* () {
-        const producto = yield products_1.default.findById(prod["id"]);
-        if (prod["cantidad"] > producto.stock) {
-            error++;
-            return producto;
-        }
-    }), []);
-    setTimeout(function () {
-        if (error === 0) {
-            next();
-        }
-        else {
-            return res.status(500).send("No hay stock");
-        }
-    }, 1000);
-});
-exports.checkStock = checkStock;
+const express_1 = require("express");
+const user_1 = __importDefault(require("../../models/user"));
+const purchaseOrder_1 = __importDefault(require("../../models/purchaseOrder"));
+const router = (0, express_1.Router)();
+router.get("/personal-orders/:idUser", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { idUser } = req.params;
+    try {
+        const user = yield user_1.default.find({ _id: idUser });
+        const email = user[0]["email"];
+        const orders = yield purchaseOrder_1.default.find({ user: email });
+        res.send(orders);
+    }
+    catch (err) {
+        console.log(err);
+        res.status(500).send(err);
+    }
+}));
+exports.default = router;

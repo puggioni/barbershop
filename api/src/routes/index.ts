@@ -45,7 +45,11 @@ import cancelOrder from "./Payments/cancelOrder";
 import createOrder from "./Payments/createOrder";
 /*============ORDERS=============*/
 import completeOrder from "./Orders/completeOrder";
-
+import getOrder from "./Orders/getOrder";
+import confirmOrder from "./Orders/completeOrder";
+import cancelOrders from "./Orders/cancelOrders";
+import deleteOrders from "./Orders/deleteAllOrders";
+import getUserOrders from "./Orders/getUserOrders";
 const router = Router();
 
 /* ============PRODUCTS============ */
@@ -99,6 +103,10 @@ router.use("/payments", cancelOrder);
 router.use("/payments", createOrder);
 
 /*============ORDERS=============*/
-router.use("/orders", completeOrder);
+router.use("/orders", getOrder);
+router.use("/orders", confirmOrder);
+router.use("/orders", cancelOrders);
+router.use("/orders", deleteOrders);
+router.use("/orders", getUserOrders);
 
 export default router;

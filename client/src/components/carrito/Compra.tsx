@@ -27,7 +27,7 @@ const Compra = () => {
     return {
       price: productos.productos.price,
       cantidad: productos.cantidad,
-      id: productos.productos._id,
+      name: productos.productos.name,
     };
   });
 

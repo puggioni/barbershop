@@ -5,14 +5,13 @@ dotenv.config();
 
 const router = Router();
 
-router.get("/cancel-order", async (req, res) => {
-  const { idOrder } = req.query;
+router.get("/cancel-order/:idOrder", async (req, res) => {
+  const { idOrder } = req.params;
+
   try {
-    const order = await Orders.findById(idOrder);
-    order["state"] = "Cancelada";
-    order.save();
-    res.send(order).redirect(`${process.env.CLIENT_URL}/product`);
+    res.redirect(`${process.env.PORT_FRONT}products/cancelacion/${idOrder}`);
   } catch (error) {
+    console.log(error);
     console.log(error);
     res.status(500).send(error);
   }

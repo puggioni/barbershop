@@ -46,17 +46,20 @@ router.post("/create-order", (req, res) => __awaiter(void 0, void 0, void 0, fun
     let value = compra.reduce((acc, curr) => {
         return acc["price"] + curr["price"];
     });
-    console.log(value);
     let productos = compra.map((obj) => {
-        return { id: obj["id"], quantity: obj["cantidad"] };
+        return {
+            name: obj["name"],
+            quantity: obj["cantidad"],
+            price: obj["price"],
+        };
     });
     const newOrder = new purchaseOrder_1.default({
-        user: { id: user["user"] },
+        user: user["email"],
         products: productos,
     });
-    console.log(newOrder);
     newOrder.save();
     const idOrder = newOrder["_id"];
+    const id = idOrder.toString();
     try {
         const order = {
             intent: "CAPTURE",
@@ -73,8 +76,8 @@ router.post("/create-order", (req, res) => __awaiter(void 0, void 0, void 0, fun
                 brand_name: "Henry BarberShop",
                 landing_page: "LOGIN",
                 user_action: "PAY_NOW",
-                return_url: `${process.env.CLIENT_URL}/payments/capture-order`,
-                cancel_url: `${process.env.CLIENT_URL}/payments/cancel-order`,
+                return_url: `http://localhost:${process.env.PORT}/payments/capture-order`,
+                cancel_url: `http://localhost:${process.env.PORT}/payments/cancel-order/${id}`,
             },
         };
         const response = yield axios_1.default.post("https://api-m.sandbox.paypal.com/v2/checkout/orders", order, {
@@ -83,7 +86,6 @@ router.post("/create-order", (req, res) => __awaiter(void 0, void 0, void 0, fun
                 password: `${process.env.PAYPAL_CLIENT_SECRET}`,
             },
         });
-        //deleteStock(products);
         res.status(200).json(response.data);
     }
     catch (error) {

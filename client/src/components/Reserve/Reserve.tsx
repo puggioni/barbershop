@@ -1,6 +1,3 @@
-import { VscArrowLeft } from "react-icons/vsc";
-import { useNavigate, Link } from "react-router-dom";
-import MapView from "./Map/MapView";
 import BarberCard from "./BarberCard";
 import { fetchAllBarbers } from "../slices/barbers";
 import { useCallback, useEffect, useState } from "react";
@@ -8,7 +5,7 @@ import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { RootState } from "../../app/store";
 import { buttonHover } from "../NavBar";
 import { postAppointment } from "../slices/appoinment";
-import offices, { fetchAllOffices } from "../slices/offices";
+import { fetchAllOffices } from "../slices/offices";
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 
@@ -67,13 +64,12 @@ const Reserve = () => {
 
   const sendTurno=(e: React.FormEvent<HTMLButtonElement>)=>{
     e.preventDefault();
-   // turno.date=date.toLocaleDateString();
     if(!turno.barber||!turno.block||!turno.service||!turno.office)
     {alert("Por favor asegurate de completar todos los campos")}
     else{
       turno.block=turno.block
-      console.log(turno)
       dispatch(postAppointment(turno))
+      setTurno(initialTurn);
     }
     
   }

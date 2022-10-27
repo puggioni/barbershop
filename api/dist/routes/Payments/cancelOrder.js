@@ -31,24 +31,18 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
-const purchaseOrder_1 = __importDefault(require("../../models/purchaseOrder"));
 const dotenv = __importStar(require("dotenv"));
 dotenv.config();
 const router = (0, express_1.Router)();
-router.get("/cancel-order", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { idOrder } = req.query;
+router.get("/cancel-order/:idOrder", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { idOrder } = req.params;
     try {
-        const order = yield purchaseOrder_1.default.findById(idOrder);
-        order["state"] = "Cancelada";
-        order.save();
-        res.send(order).redirect(`${process.env.CLIENT_URL}/product`);
+        res.redirect(`${process.env.PORT_FRONT}products/cancelacion/${idOrder}`);
     }
     catch (error) {
+        console.log(error);
         console.log(error);
         res.status(500).send(error);
     }

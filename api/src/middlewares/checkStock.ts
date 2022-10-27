@@ -2,10 +2,10 @@ import { isAccessor } from "typescript";
 import Product from "../models/products";
 
 export const checkStock = async (req: any, res: any, next) => {
-  const { products } = req.body;
+  const { compra } = req.body;
   let error = 0;
-  products.reduce(async (acc: any, prod: Object) => {
-    const producto = await Product.findById(prod["productos"]["_id"]);
+  compra.reduce(async (acc: any, prod: Object) => {
+    const producto = await Product.findById(prod["id"]);
     if (prod["cantidad"] > producto.stock) {
       error++;
       return producto;
