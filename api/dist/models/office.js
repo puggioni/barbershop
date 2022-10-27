@@ -10,6 +10,10 @@ const officeSchema = new mongoose_1.Schema({
         required: true,
         type: Number,
     },
+    location: {
+        required: true,
+        type: String,
+    }
 }, {
     versionKey: false,
     timestamps: false,
