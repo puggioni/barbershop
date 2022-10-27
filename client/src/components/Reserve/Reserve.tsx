@@ -136,8 +136,8 @@ return(
 
 ))}
     </div>
-    <div className=" justify-center inline-block min mr-12 block grow border-l border-black pl-10">
-      <div className=" justify-center inline-block min  block grow" >
+    <div className=" justify-center inline-block min mr-12  grow border-l border-black pl-10">
+      <div className=" justify-center inline-block min  grow" >
       <h2 className="flex justify-center my-auto text-2xl text-black"> SELECCION DEL HORARIO<br /></h2>
       <br />
       <div className=" w-80 bg-white border border-black p-4 pt-2 rounded-lg text-black text-center">
