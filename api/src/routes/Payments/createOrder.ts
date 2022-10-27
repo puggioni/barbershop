@@ -11,21 +11,27 @@ const router = Router();
 
 router.post("/create-order", async (req, res) => {
   const { user, compra } = req.body;
-  let value = compra.reduce((acc: any, curr: any) => {
+  console.log(req.body);
+  /* let value: number = compra.reduce((acc: any, curr: any) => {
     return acc["price"] + curr["price"];
-  });
-  console.log(value);
+  }); */
+
   let productos = compra.map((obj: Object) => {
-    return { id: obj["id"], quantity: obj["cantidad"] };
+    return {
+      name: obj["name"],
+      quantity: obj["cantidad"],
+      price: obj["price"],
+    };
   });
 
   const newOrder = new purchaseOrder({
-    user: { id: user["user"] },
+    user: user["email"],
     products: productos,
   });
-  console.log(newOrder);
+
   newOrder.save();
   const idOrder = newOrder["_id"];
+  const id = idOrder.toString();
   try {
     const order = {
       intent: "CAPTURE",
@@ -34,7 +40,7 @@ router.post("/create-order", async (req, res) => {
           reference_id: `${idOrder}`,
           amount: {
             currency_code: "USD",
-            value: value,
+            value: 100,
           },
         },
       ],
@@ -42,8 +48,10 @@ router.post("/create-order", async (req, res) => {
         brand_name: "Henry BarberShop",
         landing_page: "LOGIN",
         user_action: "PAY_NOW",
-        return_url: `${process.env.CLIENT_URL}/payments/capture-order`,
-        cancel_url: `${process.env.CLIENT_URL}/payments/cancel-order`,
+
+        return_url: `http://localhost:5000/payments/capture-order`,
+        cancel_url: `http://localhost:5000/payments/cancel-order/${id}`,
+
       },
     };
     const response = await axios.post(
@@ -58,7 +66,7 @@ router.post("/create-order", async (req, res) => {
         },
       }
     );
-    //deleteStock(products);
+
     res.status(200).json(response.data);
   } catch (error) {
     res.status(500).send(error);

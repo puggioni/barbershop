@@ -1,6 +1,7 @@
 import { Schema, model } from "mongoose";
 
 export interface IOffice {
+
     lat: number;
     long: number;
     location: string;
@@ -20,11 +21,17 @@ const officeSchema = new Schema(
         required: true,
         type: String,
       }
+
     },
-    {
-        versionKey: false,
-        timestamps: false,
-    }
+    long: {
+      required: true,
+      type: Number,
+    },
+  },
+  {
+    versionKey: false,
+    timestamps: false,
+  }
 );
 
 export default model<IOffice>("Office", officeSchema);

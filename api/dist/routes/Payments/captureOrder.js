@@ -48,9 +48,17 @@ router.get("/capture-order", (req, res) => __awaiter(void 0, void 0, void 0, fun
             password: `${process.env.PAYPAL_CLIENT_SECRET}`,
         },
     });
+    // await transporter.sendMail({
+    //   from: '"Orden completada con éxito!" <grupo7henry@gmail.com', // sender address
+    //   to: "seisdedosmanuel2@gmail.com", // list of receivers
+    //   subject: "Nodemail test", // Subject line
+    //   html: "<b>Orden completa! </b>", // html body
+    // });
     const idOrder = response.data.purchase_units[0].reference_id;
     console.log("IDORDER", idOrder);
     console.log(response.data);
-    res.status(200).send(response.data);
+    res
+        .status(200)
+        .redirect(`${process.env.PORT_FRONT}products/confirmacion/${idOrder}`);
 }));
 exports.default = router;
