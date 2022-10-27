@@ -11,13 +11,13 @@ export interface PurchaseOrders {
 }
 
 interface PurchaseOrder {
-  purchaseOrder: PurchaseOrders | {};
+  purchaseOrder: PurchaseOrders | undefined;
   allOrders: Array<PurchaseOrders>;
   ordersByUser: Array<PurchaseOrders>;
 }
 
 const initialState: PurchaseOrder = {
-  purchaseOrder: {},
+  purchaseOrder: undefined,
   allOrders: [],
   ordersByUser: [],
 };

@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useCallback } from "react";
 import { RiArrowGoBackFill } from "react-icons/ri";
 import { useNavigate } from "react-router";
 import { useParams } from "react-router";
@@ -29,9 +29,9 @@ const Cancelacion = () => {
     //return window.localStorage.removeItem("product");
   }, [dispatch, inicializar]);
 
-  console.log(purchaseOrder);
+  console.log(purchaseOrder?.products);
   let total = 0;
-  let id = idOrder;
+
   const navigate = useNavigate();
   const carrito = JSON.parse(window.localStorage.getItem("product") || "{}");
   if (Object.keys(carrito).length) {
@@ -53,7 +53,7 @@ const Cancelacion = () => {
 
         <div className="border border-black m-8 ">
           <div className="grid grid-cols-[1fr_2fr] my-16 gap-4">
-            <div className="justify-self-center">{id}</div>
+            <div className="justify-self-center">id:{idOrder}</div>
             <div className="border-l border-black pl-16  grid gap-4">
               <div className="grid grid-cols-[2fr_1fr_1fr_1fr] pb-4">
                 <p>nombre</p>

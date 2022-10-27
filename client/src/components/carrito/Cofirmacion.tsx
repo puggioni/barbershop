@@ -1,9 +1,8 @@
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useCallback } from "react";
 import { RiArrowGoBackFill } from "react-icons/ri";
 import { useNavigate } from "react-router";
 import { useParams } from "react-router";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { RootState } from "../../app/store";
 import { confirmOrders } from "../slices/purchaseOrder";
 const Cofirmacion = () => {
   type QuizParams = {
@@ -13,21 +12,23 @@ const Cofirmacion = () => {
 
   const dispatch = useAppDispatch();
 
-  const { purchaseOrder } = useAppSelector((state: RootState) => state.orders);
+  const { purchaseOrder } = useAppSelector((state) => state.orders);
 
   const inicializar = useCallback(async () => {
     if (idOrder) {
       dispatch(confirmOrders(idOrder));
     }
   }, [dispatch, idOrder]);
-  console.log(purchaseOrder);
+
+  console.log(purchaseOrder?.products);
+
   useEffect(() => {
     inicializar();
 
     //return window.localStorage.removeItem("product");
   }, [dispatch, inicializar]);
   let total = 0;
-  let id = "id";
+
   const navigate = useNavigate();
   const carrito = JSON.parse(window.localStorage.getItem("product") || "{}");
   if (Object.keys(carrito).length) {
@@ -49,7 +50,7 @@ const Cofirmacion = () => {
 
         <div className="border border-black m-8 ">
           <div className="grid grid-cols-[1fr_2fr] my-16 gap-4">
-            <div className="justify-self-center">{id}</div>
+            <div className="justify-self-center">id: {idOrder}</div>
             <div className="border-l border-black pl-16  grid gap-4">
               <div className="grid grid-cols-[2fr_1fr_1fr_1fr] pb-4">
                 <p>nombre</p>
