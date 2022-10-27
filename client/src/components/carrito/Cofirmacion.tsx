@@ -20,26 +20,20 @@ const Cofirmacion = () => {
     }
   }, [dispatch, idOrder]);
 
-  console.log(purchaseOrder);
-
   useEffect(() => {
     inicializar();
-
-    //return window.localStorage.removeItem("product");
+    return window.localStorage.removeItem("product");
   }, [dispatch, inicializar]);
   let total = 0;
 
   const navigate = useNavigate();
-  const carrito = JSON.parse(window.localStorage.getItem("product") || "{}");
-  if (Object.keys(carrito).length) {
-    total = carrito.reduce(
-      (acc: number, prod: { productos: { price: number } }) => {
-        return acc + prod.productos.price;
-      },
-      0
-    );
-  }
 
+  if (purchaseOrder?.products?.length) {
+    total = purchaseOrder.products.reduce((acc: number, prod) => {
+      return acc + prod.price;
+    }, 0);
+  }
+  total = Math.floor(total * 100) / 100;
   return (
     <div className="h-full bg-white">
       <div className="bg-[#B1A26A] py-20 border-black"></div>
@@ -58,14 +52,14 @@ const Cofirmacion = () => {
                 <p>cantidad</p>
                 <p>total</p>
               </div>
-              {Object.keys(carrito).length &&
-                carrito.map((prod: any) => {
-                  const total = prod.productos.price * prod.cantidad;
+              {purchaseOrder?.products?.length &&
+                purchaseOrder.products.map((prod: any) => {
+                  const total = prod.price * prod.quantity;
                   return (
                     <div className="grid grid-cols-[2fr_1fr_1fr_1fr]">
-                      <p>{prod.productos.name}</p>
-                      <p>{prod.productos.price}</p>
-                      <p>{prod.cantidad}</p>
+                      <p>{prod.name}</p>
+                      <p>{prod.price}</p>
+                      <p>{prod.quantity}</p>
                       <p>{total}</p>
                     </div>
                   );

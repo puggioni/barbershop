@@ -11,7 +11,7 @@ router.get("/cancel-order/:idOrder", async (req, res) => {
   );
 
   try {
-    res.redirect(`http://localhost:3000/products/cancelacion/${idOrder}`);
+    res.redirect(`${process.env.PORT_FRONT}products/cancelacion/${idOrder}`);
   } catch (error) {
     console.log(error);
     console.log(error);
