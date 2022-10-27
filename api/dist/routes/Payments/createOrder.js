@@ -38,10 +38,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const axios_1 = __importDefault(require("axios"));
 const express_1 = require("express");
 const purchaseOrder_1 = __importDefault(require("../../models/purchaseOrder"));
+const checkStock_1 = require("../../middlewares/checkStock");
 const dotenv = __importStar(require("dotenv"));
 dotenv.config();
 const router = (0, express_1.Router)();
-router.post("/create-order", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.post("/create-order", checkStock_1.checkStock, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { user, compra } = req.body;
     let value = compra.reduce((acc, curr) => {
         return acc["price"] + curr["price"];

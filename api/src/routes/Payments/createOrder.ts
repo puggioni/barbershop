@@ -9,7 +9,7 @@ dotenv.config();
 
 const router = Router();
 
-router.post("/create-order", async (req, res) => {
+router.post("/create-order", checkStock, async (req, res) => {
   const { user, compra } = req.body;
 
   let value: number = compra.reduce((acc: any, curr: any) => {
