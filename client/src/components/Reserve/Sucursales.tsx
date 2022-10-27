@@ -59,7 +59,7 @@ return (
           className="ml-12 my-3 h-6 w-6 fill-black"
         />
     <div className="flex flex-col-2 align-center pb-12">
-        <div className="flex justify-center min flex justify-center min block mx-12 my-8">
+        <div className="flex  min justify-center min mx-12 my-8">
         <MapView />
         </div> 
 

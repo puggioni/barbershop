@@ -1,11 +1,12 @@
 import { useReducer } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../../app/hooks";
 import { comprar } from "../slices/productSlice";
 import CardCart from "./CardCart";
+
 const Compra = () => {
   const [, forceUpdate] = useReducer((x) => x + 1, 0);
-
+  const navigate = useNavigate();
   let products: any = JSON.parse(
     window.localStorage.getItem("product") || "[]"
   );
@@ -26,7 +27,7 @@ const Compra = () => {
     return {
       price: productos.productos.price,
       cantidad: productos.cantidad,
-      id: productos.productos._id,
+      name: productos.productos.name,
     };
   });
 
@@ -38,7 +39,7 @@ const Compra = () => {
     compra,
   };
 
-  const handleClick = (e: any) => {
+  const handleCompra = (e: any) => {
     e.preventDefault();
     dispatch(comprar(laCompra));
   };
@@ -75,18 +76,17 @@ const Compra = () => {
           </p>
           <button
             className="col-span-2 block bg-[#855C20] text-white font-semibold"
-            onClick={(e) => handleClick(e)}
+            onClick={(e) => handleCompra(e)}
           >
             FINALIZAR COMPRA
           </button>
         </div>
-        <Link
-          to="/product"
+        <button
           className="  bg-[#855C20] my-8 text-white w-1/4 font-semibold mt-16 mx-8 px-4 py-2"
-          onClick={(e) => handleClick(e)}
+          onClick={() => navigate("/product")}
         >
           Seguí comprando
-        </Link>
+        </button>
       </div>
       <div className=""></div>
     </div>

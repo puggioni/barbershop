@@ -56,8 +56,9 @@ const createOrder = (req, res) =>
       application_context: { brand_name: "Henry BarberShop" },
       landing_page: "NO PREFERENCE",
       user_action: "PAY_NOW",
-      return_url: "https://barbershop-roan.vercel.app/payments/capture-order",
-      cancel_url: "https://barbershop-roan.vercel.app/payments/cancel-order",
+
+      return_url: "http://localhost:5000/payments/capture-order",
+      cancel_url: "http://localhost:5000/payments/cancel-order",
     };
     const response = yield axios_1.default.post(
       `${PAYPAL_API}/v2/checkout/orders`,

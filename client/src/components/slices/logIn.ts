@@ -19,12 +19,14 @@ type dataUser = {
   data: userFound;
 };
 
+
+
 //==========actions==================
 export const logIn = (email: string, password: string): AppThunk => {
   return async (dispatch) => {
     try {
       const res: any = await axios.post(
-        "https://barbershop-roan.vercel.app/users/login",
+        `${process.env.REACT_APP_BASE_URL}/users/login`,
         {
           email,
           password,
@@ -55,7 +57,7 @@ export const logUp = (user: object): AppThunk => {
   return async (dispatch) => {
     try {
       const credenciales: dataUser = await axios.post(
-        "https://barbershop-roan.vercel.app/users/signup",
+        `${process.env.REACT_APP_BASE_URL}/users/signup`,
         user
       );
       dispatch(userCreate(credenciales.data));
@@ -89,7 +91,6 @@ export const logInReducerSlice = createSlice({
       state.user = "";
       state.logeado = false;
       localStorage.clear();
-      
     },
 
     yaLogeado: (state) => {
