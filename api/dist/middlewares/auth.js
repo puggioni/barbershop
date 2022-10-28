@@ -19,7 +19,6 @@ const user_1 = __importDefault(require("../models/user"));
 const verifyToken = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const token = req.headers["token"];
-        console.log(token);
         if (!token)
             return res.status(403).json({ message: "No hay token" });
         const decoded = jsonwebtoken_1.default.verify(token, "token");

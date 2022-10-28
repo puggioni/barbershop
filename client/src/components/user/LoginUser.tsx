@@ -4,6 +4,7 @@ import { useAppDispatch } from "../../app/hooks";
 import { logIn } from "../slices/logIn";
 import { getAuth, GoogleAuthProvider, signInWithPopup } from "@firebase/auth";
 import { getFavoritesProducts } from "../slices/productSlice";
+import { browserLocalPersistence, setPersistence } from "firebase/auth";
 export default function LoginUser() {
   const [password, setPassword] = useState("");
   const [email, setUserName] = useState("");
@@ -27,13 +28,12 @@ export default function LoginUser() {
 
   const handleLogInWithGoogle = async (e: any) => {
     e.preventDefault();
-
+    setPersistence(auth, browserLocalPersistence);
     const response: any = await signInWithPopup(auth, new GoogleAuthProvider());
     cargarFavs();
     navigate("/");
     dispatch(logIn(response.user.email, response.user.email));
   };
-
 
   function cargarFavs() {
     const aux = window.localStorage.getItem("user");

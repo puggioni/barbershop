@@ -1,20 +1,12 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 import { AppThunk } from "../../app/store";
-import { input } from "../admin/CrearProducto";
 import { products } from "./productSlice";
 
 const initialState = {
   deleteProd: {},
 };
-// axios.delete(URL, {
-//   headers: {
-//     Authorization: authorizationToken
-//   },
-//   data: {
-//     source: source
-//   }
-// });
+
 //==========action==================
 export const deleteProd = (header: object, id: string): AppThunk => {
   return async (dispatch) => {
