@@ -37,6 +37,7 @@ export const postAppointment = (cita: object): AppThunk => {
       console.log(turno.data)
       alert("Turno registrado con exito");
     } catch (error: any) {
+      alert(error.response.data.error);
       if (error.response.status === 400) {
         alert("Error en la información");
       }
