@@ -21,6 +21,7 @@ const officeSchema = new Schema(
       type: String,
     },
   },
+
   {
     versionKey: false,
     timestamps: false,

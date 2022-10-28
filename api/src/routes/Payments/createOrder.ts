@@ -11,10 +11,10 @@ const router = Router();
 
 router.post("/create-order", async (req, res) => {
   const { user, compra } = req.body;
-  console.log(req.body);
-  /* let value: number = compra.reduce((acc: any, curr: any) => {
+
+  let value: number = compra.reduce((acc: any, curr: any) => {
     return acc["price"] + curr["price"];
-  }); */
+  });
 
   let productos = compra.map((obj: Object) => {
     return {
@@ -40,7 +40,7 @@ router.post("/create-order", async (req, res) => {
           reference_id: `${idOrder}`,
           amount: {
             currency_code: "USD",
-            value: 100,
+            value: value,
           },
         },
       ],
@@ -49,9 +49,8 @@ router.post("/create-order", async (req, res) => {
         landing_page: "LOGIN",
         user_action: "PAY_NOW",
 
-        return_url: `http://localhost:5000/payments/capture-order`,
-        cancel_url: `http://localhost:5000/payments/cancel-order/${id}`,
-
+        return_url: `http://localhost:${process.env.PORT}/payments/capture-order`,
+        cancel_url: `http://localhost:${process.env.PORT}/payments/cancel-order/${id}`,
       },
     };
     const response = await axios.post(
@@ -59,10 +58,8 @@ router.post("/create-order", async (req, res) => {
       order,
       {
         auth: {
-          username:
-          `${process.env.PAYPAL_CLIENT_ID}`,
-          password:
-          `${process.env.PAYPAL_CLIENT_SECRET}`,
+          username: `${process.env.PAYPAL_CLIENT_ID}`,
+          password: `${process.env.PAYPAL_CLIENT_SECRET}`,
         },
       }
     );

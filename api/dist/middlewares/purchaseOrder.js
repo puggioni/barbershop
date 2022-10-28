@@ -21,9 +21,7 @@ const purchaseOrder = (user, products, next) => __awaiter(void 0, void 0, void 0
     products.reduce((acc, obj) => __awaiter(void 0, void 0, void 0, function* () {
         const producto = yield products_1.default.findById(obj["productos"]["_id"]);
         userFound.purchases.push(producto);
-        console.log("🚀 ~ file: purchaseOrder.ts ~ line 11 ~ products.reduce ~ userFound", userFound);
         producto.purchases.push(userFound);
-        console.log("🚀 ~ file: purchaseOrder.ts ~ line 12 ~ products.reduce ~ producto", producto);
         const purchaseOrder = new purchaseOrder_1.default({
             user: userFound["_id"],
             products: {

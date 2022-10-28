@@ -8,18 +8,23 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.uploadImage = void 0;
-const cloudinary_1 = require("cloudinary");
-cloudinary_1.v2.config({
-    cloud_name: `${process.env.CLOUDINARY_NAME}`,
-    api_key: `${process.env.CLOUDINARY_API_KEY}`,
-    api_secret: `${process.env.CLOUDINARY_API_SECRET}`,
-    secure: true,
+exports.deleteStock = void 0;
+const products_1 = __importDefault(require("../../models/products"));
+const deleteStock = (order) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const products = yield order["products"].reduce((acc, curr) => __awaiter(void 0, void 0, void 0, function* () {
+            const producto = yield products_1.default.findById(acc["_id"]);
+            producto["stock"] - acc["quantity"];
+            producto.save();
+        }));
+        return "Stock eliminado";
+    }
+    catch (error) {
+        return error;
+    }
 });
-function uploadImage(fliePath) {
-    return __awaiter(this, void 0, void 0, function* () {
-        return yield cloudinary_1.v2.uploader.upload(fliePath);
-    });
-}
-exports.uploadImage = uploadImage;
+exports.deleteStock = deleteStock;

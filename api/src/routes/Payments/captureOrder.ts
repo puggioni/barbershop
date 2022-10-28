@@ -13,10 +13,8 @@ router.get("/capture-order", async (req, res) => {
     {},
     {
       auth: {
-        username:
-        `${process.env.PAYPAL_CLIENT_ID}`,
-        password:
-        `${process.env.PAYPAL_CLIENT_SECRET}`,
+        username: `${process.env.PAYPAL_CLIENT_ID}`,
+        password: `${process.env.PAYPAL_CLIENT_SECRET}`,
       },
     }
   );
@@ -30,9 +28,7 @@ router.get("/capture-order", async (req, res) => {
   // });
 
   const idOrder = response.data.purchase_units[0].reference_id;
-  console.log("IDORDER", idOrder);
 
-  console.log(response.data);
   res
     .status(200)
     .redirect(`${process.env.PORT_FRONT}products/confirmacion/${idOrder}`);
