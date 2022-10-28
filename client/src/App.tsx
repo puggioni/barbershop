@@ -21,6 +21,7 @@ import OrdenDeCompra from "./components/carrito/OrdenDeCompra";
 import Confirmacion from "./components/carrito/Cofirmacion";
 import Cancelacion from "./components/carrito/Cancelacion";
 import CrearProducto from "./components/admin/CrearProducto";
+import HistorialCompra from "./components/admin/HistorialCompra";
 
 export const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
@@ -62,6 +63,7 @@ function App() {
           path="/admin/products/crear-producto"
           element={<CrearProducto />}
         />
+        <Route path="/admin/users/historial" element={<HistorialCompra />} />
       </Routes>
     </div>
   );
