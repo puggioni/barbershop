@@ -27,14 +27,14 @@ type dataTurno = {
 
 //==========action=================
 
-export const postAppointment = (info: object): AppThunk => {
+export const postAppointment = (cita: object): AppThunk => {
   return async (dispatch) => {
     try {
       const turno: dataTurno = await axios.post(
         `${process.env.REACT_APP_BASE_URL}/agenda/create`,
-        info
+        cita
       );
-      // dispatch(appointmentCreate(turno.data));
+      console.log(turno.data)
       alert("Turno registrado con exito");
     } catch (error: any) {
       if (error.response.status === 400) {

@@ -19,6 +19,8 @@ type dataUser = {
   data: userFound;
 };
 
+
+
 //==========actions==================
 export const logIn = (email: string, password: string): AppThunk => {
   return async (dispatch) => {
