@@ -32,6 +32,7 @@ import editReview from "./Reviews/editReview";
 import postAppointment from "./Appointments/postAppointment";
 import getAppointments from "./Appointments/getAppontments";
 import deleteAppointment from "./Appointments/deleteAppointment";
+import getAllAppointments from "./Appointments/getAllAppointments";
 /* ============OFFICES============ */
 import postbarber from "./Barbers/postbarber";
 import getbarbers from "./Barbers/getbarbers";
@@ -44,7 +45,11 @@ import cancelOrder from "./Payments/cancelOrder";
 import createOrder from "./Payments/createOrder";
 /*============ORDERS=============*/
 import completeOrder from "./Orders/completeOrder";
-
+import getOrder from "./Orders/getOrder";
+import confirmOrder from "./Orders/completeOrder";
+import cancelOrders from "./Orders/cancelOrders";
+import deleteOrders from "./Orders/deleteAllOrders";
+import getUserOrders from "./Orders/getUserOrders";
 const router = Router();
 
 /* ============PRODUCTS============ */
@@ -82,6 +87,7 @@ router.use("/reviews", editReview);
 router.use("/agenda/", postAppointment);
 router.use("/agenda/", deleteAppointment);
 router.use("/agenda/", getAppointments);
+router.use("/agenda/", getAllAppointments);
 
 /* ============OFFICES============ */
 router.use("/office/", postOffice);
@@ -97,6 +103,10 @@ router.use("/payments", cancelOrder);
 router.use("/payments", createOrder);
 
 /*============ORDERS=============*/
-router.use("/complete-order", completeOrder);
+router.use("/orders", getOrder);
+router.use("/orders", confirmOrder);
+router.use("/orders", cancelOrders);
+router.use("/orders", deleteOrders);
+router.use("/orders", getUserOrders);
 
 export default router;

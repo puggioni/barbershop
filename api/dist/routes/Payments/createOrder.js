@@ -1,4 +1,27 @@
 "use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -15,21 +38,30 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const axios_1 = __importDefault(require("axios"));
 const express_1 = require("express");
 const purchaseOrder_1 = __importDefault(require("../../models/purchaseOrder"));
+const checkStock_1 = require("../../middlewares/checkStock");
+const verifyUser_1 = require("../../middlewares/verifyUser");
+const dotenv = __importStar(require("dotenv"));
+dotenv.config();
 const router = (0, express_1.Router)();
-router.post("/create-order", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.post("/create-order", checkStock_1.checkStock, verifyUser_1.verifyUser, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { user, compra } = req.body;
-    let value = compra.reduce((acc, curr) => {
+    let value = compra["compra"].reduce((acc, curr) => {
         return acc["price"] + curr["price"];
     });
-    let productos = compra.map((obj) => {
-        return { id: obj["id"], quantity: obj["cantidad"] };
+    let productos = compra["compra"].map((obj) => {
+        return {
+            name: obj["name"],
+            quantity: obj["cantidad"],
+            price: obj["price"],
+        };
     });
     const newOrder = new purchaseOrder_1.default({
-        user: { id: user["user"] },
+        user: compra.user["email"],
         products: productos,
     });
     newOrder.save();
     const idOrder = newOrder["_id"];
+    const id = idOrder.toString();
     try {
         const order = {
             intent: "CAPTURE",
@@ -46,14 +78,14 @@ router.post("/create-order", (req, res) => __awaiter(void 0, void 0, void 0, fun
                 brand_name: "Henry BarberShop",
                 landing_page: "LOGIN",
                 user_action: "PAY_NOW",
-                return_url: `http://localhost:5000/payments/capture-order`,
-                cancel_url: `http://localhost:3000/products/cancelacion/${idOrder}`,
+                return_url: `http://localhost:${process.env.PORT}/payments/capture-order`,
+                cancel_url: `http://localhost:${process.env.PORT}/payments/cancel-order/${id}`,
             },
         };
         const response = yield axios_1.default.post("https://api-m.sandbox.paypal.com/v2/checkout/orders", order, {
             auth: {
-                username: "AVwlVSANTKRUrYDVQ0bmVEjUqaC9-RHw8qn3uRVp-xr4SzQae-1GmM4-B-V4y_bP2tCw7gKH2S8SfeKx",
-                password: "EG_ZGG1BcPvJhGKbU0HafZRgg1mFMRGk0kZVULdRAL-ECDr5IYVzvA1aWNPXiWQHcSRHqxooNZnyoy6Z",
+                username: `${process.env.PAYPAL_CLIENT_ID}`,
+                password: `${process.env.PAYPAL_CLIENT_SECRET}`,
             },
         });
         res.status(200).json(response.data);

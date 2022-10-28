@@ -1,24 +1,56 @@
 import { Router } from "express";
 import Orders from "../../models/purchaseOrder";
-import { transporter } from "../../middlewares/mailer";
+const fetch = (...args) =>
+  import('node-fetch').then(({ default: fetch }) => fetch(...args));
+import * as dotenv from "dotenv";
+dotenv.config();
+
 const router = Router();
 
-router.patch("/:idOrder", async (req, res) => {
+router.get("/confirm/:idOrder", async (req, res) => {
   const { idOrder } = req.params;
   try {
-    const order = await Orders.findById(idOrder);
+    const order = await (await Orders.findById(idOrder)).populate("products");
     order["state"] = "Completa";
-    await order.save();
-
-    // await transporter.sendMail({
-    //   from: '"Orden completada con éxito!" <grupo7henry@gmail.com', // sender address
-    //   to: "seisdedosmanuel2@gmail.com", // list of receivers
-    //   subject: "Hello ✔", // Subject line
-
-    //   html: "<b>Orden completa! </b>", // html body
-    // });
-
-    res.status(200).send(order);
+    order.save()
+      .then(function (savedOrder) {
+        return fetch('https://api.sendinblue.com/v3/smtp/email', {
+          method: 'POST',
+          mode: 'cors',
+          cache: 'no-cache',
+          credentials: 'same-origin',
+          headers: {
+            'Content-Type': 'application/json',
+            'accept': 'application/json',
+            'api-key': `${process.env.SENDINBLUE_API_KEY}`
+          },
+          redirect: 'follow',
+          referrerPolicy: 'no-referrer',
+          body: {
+            "sender": {
+              "name": "grupo7henry",
+              "email": "grupo7henry@gmail.com"
+            },
+            "to": [
+              {
+                "email": "grupo7henry@gmail.com",
+                "name": "Grupo Barbershop"
+              }
+            ],
+            "subject": "Orden de compra",
+            "htmlContent": `<html>
+                              <head></head>
+                                <h1>Gracias por su compra!</h1>
+                                <body>
+                                  <p>Su orden de compra fue confirmada:</p>
+                                  ${order.products}
+                                  </p>
+                                </body>
+                            </html>`
+          }
+        });
+      })
+    res.status(200).json(order);
   } catch (error) {
     console.log(error);
     res.status(500).send(error);

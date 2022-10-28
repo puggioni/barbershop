@@ -36,8 +36,14 @@ function App() {
         <Route path="/products/shopping-cart" element={<Compra />} />
         <Route path="/products/favorites" element={<Favorites />} />
         <Route path="/products/orden-de-compra" element={<OrdenDeCompra />} />
-        <Route path="/products/confirmacion" element={<Confirmacion />} />
-        <Route path="/products/cancelacion" element={<Cancelacion />} />
+        <Route
+          path="/products/confirmacion/:idOrder"
+          element={<Confirmacion />}
+        />
+        <Route
+          path="/products/cancelacion/:idOrder"
+          element={<Cancelacion />}
+        />
         <Route path="/product/:idProduct" element={<ProductDetail />} />
         {/*=====================user===============================*/}
         <Route path="/user/create" element={<CreateUser />} />
