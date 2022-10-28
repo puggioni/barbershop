@@ -1,4 +1,5 @@
 import { Router } from "express";
+
 import Orders from "../../models/purchaseOrder";
 const fetch = (...args) =>
   import("node-fetch").then(({ default: fetch }) => fetch(...args));
@@ -51,6 +52,7 @@ router.get("/confirm/:idOrder", async (req, res) => {
         },
       });
     });
+
     res.status(200).json(order);
   } catch (error) {
     console.log(error);
