@@ -20,6 +20,7 @@ import { isAdmin } from "../middlewares/auth";
 import changeToCommon from "./User/changeToCommon";
 import banUser from "./User/banUser";
 import desbanearUser from "./User/desbanearUser";
+import getAllUsers from "./User/getAllUsers";
 /* ============CATEGORIES============ */
 import postCategories from "./Categories/postCategories";
 import deleteCategory from "./Categories/deleteCategory";
@@ -44,7 +45,6 @@ import captureOrder from "./Payments/captureOrder";
 import cancelOrder from "./Payments/cancelOrder";
 import createOrder from "./Payments/createOrder";
 /*============ORDERS=============*/
-import completeOrder from "./Orders/completeOrder";
 import getOrder from "./Orders/getOrder";
 import confirmOrder from "./Orders/completeOrder";
 import cancelOrders from "./Orders/cancelOrders";
@@ -73,6 +73,7 @@ router.use("/users", changeToAdmin);
 router.use("/users", changeToCommon);
 router.use("/users", banUser);
 router.use("/users", desbanearUser);
+router.use("/users", getAllUsers);
 /* ============CATEGORIES============ */
 router.use("/categories", postCategories);
 router.use("/categories", deleteCategory);
