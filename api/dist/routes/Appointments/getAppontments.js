@@ -18,8 +18,11 @@ const router = (0, express_1.Router)();
 router.get("/all/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     let _id = req.params.id;
     try {
-        const apmnts = yield appointments_1.default.find({ user: _id });
-        res.send(apmnts);
+        appointments_1.default.find({ user: _id })
+            .populate({ path: 'barber', select: 'name' })
+            .populate({ path: 'office', select: 'location' })
+            .populate({ path: 'user', select: 'email' })
+            .then((apmnts) => res.send(apmnts));
     }
     catch (err) {
         console.log(err);
