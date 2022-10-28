@@ -3,8 +3,28 @@ import axios from "axios";
 import { AppThunk } from "../../app/store";
 import { products } from "./productSlice";
 
-const initialState = {
+interface users {
+  _id: string;
+  email: string;
+  password?: string;
+  name?: string;
+  lastname?: string;
+  user_image?: string;
+  phone_number?: string;
+  role?: { name: string }[];
+  createdAt?: string;
+  updatedAt?: string;
+  banned?: boolean;
+  favorites_products?: Array<string>;
+  purchases?: Array<any>;
+}
+interface init {
+  deleteProd: object;
+  users: users[];
+}
+const initialState: init = {
   deleteProd: {},
+  users: [],
 };
 
 //==========action==================
@@ -43,6 +63,19 @@ export const createProd = (header: object, data: any, img: any): AppThunk => {
   };
 };
 
+export const getUsers = (header: any): AppThunk => {
+  return async (dispatch) => {
+    try {
+      const res = await axios.get(
+        `${process.env.REACT_APP_BASE_URL}/users/all`,
+        { headers: header }
+      );
+      dispatch(getUsersReducer(res.data));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
 //================reducer===================
 export const adminReducerSlice = createSlice({
   name: "admin",
@@ -51,8 +84,11 @@ export const adminReducerSlice = createSlice({
     adminDeleteProd: (state: any, action: PayloadAction<products>) => {
       state.deleteProd = action.payload;
     },
+    getUsersReducer: (state: any, action: PayloadAction<users>) => {
+      state.users = action.payload;
+    },
   },
 });
 
 export default adminReducerSlice.reducer;
-export const { adminDeleteProd } = adminReducerSlice.actions;
+export const { adminDeleteProd, getUsersReducer } = adminReducerSlice.actions;

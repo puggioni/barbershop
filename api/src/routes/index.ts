@@ -68,7 +68,7 @@ router.use("/products", addToFavotiteBulk);
 /* ============USERS============ */
 router.use("/users", signUp);
 router.use("/users", login);
-router.use("/users", isAdmin);
+// router.use("/users", isAdmin);
 router.use("/users", changeToAdmin);
 router.use("/users", changeToCommon);
 router.use("/users", banUser);

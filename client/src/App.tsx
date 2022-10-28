@@ -59,6 +59,7 @@ function App() {
         <Route path="/admin/products" element={<Productos />} />
         <Route path="/admin/users" element={<Users />} />
         <Route path="/admin/compras" element={<Compras />} />
+        <Route path="/admin/users" element={<Users />} />
         <Route
           path="/admin/products/crear-producto"
           element={<CrearProducto />}
