@@ -71,7 +71,21 @@ const CrearProducto = () => {
     setImg(e.target.files);
   };
 
+  const clearState = () => {
+    setInputs(() => {
+      return {
+        nombre: "",
+        precio: 0,
+        stock: 0,
+        descripcion: "",
+        categorias: [],
+        available: false,
+      };
+    });
+  };
+
   const handleCreateOrder = () => {
+    clearState();
     dispatch(createProd(header.headers, inputs, img));
   };
 
