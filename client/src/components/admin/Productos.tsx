@@ -131,7 +131,8 @@ const Productos = () => {
                 <BsArrowCounterclockwise
                   onClick={(e) => handleRestore(e)}
                   size={30}
-                  title="restore products cursor-pointer"
+                  title="restaurar productos"
+                  className="cursor-pointer"
                 />
               </div>
 

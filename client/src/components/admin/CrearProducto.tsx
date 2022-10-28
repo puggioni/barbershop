@@ -11,6 +11,7 @@ export interface input {
   stock: number;
   descripcion: string;
   categorias: Array<string>;
+  available: boolean;
 }
 
 const CrearProducto = () => {
@@ -25,6 +26,7 @@ const CrearProducto = () => {
     stock: 0,
     descripcion: "",
     categorias: [],
+    available: false,
   });
   const [img, setImg] = useState();
 
@@ -35,11 +37,18 @@ const CrearProducto = () => {
   //================handlers===========
   const handleInput = (e: React.ChangeEvent<any>) => {
     e.preventDefault();
+    if (e.target.name === "stock") {
+      setInputs((prevState) => ({
+        ...prevState,
+        available: true,
+      }));
+    }
     setInputs((prevState) => ({
       ...prevState,
       [e.target.name]: e.target.value,
     }));
   };
+
   const deleteCate = (name: string) => {
     const filtered = inputs.categorias.filter((cate) => {
       return cate !== name;
