@@ -28,21 +28,26 @@ export const deleteProd = (header: object, id: string): AppThunk => {
 
 export const createProd = (header: object, data: any, img: any): AppThunk => {
   return async () => {
-    const newProd = new FormData();
-    newProd.append("name", data.nombre);
-    newProd.append("price", data.precio);
-    newProd.append("stock", data.stock);
-    newProd.append("description", data.descripcion);
-    newProd.append("categories", data.categorias);
-    newProd.append("image", img[0]);
+    try {
+      const newProd = new FormData();
+      newProd.append("name", data.nombre);
+      newProd.append("price", data.precio);
+      newProd.append("stock", data.stock);
+      newProd.append("available", data.available);
+      newProd.append("description", data.descripcion);
+      newProd.append("categories", data.categorias);
+      newProd.append("image", img[0]);
 
-    await axios.post(
-      `${process.env.REACT_APP_BASE_URL}/products/create`,
-      newProd,
-      {
-        headers: header,
-      }
-    );
+      await axios.post(
+        `${process.env.REACT_APP_BASE_URL}/products/create`,
+        newProd,
+        {
+          headers: header,
+        }
+      );
+    } catch (error) {
+      console.log(error);
+    }
   };
 };
 
