@@ -1,8 +1,8 @@
 import { Router } from "express";
+import { uploadImage } from "../../libs/cloudinary";
+import { isAdmin, verifyToken } from "../../middlewares/auth";
 import Category from "../../models/categories";
 import Product from "../../models/products";
-import { verifyToken, isAdmin } from "../../middlewares/auth";
-import { uploadImage } from "../../libs/cloudinary";
 
 const router = Router();
 
@@ -11,7 +11,6 @@ router.post("/create", verifyToken, isAdmin, async (req: any, res: any) => {
     req.body;
 
   if (typeof name === "string") name = name.toLocaleLowerCase();
-
   const image: Object = await uploadImage(req.files.image.tempFilePath);
   try {
     const product = new Product({

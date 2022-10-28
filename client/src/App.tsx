@@ -20,6 +20,7 @@ import Sucursales from "./components/Reserve/Sucursales";
 import OrdenDeCompra from "./components/carrito/OrdenDeCompra";
 import Confirmacion from "./components/carrito/Cofirmacion";
 import Cancelacion from "./components/carrito/Cancelacion";
+import CrearProducto from "./components/admin/CrearProducto";
 
 export const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
@@ -57,6 +58,10 @@ function App() {
         <Route path="/admin/products" element={<Productos />} />
         <Route path="/admin/users" element={<Users />} />
         <Route path="/admin/compras" element={<Compras />} />
+        <Route
+          path="/admin/products/crear-producto"
+          element={<CrearProducto />}
+        />
       </Routes>
     </div>
   );
