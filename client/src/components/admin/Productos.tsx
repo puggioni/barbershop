@@ -91,7 +91,7 @@ const Productos = () => {
   //==============render================================
   if (data?.allProducts instanceof Array) {
     return (
-      <div className="bg-white bg-admin-banner bg-no-repeat bg-contain h-full">
+      <div className=" bg-white bg-admin-banner bg-no-repeat bg-contain h-full">
         <h1 className="text-white justify-center py-20 mb-2 text-5xl font-bold flex align-middle items-center">
           PANEL DE PRODUCTOS
         </h1>
