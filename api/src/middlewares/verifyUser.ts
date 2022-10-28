@@ -4,8 +4,7 @@ import User from "../models/user";
 
 export const verifyUser = async (req, res, next) => {
   const token = req.body.header["token"];
-  console.log("TOKEN", token);
-  console.log(req.body.header["token"]);
+
   try {
     console.log(token);
     if (!token) return res.status(403).json({ message: "No hay token" });

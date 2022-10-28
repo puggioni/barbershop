@@ -3,7 +3,6 @@ import { Router } from "express";
 import purchaseOrder from "../../models/purchaseOrder";
 import { checkStock } from "../../middlewares/checkStock";
 import { verifyUser } from "../../middlewares/verifyUser";
-import { deleteStock } from "../../middlewares/deleteStock";
 import * as dotenv from "dotenv";
 dotenv.config();
 
