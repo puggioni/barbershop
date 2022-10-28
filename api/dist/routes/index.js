@@ -25,6 +25,7 @@ const auth_1 = require("../middlewares/auth");
 const changeToCommon_1 = __importDefault(require("./User/changeToCommon"));
 const banUser_1 = __importDefault(require("./User/banUser"));
 const desbanearUser_1 = __importDefault(require("./User/desbanearUser"));
+const getAllUsers_1 = __importDefault(require("./User/getAllUsers"));
 /* ============CATEGORIES============ */
 const postCategories_1 = __importDefault(require("./Categories/postCategories"));
 const deleteCategory_1 = __importDefault(require("./Categories/deleteCategory"));
@@ -48,6 +49,7 @@ const getOffices_1 = __importDefault(require("./Offices/getOffices"));
 const captureOrder_1 = __importDefault(require("./Payments/captureOrder"));
 const cancelOrder_1 = __importDefault(require("./Payments/cancelOrder"));
 const createOrder_1 = __importDefault(require("./Payments/createOrder"));
+/*============ORDERS=============*/
 const getOrder_1 = __importDefault(require("./Orders/getOrder"));
 const completeOrder_1 = __importDefault(require("./Orders/completeOrder"));
 const cancelOrders_1 = __importDefault(require("./Orders/cancelOrders"));
@@ -75,6 +77,7 @@ router.use("/users", changeToAdmin_1.default);
 router.use("/users", changeToCommon_1.default);
 router.use("/users", banUser_1.default);
 router.use("/users", desbanearUser_1.default);
+router.use("/users", getAllUsers_1.default);
 /* ============CATEGORIES============ */
 router.use("/categories", postCategories_1.default);
 router.use("/categories", deleteCategory_1.default);
