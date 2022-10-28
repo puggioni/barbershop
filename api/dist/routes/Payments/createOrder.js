@@ -45,8 +45,10 @@ dotenv.config();
 const router = (0, express_1.Router)();
 router.post("/create-order", checkStock_1.checkStock, verifyUser_1.verifyUser, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { user, compra } = req.body;
-    let value = compra["compra"].reduce((acc, curr) => {
-        return acc["price"] + curr["price"];
+    console.log(compra);
+    let value = 0;
+    compra["compra"].forEach((obj) => {
+        value = value + obj["price"];
     });
     let productos = compra["compra"].map((obj) => {
         return {

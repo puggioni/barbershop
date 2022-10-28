@@ -11,9 +11,10 @@ const router = Router();
 
 router.post("/create-order", checkStock, verifyUser, async (req, res) => {
   const { user, compra } = req.body;
-
-  let value: number = compra["compra"].reduce((acc: any, curr: any) => {
-    return acc["price"] + curr["price"];
+  console.log(compra);
+  let value = 0;
+  compra["compra"].forEach((obj: Object) => {
+    value = value + obj["price"];
   });
 
   let productos = compra["compra"].map((obj: Object) => {
