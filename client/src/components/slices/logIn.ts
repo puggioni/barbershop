@@ -19,10 +19,13 @@ type dataUser = {
   data: userFound;
 };
 
+
+
 //==========actions==================
 export const logIn = (email: string, password: string): AppThunk => {
   return async (dispatch) => {
     try {
+      console.log(process.env);
       const res: any = await axios.post(
         `${process.env.REACT_APP_BASE_URL}/users/login`,
         {

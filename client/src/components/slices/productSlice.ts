@@ -72,7 +72,7 @@ export const addFavoriteProduct = (
     try {
       const res = await axios.post(
         `${process.env.REACT_APP_BASE_URL}/products/addFavorite`,
-        { product: { _id: idProduct }, user: { _id: IdUser } },
+        { productId: idProduct, userId: IdUser},
         { headers: { token: token } }
       );
       console.log(res.data);

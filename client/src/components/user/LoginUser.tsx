@@ -15,7 +15,6 @@ export default function LoginUser() {
   const handleSubmit = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
     dispatch(logIn(email, password));
-    console.log(user);
 
     if (user.name) {
       cargarFavs();
@@ -34,8 +33,7 @@ export default function LoginUser() {
     navigate("/");
     dispatch(logIn(response.user.email, response.user.email));
   };
-  let string = "Log In" + email + password;
-  console.log(string);
+
 
   function cargarFavs() {
     const aux = window.localStorage.getItem("user");
