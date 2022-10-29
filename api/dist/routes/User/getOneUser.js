@@ -8,12 +8,24 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
+const user_1 = __importDefault(require("../../models/user"));
 const router = (0, express_1.Router)();
 router.get("/one-user", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { name } = req.query;
     try {
+        const nombre = user_1.default.find({ name: name });
+        const user = user_1.default.find({ lastname: name });
+        const mail = user_1.default.find({ email: name });
+        const promesas = yield Promise.all([nombre, user, mail]);
+        const users = promesas.filter((obj) => {
+            return obj.length !== 0;
+        });
+        res.status(200).send(users);
     }
     catch (err) {
         console.log(err);
