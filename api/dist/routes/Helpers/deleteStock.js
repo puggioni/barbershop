@@ -13,21 +13,18 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteStock = void 0;
-const products_1 = __importDefault(require("../models/products"));
+const products_1 = __importDefault(require("../../models/products"));
 const deleteStock = (order) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log(order);
     try {
-        yield order["products"].forEach((obj) => __awaiter(void 0, void 0, void 0, function* () {
-            const producto = yield products_1.default.findOne({ name: obj["name"] });
-            console.log("PRODUCTO", producto);
-            console.log(producto["stock"]);
-            producto.stock -= obj["quantity"];
-            yield producto.save();
+        const products = yield order["products"].reduce((acc, curr) => __awaiter(void 0, void 0, void 0, function* () {
+            const producto = yield products_1.default.findById(acc["_id"]);
+            producto["stock"] - acc["quantity"];
+            producto.save();
         }));
-        return order;
+        return "Stock eliminado";
     }
     catch (error) {
-        throw new Error(error);
+        return error;
     }
 });
 exports.deleteStock = deleteStock;
