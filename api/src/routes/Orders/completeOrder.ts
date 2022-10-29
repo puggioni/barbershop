@@ -1,8 +1,7 @@
 import { Router } from "express";
 import Orders from "../../models/purchaseOrder";
-const fetch = (...args) =>
-  import('node-fetch').then(({ default: fetch }) => fetch(...args));
 import * as dotenv from "dotenv";
+import axios from "axios";
 dotenv.config();
 
 const router = Router();
@@ -13,45 +12,57 @@ router.get("/confirm/:idOrder", async (req, res) => {
     const order = await (await Orders.findById(idOrder)).populate("products");
     order["state"] = "Completa";
     order.save()
-      .then(function (savedOrder) {
-        return fetch('https://api.sendinblue.com/v3/smtp/email', {
-          method: 'POST',
-          mode: 'cors',
-          cache: 'no-cache',
-          credentials: 'same-origin',
-          headers: {
-            'Content-Type': 'application/json',
-            'accept': 'application/json',
-            'api-key': `${process.env.SENDINBLUE_API_KEY}`
-          },
-          redirect: 'follow',
-          referrerPolicy: 'no-referrer',
-          body: {
+      .then(savedOrder => {
+        let total = 0;
+        const options = {
+          method: 'post',
+          url: 'https://api.sendinblue.com/v3/smtp/email',
+          data: {
             "sender": {
               "name": "grupo7henry",
               "email": "grupo7henry@gmail.com"
             },
             "to": [
               {
-                "email": "grupo7henry@gmail.com",
+                "email": `${savedOrder.user}`,
                 "name": "Grupo Barbershop"
               }
             ],
             "subject": "Orden de compra",
-            "htmlContent": `<html>
-                              <head></head>
-                                <h1>Gracias por su compra!</h1>
-                                <body>
-                                  <p>Su orden de compra fue confirmada:</p>
-                                  ${order.products}
-                                  </p>
-                                </body>
-                            </html>`
+            "htmlContent": 
+            `<html>
+              <head></head>
+                <h1>Henry Barbershop</h1>
+                <body>
+                  <p>Confirmacion de orden de compra: </p>
+                  <p>
+                    <ul>
+                      ${savedOrder.products.map(item => 
+                        {
+                          total += item.price;
+                          return `<li>${item.quantity} x ${item.name} : $ ${item.price}</li>`
+                        })}
+                    </ul>
+                    <p>_____________________________________</p>
+                    <p>Total: $ ${total}</p>
+                  </p>
+                </body>
+            </html>`
+          },
+          headers: {
+            'Content-Type': 'application/json',
+            'accept': 'application/json',
+            'api-key': `${process.env.SENDINBLUE_API_KEY}`
           }
-        });
+        };
+        return axios(options)
       })
-    res.status(200).json(order);
-  } catch (error) {
+      .then(mailServerRes => {
+        console.log(mailServerRes);
+        res.status(200).json(order);
+      })
+  }
+  catch (error) {
     console.log(error);
     res.status(500).send(error);
   }
