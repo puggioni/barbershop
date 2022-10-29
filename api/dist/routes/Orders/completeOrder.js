@@ -36,10 +36,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
-const purchaseOrder_1 = __importDefault(require("../../models/purchaseOrder"));
-const fetch = (...args) => Promise.resolve().then(() => __importStar(require("node-fetch"))).then(({ default: fetch }) => fetch(...args));
 const dotenv = __importStar(require("dotenv"));
 const deleteStock_1 = require("../../middlewares/deleteStock");
+const purchaseOrder_1 = __importDefault(require("../../models/purchaseOrder"));
+const fetch = (...args) => Promise.resolve().then(() => __importStar(require("node-fetch"))).then(({ default: fetch }) => fetch(...args));
 dotenv.config();
 const router = (0, express_1.Router)();
 router.get("/confirm/:idOrder", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
