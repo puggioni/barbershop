@@ -76,6 +76,35 @@ export const getUsers = (header: any): AppThunk => {
     }
   };
 };
+
+export const banearUsuario = (header: any, id: string): AppThunk => {
+  return async () => {
+    try {
+      await axios.patch(
+        `${process.env.REACT_APP_BASE_URL}/users/banear/${id}`,
+        null,
+        {
+          headers: header,
+        }
+      );
+    } catch (error) {}
+  };
+};
+
+export const hacerAdmin = (header: any, id: string, role: string): AppThunk => {
+  return async () => {
+    try {
+      const rol = role === "admin" ? "user" : "admin";
+      await axios.patch(
+        `${process.env.REACT_APP_BASE_URL}/users/changeToAdmin/${id}`,
+        { role: rol },
+        {
+          headers: header,
+        }
+      );
+    } catch (error) {}
+  };
+};
 //================reducer===================
 export const adminReducerSlice = createSlice({
   name: "admin",

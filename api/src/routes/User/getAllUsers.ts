@@ -8,7 +8,7 @@ const router = Router();
 router.get("/all", verifyToken, isAdmin, async (req, res) => {
   try {
     await UsersModels.find()
-      .populate("purchases")
+      .populate("purchases role")
       .then((users) => res.status(200).send(users));
   } catch (err) {
     console.log(err);
