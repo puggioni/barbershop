@@ -1,21 +1,25 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
 import useHeaders from "../../app/header";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { RootState } from "../../app/store";
 import Paginate from "../products/Paginate";
 import { banearUsuario, getUsers, hacerAdmin } from "../slices/admin";
+import { yaLog } from "../slices/logIn";
+
+const user = JSON.parse(window.localStorage.getItem("user") || "{}");
 
 const Productos = () => {
   const dispatch = useAppDispatch();
   const { users } = useAppSelector((state: RootState) => state.admin);
   const token = JSON.parse(window.localStorage.getItem("token") || "{}");
-  const navigate = useNavigate();
   const header = useHeaders(token);
   //============use effect=================
   useEffect(() => {
     dispatch(getUsers(header.headers));
+    if (Object.keys(user).length) {
+      dispatch(yaLog(user.email));
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   //===========pagination=============
@@ -106,7 +110,10 @@ const Productos = () => {
                       defaultChecked={admin}
                       onChange={(e) => handleAdmin(data._id, data.email, rol)}
                     />
-                    <Link className="justify-self-end mr-3" to="/">
+                    <Link
+                      className="justify-self-end mr-3 text-blue-700"
+                      to="/"
+                    >
                       Ver historial de compra
                     </Link>
                   </div>

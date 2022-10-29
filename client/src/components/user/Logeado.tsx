@@ -11,6 +11,7 @@ const Logeado = () => {
     signOut(auth);
     dispatch(clearFavorites());
     dispatch(logOut());
+    navigate("/");
   }
   const img =
     "https://media.istockphoto.com/vectors/black-hipster-vector-mustache-vector-id485318064?k=20&m=485318064&s=170667a&w=0&h=krFPiCXz9kaEOS3gmFxGwYSOzTIxgOXqos7hEELiaTY=";
