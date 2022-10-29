@@ -41,7 +41,7 @@ router.get("/confirm/:idOrder", async (req, res) => {
                         {
                           total += item.price;
                           return `<li>${item.quantity} x ${item.name} : $ ${item.price}</li>`
-                        })}
+                        }).join('')}
                     </ul>
                     <p>_____________________________________</p>
                     <p>Total: $ ${total}</p>

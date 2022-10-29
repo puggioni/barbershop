@@ -74,7 +74,7 @@ router.get("/confirm/:idOrder", (req, res) => __awaiter(void 0, void 0, void 0, 
                       ${savedOrder.products.map(item => {
                         total += item.price;
                         return `<li>${item.quantity} x ${item.name} : $ ${item.price}</li>`;
-                    })}
+                    }).join('')}
                     </ul>
                     <p>_____________________________________</p>
                     <p>Total: $ ${total}</p>
