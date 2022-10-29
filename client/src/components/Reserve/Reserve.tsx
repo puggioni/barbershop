@@ -67,6 +67,7 @@ const Reserve = () => {
     if(!turno.barber||!turno.block||!turno.service||!turno.office)
     {alert("Por favor asegurate de completar todos los campos")}
     else{
+      console.log(turno)
       dispatch(postAppointment(turno));
       setTurno(initialTurn);
       setDate(new Date(Date.now()));
@@ -141,7 +142,7 @@ return(
       <div className=" justify-center inline-block min  grow" >
       <h2 className="flex justify-center my-auto text-2xl text-black"> SELECCION DEL HORARIO<br /></h2>
       <br />
-      <div className=" w-80 bg-white border border-black p-4 pt-2 rounded-lg text-black text-center">
+      <div className=" w-80 bg-white rounded-lg text-black text-center">
       <Calendar 
       minDate={new Date(Date.now())} 
       onChange={(val:Date) => ( val.getDay()===6||val.getDay()===0? alert("Sin turnos para sabados y domingos"):setDate(val))} 
@@ -150,15 +151,15 @@ return(
       {/* <input  className="justify-center justify-center my-auto   text-xl  text-black" type="date" /> */}
       <br />
       <select className="inline justify-center p-2  mt-5 py-1 rounded-lg border border-black" name="block" id="" value={turno.block}>
-      <option value="0">SELECCIONE UN HORARIO:</option>
-      <option value="1">8:00hs</option>
-      <option value="2">9:00hs</option>
-      <option value="3">10:00hs</option>
-      <option value="4">11:00hs</option>
-      <option value="5">14:00hs</option>
-      <option value="6">15:00hs</option>
-      <option value="7">16:00hs</option>
-      <option value="8">17:00hs</option>
+      <option value={0}>SELECCIONE UN HORARIO:</option>
+      <option value={1}>8:00hs</option>
+      <option value={2}>9:00hs</option>
+      <option value={3}>10:00hs</option>
+      <option value={4}>11:00hs</option>
+      <option value={5}>14:00hs</option>
+      <option value={6}>15:00hs</option>
+      <option value={7}>16:00hs</option>
+      <option value={8}>17:00hs</option>
       </select>
 
 
