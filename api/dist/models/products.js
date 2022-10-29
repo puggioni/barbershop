@@ -36,6 +36,7 @@ const productSchema = new mongoose_1.Schema({
     },
     available: {
         type: Boolean,
+        required: true,
     },
     favorite: {
         type: Boolean,

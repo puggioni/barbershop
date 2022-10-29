@@ -14,23 +14,22 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const user_1 = __importDefault(require("../../models/user"));
-const auth_1 = require("../../middlewares/auth");
-var mongoose = require('mongoose');
 const router = (0, express_1.Router)();
-router.post("/addFavorite", auth_1.verifyToken, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { productId, userId } = req.body;
+router.get("/one-user", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { name } = req.query;
     try {
-        user_1.default.findById(userId)
-            .then(user => {
-            user.favorites_products.push(mongoose.Types.ObjectId(productId));
-            return user.save();
-        })
-            .then(savedUser => user_1.default.findById(savedUser._id).populate("favorites_products"))
-            .then(completeUser => res.send(completeUser.favorites_products));
+        const nombre = user_1.default.find({ name: name });
+        const user = user_1.default.find({ lastname: name });
+        const mail = user_1.default.find({ email: name });
+        const promesas = yield Promise.all([nombre, user, mail]);
+        const users = promesas.filter((obj) => {
+            return obj.length !== 0;
+        });
+        res.status(200).send(users);
     }
-    catch (error) {
-        console.log(error);
-        res.status(500).json({ message: "Error al agregar a favoritos" });
+    catch (err) {
+        console.log(err);
+        res.status(500).send(err);
     }
 }));
 exports.default = router;
