@@ -26,6 +26,7 @@ const changeToCommon_1 = __importDefault(require("./User/changeToCommon"));
 const banUser_1 = __importDefault(require("./User/banUser"));
 const desbanearUser_1 = __importDefault(require("./User/desbanearUser"));
 const getAllUsers_1 = __importDefault(require("./User/getAllUsers"));
+const getOneUser_1 = __importDefault(require("./User/getOneUser"));
 /* ============CATEGORIES============ */
 const postCategories_1 = __importDefault(require("./Categories/postCategories"));
 const deleteCategory_1 = __importDefault(require("./Categories/deleteCategory"));
@@ -72,6 +73,7 @@ router.use("/products", addToFavoriteBulk_1.default);
 /* ============USERS============ */
 router.use("/users", signup_1.default);
 router.use("/users", signin_1.default);
+router.use("/users", getOneUser_1.default);
 router.use("/users", auth_1.isAdmin);
 router.use("/users", changeToAdmin_1.default);
 router.use("/users", changeToCommon_1.default);
