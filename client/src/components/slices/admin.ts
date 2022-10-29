@@ -1,7 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 import { AppThunk } from "../../app/store";
-import { input } from "../admin/CrearProducto";
 import { products } from "./productSlice";
 
 const initialState = {

@@ -1,16 +1,17 @@
 import { Router } from "express";
 
+import * as dotenv from "dotenv";
+import { deleteStock } from "../../middlewares/deleteStock";
 import Orders from "../../models/purchaseOrder";
 const fetch = (...args) =>
   import("node-fetch").then(({ default: fetch }) => fetch(...args));
-import * as dotenv from "dotenv";
-import { deleteStock } from "../../middlewares/deleteStock";
 dotenv.config();
 
 const router = Router();
 
 router.get("/confirm/:idOrder", async (req, res) => {
   const { idOrder } = req.params;
+
   try {
     const order = await (await Orders.findById(idOrder)).populate("products");
     order["state"] = "Completa";

@@ -2,21 +2,21 @@ import axios from "axios";
 import { Router } from "express";
 import purchaseOrder from "../../models/purchaseOrder";
 import { checkStock } from "../../middlewares/checkStock";
-import { verifyUser } from "../../middlewares/verifyUser";
 import * as dotenv from "dotenv";
+import { verifyToken } from "../../middlewares/auth";
 dotenv.config();
 
 const router = Router();
 
-router.post("/create-order", checkStock, verifyUser, async (req, res) => {
+router.post("/create-order", checkStock, verifyToken, async (req, res) => {
   const { user, compra } = req.body;
-  console.log(compra);
+
   let value = 0;
-  compra["compra"].forEach((obj: Object) => {
+  compra.forEach((obj: Object) => {
     value = value + obj["price"];
   });
-
-  let productos = compra["compra"].map((obj: Object) => {
+  value = (value * 100) / 100;
+  let productos = compra.map((obj: Object) => {
     return {
       name: obj["name"],
       quantity: obj["cantidad"],
@@ -25,7 +25,7 @@ router.post("/create-order", checkStock, verifyUser, async (req, res) => {
   });
 
   const newOrder = new purchaseOrder({
-    user: compra.user["email"],
+    user: user["email"],
     products: productos,
   });
   newOrder.save();

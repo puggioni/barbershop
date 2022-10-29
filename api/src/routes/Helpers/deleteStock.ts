@@ -6,7 +6,7 @@ export const deleteStock = async (order: object) => {
       async (acc: object, curr: object) => {
         const producto = await Products.findById(acc["_id"]);
         producto["stock"] - acc["quantity"];
-        producto.save();
+        await producto.save();
       }
     );
     return "Stock eliminado";

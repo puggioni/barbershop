@@ -6,7 +6,6 @@ export const verifyUser = async (req, res, next) => {
   const token = req.body.header["token"];
 
   try {
-    console.log(token);
     if (!token) return res.status(403).json({ message: "No hay token" });
     const decoded = jwt.verify(token, "token");
     req.userId = decoded["_id"];

@@ -1,25 +1,26 @@
-import { useEffect, useCallback, useState } from "react";
+import { useEffect, useState } from "react";
 import { RiArrowGoBackFill } from "react-icons/ri";
 import { useNavigate } from "react-router";
 import { useParams } from "react-router";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { confirmOrders } from "../slices/purchaseOrder";
 const Cofirmacion = () => {
-  type QuizParams = {
-    idOrder: string;
-  };
-  const { idOrder } = useParams<QuizParams>();
-  const [loading, setLoading] = useState(true);
+  let loading = true;
+  // const { loading } = useAppSelector((state) => state.orders);
   const dispatch = useAppDispatch();
 
   const { purchaseOrder } = useAppSelector((state) => state.orders);
-
+  const { idOrder } = useParams<{ idOrder: string }>();
   useEffect(() => {
-    if (idOrder && !loading) {
+    if (loading) {
+      console.log("entra");
       dispatch(confirmOrders(idOrder));
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      loading = false;
     }
-    setLoading(false);
     return window.localStorage.removeItem("product");
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   let total = 0;

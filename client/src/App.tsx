@@ -33,8 +33,10 @@ function App() {
         <Route path="/" element={<Home />} />
         {/*=====================productos==========================*/}
         <Route path="/product" element={<Products />}></Route>
-        <Route path="/products/shopping-cart" element={<Compra />} />
         <Route path="/products/favorites" element={<Favorites />} />
+        <Route path="/product/:idProduct" element={<ProductDetail />} />
+        {/* =====================compra============================== */}
+        <Route path="/products/shopping-cart" element={<Compra />} />
         <Route path="/products/orden-de-compra" element={<OrdenDeCompra />} />
         <Route
           path="/products/confirmacion/:idOrder"
@@ -44,7 +46,6 @@ function App() {
           path="/products/cancelacion/:idOrder"
           element={<Cancelacion />}
         />
-        <Route path="/product/:idProduct" element={<ProductDetail />} />
         {/*=====================user===============================*/}
         <Route path="/user/create" element={<CreateUser />} />
         <Route path="/user/login" element={<LoginUser />} />
