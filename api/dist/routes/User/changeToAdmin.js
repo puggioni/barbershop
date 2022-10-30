@@ -20,6 +20,7 @@ const router = (0, express_1.Router)();
 router.patch("/changeToAdmin/:id", auth_1.isAdmin, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
     const { role } = req.body;
+    console.log(role);
     try {
         const user = yield user_1.default.findById(id);
         const roleFound = yield role_1.default.findOne({ name: role });
@@ -28,6 +29,7 @@ router.patch("/changeToAdmin/:id", auth_1.isAdmin, (req, res) => __awaiter(void 
         res.status(200).send("User updated");
     }
     catch (error) {
+        console.log(error);
         res.status(500).send({ error });
     }
 }));
