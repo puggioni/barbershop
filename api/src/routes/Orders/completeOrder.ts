@@ -62,7 +62,6 @@ router.get("/confirm/:idOrder", async (req, res) => {
         return axios(options);
       })
       .then((mailServerRes) => {
-        console.log(mailServerRes);
         res.status(200).json(order);
       });
   } catch (error) {
