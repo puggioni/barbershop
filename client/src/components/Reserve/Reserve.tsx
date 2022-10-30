@@ -8,6 +8,7 @@ import { postAppointment } from "../slices/appoinment";
 import { fetchAllOffices } from "../slices/offices";
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
+import { Link } from "react-router-dom";
 
 const initialTurn={
   service:"",
@@ -77,8 +78,8 @@ const Reserve = () => {
 return(
   <div className=" bg-white bg-store-banner justify-center bg-no-repeat pt-32 pb-8">
     {turno.user?<>
-    <h2 className="flex justify-center my-auto text-5xl text-white mb-12">PEDI TU TURNO</h2>
-    <div className="border bg-white border-black rounded-xl mx-40 my-auto">
+    <h2 className="flex justify-center my-auto text-5xl text-white font-bold mb-12">PEDI TU TURNO</h2>
+    <div className="border bg-white border-black rounded-xl py-10 mx-40 my-auto">
     <form onChange={(e)=>handleFormTurn(e)} className="flex items-center place-content-baseline text-black">
 
     <div className="flex flex-col-3 align-center justify-center pl-36 grow pb-12">
@@ -160,12 +161,14 @@ return(
       <option value="7">16:00hs</option>
       <option value="8">17:00hs</option>
       </select>
-
-
-      
       </div>
 
+      <br />
       <button type="submit" onClick={(e)=>sendTurno(e)} className={`${buttonHover} px-4 py-1 rounded-lg m-auto mt-10 border-b border-black`}>AGENDAR</button>
+      <br />
+      <Link to="/reserve/barber">
+      <button className={`${buttonHover} px-4 py-1 rounded-lg m-auto mt-10 border-b mb-3 border-black`}>MIS TURNOS</button>
+      </Link>
     </div>
   </form>
   </div>

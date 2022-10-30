@@ -22,6 +22,7 @@ import Confirmacion from "./components/carrito/Cofirmacion";
 import Cancelacion from "./components/carrito/Cancelacion";
 import CrearProducto from "./components/admin/CrearProducto";
 import HistorialCompra from "./components/admin/HistorialCompra";
+import  MyAppointments  from "./components/Reserve/MyAppointments";
 
 export const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
@@ -55,7 +56,7 @@ function App() {
         <Route path="/sucursales" element={<Sucursales />} />
         {/*===================turno=================================*/}
         <Route path="/reserve" element={<Reserve />} />
-        <Route path="/reserve/barber" element={<BarberDetail />} />
+        <Route path="/reserve/barber" element={<MyAppointments />} />
         {/*===================admin=================================*/}
         <Route path="/admin/products" element={<Productos />} />
         <Route path="/admin/users" element={<Users />} />
