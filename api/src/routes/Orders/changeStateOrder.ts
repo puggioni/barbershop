@@ -5,11 +5,14 @@ const router = Router();
 
 router.patch("/editorder", async (req, res) => {
   const { id, state } = req.query;
-
-  const order = await Orders.findOne({ _id: id });
-  console.log(order);
-  order.save();
-  res.status(200).send(order);
+  try {
+    const order = await Orders.findById(id);
+    state ? (order.state = `${state}`) : "";
+    await order.save();
+    res.status(200).send(order);
+  } catch (error) {
+    res.status(500).send(error);
+  }
 });
 
 export default router;
