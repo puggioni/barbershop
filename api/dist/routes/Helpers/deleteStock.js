@@ -19,7 +19,7 @@ const deleteStock = (order) => __awaiter(void 0, void 0, void 0, function* () {
         const products = yield order["products"].reduce((acc, curr) => __awaiter(void 0, void 0, void 0, function* () {
             const producto = yield products_1.default.findById(acc["_id"]);
             producto["stock"] - acc["quantity"];
-            producto.save();
+            yield producto.save();
         }));
         return "Stock eliminado";
     }

@@ -13,12 +13,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
+const auth_1 = require("../../middlewares/auth");
 const user_1 = __importDefault(require("../../models/user"));
 const router = (0, express_1.Router)();
-router.get("/all", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.get("/all", auth_1.verifyToken, auth_1.isAdmin, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         yield user_1.default.find()
-            .populate("purchases")
+            .populate("purchases role")
             .then((users) => res.status(200).send(users));
     }
     catch (err) {

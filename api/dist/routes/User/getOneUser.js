@@ -18,12 +18,12 @@ const router = (0, express_1.Router)();
 router.get("/one-user", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { name } = req.query;
     try {
-        const nombre = user_1.default.find({ name: name });
-        const user = user_1.default.find({ lastname: name });
-        const mail = user_1.default.find({ email: name });
-        const promesas = yield Promise.all([nombre, user, mail]);
-        const users = promesas.filter((obj) => {
-            return obj.length !== 0;
+        const users = yield user_1.default.find({
+            $or: [
+                { name: { $regex: `${name}`, $options: "i" } },
+                { email: { $regex: `${name}`, $options: "i" } },
+                { lastname: { $regex: `${name}`, $options: "i" } },
+            ],
         });
         res.status(200).send(users);
     }
