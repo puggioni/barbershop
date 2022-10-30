@@ -12,23 +12,28 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.checkStock = void 0;
-const products_1 = __importDefault(require("../models/products"));
-const checkStock = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const { compra } = req.body;
-    let error = 0;
-    yield compra.reduce((acc, prod) => __awaiter(void 0, void 0, void 0, function* () {
-        const producto = yield products_1.default.findOne({ name: prod["name"] });
-        if (prod["cantidad"] > producto.stock) {
-            error++;
-            return producto;
+const express_1 = require("express");
+const mongoose_1 = __importDefault(require("mongoose"));
+const purchaseOrder_1 = __importDefault(require("../../models/purchaseOrder"));
+const router = (0, express_1.Router)();
+router.get("/search-order", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { name } = req.query;
+    try {
+        if (mongoose_1.default.isValidObjectId(name)) {
+            console.log("ENTRE");
+            const orders = yield purchaseOrder_1.default.findById(name);
+            res.status(200).send(orders);
         }
-    }), []);
-    if (error === 0) {
-        next();
+        else {
+            const orders = yield purchaseOrder_1.default.find({
+                user: { $regex: `${name}`, $options: "i" },
+            });
+            res.status(200).send(orders);
+        }
     }
-    else {
-        return res.status(500).send("No hay stock");
+    catch (err) {
+        console.log(err);
+        res.status(500).send(err);
     }
-});
-exports.checkStock = checkStock;
+}));
+exports.default = router;
