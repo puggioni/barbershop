@@ -44,6 +44,25 @@ export const postAppointment = (cita: object): AppThunk => {
     }
   };
 };
+export const getAppointments = (idUser: string): AppThunk=> {
+  return async (dispatch) => {
+    try {
+      const turnos = await axios.get(
+        `${process.env.REACT_APP_BASE_URL}/agenda/all/${idUser}`
+      );
+      dispatch(MyAppointment(turnos.data))
+    }catch (error) {return error}
+  }
+}
+export const deleteAppointment = (idAppointment: string): AppThunk => {
+  return async (dispatch) => {
+    const res = await axios.delete(
+      `${process.env.REACT_APP_BASE_URL}/agenda/delete/${idAppointment}`,
+      { }
+    );
+    dispatch(deleteTurnos(res));
+  };
+};
 
 //==========reducer================
 export const allAppointments = createSlice({
@@ -54,8 +73,19 @@ export const allAppointments = createSlice({
       state.allAppointments = action.payload;
       state.loading = false;
     },
+    MyAppointment: (state, action: PayloadAction<appointmentData[]>) => {
+      state.allAppointments = action.payload;
+      state.loading = false;
+    },
+    deleteTurnos: (state: any, action: PayloadAction<any>) => {
+      state.allAppointments = action.payload;
+      const deleted = state.allAppointments.filter((appo: { _id: string }) => {
+        return action.payload.data._id !== appo._id;
+      });
+      state.allAppointments = deleted;
+    }, 
   },
 });
 
 export default allAppointments.reducer;
-export const { appointmentCreate } = allAppointments.actions;
+export const { appointmentCreate, MyAppointment, deleteTurnos } = allAppointments.actions;

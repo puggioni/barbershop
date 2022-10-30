@@ -5,6 +5,7 @@ import adminReducer from "../components/slices/admin";
 import allBarbers from "../components/slices/barbers";
 import getAllOffices from "../components/slices/offices";
 import getAllOrdersSlice from "../components/slices/purchaseOrder";
+import  getAppointments  from "../components/slices/appoinment";
 
 const store = configureStore({
   //aca se agregan los reducers
@@ -15,6 +16,7 @@ const store = configureStore({
     barbers: allBarbers,
     offices: getAllOffices,
     orders: getAllOrdersSlice,
+    appointments: getAppointments
   },
 });
 

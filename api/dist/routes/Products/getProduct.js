@@ -18,22 +18,35 @@ const router = (0, express_1.Router)();
 router.get("/:idProduct", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { idProduct } = req.params;
     try {
-        yield products_1.default.findById(idProduct).populate("reviews")
-            .then(response => {
+        yield products_1.default.findById(idProduct)
+            .populate("reviews categories")
+            .then((response) => {
             let filteredProd = {
-                "_id": response._id,
-                "name": response.name,
-                "description": response.description,
-                "price": response.price,
-                "stock": response.stock,
-                "image": response.image,
-                "available": response.available,
-                "favorite": response.favorite,
-                "rating": response.rating,
-                "reviews": response.reviews.map(item => { return { reviewId: item._id, rating: item.rating, comment: item.comment }; })
+                _id: response._id,
+                name: response.name,
+                description: response.description,
+                price: response.price,
+                stock: response.stock,
+                image: response.image,
+                available: response.available,
+                favorite: response.favorite,
+                rating: response.rating,
+                reviews: response.reviews.map((item) => {
+                    return {
+                        reviewId: item._id,
+                        rating: item.rating,
+                        comment: item.comment,
+                    };
+                }),
+                categories: response.categories.map((item) => {
+                    return {
+                        name: item.name,
+                    };
+                }),
             };
             return filteredProd;
-        }).then(prod => res.send(prod));
+        })
+            .then((prod) => res.send(prod));
     }
     catch (err) {
         console.log(err);

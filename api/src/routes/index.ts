@@ -21,6 +21,7 @@ import changeToCommon from "./User/changeToCommon";
 import banUser from "./User/banUser";
 import desbanearUser from "./User/desbanearUser";
 import getAllUsers from "./User/getAllUsers";
+import getOneUser from "./User/getOneUser";
 /* ============CATEGORIES============ */
 import postCategories from "./Categories/postCategories";
 import deleteCategory from "./Categories/deleteCategory";
@@ -68,6 +69,7 @@ router.use("/products", addToFavotiteBulk);
 /* ============USERS============ */
 router.use("/users", signUp);
 router.use("/users", login);
+router.use("/users", getOneUser);
 router.use("/users", isAdmin);
 router.use("/users", changeToAdmin);
 router.use("/users", changeToCommon);

@@ -12,23 +12,19 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.checkStock = void 0;
-const products_1 = __importDefault(require("../models/products"));
-const checkStock = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const { compra } = req.body;
-    let error = 0;
-    compra.reduce((acc, prod) => __awaiter(void 0, void 0, void 0, function* () {
-        const producto = yield products_1.default.findOne({ name: prod["name"] });
-        if (prod["cantidad"] > producto.stock) {
-            error++;
-            return producto;
-        }
-    }), []);
-    if (error === 0) {
-        next();
+exports.deleteStock = void 0;
+const products_1 = __importDefault(require("../../models/products"));
+const deleteStock = (order) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const products = yield order["products"].reduce((acc, curr) => __awaiter(void 0, void 0, void 0, function* () {
+            const producto = yield products_1.default.findById(acc["_id"]);
+            producto["stock"] - acc["quantity"];
+            producto.save();
+        }));
+        return "Stock eliminado";
     }
-    else {
-        return res.status(500).send("No hay stock");
+    catch (error) {
+        return error;
     }
 });
-exports.checkStock = checkStock;
+exports.deleteStock = deleteStock;

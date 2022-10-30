@@ -14,15 +14,32 @@ interface PurchaseOrder {
   purchaseOrder: PurchaseOrders | undefined;
   allOrders: Array<PurchaseOrders>;
   ordersByUser: Array<PurchaseOrders>;
+  loading: boolean;
 }
 
 const initialState: PurchaseOrder = {
   purchaseOrder: undefined,
   allOrders: [],
   ordersByUser: [],
+  loading: true,
 };
 
 //==========action================//
+export const comprar = (header: object, compra: object) => {
+  return async () => {
+    console.log(compra);
+    const response: any = await axios.post(
+      `${process.env.REACT_APP_BASE_URL}/payments/create-order`,
+      compra,
+      {
+        headers: header,
+      }
+    );
+
+    window.location.href = `${response.data.links[1].href}`;
+  };
+};
+//window.open(url, '_blank').focus();
 export const getPurchaseOrder = (id: any): AppThunk => {
   return async (dispatch) => {
     try {
@@ -42,7 +59,6 @@ export const confirmOrders = (id: any): AppThunk => {
       const res = await axios.get(
         `${process.env.REACT_APP_BASE_URL}/orders/confirm/${id}`
       );
-      console.log(res.data);
       dispatch(confirmOrder(res.data));
     } catch (error) {
       console.log(error);
@@ -73,6 +89,7 @@ export const getAllOrdersSlice = createSlice({
       state.purchaseOrder = action.payload;
     },
     confirmOrder: (state, action: PayloadAction<PurchaseOrders>) => {
+      state.loading = false;
       state.purchaseOrder = action.payload;
     },
     cancelOrder: (state, action: PayloadAction<PurchaseOrders>) => {
