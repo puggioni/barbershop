@@ -20,7 +20,6 @@ const ProductCard = (producto: any) => {
     producto.forceUpdate();
   };
   const handleCantidadChange = (event: any, cantidad: number) => {
-    event.preventDefault();
     const index = prodLocalStorage.findIndex((p: any) => {
       return p.productos._id === producto._id;
     });
