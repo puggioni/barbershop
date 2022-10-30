@@ -51,6 +51,10 @@ import confirmOrder from "./Orders/completeOrder";
 import cancelOrders from "./Orders/cancelOrders";
 import deleteOrders from "./Orders/deleteAllOrders";
 import getUserOrders from "./Orders/getUserOrders";
+import getPurchaseOrders from "./Orders/getPurchaseOrders";
+import searchOrder from "./Orders/searchOrder";
+import changeStateOrder from "./Orders/changeStateOrder";
+
 const router = Router();
 
 /* ============PRODUCTS============ */
@@ -66,16 +70,18 @@ router.use("/products", addToFavorite);
 router.use("/products", removeFromFavorite);
 router.use("/products", getAllFavorites);
 router.use("/products", addToFavotiteBulk);
+
 /* ============USERS============ */
 router.use("/users", signUp);
 router.use("/users", login);
 router.use("/users", getOneUser);
-router.use("/users", isAdmin);
+// router.use("/users", isAdmin);
 router.use("/users", changeToAdmin);
 router.use("/users", changeToCommon);
 router.use("/users", banUser);
 router.use("/users", desbanearUser);
 router.use("/users", getAllUsers);
+
 /* ============CATEGORIES============ */
 router.use("/categories", postCategories);
 router.use("/categories", deleteCategory);
@@ -106,6 +112,9 @@ router.use("/payments", cancelOrder);
 router.use("/payments", createOrder);
 
 /*============ORDERS=============*/
+router.use("/orders", getPurchaseOrders);
+router.use("/orders", searchOrder);
+router.use("/orders", changeStateOrder);
 router.use("/orders", getOrder);
 router.use("/orders", confirmOrder);
 router.use("/orders", cancelOrders);

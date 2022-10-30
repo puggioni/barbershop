@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { VscArrowLeft } from "react-icons/vsc";
+import { HiOutlineArrowLongDown, HiOutlineArrowLongUp } from "react-icons/hi2";
 import { useParams } from "react-router";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
@@ -64,85 +64,82 @@ export default function ProductDetail() {
     }
   };
 
-  const handleChange = (event: any) => {
+  const handleCantidadChange = (event: any) => {
     setCantidad(parseInt(event.target.value));
   };
 
   return (
-    <div className=" bg-slate-200/50 ">
-      <div className=" flex  flex-col md:flex-row">
-        <VscArrowLeft
-          className=" ml-4 mt-3 h-12 w-12 fill-black"
-          onClick={goBack}
-        />
-
-        {product ? (
-          <>
-            <div className=" w-5/6 flex self-center">
-              <div className="flex justify-center min">
-                <img
-                  className=" w-9/10 rounded-3xl p-5 "
-                  src={product.image}
-                  alt=""
-                />
-              </div>
-            </div>
-            <div className="w-5/6 flex-col self-center">
-              <h1 className=" text-center font-bold p-5 text-2xl">
-                {product.name}
-              </h1>
-              <div className="justify-end ">
-                <h2 className=" font-bold justify-end px-5 text-2xl">
-                  ${product.price}
-                </h2>
-              </div>
-              <form action="" className="ml-10 mb-5 justify-center">
-                <label htmlFor="">Cantidad: </label>
-                <input
-                  type="number"
-                  className="flex justify-center rounded-lg border-2 border-black text-black mb-5"
-                  name="cantidad"
-                  value={cantidad}
-                  onChange={(e) => {
-                    handleChange(e);
-                  }}
-                />
-                <button
-                  onClick={(event) => {
-                    handleClick(event);
-                  }}
-                  className={buttonStyle}
-                >
-                  Agregar al Carrito
-                </button>
-              </form>
-              <div>
-                <label htmlFor="" className=" font-bold ml-3">
-                  Descripción:{" "}
-                </label>
-                <p className=" ml-3 text-justify self-center p-4">
-                  {product.description}
-                </p>
-              </div>
-              <label htmlFor="" className=" p-5">
-                Stock: {product.stock} Unidades
-              </label>
-            </div>
-          </>
-        ) : (
-          <h1>El producto requerido no existe o no esta activo🤔</h1>
-        )}
-      </div>
-      <div className=" bg-slate-200/50">
-        <div className="flex flex-col ml-4 md:ml-16">
+    <div className="pt-20 bg-white bg-store-banner bg-no-repeat pb-8 bg-contain font-homenaje rounded-xl">
+      <div className="  mx-20 bg-white rounded-xl">
+        <div className="border-2 border-black rounded-xl">
           {product ? (
-            <ReviewsProduct
-              reviews={product.reviews}
-              idProduct={idProduct}
-            ></ReviewsProduct>
+            <div className="grid grid-cols-[1fr_2fr]">
+              <div className=" overflow-hidden p-4">
+                <img className="" src={product.image} alt="product" />
+              </div>
+
+              <div className="flex flex-col  ">
+                <div className="flex flex-row mt-16 border-b border-black gap-8 mr-[30%] ml-12 ">
+                  <h1 className=" text-center text-3xl">{product.name}</h1>
+                  <h2 className=" text-[#C0914CA1] text-3xl">
+                    $ {product.price}
+                  </h2>
+                </div>
+
+                <p className="h-[30vh] mr-4 my-12">{product.description}</p>
+
+                <div className="flex flex-row mb-16 ml-8">
+                  <div className="relative border border-black py-1 pr-2 mr-4 items-center text-center">
+                    <input
+                      type="text"
+                      className="pl-4 w-12"
+                      name="cantidad"
+                      value={cantidad}
+                      onChange={(e) => {
+                        handleCantidadChange(e);
+                      }}
+                    />
+                    <HiOutlineArrowLongDown
+                      onClick={(e) => {
+                        setCantidad((prev) => prev - 1);
+                        handleCantidadChange(e);
+                      }}
+                      size={10}
+                      className="absolute bottom-0 right-0 cursor-pointer mb-1"
+                    />
+                    <HiOutlineArrowLongUp
+                      onClick={(e) => {
+                        setCantidad((prev) => prev + 1);
+                        handleCantidadChange(e);
+                      }}
+                      size={10}
+                      className="absolute top-0 right-0 cursor-pointer mt-1"
+                    />
+                  </div>
+                  <button
+                    onClick={(event) => {
+                      handleClick(event);
+                    }}
+                    className="text-[#C0914CA1] border border-[#C0914CA1] py-1 px-10"
+                  >
+                    Agregar al Carrito
+                  </button>
+                </div>
+              </div>
+            </div>
           ) : (
-            <>Agrega un review al producto</>
+            <h1>El producto requerido no existe o no esta activo🤔</h1>
           )}
+        </div>
+
+        <div className="">
+          <div className="flex flex-col ml-4 md:ml-16">
+            {product ? (
+              <ReviewsProduct reviews={product.reviews} idProduct={idProduct} />
+            ) : (
+              <>Agrega un review al producto</>
+            )}
+          </div>
         </div>
       </div>
     </div>

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import {  useEffect, useState } from "react";
 import { BsArrowCounterclockwise, BsCreditCardFill } from "react-icons/bs";
 import { FaEdit, FaTrashAlt } from "react-icons/fa";
 import { useNavigate } from "react-router";
@@ -8,6 +8,7 @@ import { RootState } from "../../app/store";
 import Paginate from "../products/Paginate";
 import SearchBar from "../products/Searchbar";
 import { Link } from "react-router-dom";
+import { yaLog } from "../slices/logIn";
 import {
   deleteProd,
   orderByDisponible,
@@ -27,18 +28,21 @@ const Productos = () => {
   const data = useAppSelector((state: RootState) => state.products);
   const cate = useAppSelector((state) => state.products.categorias);
   const token = JSON.parse(window.localStorage.getItem("token") || "{}");
+  const user = JSON.parse(window.localStorage.getItem("user") || "{}");
+
   const navigate = useNavigate();
   const header = useHeaders(token);
 
   //============use effect=================
-  const inicializar = useCallback(() => {
-    dispatch(fetchAllProducts(""));
-    dispatch(categorias());
-  }, [dispatch]);
 
   useEffect(() => {
-    inicializar();
-  }, [inicializar]);
+    dispatch(fetchAllProducts(""));
+    dispatch(categorias());
+    if (Object.keys(user).length) {
+      dispatch(yaLog(user.email));
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   //===========pagination=============
   const currentProducts = data.allProducts?.slice(

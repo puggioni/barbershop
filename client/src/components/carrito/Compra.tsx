@@ -1,9 +1,10 @@
-import { useReducer } from "react";
+import { useEffect, useReducer } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../../app/hooks";
 import { comprar } from "../slices/purchaseOrder";
 import CardCart from "./CardCart";
 import useHeaders from "../../app/header";
+import { yaLog } from "../slices/logIn";
 
 const Compra = () => {
   const [, forceUpdate] = useReducer((x) => x + 1, 0);
@@ -32,7 +33,11 @@ const Compra = () => {
       name: productos.productos.name,
     };
   });
-  console.log(compra);
+
+  useEffect(() => {
+    dispatch(yaLog(user.email));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const laCompra = {
     user: {
