@@ -27,6 +27,7 @@ const desbanearUser_1 = __importDefault(require("./User/desbanearUser"));
 const getAllUsers_1 = __importDefault(require("./User/getAllUsers"));
 const getOneUser_1 = __importDefault(require("./User/getOneUser"));
 const resetPwd_1 = __importDefault(require("./User/resetPwd"));
+const patchPwd_1 = __importDefault(require("./User/patchPwd"));
 /* ============CATEGORIES============ */
 const postCategories_1 = __importDefault(require("./Categories/postCategories"));
 const deleteCategory_1 = __importDefault(require("./Categories/deleteCategory"));
@@ -81,6 +82,7 @@ router.use("/users", banUser_1.default);
 router.use("/users", desbanearUser_1.default);
 router.use("/users", getAllUsers_1.default);
 router.use("/users", resetPwd_1.default);
+router.use("/users", patchPwd_1.default);
 /* ============CATEGORIES============ */
 router.use("/categories", postCategories_1.default);
 router.use("/categories", deleteCategory_1.default);
