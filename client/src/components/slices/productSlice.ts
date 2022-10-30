@@ -13,7 +13,7 @@ export interface products {
   available?: boolean;
   favorite?: boolean;
   userFavorite?: boolean;
-  category?: Array<any>;
+  categories?: Array<any>;
   reviews?: Array<any>;
   __v?: number;
 }
@@ -231,17 +231,6 @@ export const clearProducDetail: any = () => {
   };
 };
 
-export const comprar = (header: object, compra: object) => {
-  return async () => {
-    const response: any = await axios.post(
-      `${process.env.REACT_APP_BASE_URL}/payments/create-order`,
-      { header: header, compra }
-    );
-
-    window.location.href = `${response.data.links[1].href}`;
-  };
-};
-//window.open(url, '_blank').focus();
 
 export const reviewProduct = (review: object, config: object): AppThunk => {
   return async (dispatch) => {

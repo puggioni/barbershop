@@ -7,7 +7,7 @@ const router = Router();
 
 router.post("/create", async (req, res) => {
     let { user, date, block, barber, office, service } = req.body;
-
+    block=parseInt(block);
     let todayDate = new Date();
     let todayDateString: string = todayDate.toISOString().split('T')[0];
 

@@ -4,7 +4,7 @@ import UserModel from "../../models/user";
 import RoleModel from "../../models/role";
 const router = Router();
 
-router.patch("/changeToAdmin/:id", isAdmin, async (req, res) => {
+router.patch("/changeToAdmin/:id",isAdmin,async (req, res) => {
   const { id } = req.params;
   const { role } = req.body;
   try {

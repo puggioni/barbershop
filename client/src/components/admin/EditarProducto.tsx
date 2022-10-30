@@ -3,41 +3,57 @@ import { AiFillCloseCircle } from "react-icons/ai";
 import { useNavigate,useParams } from "react-router";
 import useHeaders from "../../app/header";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { createProd } from "../slices/admin";
+import { editProd } from "../slices/admin";
 import { categorias,productDetail,clearDetail } from "../slices/productSlice";
 export interface input {
   nombre: string;
   precio: number;
   stock: number;
   descripcion: string;
-  categorias: Array<string>;
+  categorias: Array<any>;
+}
+
+interface cat{
+  id:string;
+  name:string;
 }
 type QuizParams = {
     idProduct: string;
   };
 
 const EditarProducto = () => {
-    const token = JSON.parse(window.localStorage.getItem("token") || "{}");
+    const token =JSON.parse(window.localStorage.getItem("token") || "{}");
     const { idProduct } = useParams<QuizParams>();
     // const navigate = useNavigate();
     const header = useHeaders(token);
     const dispatch = useAppDispatch();
     const producto = useAppSelector((state) => state.products.product);
     const categoriaProds = useAppSelector((state) => state.products.categorias);
-    const [img, setImg] = useState();
+    const [img, setImg] = useState([]);
+    const [filepreview, setFilepreview]=useState("")
     const [inputs, setInputs] = useState<input>({
-      nombre: producto?.name||"",
-      precio: producto?.price||0,
-      stock: producto?.stock||0,
-      descripcion:producto?.description||"",
-      categorias: producto?.category||[],
+      nombre: "",
+      precio: 0,
+      stock: 0,
+      descripcion:"",
+      categorias: [],
     });
   
     useEffect(() => {
-      dispatch(categorias());
       dispatch(productDetail(idProduct||""))
+      dispatch(categorias());
       return ()=>{dispatch(clearDetail())}
-    }, [dispatch,inputs]);
+    }, [dispatch]);
+
+    useEffect(() => {
+      setInputs({...inputs,      
+        nombre: producto?.name||"",
+        precio: producto?.price||0,
+        stock: producto?.stock||0,
+        descripcion:producto?.description||"",
+        categorias: producto?.categories?.map(c=>c.name)||[],})
+    }, [producto]);
+
 
 
     
@@ -59,21 +75,25 @@ const EditarProducto = () => {
         categorias: filtered,
       });
     };
-    const handleGenreChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
       e.preventDefault();
       !inputs.categorias.includes(e.target.value) &&
         setInputs({
           ...inputs,
-          categorias: [...inputs.categorias, e.target.value],
+          categorias: [...inputs.categorias,e.target.value],
         });
     };
   
     const handleImage = (e: ChangeEvent<any>) => {
       setImg(e.target.files);
+      setFilepreview(URL.createObjectURL(e.target.files[0]))  
     };
   
     const handleCreateOrder = () => {
-      dispatch(createProd(header.headers, inputs, img));
+      idProduct? dispatch(editProd(header.headers, inputs, img, idProduct))
+      : alert("Este producto no se puede editar");
+      console.log(inputs)
+      console.log(header)
     };
   
     //===================render========================
@@ -84,12 +104,12 @@ const EditarProducto = () => {
             EDITAR PRODUCTO
           </h1><br />
           <h1 className="text-5xl font-bold flex justify-center">
-            {producto?.name.toUpperCase()}
+            {inputs.nombre.toUpperCase()}
           </h1>
           <div className="flex m-auto w-[40%] pt-4 border-b-2 border-black"></div>
           <div className="container flex flex-row justify-around h-12 my-16">
             <input
-              value={producto?.name}
+              value={inputs.nombre}
               type="text"
               name="nombre"
               onChange={(e) => handleInput(e)}
@@ -99,7 +119,7 @@ const EditarProducto = () => {
             <div>
               <label htmlFor="precio">Precio: </label>
               <input
-                value={producto?.price}
+                value={inputs.precio}
                 type="number"
                 id="precio"
                 name="precio"
@@ -111,7 +131,7 @@ const EditarProducto = () => {
             <div>
               <label htmlFor="precio">Stock: </label>
               <input
-                value={producto?.stock}
+                value={inputs.stock}
                 type="number"
                 name="stock"
                 onChange={(e) => handleInput(e)}
@@ -122,7 +142,7 @@ const EditarProducto = () => {
           </div>
   
           <textarea
-            value={producto?.description}
+            value={inputs.descripcion}
             name="descripcion"
             onChange={(e) => handleInput(e)}
             className="flex m-auto w-[80%] rounded-lg bg-white/70 p-4 h-[30vh] mb-8"
@@ -132,8 +152,9 @@ const EditarProducto = () => {
 
   
           <div className="grid grid-cols-[1fr_4fr] gap-4 w-[80%] mx-auto mb-4 ">
-            <div>
-              <img src={img? img: producto?.image} alt="" />
+            <div >
+              <img className=" w-40" src={filepreview? filepreview : producto?.image} alt="" />
+          
             </div> <br />
             <input
               type="file"
@@ -169,19 +190,19 @@ const EditarProducto = () => {
           <div className="grid grid-cols-[.5fr_4fr] justify-self-center gap-4 w-[80%] m-auto">
             <select
               name="categorias"
-              onChange={(e) => handleGenreChange(e)}
+              onChange={(e) => handleCategoryChange(e)}
               className="categorias rounded-lg"
             >
-              {categoriaProds.map((cate) => {
+              {categoriaProds?.map((cate) => {
                 return (
-                  <option key={cate.id} value={cate.name}>
+                  <option key={cate.id} id={cate.id} value={cate.name}>
                     {cate.name}
                   </option>
                 );
               })}
             </select>
             <div className="categoriasagregadas grid grid-cols-7 bg-white/70 rounded-lg gap-4 ">
-              {producto?.category?.map((cate) => {
+              {inputs?.categorias?.map((cate) => {
                 return (
                   <div className="bg-white/70 flex flex-row rounded-lg w-fit pl-2">
                     <p>{cate}</p>

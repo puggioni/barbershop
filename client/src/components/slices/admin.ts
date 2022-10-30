@@ -1,20 +1,12 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 import { AppThunk } from "../../app/store";
-import { input } from "../admin/CrearProducto";
 import { products } from "./productSlice";
 
 const initialState = {
   deleteProd: {},
 };
-// axios.delete(URL, {
-//   headers: {
-//     Authorization: authorizationToken
-//   },
-//   data: {
-//     source: source
-//   }
-// });
+
 //==========action==================
 export const deleteProd = (header: object, id: string): AppThunk => {
   return async (dispatch) => {
@@ -40,6 +32,31 @@ export const createProd = (header: object, data: any, img: any): AppThunk => {
 
       await axios.post(
         `${process.env.REACT_APP_BASE_URL}/products/create`,
+        newProd,
+        {
+          headers: header,
+        }
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const editProd = (header: object, data: any, img: any, idProduct:string): AppThunk => {
+  return async () => {
+    try {
+      const newProd = new FormData();
+      newProd.append("name", data.nombre);
+      newProd.append("price", data.precio);
+      newProd.append("stock", data.stock);
+      newProd.append("description", data.descripcion);
+      newProd.append("categories",JSON.stringify(data.categorias));
+      img.length!==0 ? newProd.append("image", img[0]):newProd.append("image","")
+
+      console.log(img.length)
+      await axios.put(
+        `${process.env.REACT_APP_BASE_URL}/products/edit/${idProduct}`,
         newProd,
         {
           headers: header,

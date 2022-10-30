@@ -22,6 +22,7 @@ import Confirmacion from "./components/carrito/Cofirmacion";
 import Cancelacion from "./components/carrito/Cancelacion";
 import CrearProducto from "./components/admin/CrearProducto";
 import EditarProducto from "./components/admin/EditarProducto";
+import HistorialCompra from "./components/admin/HistorialCompra";
 
 export const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
@@ -34,8 +35,10 @@ function App() {
         <Route path="/" element={<Home />} />
         {/*=====================productos==========================*/}
         <Route path="/product" element={<Products />}></Route>
-        <Route path="/products/shopping-cart" element={<Compra />} />
         <Route path="/products/favorites" element={<Favorites />} />
+        <Route path="/product/:idProduct" element={<ProductDetail />} />
+        {/* =====================compra============================== */}
+        <Route path="/products/shopping-cart" element={<Compra />} />
         <Route path="/products/orden-de-compra" element={<OrdenDeCompra />} />
         <Route
           path="/products/confirmacion/:idOrder"
@@ -45,7 +48,6 @@ function App() {
           path="/products/cancelacion/:idOrder"
           element={<Cancelacion />}
         />
-        <Route path="/product/:idProduct" element={<ProductDetail />} />
         {/*=====================user===============================*/}
         <Route path="/user/create" element={<CreateUser />} />
         <Route path="/user/login" element={<LoginUser />} />
@@ -61,7 +63,9 @@ function App() {
         <Route path="/admin/compras" element={<Compras />} />
         <Route path="/admin/products/crear-producto" element={<CrearProducto />}/>
         <Route path="/admin/products/editar-producto/:idProduct" element={<EditarProducto />} />
-        </Routes>
+        <Route path="/admin/products/crear-producto" element={<CrearProducto />}/>
+        <Route path="/admin/users/historial" element={<HistorialCompra />} />
+      </Routes>
     </div>
   );
 }
