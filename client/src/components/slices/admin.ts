@@ -54,14 +54,18 @@ export const editProd = (header: object, data: any, img: any, idProduct:string):
       newProd.append("categories",JSON.stringify(data.categorias));
       img.length!==0 ? newProd.append("image", img[0]):newProd.append("image","")
 
-      console.log(img.length)
-      await axios.put(
+      const res=await axios.put(
         `${process.env.REACT_APP_BASE_URL}/products/edit/${idProduct}`,
         newProd,
         {
           headers: header,
         }
       );
+      if(res.status==200){
+        alert("Producto editado correctamente")
+        window.location.pathname = "admin/products";
+      }
+      
     } catch (error) {
       console.log(error);
     }

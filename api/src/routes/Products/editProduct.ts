@@ -32,7 +32,6 @@ router.put("/edit/:idProduct", verifyToken, isAdmin, async (req:any, res) => {
     product.populate("categories", "name -_id");
     const savedProduct = await product.save();
     
-    console.log(savedProduct)
     res.status(200).send(savedProduct);
   } catch (err) {
     console.log(err);
