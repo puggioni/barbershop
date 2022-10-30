@@ -13,17 +13,17 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
+const cloudinary_1 = require("../../libs/cloudinary");
+const auth_1 = require("../../middlewares/auth");
 const categories_1 = __importDefault(require("../../models/categories"));
 const products_1 = __importDefault(require("../../models/products"));
-const auth_1 = require("../../middlewares/auth");
-const cloudinary_1 = require("../../libs/cloudinary");
 const router = (0, express_1.Router)();
 router.post("/create", auth_1.verifyToken, auth_1.isAdmin, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     let { name, description, price, stock, available, favorite, categories } = req.body;
-    if (typeof name === "string")
-        name = name.toLocaleLowerCase();
-    const image = yield (0, cloudinary_1.uploadImage)(req.files.image.tempFilePath);
     try {
+        if (typeof name === "string")
+            name = name.toLocaleLowerCase();
+        const image = yield (0, cloudinary_1.uploadImage)(req.files.image.tempFilePath);
         const product = new products_1.default({
             name: name,
             description: description,

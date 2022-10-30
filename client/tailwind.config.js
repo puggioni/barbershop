@@ -24,6 +24,7 @@ module.exports = {
         "carrito-banner": "url('/src/imagenes/carrito banner.png')",
         "admin-banner": "url('/src/imagenes/bannerAdmin.png')",
         "bg-prods": "url('/src/imagenes/crear-modificar-producto.png')",
+        "bg-historial": "url('/src/imagenes/banner-historial.png')",
       },
     },
 

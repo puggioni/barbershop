@@ -67,9 +67,9 @@ const Reserve = () => {
     if(!turno.barber||!turno.block||!turno.service||!turno.office)
     {alert("Por favor asegurate de completar todos los campos")}
     else{
-      turno.block=turno.block
-      dispatch(postAppointment(turno))
+      dispatch(postAppointment(turno));
       setTurno(initialTurn);
+      setDate(new Date(Date.now()));
     }
     
   }
@@ -108,8 +108,8 @@ return(
       </div><br />
       <h2 className="flex justify-center my-auto text-2xl text-black pb-10"> SELECCION DEL SUCURSAL </h2>
         
-      <select className="inline justify-center p-2  mt-1 py-1 rounded-lg  border border-black" name="office" id="">SELECCIONE UNA SUCURSAL:
-      <option value="none">SELECCIONE UNA SUCURSAL:</option>
+      <select className="inline justify-center p-2  mt-1 py-1 rounded-lg  border border-black" name="office" id="" value={turno.office}>SELECCIONE UNA SUCURSAL:
+      <option value="">SELECCIONE UNA SUCURSAL:</option>
       { sucursales?.map(sucursal=>{ 
                    return(
                         <option key={sucursal._id} value={sucursal._id}>{sucursal.location?sucursal.location:"Sucursal X"}</option>
@@ -119,7 +119,7 @@ return(
       </div>
       
     </div>
-    
+    <div className="text-center my-auto text-2xl text-black"> SELECCIONE UN BARBER@
     <div className="grid grid-cols-2  gap-4 m-10 mb-5">
     {data.allBarbers?.map((datas: any) => (
       turno.office===datas.office?
@@ -136,6 +136,7 @@ return(
 
 ))}
     </div>
+    </div>
     <div className=" justify-center inline-block min mr-12  grow border-l border-black pl-10">
       <div className=" justify-center inline-block min  grow" >
       <h2 className="flex justify-center my-auto text-2xl text-black"> SELECCION DEL HORARIO<br /></h2>
@@ -148,8 +149,8 @@ return(
       </div>
       {/* <input  className="justify-center justify-center my-auto   text-xl  text-black" type="date" /> */}
       <br />
-      <select className="inline justify-center p-2  mt-5 py-1 rounded-lg border border-black" name="block" id="">
-      <option value="none">SELECCIONE UN HORARIO:</option>
+      <select className="inline justify-center p-2  mt-5 py-1 rounded-lg border border-black" name="block" id="" value={turno.block}>
+      <option value="0">SELECCIONE UN HORARIO:</option>
       <option value="1">8:00hs</option>
       <option value="2">9:00hs</option>
       <option value="3">10:00hs</option>

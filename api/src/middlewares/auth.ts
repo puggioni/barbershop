@@ -5,7 +5,6 @@ import User from "../models/user";
 export const verifyToken = async (req, res, next) => {
   try {
     const token = req.headers["token"];
-    console.log(token);
     if (!token) return res.status(403).json({ message: "No hay token" });
     const decoded = jwt.verify(token, "token");
     req.userId = decoded["_id"];

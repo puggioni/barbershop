@@ -48,12 +48,6 @@ router.get("/capture-order", (req, res) => __awaiter(void 0, void 0, void 0, fun
             password: `${process.env.PAYPAL_CLIENT_SECRET}`,
         },
     });
-    // await transporter.sendMail({
-    //   from: '"Orden completada con éxito!" <grupo7henry@gmail.com', // sender address
-    //   to: "seisdedosmanuel2@gmail.com", // list of receivers
-    //   subject: "Nodemail test", // Subject line
-    //   html: "<b>Orden completa! </b>", // html body
-    // });
     const idOrder = response.data.purchase_units[0].reference_id;
     res
         .status(200)

@@ -231,17 +231,6 @@ export const clearProducDetail: any = () => {
   };
 };
 
-export const comprar = (header: object, compra: object) => {
-  return async () => {
-    const response: any = await axios.post(
-      `${process.env.REACT_APP_BASE_URL}/payments/create-order`,
-      { header: header, compra }
-    );
-
-    window.location.href = `${response.data.links[1].href}`;
-  };
-};
-//window.open(url, '_blank').focus();
 
 export const reviewProduct = (review: object, config: object): AppThunk => {
   return async (dispatch) => {
