@@ -60,7 +60,7 @@ router.get("/confirm/:idOrder", (req, res) => __awaiter(void 0, void 0, void 0, 
                     "to": [
                         {
                             "email": `${savedOrder.user}`,
-                            "name": "Grupo Barbershop"
+                            "name": `${savedOrder.user}`
                         }
                     ],
                     "subject": "Orden de compra",

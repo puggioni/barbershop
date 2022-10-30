@@ -25,7 +25,7 @@ router.get("/confirm/:idOrder", async (req, res) => {
             "to": [
               {
                 "email": `${savedOrder.user}`,
-                "name": "Grupo Barbershop"
+                "name": `${savedOrder.user}`
               }
             ],
             "subject": "Orden de compra",
