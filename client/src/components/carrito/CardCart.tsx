@@ -2,7 +2,6 @@ import { FaTrash } from "react-icons/fa";
 import { HiOutlineArrowLongDown, HiOutlineArrowLongUp } from "react-icons/hi2";
 import { Link } from "react-router-dom";
 
-
 const ProductCard = (producto: any) => {
   let cantidad: number = producto.cantidad;
   const prodLocalStorage: any = JSON.parse(
@@ -25,7 +24,7 @@ const ProductCard = (producto: any) => {
     const index = prodLocalStorage.findIndex((p: any) => {
       return p.productos._id === producto._id;
     });
-    debugger;
+
     prodLocalStorage[index] = { productos: producto, cantidad };
 
     updateLocal(prodLocalStorage);
