@@ -10,7 +10,6 @@ router.get("/search-order", async (req, res) => {
 
   try {
     if (mongoose.isValidObjectId(name)) {
-      console.log("ENTRE");
       const orders = await Orders.findById(name);
       res.status(200).send(orders);
     } else {

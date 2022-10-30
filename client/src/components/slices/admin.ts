@@ -18,15 +18,24 @@ interface users {
   favorites_products?: Array<string>;
   purchases?: Array<any>;
 }
+
+interface PurchaseOrders {
+  _id: string;
+  user?: string;
+  products?: Array<any>;
+  state?: string;
+  date?: Date;
+}
 interface init {
   deleteProd: object;
   users: users[];
+  orders: PurchaseOrders[];
 }
 const initialState: init = {
   deleteProd: {},
   users: [],
+  orders: [],
 };
-
 //==========action==================
 export const deleteProd = (header: object, id: string): AppThunk => {
   return async (dispatch) => {
@@ -122,8 +131,64 @@ export const searchUser = (param: string): AppThunk => {
     }
   };
 };
+
+export const getAllOrders = (header: any): AppThunk => {
+  return async (dispatch) => {
+    try {
+      const res = await axios.get(
+        `${process.env.REACT_APP_BASE_URL}/orders/all-orders`,
+        { headers: header }
+      );
+      dispatch(getOrdersReducer(res.data));
+    } catch (error) {
+      alert("No se pudo obtener ordenes de compra");
+    }
+  };
+};
+
+export const cambiarEstadoOrden = (
+  header: any,
+  id: string,
+  estado: string
+): AppThunk => {
+  return async () => {
+    try {
+      await axios.patch(
+        `${process.env.REACT_APP_BASE_URL}/orders/editorder?id=${id}&state=${estado}`,
+        null,
+        {
+          headers: header,
+        }
+      );
+    } catch (error) {
+      alert("No se pudo cambiar el estado de la orden");
+    }
+  };
+};
+
+export const searchOrderName = (name: string): AppThunk => {
+  return async () => {
+    try {
+      await axios.get(
+        `${process.env.REACT_APP_BASE_URL}/orders/search-orders?name=${name}`
+      );
+    } catch (error) {
+      alert("No se pudo cambiar el estado de la orden");
+    }
+  };
+};
+
+export const searchOrderId = (id: string): AppThunk => {
+  return async () => {
+    try {
+      await axios.get(`${process.env.REACT_APP_BASE_URL}/orders/${id}`);
+    } catch (error) {
+      alert("No se pudo cambiar el estado de la orden");
+    }
+  };
+};
 //================reducer===================
-export const adminReducerSlice = createSlice({
+const adminReducerSlice = createSlice({
   name: "admin",
   initialState,
   reducers: {
@@ -133,8 +198,15 @@ export const adminReducerSlice = createSlice({
     getUsersReducer: (state: any, action: PayloadAction<users>) => {
       state.users = action.payload;
     },
+    getOrdersReducer: (
+      state: { orders: any[] },
+      action: PayloadAction<any[]>
+    ) => {
+      state.orders = action.payload;
+    },
   },
 });
 
 export default adminReducerSlice.reducer;
-export const { adminDeleteProd, getUsersReducer } = adminReducerSlice.actions;
+export const { adminDeleteProd, getUsersReducer, getOrdersReducer } =
+  adminReducerSlice.actions;
