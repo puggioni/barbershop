@@ -9,6 +9,7 @@ import { fetchAllOffices } from "../slices/offices";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import { yaLog } from "../slices/logIn";
+import { Link } from "react-router-dom";
 
 const initialTurn = {
   service: "",
@@ -214,6 +215,7 @@ const Reserve = () => {
                   </select>
                 </div>
 
+                <br />
                 <button
                   type="submit"
                   onClick={(e) => sendTurno(e)}
@@ -221,6 +223,14 @@ const Reserve = () => {
                 >
                   AGENDAR
                 </button>
+                <br />
+                <Link to="/reserve/barber">
+                  <button
+                    className={`${buttonHover} px-4 py-1 rounded-lg m-auto mt-10 border-b mb-3 border-black`}
+                  >
+                    MIS TURNOS
+                  </button>
+                </Link>
               </div>
             </form>
           </div>
