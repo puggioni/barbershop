@@ -52,6 +52,8 @@ import cancelOrders from "./Orders/cancelOrders";
 import deleteOrders from "./Orders/deleteAllOrders";
 import getUserOrders from "./Orders/getUserOrders";
 import getPurchaseOrders from "./Orders/getPurchaseOrders";
+import changeStateOrder from "./Orders/changeStateOrder";
+
 const router = Router();
 
 /* ============PRODUCTS============ */
@@ -108,6 +110,7 @@ router.use("/payments", createOrder);
 
 /*============ORDERS=============*/
 router.use("/orders", getPurchaseOrders);
+router.use("/orders", changeStateOrder);
 router.use("/orders", getOrder);
 router.use("/orders", confirmOrder);
 router.use("/orders", cancelOrders);
