@@ -72,7 +72,7 @@ export const getUsers = (header: any): AppThunk => {
       );
       dispatch(getUsersReducer(res.data));
     } catch (error) {
-      console.log(error);
+      alert("No se pudo obtener usuario");
     }
   };
 };
@@ -87,7 +87,9 @@ export const banearUsuario = (header: any, id: string): AppThunk => {
           headers: header,
         }
       );
-    } catch (error) {}
+    } catch (error) {
+      alert("ocurrio un error");
+    }
   };
 };
 
@@ -102,7 +104,22 @@ export const hacerAdmin = (header: any, id: string, role: string): AppThunk => {
           headers: header,
         }
       );
-    } catch (error) {}
+    } catch (error) {
+      alert("ocurrio un error");
+    }
+  };
+};
+
+export const searchUser = (param: string): AppThunk => {
+  return async (dispatch) => {
+    try {
+      const res = await axios.get(
+        `${process.env.REACT_APP_BASE_URL}/users/one-user?name=${param}`
+      );
+      dispatch(getUsersReducer(res.data));
+    } catch (error) {
+      alert("no se encontro usuario");
+    }
   };
 };
 //================reducer===================

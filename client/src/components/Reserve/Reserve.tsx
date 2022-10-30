@@ -1,6 +1,6 @@
 import BarberCard from "./BarberCard";
 import { fetchAllBarbers } from "../slices/barbers";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { RootState } from "../../app/store";
 import { buttonHover } from "../NavBar";

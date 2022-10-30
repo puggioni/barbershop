@@ -6,6 +6,8 @@ import { RootState } from "../../app/store";
 import Paginate from "../products/Paginate";
 import { banearUsuario, getUsers, hacerAdmin } from "../slices/admin";
 import { yaLog } from "../slices/logIn";
+import UserSearch from "./userSearch";
+import { BsArrowCounterclockwise } from "react-icons/bs";
 
 const user = JSON.parse(window.localStorage.getItem("user") || "{}");
 
@@ -22,7 +24,7 @@ const Productos = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  //===========pagination=============
+  //===========pagination=´-===========
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [productsPerPage] = useState(9);
   const lastPostIndex = currentPage * productsPerPage;
@@ -61,22 +63,34 @@ const Productos = () => {
     }
   };
 
+  const handleRestoreUsers = () => {
+    dispatch(getUsers(header.headers));
+  };
+
   //==============render================================
   if ([] instanceof Array) {
     return (
-      <div className=" bg-white bg-admin-banner bg-no-repeat bg-contain h-full">
+      <div className=" bg-white pb-8 bg-admin-banner bg-no-repeat bg-contain h-full">
         <h1 className=" text-white justify-center py-20 mb-2 text-5xl font-bold flex flex-col align-middle items-center">
           PANEL DE USUARIOS
         </h1>
         <div className=" mx-8 bg-white border-2 px-4 border-black rounded-lg">
-          <div>
+          <div className="mt-8">
             <div className="relative w-full">
-              <div className=" grid grid-cols-[1fr_1fr_1.5fr_.5fr_.5fr_3fr]  pr-8 gap-20 justify-items-center">
+              <div className=" grid grid-cols-[1fr_1fr_1.5fr_.5fr_.5fr_.5fr_2fr]  pr-8 gap-20 justify-items-center">
                 <p>Email</p>
                 <p>Nombre</p>
                 <p>Apellido</p>
                 <p>Banear</p>
                 <p>Admin</p>
+                <BsArrowCounterclockwise
+                  className="cursor-pointer"
+                  onClick={() => {
+                    handleRestoreUsers();
+                  }}
+                  size={25}
+                />
+                <UserSearch />
               </div>
 
               {currentProducts.map((data) => {
@@ -89,7 +103,6 @@ const Productos = () => {
                     rol = "admin";
                   }
                 }
-
                 return (
                   <div
                     className="grid grid-cols-[1.5fr_1fr_1fr_.5fr_.5fr_3fr]  gap-16 py-2 pl-2 mt-8 border border-black rounded-lg items-center"
