@@ -24,7 +24,7 @@ const HistorialCompra = () => {
 
   //=================pagination=======================
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const [productsPerPage] = useState(9);
+  const [productsPerPage] = useState(15);
   const lastPostIndex = currentPage * productsPerPage;
   const firstPostIndex = lastPostIndex - productsPerPage;
   const currentProducts = ordenes.slice(firstPostIndex, lastPostIndex);
@@ -51,7 +51,7 @@ const HistorialCompra = () => {
 
   //==========================render================
   return (
-    <div className="flex flex-col bg-white bg-bg-historial bg-no-repeat bg-auto h-screen">
+    <div className="flex flex-col bg-white bg-bg-historial bg-no-repeat bg-auto ">
       <h1 className="text-white justify-center py-20 mb-2 text-5xl font-bold flex align-middle items-center">
         HISTORIAL DE COMPRAS
       </h1>

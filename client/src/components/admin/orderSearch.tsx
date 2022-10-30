@@ -1,16 +1,19 @@
 import { useState } from "react";
 import { BsSearch } from "react-icons/bs";
 import { useAppDispatch } from "../../app/hooks";
+import { searchOrderId, searchOrderName } from "../slices/admin";
 
-const UserSearch = () => {
+const UserSearch = (searchBy: string) => {
   const [searchParam, setSearchParam] = useState("");
   const dispatch = useAppDispatch();
 
   function search(e: any) {
     e.preventDefault();
-    if (searchParam.length) {
-      dispatch(searchParam);
+    if (searchParam.length && searchBy === "name") {
+      dispatch(searchOrderName(searchParam));
       setSearchParam("");
+    } else {
+      dispatch(searchOrderId(searchParam));
     }
   }
 

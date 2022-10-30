@@ -153,13 +153,35 @@ export const cambiarEstadoOrden = (
 ): AppThunk => {
   return async () => {
     try {
-      axios.patch(
+      await axios.patch(
         `${process.env.REACT_APP_BASE_URL}/orders/editorder?id=${id}&state=${estado}`,
         null,
         {
           headers: header,
         }
       );
+    } catch (error) {
+      alert("No se pudo cambiar el estado de la orden");
+    }
+  };
+};
+
+export const searchOrderName = (name: string): AppThunk => {
+  return async () => {
+    try {
+      await axios.get(
+        `${process.env.REACT_APP_BASE_URL}/orders/search-orders?name=${name}`
+      );
+    } catch (error) {
+      alert("No se pudo cambiar el estado de la orden");
+    }
+  };
+};
+
+export const searchOrderId = (id: string): AppThunk => {
+  return async () => {
+    try {
+      await axios.get(`${process.env.REACT_APP_BASE_URL}/orders/${id}`);
     } catch (error) {
       alert("No se pudo cambiar el estado de la orden");
     }
