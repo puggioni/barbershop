@@ -70,7 +70,7 @@ router.use("/products", addToFavotiteBulk);
 router.use("/users", signUp);
 router.use("/users", login);
 router.use("/users", getOneUser);
-router.use("/users", isAdmin);
+// router.use("/users", isAdmin);
 router.use("/users", changeToAdmin);
 router.use("/users", changeToCommon);
 router.use("/users", banUser);

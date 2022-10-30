@@ -9,7 +9,9 @@ router.patch("/banear/:id", isAdmin, async (req, res) => {
 
   try {
     const user: any = await User.findById(id);
-    user["banned"] = true;
+    user["banned"] === true
+      ? (user["banned"] = false)
+      : (user["banned"] = true);
     user.save();
     res.status(200).send("User updated");
   } catch (error) {
