@@ -54,7 +54,7 @@ import getUserOrders from "./Orders/getUserOrders";
 import getPurchaseOrders from "./Orders/getPurchaseOrders";
 import searchOrder from "./Orders/searchOrder";
 import changeStateOrder from "./Orders/changeStateOrder";
-
+import filterOrders from "./Orders/filterOrders";
 const router = Router();
 
 /* ============PRODUCTS============ */
@@ -114,11 +114,11 @@ router.use("/payments", createOrder);
 /*============ORDERS=============*/
 router.use("/orders", getPurchaseOrders);
 router.use("/orders", searchOrder);
+router.use("/orders", filterOrders);
 router.use("/orders", changeStateOrder);
 router.use("/orders", getOrder);
 router.use("/orders", confirmOrder);
 router.use("/orders", cancelOrders);
 router.use("/orders", deleteOrders);
 router.use("/orders", getUserOrders);
-
 export default router;
