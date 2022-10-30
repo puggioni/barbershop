@@ -51,6 +51,8 @@ import confirmOrder from "./Orders/completeOrder";
 import cancelOrders from "./Orders/cancelOrders";
 import deleteOrders from "./Orders/deleteAllOrders";
 import getUserOrders from "./Orders/getUserOrders";
+import changeStateOrder from "./Orders/changeStateOrder";
+
 const router = Router();
 
 /* ============PRODUCTS============ */
@@ -111,5 +113,6 @@ router.use("/orders", confirmOrder);
 router.use("/orders", cancelOrders);
 router.use("/orders", deleteOrders);
 router.use("/orders", getUserOrders);
+router.use("/orders", changeStateOrder);
 
 export default router;
