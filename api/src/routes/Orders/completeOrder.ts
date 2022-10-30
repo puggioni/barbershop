@@ -2,6 +2,8 @@ import { Router } from "express";
 import Orders from "../../models/purchaseOrder";
 import * as dotenv from "dotenv";
 import axios from "axios";
+import { deleteStock } from "../../middlewares/deleteStock";
+
 dotenv.config();
 
 const router = Router();
@@ -11,6 +13,7 @@ router.get("/confirm/:idOrder", async (req, res) => {
   try {
     const order = await (await Orders.findById(idOrder)).populate("products");
     order["state"] = "Completa";
+    deleteStock(order);
     order
       .save()
       .then((savedOrder) => {
