@@ -41,6 +41,7 @@ router.get("/:idProduct", (req, res) => __awaiter(void 0, void 0, void 0, functi
                 categories: response.categories.map((item) => {
                     return {
                         name: item.name,
+                        id: item._id,
                     };
                 }),
             };

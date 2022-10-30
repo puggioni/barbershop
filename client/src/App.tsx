@@ -20,6 +20,7 @@ import OrdenDeCompra from "./components/carrito/OrdenDeCompra";
 import Confirmacion from "./components/carrito/Cofirmacion";
 import Cancelacion from "./components/carrito/Cancelacion";
 import CrearProducto from "./components/admin/CrearProducto";
+import EditarProducto from "./components/admin/EditarProducto";
 import HistorialCompra from "./components/admin/HistorialCompra";
 import MyAppointments from "./components/Reserve/MyAppointments";
 
@@ -59,12 +60,14 @@ function App() {
         {/*===================admin=================================*/}
         <Route path="/admin/products" element={<Productos />} />
         <Route path="/admin/users" element={<Users />} />
+        <Route path="/admin/products/editar-producto/:idProduct" element={<EditarProducto />} />
         <Route path="/admin/compras" element={<HistorialCompra />} />
         <Route path="/admin/users" element={<Users />} />
         <Route
           path="/admin/products/crear-producto"
           element={<CrearProducto />}
         />
+
         <Route path="/admin/users/historial" element={<HistorialCompra />} />
       </Routes>
     </div>

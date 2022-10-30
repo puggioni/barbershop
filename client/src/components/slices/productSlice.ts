@@ -13,7 +13,7 @@ export interface products {
   available?: boolean;
   favorite?: boolean;
   userFavorite?: boolean;
-  category?: Array<any>;
+  categories?: Array<any>;
   reviews?: Array<any>;
   __v?: number;
 }
