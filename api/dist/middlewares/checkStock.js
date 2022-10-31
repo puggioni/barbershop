@@ -15,22 +15,20 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.checkStock = void 0;
 const products_1 = __importDefault(require("../models/products"));
 const checkStock = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const { products } = req.body;
+    const { compra } = req.body;
     let error = 0;
-    products.reduce((acc, prod) => __awaiter(void 0, void 0, void 0, function* () {
-        const producto = yield products_1.default.findById(prod["productos"]["_id"]);
+    yield compra.reduce((acc, prod) => __awaiter(void 0, void 0, void 0, function* () {
+        const producto = yield products_1.default.findOne({ name: prod["name"] });
         if (prod["cantidad"] > producto.stock) {
             error++;
             return producto;
         }
     }), []);
-    setTimeout(function () {
-        if (error === 0) {
-            next();
-        }
-        else {
-            return res.status(500).send("No hay stock");
-        }
-    }, 1000);
+    if (error === 0) {
+        next();
+    }
+    else {
+        return res.status(500).send("No hay stock");
+    }
 });
 exports.checkStock = checkStock;

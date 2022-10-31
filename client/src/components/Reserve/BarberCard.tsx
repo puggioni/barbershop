@@ -12,10 +12,10 @@ interface barberCard {
 const BarberCard = (barber: barberCard) => {
 
   return (
-    <div className="h-86 border rounded-lg align-center p-3 my-2 border-black">
+    <div className="h-86 border rounded-lg align-center p-3 my-0 border-black">
 
       <img
-        className="h-48 w-48 object-cover bg-white  rounded-xl h-full m-auto mt-2"
+        className="h-48 w-48 object-cover bg-white  rounded-xl m-auto mt-2"
         src="https://web-ontime.com/wp-content/uploads/2020/02/19-min.jpg"
         alt="barber-image" />
 

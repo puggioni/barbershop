@@ -21,10 +21,11 @@ const addToFavoriteBulk_1 = __importDefault(require("./Products/addToFavoriteBul
 const signup_1 = __importDefault(require("./User/signup"));
 const signin_1 = __importDefault(require("./User/signin"));
 const changeToAdmin_1 = __importDefault(require("./User/changeToAdmin"));
-const auth_1 = require("../middlewares/auth");
 const changeToCommon_1 = __importDefault(require("./User/changeToCommon"));
 const banUser_1 = __importDefault(require("./User/banUser"));
 const desbanearUser_1 = __importDefault(require("./User/desbanearUser"));
+const getAllUsers_1 = __importDefault(require("./User/getAllUsers"));
+const getOneUser_1 = __importDefault(require("./User/getOneUser"));
 /* ============CATEGORIES============ */
 const postCategories_1 = __importDefault(require("./Categories/postCategories"));
 const deleteCategory_1 = __importDefault(require("./Categories/deleteCategory"));
@@ -37,6 +38,7 @@ const editReview_1 = __importDefault(require("./Reviews/editReview"));
 const postAppointment_1 = __importDefault(require("./Appointments/postAppointment"));
 const getAppontments_1 = __importDefault(require("./Appointments/getAppontments"));
 const deleteAppointment_1 = __importDefault(require("./Appointments/deleteAppointment"));
+const getAllAppointments_1 = __importDefault(require("./Appointments/getAllAppointments"));
 /* ============OFFICES============ */
 const postbarber_1 = __importDefault(require("./Barbers/postbarber"));
 const getbarbers_1 = __importDefault(require("./Barbers/getbarbers"));
@@ -48,7 +50,14 @@ const captureOrder_1 = __importDefault(require("./Payments/captureOrder"));
 const cancelOrder_1 = __importDefault(require("./Payments/cancelOrder"));
 const createOrder_1 = __importDefault(require("./Payments/createOrder"));
 /*============ORDERS=============*/
+const getOrder_1 = __importDefault(require("./Orders/getOrder"));
 const completeOrder_1 = __importDefault(require("./Orders/completeOrder"));
+const cancelOrders_1 = __importDefault(require("./Orders/cancelOrders"));
+const deleteAllOrders_1 = __importDefault(require("./Orders/deleteAllOrders"));
+const getUserOrders_1 = __importDefault(require("./Orders/getUserOrders"));
+const getPurchaseOrders_1 = __importDefault(require("./Orders/getPurchaseOrders"));
+const searchOrder_1 = __importDefault(require("./Orders/searchOrder"));
+const changeStateOrder_1 = __importDefault(require("./Orders/changeStateOrder"));
 const router = (0, express_1.Router)();
 /* ============PRODUCTS============ */
 router.use("/products", postProducts_1.default);
@@ -66,11 +75,13 @@ router.use("/products", addToFavoriteBulk_1.default);
 /* ============USERS============ */
 router.use("/users", signup_1.default);
 router.use("/users", signin_1.default);
-router.use("/users", auth_1.isAdmin);
+router.use("/users", getOneUser_1.default);
+// router.use("/users", isAdmin);
 router.use("/users", changeToAdmin_1.default);
 router.use("/users", changeToCommon_1.default);
 router.use("/users", banUser_1.default);
 router.use("/users", desbanearUser_1.default);
+router.use("/users", getAllUsers_1.default);
 /* ============CATEGORIES============ */
 router.use("/categories", postCategories_1.default);
 router.use("/categories", deleteCategory_1.default);
@@ -83,6 +94,7 @@ router.use("/reviews", editReview_1.default);
 router.use("/agenda/", postAppointment_1.default);
 router.use("/agenda/", deleteAppointment_1.default);
 router.use("/agenda/", getAppontments_1.default);
+router.use("/agenda/", getAllAppointments_1.default);
 /* ============OFFICES============ */
 router.use("/office/", postOffice_1.default);
 router.use("/office/", getOffices_1.default);
@@ -94,5 +106,12 @@ router.use("/payments", captureOrder_1.default);
 router.use("/payments", cancelOrder_1.default);
 router.use("/payments", createOrder_1.default);
 /*============ORDERS=============*/
+router.use("/orders", getPurchaseOrders_1.default);
+router.use("/orders", searchOrder_1.default);
+router.use("/orders", changeStateOrder_1.default);
+router.use("/orders", getOrder_1.default);
 router.use("/orders", completeOrder_1.default);
+router.use("/orders", cancelOrders_1.default);
+router.use("/orders", deleteAllOrders_1.default);
+router.use("/orders", getUserOrders_1.default);
 exports.default = router;

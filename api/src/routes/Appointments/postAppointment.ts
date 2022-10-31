@@ -7,7 +7,7 @@ const router = Router();
 
 router.post("/create", async (req, res) => {
     let { user, date, block, barber, office, service } = req.body;
-
+    block=parseInt(block)
     let todayDate = new Date();
     let todayDateString: string = todayDate.toISOString().split('T')[0];
 
@@ -24,15 +24,42 @@ router.post("/create", async (req, res) => {
     //check apmnt availability 
     else {
         try {
+            let block_str : string;
+            switch(block){
+                case 1:
+                    block_str = "8:00hs";
+                break;
+                case 2:
+                    block_str = "9:00hs";
+                break;
+                case 3:
+                    block_str = "10:00hs";
+                break;
+                case 4:
+                    block_str = "11:00hs";
+                break;
+                case 5:
+                    block_str = "14:00hs";
+                break;
+                case 6:
+                    block_str = "15:00hs";
+                break;
+                case 7:
+                    block_str = "16:00hs";
+                break;
+                case 8:
+                    block_str = "17:00hs";
+                break;
+            }
             const apmt = new Appointment({
                 user: user,
                 date: date,
-                block: block,
+                block: block_str,
                 barber: barber,
                 office: office,
                 service: service
             });
-            const existingApmnt = await Appointment.findOne({ date: date, block: block, barber: barber, office: office })
+            const existingApmnt = await Appointment.findOne({ date: date, block: block_str, barber: barber, office: office })
             if (existingApmnt === null) {
                 apmt.save()
                     .then(savedApmt => res.status(200).send(savedApmt))

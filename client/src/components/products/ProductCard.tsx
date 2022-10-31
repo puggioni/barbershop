@@ -15,10 +15,21 @@ import {
 
 const ProductCard = (producto: products) => {
   const added = (
-    <AiTwotoneHeart title="Quitar de Favoritos" size={25} fill="#be0027" />
+    <AiTwotoneHeart
+      className="cursor-pointer"
+      title="Quitar de Favoritos"
+      size={25}
+      fill="#be0027"
+    />
   );
 
-  const notAdded = <AiOutlineHeart title="Agregar a Favoritos" size={25} />;
+  const notAdded = (
+    <AiOutlineHeart
+      className="cursor-pointer"
+      title="Agregar a Favoritos"
+      size={25}
+    />
+  );
 
   const dispatch = useAppDispatch();
   function handleBookmark(e: any) {
@@ -68,7 +79,10 @@ const ProductCard = (producto: products) => {
 
       <h3>{producto.name.toUpperCase()}</h3>
 
-      <Link to={`/product/${producto._id}`} className="">
+      <Link
+        to={`/product/${producto._id}`}
+        className="py-4 underline underline-offset-2"
+      >
         DESCRIPCION
       </Link>
 

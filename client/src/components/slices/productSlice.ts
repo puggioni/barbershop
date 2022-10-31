@@ -13,7 +13,7 @@ export interface products {
   available?: boolean;
   favorite?: boolean;
   userFavorite?: boolean;
-  category?: Array<any>;
+  categories?: Array<any>;
   reviews?: Array<any>;
   __v?: number;
 }
@@ -72,7 +72,7 @@ export const addFavoriteProduct = (
     try {
       const res = await axios.post(
         `${process.env.REACT_APP_BASE_URL}/products/addFavorite`,
-        { product: { _id: idProduct }, user: { _id: IdUser } },
+        { productId: idProduct, userId: IdUser},
         { headers: { token: token } }
       );
       console.log(res.data);
@@ -231,17 +231,6 @@ export const clearProducDetail: any = () => {
   };
 };
 
-export const comprar = (compra: object) => {
-  return async () => {
-    const response: any = await axios.post(
-      `${process.env.REACT_APP_BASE_URL}/payments/create-order`,
-      compra
-    );
-
-    window.location.href = `${response.data.links[1].href}`;
-  };
-};
-//window.open(url, '_blank').focus();
 
 export const reviewProduct = (review: object, config: object): AppThunk => {
   return async (dispatch) => {

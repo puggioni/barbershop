@@ -4,9 +4,10 @@ import UserModel from "../../models/user";
 import RoleModel from "../../models/role";
 const router = Router();
 
-router.patch("/changeToAdmin/:id", isAdmin, async (req, res) => {
+router.patch("/changeToAdmin/:id",isAdmin,async (req, res) => {
   const { id } = req.params;
   const { role } = req.body;
+  console.log(role);
   try {
     const user: any = await UserModel.findById(id);
     const roleFound: Object = await RoleModel.findOne({ name: role });
@@ -14,6 +15,7 @@ router.patch("/changeToAdmin/:id", isAdmin, async (req, res) => {
     user.save();
     res.status(200).send("User updated");
   } catch (error) {
+    console.log(error);
     res.status(500).send({ error });
   }
 });

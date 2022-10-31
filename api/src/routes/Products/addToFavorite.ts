@@ -15,7 +15,7 @@ const router = Router();
        })
        .then(savedUser => 
          User.findById(savedUser._id).populate("favorites_products"))
-       .then(completeUser => res.send(completeUser));
+         .then(completeUser => res.send(completeUser.favorites_products));
      } catch (error) { 
        console.log(error);
        res.status(500).json({ message: "Error al agregar a favoritos" }); 

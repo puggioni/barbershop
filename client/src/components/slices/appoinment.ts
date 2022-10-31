@@ -27,20 +27,40 @@ type dataTurno = {
 
 //==========action=================
 
-export const postAppointment = (info: object): AppThunk => {
+export const postAppointment = (cita: object): AppThunk => {
   return async (dispatch) => {
     try {
       const turno: dataTurno = await axios.post(
         `${process.env.REACT_APP_BASE_URL}/agenda/create`,
-        info
+        cita
       );
-      // dispatch(appointmentCreate(turno.data));
+      console.log(turno.data)
       alert("Turno registrado con exito");
     } catch (error: any) {
+      alert(error.response.data.error);
       if (error.response.status === 400) {
         alert("Error en la información");
       }
     }
+  };
+};
+export const getAppointments = (idUser: string): AppThunk=> {
+  return async (dispatch) => {
+    try {
+      const turnos = await axios.get(
+        `${process.env.REACT_APP_BASE_URL}/agenda/all/${idUser}`
+      );
+      dispatch(MyAppointment(turnos.data))
+    }catch (error) {return error}
+  }
+}
+export const deleteAppointment = (idAppointment: string): AppThunk => {
+  return async (dispatch) => {
+    const res = await axios.delete(
+      `${process.env.REACT_APP_BASE_URL}/agenda/delete/${idAppointment}`,
+      { }
+    );
+    dispatch(deleteTurnos(res));
   };
 };
 
@@ -53,8 +73,19 @@ export const allAppointments = createSlice({
       state.allAppointments = action.payload;
       state.loading = false;
     },
+    MyAppointment: (state, action: PayloadAction<appointmentData[]>) => {
+      state.allAppointments = action.payload;
+      state.loading = false;
+    },
+    deleteTurnos: (state: any, action: PayloadAction<any>) => {
+      state.allAppointments = action.payload;
+      const deleted = state.allAppointments.filter((appo: { _id: string }) => {
+        return action.payload.data._id !== appo._id;
+      });
+      state.allAppointments = deleted;
+    }, 
   },
 });
 
 export default allAppointments.reducer;
-export const { appointmentCreate } = allAppointments.actions;
+export const { appointmentCreate, MyAppointment, deleteTurnos } = allAppointments.actions;

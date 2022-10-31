@@ -1,23 +1,21 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { BsPlus } from "react-icons/bs";
 import { HiMinus } from "react-icons/hi";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { RootState } from "../../app/store";
 import Paginate from "./Paginate";
-import { categorias, fetchAllProducts,getFavoritesProducts,setFavosBulk,setFavorites} from "../slices/productSlice";
+import {
+  categorias,
+  fetchAllProducts,
+  getFavoritesProducts,
+  setFavosBulk,
+  setFavorites,
+} from "../slices/productSlice";
 import { OrderingByName, OrderingByPrice } from "../products/Order";
 import Categorias from "./FilterCategorias";
 import ProductCard from "./ProductCard";
 import SearchBar from "./Searchbar";
 
-interface prodCard {
-  _id: string;
-  name: string;
-  image: string;
-  price: number;
-  rating?: number;
-  available?: boolean;
-}
 const Products = () => {
   const dispatch = useAppDispatch();
 
@@ -30,41 +28,36 @@ const Products = () => {
   const { favs } = useAppSelector((state: RootState) => state.products);
   const favoritos = JSON.stringify(favs);
 
-  const inicializar = useCallback(async () => {
-    dispatch(fetchAllProducts(""));
-    dispatch(categorias());
+  const cargarFavs = () => {
+    const aux = window.localStorage.getItem("user");
+    const aux2 = window.localStorage.getItem("token");
+    const aux3 = window.localStorage.getItem("favoritos");
 
-  }, [dispatch]);
+    if (aux && aux2 && aux3) {
+      // esta parte es para traerse los favoritos si el usuario se logueo
+      const user = JSON.parse(aux);
+      const token = JSON.parse(aux2);
+      const favos = JSON.parse(aux3);
+      const arrayIdsfavos = favos.map((p: any) => p._id);
 
-  const  cargarFavs=()=>{
-    const aux=window.localStorage.getItem("user");
-    const aux2=window.localStorage.getItem("token");
-    const aux3=window.localStorage.getItem("favoritos");
-
-    if(aux && aux2 && aux3){   // esta parte es para traerse los favoritos si el usuario se logueo
-     const user=JSON.parse(aux);
-     const token=JSON.parse(aux2);
-     const favos=JSON.parse(aux3);
-     const arrayIdsfavos=favos.map((p:any)=>(p._id));
-
-  window.localStorage.removeItem('favoritos');
-  dispatch(setFavosBulk(user._id,token, arrayIdsfavos));
-   
-  }else if(aux && aux2 ){
-      const user=JSON.parse(aux);
-      const token=JSON.parse(aux2);
-     dispatch(getFavoritesProducts(user._id,token));
-    
-  }else if(aux3){
-    const favos=JSON.parse(aux3)
-    dispatch(setFavorites(favos))
-  }
-  }
+      window.localStorage.removeItem("favoritos");
+      dispatch(setFavosBulk(user._id, token, arrayIdsfavos));
+    } else if (aux && aux2) {
+      const user = JSON.parse(aux);
+      const token = JSON.parse(aux2);
+      dispatch(getFavoritesProducts(user._id, token));
+    } else if (aux3) {
+      const favos = JSON.parse(aux3);
+      dispatch(setFavorites(favos));
+    }
+  };
 
   useEffect(() => {
-    inicializar();
+    dispatch(fetchAllProducts(""));
+    dispatch(categorias());
     cargarFavs();
-  }, [inicializar]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const data = useAppSelector((state: RootState) => state.products);
 
@@ -77,7 +70,6 @@ const Products = () => {
       firstPostIndex,
       lastPostIndex
     );
-    
 
     return (
       <div className=" bg-white bg-store-banner bg-no-repeat pt-52 pb-8 bg-contain">

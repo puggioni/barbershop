@@ -26,7 +26,7 @@ router.post("/addFavorite", auth_1.verifyToken, (req, res) => __awaiter(void 0, 
             return user.save();
         })
             .then(savedUser => user_1.default.findById(savedUser._id).populate("favorites_products"))
-            .then(completeUser => res.send(completeUser));
+            .then(completeUser => res.send(completeUser.favorites_products));
     }
     catch (error) {
         console.log(error);
