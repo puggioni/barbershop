@@ -7,6 +7,7 @@ import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { RootState } from "../../app/store";
 import Paginate from "../products/Paginate";
 import SearchBar from "../products/Searchbar";
+import { Link } from "react-router-dom";
 import { yaLog } from "../slices/logIn";
 import {
   deleteProd,
@@ -86,9 +87,9 @@ const Productos = () => {
     e.preventDefault();
   };
 
-  const handleEditProd = (e: any, id: string) => {
-    e.preventDefault();
-  };
+  // const handleEditProd = (e: any, id: string) => {
+  //   e.preventDefault();
+  // };
 
   const handleDelProd = (e: any, id: string) => {
     e.preventDefault();
@@ -184,13 +185,15 @@ const Productos = () => {
                         handleEditHistory(e, data._id);
                       }}
                     />
+                    <Link to={`editar-producto/${data._id}`} > 
                     <FaEdit
                       className="justify-self-center cursor-pointer "
                       title="Editar producto"
-                      onClick={(e) => {
-                        handleEditProd(e, data._id);
-                      }}
-                    />
+                      // onClick={(e) => {
+                      //   handleEditProd(e, data._id);
+                      // }}
+                    />  
+                    </Link>
                     <FaTrashAlt
                       className="justify-self-center cursor-pointer "
                       title="Eliminar producto"

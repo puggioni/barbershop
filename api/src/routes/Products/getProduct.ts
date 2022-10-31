@@ -30,6 +30,7 @@ router.get("/:idProduct", async (req, res) => {
           categories: response.categories.map((item) => {
             return {
               name: item.name,
+              id: item._id,
             };
           }),
         };

@@ -72,6 +72,33 @@ export const createProd = (header: object, data: any, img: any): AppThunk => {
   };
 };
 
+export const editProd = (header: object, data: any, img: any, idProduct:string): AppThunk => {
+  return async () => {
+    try {
+      const newProd = new FormData();
+      newProd.append("name", data.nombre);
+      newProd.append("price", data.precio);
+      newProd.append("stock", data.stock);
+      newProd.append("description", data.descripcion);
+      newProd.append("categories",JSON.stringify(data.categorias));
+      img.length!==0 ? newProd.append("image", img[0]):newProd.append("image","")
+
+      const res=await axios.put(
+        `${process.env.REACT_APP_BASE_URL}/products/edit/${idProduct}`,
+        newProd,  {
+          headers: header,
+        }
+      );
+      if(res.status==200){
+        alert("Producto editado correctamente")
+        window.location.pathname = "admin/products";
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
 export const getUsers = (header: any): AppThunk => {
   return async (dispatch) => {
     try {

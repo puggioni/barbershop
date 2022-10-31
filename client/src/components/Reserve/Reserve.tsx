@@ -56,6 +56,11 @@ const Reserve = () => {
     }
   };
 
+  const putDate = (date:Date) => {
+   setDate(date)
+   setTurno({...turno,date:date})
+  };
+
   const selectBarber = (e: any, barber: any) => {
     e.preventDefault();
     setTurno({ ...turno, barber: barber._id });
@@ -66,6 +71,7 @@ const Reserve = () => {
     if (!turno.barber || !turno.block || !turno.service || !turno.office) {
       alert("Por favor asegurate de completar todos los campos");
     } else {
+      
       dispatch(postAppointment(turno));
       setTurno(initialTurn);
       setDate(new Date(Date.now()));
@@ -190,7 +196,7 @@ const Reserve = () => {
                       onChange={(val: Date) =>
                         val.getDay() === 6 || val.getDay() === 0
                           ? alert("Sin turnos para sabados y domingos")
-                          : setDate(val)
+                          : putDate(val)
                       }
                       value={date}
                     />
