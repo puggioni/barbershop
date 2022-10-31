@@ -6,10 +6,10 @@ dotenv.config();
 
 const router = Router();
 
-router.get("/pwdRst/sendEmail/:idUsr", async (req, res) => {
-  const { idUsr } = req.params;
+router.get("/pwdRst/sendEmail/:usrEmail", async (req, res) => {
+  const { usrEmail } = req.params;
   try {
-    User.findById(idUsr)
+    User.findOne({email: usrEmail})
       .then(user => {
         const options = {
           method: 'post',
@@ -34,7 +34,7 @@ router.get("/pwdRst/sendEmail/:idUsr", async (req, res) => {
                   <p>Un reseteo de contraseña fue pedido para esta cuenta,</p>
                   <p>si fue asi hace click en el siguiente boton, sino ignora este email.</p>
                   <p>
-                  <button type="button"><a href="${process.env.CLIENT_URL}/passwordReset/${idUsr}">Reset Password</a></button>
+                  <button type="button"><a href="${process.env.CLIENT_URL}/passwordReset/${user._id}">Reset Password</a></button>
                   </p>
                 </body>
             </html>`

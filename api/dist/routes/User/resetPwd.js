@@ -41,10 +41,10 @@ const dotenv = __importStar(require("dotenv"));
 const axios_1 = __importDefault(require("axios"));
 dotenv.config();
 const router = (0, express_1.Router)();
-router.get("/pwdRst/sendEmail/:idUsr", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { idUsr } = req.params;
+router.get("/pwdRst/sendEmail/:usrEmail", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { usrEmail } = req.params;
     try {
-        user_1.default.findById(idUsr)
+        user_1.default.findOne({ email: usrEmail })
             .then(user => {
             const options = {
                 method: 'post',
@@ -68,7 +68,7 @@ router.get("/pwdRst/sendEmail/:idUsr", (req, res) => __awaiter(void 0, void 0, v
                   <p>Un reseteo de contraseña fue pedido para esta cuenta,</p>
                   <p>si fue asi hace click en el siguiente boton, sino ignora este email.</p>
                   <p>
-                  <button type="button"><a href="${process.env.CLIENT_URL}/passwordReset/${idUsr}">Reset Password</a></button>
+                  <button type="button"><a href="${process.env.CLIENT_URL}/passwordReset/${user._id}">Reset Password</a></button>
                   </p>
                 </body>
             </html>`
