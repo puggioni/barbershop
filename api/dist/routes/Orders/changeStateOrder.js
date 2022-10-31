@@ -19,7 +19,7 @@ router.patch("/editorder", (req, res) => __awaiter(void 0, void 0, void 0, funct
     const { id, state } = req.query;
     try {
         const order = yield purchaseOrder_1.default.findById(id);
-        state ? (order.state = `${state}`) : "";
+        state ? (order.state = `${state}`) : "creada";
         yield order.save();
         res.status(200).send(order);
     }
