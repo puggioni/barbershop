@@ -20,7 +20,9 @@ router.patch("/banear/:id", auth_1.isAdmin, (req, res) => __awaiter(void 0, void
     const { id } = req.params;
     try {
         const user = yield user_1.default.findById(id);
-        user["banned"] = true;
+        user["banned"] === true
+            ? (user["banned"] = false)
+            : (user["banned"] = true);
         user.save();
         res.status(200).send("User updated");
     }

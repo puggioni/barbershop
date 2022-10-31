@@ -24,7 +24,6 @@ router.patch("/changeToCommon/:id", auth_1.isAdmin, (req, res) => __awaiter(void
         const user = yield user_1.default.findById(id);
         const roleFound = yield role_1.default.findOne({ name: role });
         user["role"][0] = roleFound["_id"];
-        console.log("🚀 ~ file: changeToCommon.ts ~ line 14 ~ router.patch ~ user", user);
         user.save();
         res.status(200).send("User updated");
     }

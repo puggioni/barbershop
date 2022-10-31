@@ -1,24 +1,38 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { RiArrowGoBackFill } from "react-icons/ri";
 import { useNavigate } from "react-router";
-
+import { useParams } from "react-router";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { confirmOrders } from "../slices/purchaseOrder";
 const Cofirmacion = () => {
-  useEffect(() => {
-    return window.localStorage.removeItem("product");
-  }, []);
-  let total = 0;
-  let id = "id";
-  const navigate = useNavigate();
-  const carrito = JSON.parse(window.localStorage.getItem("product") || "{}");
-  if (Object.keys(carrito).length) {
-    total = carrito.reduce(
-      (acc: number, prod: { productos: { price: number } }) => {
-        return acc + prod.productos.price;
-      },
-      0
-    );
-  }
+  let loading = true;
+  // const { loading } = useAppSelector((state) => state.orders);
+  const dispatch = useAppDispatch();
 
+  const { purchaseOrder } = useAppSelector((state) => state.orders);
+  const { idOrder } = useParams<{ idOrder: string }>();
+  useEffect(() => {
+    if (loading) {
+      console.log("entra");
+      dispatch(confirmOrders(idOrder));
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      loading = false;
+    }
+    return window.localStorage.removeItem("product");
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  let total = 0;
+
+  const navigate = useNavigate();
+
+  if (purchaseOrder?.products?.length) {
+    total = purchaseOrder.products.reduce((acc: number, prod) => {
+      return acc + prod.price;
+    }, 0);
+  }
+  total = Math.floor(total * 100) / 100;
   return (
     <div className="h-full bg-white">
       <div className="bg-[#B1A26A] py-20 border-black"></div>
@@ -29,7 +43,7 @@ const Cofirmacion = () => {
 
         <div className="border border-black m-8 ">
           <div className="grid grid-cols-[1fr_2fr] my-16 gap-4">
-            <div className="justify-self-center">{id}</div>
+            <div className="justify-self-center">id: {idOrder}</div>
             <div className="border-l border-black pl-16  grid gap-4">
               <div className="grid grid-cols-[2fr_1fr_1fr_1fr] pb-4">
                 <p>nombre</p>
@@ -37,14 +51,14 @@ const Cofirmacion = () => {
                 <p>cantidad</p>
                 <p>total</p>
               </div>
-              {Object.keys(carrito).length &&
-                carrito.map((prod: any) => {
-                  const total = prod.productos.price * prod.cantidad;
+              {purchaseOrder?.products?.length &&
+                purchaseOrder.products.map((prod: any) => {
+                  const total = prod.price * prod.quantity;
                   return (
                     <div className="grid grid-cols-[2fr_1fr_1fr_1fr]">
-                      <p>{prod.productos.name}</p>
-                      <p>{prod.productos.price}</p>
-                      <p>{prod.cantidad}</p>
+                      <p>{prod.name}</p>
+                      <p>{prod.price}</p>
+                      <p>{prod.quantity}</p>
                       <p>{total}</p>
                     </div>
                   );

@@ -1,11 +1,14 @@
-import { useCallback, useEffect, useState } from "react";
+import {  useEffect, useState } from "react";
 import { BsArrowCounterclockwise, BsCreditCardFill } from "react-icons/bs";
 import { FaEdit, FaTrashAlt } from "react-icons/fa";
+import { useNavigate } from "react-router";
 import useHeaders from "../../app/header";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { RootState } from "../../app/store";
 import Paginate from "../products/Paginate";
 import SearchBar from "../products/Searchbar";
+import { Link } from "react-router-dom";
+import { yaLog } from "../slices/logIn";
 import {
   deleteProd,
   orderByDisponible,
@@ -25,18 +28,21 @@ const Productos = () => {
   const data = useAppSelector((state: RootState) => state.products);
   const cate = useAppSelector((state) => state.products.categorias);
   const token = JSON.parse(window.localStorage.getItem("token") || "{}");
+  const user = JSON.parse(window.localStorage.getItem("user") || "{}");
 
+  const navigate = useNavigate();
   const header = useHeaders(token);
 
   //============use effect=================
-  const inicializar = useCallback(() => {
-    dispatch(fetchAllProducts(""));
-    dispatch(categorias());
-  }, [dispatch]);
 
   useEffect(() => {
-    inicializar();
-  }, [inicializar]);
+    dispatch(fetchAllProducts(""));
+    dispatch(categorias());
+    if (Object.keys(user).length) {
+      dispatch(yaLog(user.email));
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   //===========pagination=============
   const currentProducts = data.allProducts?.slice(
@@ -78,9 +84,9 @@ const Productos = () => {
     e.preventDefault();
   };
 
-  const handleEditProd = (e: any, id: string) => {
-    e.preventDefault();
-  };
+  // const handleEditProd = (e: any, id: string) => {
+  //   e.preventDefault();
+  // };
 
   const handleDelProd = (e: any, id: string) => {
     e.preventDefault();
@@ -90,7 +96,7 @@ const Productos = () => {
   //==============render================================
   if (data?.allProducts instanceof Array) {
     return (
-      <div className="bg-white bg-admin-banner bg-no-repeat bg-contain h-full">
+      <div className=" bg-white bg-admin-banner bg-no-repeat bg-contain h-full">
         <h1 className="text-white justify-center py-20 mb-2 text-5xl font-bold flex align-middle items-center">
           PANEL DE PRODUCTOS
         </h1>
@@ -130,7 +136,8 @@ const Productos = () => {
                 <BsArrowCounterclockwise
                   onClick={(e) => handleRestore(e)}
                   size={30}
-                  title="restore products cursor-pointer"
+                  title="restaurar productos"
+                  className="cursor-pointer"
                 />
               </div>
 
@@ -138,7 +145,10 @@ const Productos = () => {
                 <button className="bg-[#855C20] mr-4 py-2 px-2 text-white rounded-lg font-semibold">
                   CREAR CATEGORIO
                 </button>
-                <button className="bg-[#855C20] py-2 px-2 text-white rounded-lg font-semibold">
+                <button
+                  onClick={() => navigate("/admin/products/crear-producto")}
+                  className="bg-[#855C20] py-2 px-2 text-white rounded-lg font-semibold"
+                >
                   CREAR PRODUCTO
                 </button>
               </div>
@@ -172,13 +182,15 @@ const Productos = () => {
                         handleEditHistory(e, data._id);
                       }}
                     />
+                    <Link to={`editar-producto/${data._id}`} > 
                     <FaEdit
                       className="justify-self-center cursor-pointer "
                       title="Editar producto"
-                      onClick={(e) => {
-                        handleEditProd(e, data._id);
-                      }}
-                    />
+                      // onClick={(e) => {
+                      //   handleEditProd(e, data._id);
+                      // }}
+                    />  
+                    </Link>
                     <FaTrashAlt
                       className="justify-self-center cursor-pointer "
                       title="Eliminar producto"

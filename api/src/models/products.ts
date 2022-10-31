@@ -57,6 +57,7 @@ const productSchema = new Schema(
     },
     available: {
       type: Boolean,
+      required: true,
     },
     favorite: {
       type: Boolean,

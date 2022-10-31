@@ -3,8 +3,10 @@ import axios from "axios";
 import { AppThunk } from "../../app/store";
 
 export interface office {
+  _id:string;
   lat: number;
   long: number;
+  location: string;
 }
 
 interface BarberState {

@@ -7,7 +7,7 @@ const appointmentSchema = new mongoose_1.Schema({
         type: Date,
         required: true, //la validacion de fecha se hace en la ruta
     },
-    block: { required: true, type: Number, min: 1, max: 8 },
+    block: { required: true, type: String },
     barber: { type: mongoose_1.Types.ObjectId, ref: 'Barber' },
     office: { type: mongoose_1.Types.ObjectId, ref: 'Office' },
     service: [String]

@@ -1,8 +1,10 @@
-import { useReducer } from "react";
+import { useEffect, useReducer } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../../app/hooks";
-import { comprar } from "../slices/productSlice";
+import { comprar } from "../slices/purchaseOrder";
 import CardCart from "./CardCart";
+import useHeaders from "../../app/header";
+import { yaLog } from "../slices/logIn";
 
 const Compra = () => {
   const [, forceUpdate] = useReducer((x) => x + 1, 0);
@@ -11,7 +13,8 @@ const Compra = () => {
     window.localStorage.getItem("product") || "[]"
   );
   const user: any = JSON.parse(window.localStorage.getItem("user") || "[]");
-
+  const token = JSON.parse(window.localStorage.getItem("token") || "{}");
+  const header = useHeaders(token);
   const cantidadTotal = products.reduce(
     (acc: number, prod: { cantidad: number }) => {
       return acc + prod.cantidad;
@@ -27,9 +30,14 @@ const Compra = () => {
     return {
       price: productos.productos.price,
       cantidad: productos.cantidad,
-      id: productos.productos._id,
+      name: productos.productos.name,
     };
   });
+
+  useEffect(() => {
+    dispatch(yaLog(user.email));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const laCompra = {
     user: {
@@ -41,7 +49,7 @@ const Compra = () => {
 
   const handleCompra = (e: any) => {
     e.preventDefault();
-    dispatch(comprar(laCompra));
+    dispatch(comprar(header.headers, laCompra));
   };
 
   return (

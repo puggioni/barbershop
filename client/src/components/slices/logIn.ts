@@ -30,11 +30,16 @@ export const logIn = (email: string, password: string): AppThunk => {
           password,
         }
       );
-      dispatch(userLogIn(res.data));
+      if (res.data.banned) {
+        alert("Baneado");
+      } else {
+        dispatch(userLogIn(res.data));
+      }
     } catch (error: any) {
       if (error.response.status === 400) {
-        alert("La cuenta no existe");
-        window.location.pathname = "/user/create";
+        alert("Su cuenta fue baneada");
+      } else if (error.response.status === 401) {
+        alert("Contraseña invalida");
       }
     }
   };
@@ -45,9 +50,19 @@ export const logOut = () => {
     dispatch(userLogOut());
   };
 };
-export const yaLog = () => {
-  return (dispatch: any) => {
-    dispatch(yaLogeado());
+export const yaLog = (email: string) => {
+  return async (dispatch: any) => {
+    const res = await axios(
+      `${process.env.REACT_APP_BASE_URL}/users/one-user?name=${email}`
+    );
+    console.log(res.data[0].banned);
+    if (res.data[0].banned) {
+      alert("Su cuenta fue baneada");
+      dispatch(userLogOut());
+      window.location.pathname = "/user/login";
+    } else {
+      dispatch(yaLogeado());
+    }
   };
 };
 
@@ -80,7 +95,6 @@ export const logInReducerSlice = createSlice({
 
       state.userFound = action.payload.user;
       localStorage.setItem("user", JSON.stringify(action.payload.user));
-
       state.logeado = true;
     },
 
