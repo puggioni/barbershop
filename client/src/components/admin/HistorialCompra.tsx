@@ -25,16 +25,19 @@ const HistorialCompra = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  //=================pagination=======================
+  //=================pagination=======================//
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [productsPerPage] = useState(15);
+  const [pageLimit, setPageLimit] = useState(5);
+  const [maxPageNumberLimit, setMaxPageNumberLimit] = useState(5);
+  const [minPageNumberLimit, setMinPageNumberLimit] = useState(0);
   const lastPostIndex = currentPage * productsPerPage;
   const firstPostIndex = lastPostIndex - productsPerPage;
   const currentProducts = ordenes.length
     ? ordenes?.slice(firstPostIndex, lastPostIndex)
     : [];
 
-  //===============handlers===========================
+  //===============handlers===========================//
 
   const handleRestore = () => {
     dispatch(getAllOrders(header.headers));
@@ -170,6 +173,12 @@ const HistorialCompra = () => {
             allProducts={ordenes.length}
             productsPerPage={productsPerPage}
             setCurrentPage={setCurrentPage}
+            currentPage={currentPage}
+            pageLimit={pageLimit}
+            maxPageNumberLimit={maxPageNumberLimit}
+            minPageNumberLimit={minPageNumberLimit}
+            setMaxPageNumberLimit={setMaxPageNumberLimit}
+            setMinPageNumberLimit={setMinPageNumberLimit}
           />
         </div>
       </div>
