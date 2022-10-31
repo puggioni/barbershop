@@ -253,6 +253,43 @@ export const filterOrderState = (value: string): AppThunk => {
     dispatch(filterOrders(value));
   };
 };
+
+export const createCate = (
+  header: { token: string | null },
+  name: string
+): AppThunk => {
+  return async () => {
+    try {
+      await axios.post(
+        `${process.env.REACT_APP_BASE_URL}/categories/create`,
+        { name: name },
+        { headers: header }
+      );
+      alert("Categoria creada con exito");
+    } catch (error) {
+      alert("No se pudo crear la categoria");
+    }
+  };
+};
+
+export const borrarCate = (
+  header: { token: string | null },
+  id: string
+): AppThunk => {
+  return async () => {
+    try {
+      await axios.delete(
+        `${process.env.REACT_APP_BASE_URL}/categories/delete?id=${id}`,
+        { headers: header }
+      );
+
+      alert("Categoria borrada con exito");
+    } catch (error) {
+      alert("No se pudo crear la categoria");
+    }
+  };
+};
+
 //================reducer===================
 const adminReducerSlice = createSlice({
   name: "admin",
