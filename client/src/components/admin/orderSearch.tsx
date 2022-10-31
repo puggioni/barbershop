@@ -1,40 +1,49 @@
 import { useState } from "react";
 import { BsSearch } from "react-icons/bs";
+import useHeaders from "../../app/header";
 import { useAppDispatch } from "../../app/hooks";
 import { searchOrderId, searchOrderName } from "../slices/admin";
 
-const UserSearch = (searchBy: string) => {
+const OrderSearch = ({ searchBy }: any) => {
   const [searchParam, setSearchParam] = useState("");
   const dispatch = useAppDispatch();
+  const token = JSON.parse(window.localStorage.getItem("token") || "{}");
+  const header = useHeaders(token);
 
-  function search(e: any) {
+  //===================handlers============
+  const search = (e: any) => {
     e.preventDefault();
-    if (searchParam.length && searchBy === "name") {
-      dispatch(searchOrderName(searchParam));
+    if (searchParam.length) {
+      if (searchBy === "name") {
+        dispatch(searchOrderName(searchParam));
+      } else {
+        dispatch(searchOrderId(header.headers, searchParam));
+      }
       setSearchParam("");
-    } else {
-      dispatch(searchOrderId(searchParam));
     }
-  }
+  };
+  const handleChange = (e: { target: { value: string; name: string } }) => {
+    if (e.target.name === "searchParam") {
+      setSearchParam(e.target.value);
+    }
+  };
 
-  function handleChange(e: { target: { value: string; name: string } }) {
-    if (e.target.name === "searchParam") setSearchParam(e.target.value);
-  }
-
+  //=================render=================
   return (
-    <div className="relative w-3/4 mx-8">
+    <div className="relative w-[25%] mx-8 ">
       <input
         onChange={handleChange}
         name="searchParam"
-        className="border border-black rounded-md w-full pl-2 "
+        className="border border-black rounded-md w-full h-12 pl-2 outline-none"
         value={searchParam}
         type="text"
         placeholder="Search"
       />
 
       <BsSearch
-        className="absolute  top-1 right-1 cursor-pointer"
+        className="absolute  top-3 right-1 cursor-pointer"
         stroke="currentColor"
+        size={20}
         onClick={(event) => {
           search(event);
         }}
@@ -43,4 +52,4 @@ const UserSearch = (searchBy: string) => {
   );
 };
 
-export default UserSearch;
+export default OrderSearch;
