@@ -55,7 +55,6 @@ export const yaLog = (email: string) => {
     const res = await axios(
       `${process.env.REACT_APP_BASE_URL}/users/one-user?name=${email}`
     );
-    console.log(res.data[0].banned);
     if (res.data[0].banned) {
       alert("Su cuenta fue baneada");
       dispatch(userLogOut());
