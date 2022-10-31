@@ -20,7 +20,6 @@ router.get("/search-order", (req, res) => __awaiter(void 0, void 0, void 0, func
     const { name } = req.query;
     try {
         if (mongoose_1.default.isValidObjectId(name)) {
-            console.log("ENTRE");
             const orders = yield purchaseOrder_1.default.findById(name);
             res.status(200).send(orders);
         }

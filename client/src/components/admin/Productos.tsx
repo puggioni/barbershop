@@ -1,4 +1,4 @@
-import {  useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { BsArrowCounterclockwise, BsCreditCardFill } from "react-icons/bs";
 import { FaEdit, FaTrashAlt } from "react-icons/fa";
 import { useNavigate } from "react-router";
@@ -40,7 +40,7 @@ const Productos = () => {
     if (Object.keys(user).length) {
       dispatch(yaLog(user.email));
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   //===========pagination=============
@@ -48,6 +48,9 @@ const Productos = () => {
     firstPostIndex,
     lastPostIndex
   );
+  const [pageLimit, setPageLimit] = useState(5);
+  const [maxPageNumberLimit, setMaxPageNumberLimit] = useState(5);
+  const [minPageNumberLimit, setMinPageNumberLimit] = useState(0);
 
   //=====================click handlers=====================
   const handleCateFilter = (event: any) => {
@@ -203,6 +206,12 @@ const Productos = () => {
               allProducts={data.allProducts.length}
               productsPerPage={productsPerPage}
               setCurrentPage={setCurrentPage}
+              currentPage={currentPage}
+              pageLimit={pageLimit}
+              maxPageNumberLimit={maxPageNumberLimit}
+              minPageNumberLimit={minPageNumberLimit}
+              setMaxPageNumberLimit={setMaxPageNumberLimit}
+              setMinPageNumberLimit={setMinPageNumberLimit}
             />
           </div>
         </div>
