@@ -8,13 +8,17 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.uploadImage = void 0;
 const cloudinary_1 = require("cloudinary");
+const config_1 = __importDefault(require("./config"));
 cloudinary_1.v2.config({
-    cloud_name: `${process.env.CLOUDINARY_NAME}`,
-    api_key: `${process.env.CLOUDINARY_API_KEY}`,
-    api_secret: `${process.env.CLOUDINARY_API_SECRET}`,
+    cloud_name: `${config_1.default.cloud_name}`,
+    api_key: `${config_1.default.api_key}`,
+    api_secret: `${config_1.default.api_secret}`,
     secure: true,
 });
 function uploadImage(fliePath) {
