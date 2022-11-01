@@ -23,8 +23,10 @@ import CrearProducto from "./components/admin/CrearProducto";
 import EditarProducto from "./components/admin/EditarProducto";
 import HistorialCompra from "./components/admin/HistorialCompra";
 import MyAppointments from "./components/Reserve/MyAppointments";
+import AboutUs from "./components/AboutUs";
 import CrearCategoria from "./components/admin/CrearCategorias";
 import BorrarCategoria from "./components/admin/BorrarCategoria";
+
 
 export const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
@@ -76,14 +78,11 @@ function App() {
         <Route path="/admin/users" element={<Users />} />
 
         <Route path="/admin/users" element={<Users />} />
-        <Route
-          path="/admin/products/crear-producto"
-          element={<CrearProducto />}
-        />
-
+        <Route path="/admin/products/crear-producto" element={<CrearProducto />}/>
         <Route path="/admin/users/historial" element={<HistorialCompra />} />
-
         <Route path="/admin/compras" element={<HistorialCompra />} />
+        {/*  ======================About Us============================  */}
+        <Route path="/contacto" element={<AboutUs/>} />
       </Routes>
     </div>
   );
