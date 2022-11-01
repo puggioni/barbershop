@@ -375,11 +375,10 @@ const adminReducerSlice = createSlice({
       state.filtroOrden[index] = action.payload;
     },
     searchOrdersId: (
-      state: { orders: any[]; filtroOrden: any[] },
+      state: { orders: any[] },
       action: PayloadAction<any[]>
     ) => {
       state.orders = [action.payload];
-      state.filtroOrden = action.payload;
     },
     searchOrdersName: (
       state: { orders: any[]; filtroOrden: any[] },
