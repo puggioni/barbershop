@@ -79,13 +79,13 @@ const Reserve = () => {
   };
 
   return (
-    <div className=" bg-white bg-store-banner justify-center bg-no-repeat pt-32 pb-8">
+    <div className="bg-white bg-turnos-banner bg-no-repeat pt-32 pb-20 bg-contain">
       {turno.user ? (
         <>
           <h2 className="flex justify-center my-auto text-5xl text-white mb-12">
             PEDI TU TURNO
           </h2>
-          <div className="border bg-white border-black rounded-xl mx-40 my-auto">
+          <div className="border bg-white border-black rounded-xl py-10 mx-40 my-auto">
             <form
               onChange={(e) => handleFormTurn(e)}
               className="flex items-center place-content-baseline text-black"
@@ -156,7 +156,7 @@ const Reserve = () => {
                   </select>
                 </div>
               </div>
-              <div className="text-center my-auto text-2xl text-black">
+              <div className="text-center my-auto mr-10 text-2xl text-black">
                 {" "}
                 SELECCIONE UN BARBER@
                 <div className="grid grid-cols-2  gap-4 m-10 mb-5">
@@ -182,7 +182,7 @@ const Reserve = () => {
                   )}
                 </div>
               </div>
-              <div className=" justify-center inline-block min mr-12  grow border-l border-black pl-10">
+              <div className=" justify-center inline-block min mr-12 pt-5 grow border-l border-black pl-10">
                 <div className=" justify-center inline-block min  grow">
                   <h2 className="flex justify-center my-auto text-2xl text-black">
                     {" "}
@@ -232,7 +232,7 @@ const Reserve = () => {
                 <br />
                 <Link to="/reserve/barber">
                   <button
-                    className={`${buttonHover} px-4 py-1 rounded-lg m-auto mt-10 border-b mb-3 border-black`}
+                    className={`${buttonHover} px-4 py-1 rounded-lg m-auto mt-5 border-b mb-3 border-black`}
                   >
                     MIS TURNOS
                   </button>
@@ -242,9 +242,10 @@ const Reserve = () => {
           </div>
         </>
       ) : (
-        <div className="text-white">
-          Necesitas Iniciar sesión para solicitar un Turno
-        </div>
+          <div className="border h-86 bg-white border-black rounded-xl py-10 mx-40 my-auto">
+           <h2 className="text-center text-xl text-red-500 font-bold">*Necesitas iniciar sesión para solicitar un Turno*</h2>
+        </div>  
+        
       )}
     </div>
   );
