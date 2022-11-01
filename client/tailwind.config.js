@@ -30,6 +30,7 @@ module.exports = {
         "favorites-banner": "url('/src/imagenes/favorites.jpg')",
         "sucursales-banner": "url('/src/imagenes/sucursales-banner.jpg')",
         "turnos-banner": "url('/src/imagenes/turnos-banner.jpg')"
+
       },
     },
 

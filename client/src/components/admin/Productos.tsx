@@ -149,7 +149,9 @@ const Productos = () => {
                   onClick={() => navigate("/admin/products/crear-categoria")}
                   className="bg-[#855C20] mr-4 py-2 px-2 text-white rounded-lg font-semibold"
                 >
+
                   CATEGORIA
+
                 </button>
                 <button
                   onClick={() => navigate("/admin/products/crear-producto")}
