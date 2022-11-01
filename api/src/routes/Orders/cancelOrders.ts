@@ -11,25 +11,25 @@ router.get("/cancel/:idOrder", async (req, res) => {
   try {
     const order = await (await Orders.findById(idOrder)).populate("products");
     order["state"] = "Cancelada";
-    order.save()
-      .then(savedOrder => {
+    order
+      .save()
+      .then((savedOrder) => {
         const options = {
-          method: 'post',
-          url: 'https://api.sendinblue.com/v3/smtp/email',
+          method: "post",
+          url: "https://api.sendinblue.com/v3/smtp/email",
           data: {
-            "sender": {
-              "name": "grupo7henry",
-              "email": "grupo7henry@gmail.com"
+            sender: {
+              name: "grupo7henry",
+              email: "grupo7henry@gmail.com",
             },
-            "to": [
+            to: [
               {
-                "email": `${savedOrder.user}`,
-                "name": `${savedOrder.user}`
-              }
+                email: `${savedOrder.user}`,
+                name: `${savedOrder.user}`,
+              },
             ],
-            "subject": "Confirmacion de cancelacion de compra",
-            "htmlContent": 
-            `<html>
+            subject: "Confirmacion de cancelacion de compra",
+            htmlContent: `<html>
               <head></head>
                 <h1>Henry Barbershop</h1>
                 <body>
@@ -37,26 +37,23 @@ router.get("/cancel/:idOrder", async (req, res) => {
                   <p>Confirmamos la cancelacion de su orden. Estamos a su disposición,</p>
                   <p>equipo Henry Barbershop.</p>
                 </body>
-            </html>`
+            </html>`,
           },
           headers: {
-            'Content-Type': 'application/json',
-            'accept': 'application/json',
-            'api-key': `${process.env.SENDINBLUE_API_KEY}`
-          }
+            "Content-Type": "application/json",
+            accept: "application/json",
+            "api-key": `${process.env.SENDINBLUE_API_KEY}`,
+          },
         };
-        return axios(options)
+        return axios(options);
       })
-      .then(mailServerRes => {
-        console.log(mailServerRes);
+      .then((mailServerRes) => {
         res.status(200).json(order);
-      })
-  }
-  catch (error) {
+      });
+  } catch (error) {
     console.log(error);
     res.status(500).send(error);
   }
 });
 
 export default router;
-

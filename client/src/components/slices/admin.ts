@@ -30,14 +30,19 @@ interface init {
   deleteProd: object;
   users: users[];
   orders: PurchaseOrders[];
+  filtroOrden: PurchaseOrders[];
 }
 const initialState: init = {
   deleteProd: {},
   users: [],
   orders: [],
+  filtroOrden: [],
 };
 //==========action==================
-export const deleteProd = (header: object, id: string): AppThunk => {
+export const deleteProd = (
+  header: { token: string | null },
+  id: string
+): AppThunk => {
   return async (dispatch) => {
     const res: products = await axios.delete(
       `${process.env.REACT_APP_BASE_URL}/products/delete`,
@@ -47,7 +52,11 @@ export const deleteProd = (header: object, id: string): AppThunk => {
   };
 };
 
-export const createProd = (header: object, data: any, img: any): AppThunk => {
+export const createProd = (
+  header: { token: string | null },
+  data: any,
+  img: any
+): AppThunk => {
   return async () => {
     try {
       const newProd = new FormData();
@@ -72,7 +81,12 @@ export const createProd = (header: object, data: any, img: any): AppThunk => {
   };
 };
 
-export const editProd = (header: object, data: any, img: any, idProduct:string): AppThunk => {
+export const editProd = (
+  header: { token: string | null },
+  data: any,
+  img: any,
+  idProduct: string
+): AppThunk => {
   return async () => {
     try {
       const newProd = new FormData();
@@ -80,17 +94,20 @@ export const editProd = (header: object, data: any, img: any, idProduct:string):
       newProd.append("price", data.precio);
       newProd.append("stock", data.stock);
       newProd.append("description", data.descripcion);
-      newProd.append("categories",JSON.stringify(data.categorias));
-      img.length!==0 ? newProd.append("image", img[0]):newProd.append("image","")
+      newProd.append("categories", JSON.stringify(data.categorias));
+      img.length !== 0
+        ? newProd.append("image", img[0])
+        : newProd.append("image", "");
 
-      const res=await axios.put(
+      const res = await axios.put(
         `${process.env.REACT_APP_BASE_URL}/products/edit/${idProduct}`,
-        newProd,  {
+        newProd,
+        {
           headers: header,
         }
       );
-      if(res.status==200){
-        alert("Producto editado correctamente")
+      if (res.status === 200) {
+        alert("Producto editado correctamente");
         window.location.pathname = "admin/products";
       }
     } catch (error) {
@@ -99,7 +116,7 @@ export const editProd = (header: object, data: any, img: any, idProduct:string):
   };
 };
 
-export const getUsers = (header: any): AppThunk => {
+export const getUsers = (header: { token: string | null }): AppThunk => {
   return async (dispatch) => {
     try {
       const res = await axios.get(
@@ -113,7 +130,10 @@ export const getUsers = (header: any): AppThunk => {
   };
 };
 
-export const banearUsuario = (header: any, id: string): AppThunk => {
+export const banearUsuario = (
+  header: { token: string | null },
+  id: string
+): AppThunk => {
   return async () => {
     try {
       await axios.patch(
@@ -129,7 +149,11 @@ export const banearUsuario = (header: any, id: string): AppThunk => {
   };
 };
 
-export const hacerAdmin = (header: any, id: string, role: string): AppThunk => {
+export const hacerAdmin = (
+  header: { token: string | null },
+  id: string,
+  role: string
+): AppThunk => {
   return async () => {
     try {
       const rol = role === "admin" ? "user" : "admin";
@@ -159,7 +183,7 @@ export const searchUser = (param: string): AppThunk => {
   };
 };
 
-export const getAllOrders = (header: any): AppThunk => {
+export const getAllOrders = (header: { token: string | null }): AppThunk => {
   return async (dispatch) => {
     try {
       const res = await axios.get(
@@ -174,19 +198,56 @@ export const getAllOrders = (header: any): AppThunk => {
 };
 
 export const cambiarEstadoOrden = (
-  header: any,
+  header: { token: string | null },
   id: string,
   estado: string
 ): AppThunk => {
-  return async () => {
+  return async (dispatch) => {
     try {
-      await axios.patch(
+      const res = await axios.patch(
         `${process.env.REACT_APP_BASE_URL}/orders/editorder?id=${id}&state=${estado}`,
         null,
         {
           headers: header,
         }
       );
+      dispatch(cambiarEstado(res.data));
+    } catch (error) {
+      alert("No se pudo cambiar el estado de la orden");
+    }
+  };
+};
+export const cambiarEstadoOrdenCompleta = (
+  header: { token: string | null },
+  id: string
+): AppThunk => {
+  return async (dispatch) => {
+    try {
+      const res = await axios(
+        `${process.env.REACT_APP_BASE_URL}/orders/confirm/${id}`,
+        {
+          headers: header,
+        }
+      );
+      dispatch(cambiarEstado(res.data));
+    } catch (error) {
+      alert("No se pudo cambiar el estado de la orden");
+    }
+  };
+};
+export const cambiarEstadoOrdenCancelada = (
+  header: { token: string | null },
+  id: string
+): AppThunk => {
+  return async (dispatch) => {
+    try {
+      const res = await axios(
+        `${process.env.REACT_APP_BASE_URL}/orders/cancel/${id}`,
+        {
+          headers: header,
+        }
+      );
+      dispatch(cambiarEstado(res.data));
     } catch (error) {
       alert("No se pudo cambiar el estado de la orden");
     }
@@ -194,26 +255,96 @@ export const cambiarEstadoOrden = (
 };
 
 export const searchOrderName = (name: string): AppThunk => {
-  return async () => {
+  return async (dispatch) => {
     try {
-      await axios.get(
-        `${process.env.REACT_APP_BASE_URL}/orders/search-orders?name=${name}`
+      const res = await axios.get(
+        `${process.env.REACT_APP_BASE_URL}/orders/search-order?name=${name}`
       );
+      dispatch(searchOrdersName(res.data));
     } catch (error) {
-      alert("No se pudo cambiar el estado de la orden");
+      alert("No se encontro ordenes de compra");
     }
   };
 };
 
-export const searchOrderId = (id: string): AppThunk => {
-  return async () => {
+export const searchOrderId = (
+  header: { token: string | null },
+  id: string
+): AppThunk => {
+  return async (dispatch) => {
     try {
-      await axios.get(`${process.env.REACT_APP_BASE_URL}/orders/${id}`);
+      const res = await axios.get(
+        `${process.env.REACT_APP_BASE_URL}/orders/${id}`,
+        { headers: header }
+      );
+      dispatch(searchOrdersId(res.data));
     } catch (error) {
-      alert("No se pudo cambiar el estado de la orden");
+      alert("No se encontro ordenes de compra");
     }
   };
 };
+
+export const filterOrderState = (value: string): AppThunk => {
+  return (dispatch) => {
+    dispatch(filterOrders(value));
+  };
+};
+
+export const createCate = (
+  header: { token: string | null },
+  name: string
+): AppThunk => {
+  return async () => {
+    try {
+      await axios.post(
+        `${process.env.REACT_APP_BASE_URL}/categories/create`,
+        { name: name },
+        { headers: header }
+      );
+      alert("Categoria creada con exito");
+    } catch (error) {
+      alert("No se pudo crear la categoria");
+    }
+  };
+};
+
+export const borrarCate = (
+  header: { token: string | null },
+  id: string
+): AppThunk => {
+  return async () => {
+    try {
+      await axios.delete(
+        `${process.env.REACT_APP_BASE_URL}/categories/delete?id=${id}`,
+        { headers: header }
+      );
+
+      alert("Categoria borrada con exito");
+    } catch (error) {
+      alert("No se pudo crear la categoria");
+    }
+  };
+};
+
+export const despacharOrden = (
+  header: { token: string | null },
+  id: string
+): AppThunk => {
+  return async (dispatch) => {
+    try {
+      const res = await axios.post(
+        `${process.env.REACT_APP_BASE_URL}/orders/dispatch/` + id,
+        { id: id },
+        { headers: header }
+      );
+      dispatch(despachado(res.data));
+      alert("Producto despachado con exito");
+    } catch (error) {
+      alert("No se pudo despachar");
+    }
+  };
+};
+
 //================reducer===================
 const adminReducerSlice = createSlice({
   name: "admin",
@@ -226,14 +357,66 @@ const adminReducerSlice = createSlice({
       state.users = action.payload;
     },
     getOrdersReducer: (
-      state: { orders: any[] },
+      state: { orders: any[]; filtroOrden: any[] },
       action: PayloadAction<any[]>
     ) => {
       state.orders = action.payload;
+      state.filtroOrden = action.payload;
+    },
+    cambiarEstado: (
+      state: { orders: any[]; filtroOrden: any[] },
+      action: PayloadAction<any>
+    ) => {
+      const index = state.orders.findIndex((el) => {
+        return el._id === action.payload._id;
+      });
+
+      state.orders[index] = action.payload;
+      state.filtroOrden[index] = action.payload;
+    },
+    searchOrdersId: (
+      state: { orders: any[] },
+      action: PayloadAction<any[]>
+    ) => {
+      state.orders = [action.payload];
+    },
+    searchOrdersName: (
+      state: { orders: any[]; filtroOrden: any[] },
+      action: PayloadAction<any[]>
+    ) => {
+      state.orders = action.payload;
+      state.filtroOrden = action.payload;
+    },
+    filterOrders: (
+      state: { orders: any[]; filtroOrden: any[] },
+      action: PayloadAction<string>
+    ) => {
+      const filtered = state.filtroOrden.filter((el) => {
+        return el.state === action.payload;
+      });
+      state.orders = filtered;
+    },
+    despachado: (
+      state: { orders: any[]; filtroOrden: any[] },
+      action: PayloadAction<string>
+    ) => {
+      const index = state.orders.findIndex((el) => {
+        return null; // el._id === action.payload._id;
+      });
+      state.orders[index] = action.payload;
+      state.filtroOrden[index] = action.payload;
     },
   },
 });
 
 export default adminReducerSlice.reducer;
-export const { adminDeleteProd, getUsersReducer, getOrdersReducer } =
-  adminReducerSlice.actions;
+export const {
+  adminDeleteProd,
+  getUsersReducer,
+  getOrdersReducer,
+  searchOrdersId,
+  filterOrders,
+  searchOrdersName,
+  cambiarEstado,
+  despachado,
+} = adminReducerSlice.actions;

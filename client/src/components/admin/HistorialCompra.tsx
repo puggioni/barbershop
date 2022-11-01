@@ -1,11 +1,19 @@
-import { useEffect, useReducer, useState } from "react";
+import { useEffect, useState } from "react";
 import { BsArrowCounterclockwise } from "react-icons/bs";
-import { useNavigate } from "react-router";
+import { Link } from "react-router-dom";
 import useHeaders from "../../app/header";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import Paginate from "../products/Paginate";
-import { cambiarEstadoOrden, getAllOrders } from "../slices/admin";
+import {
+  cambiarEstadoOrden,
+  cambiarEstadoOrdenCancelada,
+  cambiarEstadoOrdenCompleta,
+  despacharOrden,
+  filterOrderState,
+  getAllOrders,
+} from "../slices/admin";
 import { yaLog } from "../slices/logIn";
+import OrderSearch from "./orderSearch";
 
 const HistorialCompra = () => {
   const token = JSON.parse(window.localStorage.getItem("token") || "{}");
@@ -13,24 +21,25 @@ const HistorialCompra = () => {
   const header = useHeaders(token);
   const dispatch = useAppDispatch();
   const ordenes = useAppSelector((state) => state.admin.orders);
-  const navigate = useNavigate();
-  const [rerender, forceUpdate] = useReducer((x) => x + 1, 0);
+  const [searchBy, setSearchBy] = useState("");
 
   useEffect(() => {
     dispatch(yaLog(user.email));
     dispatch(getAllOrders(header.headers));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [rerender]);
+  }, []);
 
   //=================pagination=======================//
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [productsPerPage] = useState(15);
-  const [pageLimit, setPageLimit] = useState(5);
+  const [pageLimit] = useState(5);
   const [maxPageNumberLimit, setMaxPageNumberLimit] = useState(5);
   const [minPageNumberLimit, setMinPageNumberLimit] = useState(0);
   const lastPostIndex = currentPage * productsPerPage;
   const firstPostIndex = lastPostIndex - productsPerPage;
-  const currentProducts = ordenes.slice(firstPostIndex, lastPostIndex);
+  const currentProducts = ordenes.length
+    ? ordenes?.slice(firstPostIndex, lastPostIndex)
+    : [];
 
   //===============handlers===========================//
 
@@ -39,27 +48,77 @@ const HistorialCompra = () => {
   };
 
   const handleEstado = (id: string, newState: string) => {
-    if (
-      window.confirm(
-        `¿Esta seguro de querer cambiar el estado de orden ${id} a ${newState}`
-      )
-    ) {
-      dispatch(cambiarEstadoOrden(header.headers, id, newState));
-      handleRestore();
+    if (newState === "Completa") {
+      if (
+        window.confirm(
+          `¿Esta seguro de querer cambiar el estado de orden ${id} a ${newState}`
+        )
+      ) {
+        dispatch(cambiarEstadoOrdenCompleta(header.headers, id));
+      }
+    } else if (newState === "Cancelada") {
+      if (
+        window.confirm(
+          `¿Esta seguro de querer cambiar el estado de orden ${id} a ${newState}`
+        )
+      ) {
+        dispatch(cambiarEstadoOrdenCancelada(header.headers, id));
+      }
+    } else {
+      if (
+        window.confirm(
+          `¿Esta seguro de querer cambiar el estado de orden ${id} a ${newState}`
+        )
+      ) {
+        dispatch(cambiarEstadoOrden(header.headers, id, newState));
+      }
     }
-    forceUpdate();
   };
 
   const handlePerfil = (id: string) => {};
 
+  const handleSearchBy = (e: any) => {
+    setSearchBy(e.target.value);
+  };
+
+  const handleFilter = (e: any) => {
+    dispatch(filterOrderState(e.target.value));
+  };
+
+  const handleDespachar = (id: string) => {
+    dispatch(despacharOrden(header.headers, id));
+  };
+
   //==========================render================
   return (
-    <div className="flex flex-col bg-white bg-bg-historial bg-no-repeat bg-auto ">
+    <div className="flex flex-col bg-white bg-bg-historial bg-no-repeat bg-contain ">
       <h1 className="text-white justify-center py-20 mb-2 text-5xl font-bold flex align-middle items-center">
         HISTORIAL DE COMPRAS
       </h1>
       <div className=" mx-8 bg-white border-2 px-4 border-black rounded-lg">
         <div>
+          <div className="flex  gap-8 mt-10">
+            <OrderSearch searchBy={searchBy} />
+            <select
+              className="outline-none"
+              onChange={(e) => handleSearchBy(e)}
+            >
+              <option value="" disabled selected>
+                Buscar por
+              </option>
+              <option value="name">Name</option>
+              <option value="id">Id</option>
+            </select>
+            <select className="outline-none" onChange={(e) => handleFilter(e)}>
+              <option value="" disabled selected>
+                Filtrar por estado
+              </option>
+              <option value="Completa">Completa</option>
+              <option value="Cancelada">Cancelada</option>
+              <option value="Creada">Procesando</option>
+            </select>
+          </div>
+
           <div className="grid grid-cols-[1.5fr_1fr] gap-8"></div>
           <div className="mt-8">
             <div className=" grid grid-cols-[1fr_.5fr_.5fr_.5fr_1.5fr_.5fr] gap-16 ml-20">
@@ -72,6 +131,7 @@ const HistorialCompra = () => {
                 onClick={() => handleRestore()}
                 size={30}
                 title="restore products cursor-pointer"
+                className="cursor-pointer"
               />
             </div>
 
@@ -91,12 +151,11 @@ const HistorialCompra = () => {
                   : "PROCENSANDO";
 
               const price = data.products?.reduce((prev, curr) => {
-                return ((prev.price + curr.price) * 100) / 100;
+                return prev + curr.price;
               }, 0);
-
               return (
                 <div
-                  className="grid grid-cols-[1.3fr_1fr_.2fr_.5fr_2fr_1fr] gap-16 py-2 pl-2 mt-8 border border-black rounded-lg items-center"
+                  className="grid grid-cols-[1fr_1fr_.2fr_.4fr_2fr_1fr] gap-6 break-words py-2 pl-2 mt-8 border border-black rounded-lg items-center"
                   key={data._id}
                 >
                   <p
@@ -107,9 +166,9 @@ const HistorialCompra = () => {
                     {data.user}
                   </p>
                   <p>{data._id}</p>
-                  <p>{price}</p>
-                  <p className={`${estilo}`}>{estado}</p>
-                  <div className={"flex gap-4 "}>
+                  <p>{price.toFixed(2)}</p>
+                  <p className={`text-sm ${estilo}`}>{estado}</p>
+                  <div className="flex gap-4 ">
                     <button
                       onClick={() => handleEstado(data._id, "Completa")}
                       className="border-r border-black pr-4 hover:text-[#855C20] font-semibold "
@@ -123,15 +182,26 @@ const HistorialCompra = () => {
                       Cancelada
                     </button>
                     <button
-                      onClick={() => handleEstado(data._id, "creada")}
-                      className="hover:text-[#855C20] font-semibold "
+                      onClick={() => handleEstado(data._id, "Creada")}
+                      className=" pr-4 hover:text-[#855C20] font-semibold "
                     >
                       Procesando
                     </button>
+                    {data.state === "Completa" && (
+                      <button
+                        onClick={() => handleDespachar(data._id)}
+                        className="border border-black px-2 hover:bg-[#855C20] hover:text-white text-sm "
+                      >
+                        DESPACHAR
+                      </button>
+                    )}
                   </div>
-                  <button className="text-blue-800 ml-auto mr-4">
+                  <Link
+                    to={`/admin/compras/${data._id}`}
+                    className="text-blue-800 ml-auto mr-4"
+                  >
                     Ver orden de compra
-                  </button>
+                  </Link>
                 </div>
               );
             })}

@@ -49,7 +49,7 @@ const Productos = () => {
     firstPostIndex,
     lastPostIndex
   );
-  const [pageLimit, setPageLimit] = useState(5);
+  const [pageLimit] = useState(5);
   const [maxPageNumberLimit, setMaxPageNumberLimit] = useState(5);
   const [minPageNumberLimit, setMinPageNumberLimit] = useState(0);
 
@@ -114,7 +114,7 @@ const Productos = () => {
                   className="border border-black rounded-lg px-1"
                   onChange={(e) => handleOrder(e)}
                 >
-                  <option value="placeholder" disabled hidden>
+                  <option value="placeholder" disabled hidden selected>
                     Order by
                   </option>
                   <option value="alfa">Alfabetico</option>
@@ -128,11 +128,11 @@ const Productos = () => {
                   className="border border-black rounded-lg px-1 py-3"
                   onChange={(e) => handleCateFilter(e)}
                 >
-                  <option value="placeholder" disabled hidden>
+                  <option value="placeholder" disabled hidden selected>
                     Categorias
                   </option>
                   <option value="all">All</option>;
-                  {cate?.map((cate: { name: string; id: string }) => {
+                  {cate?.map((cate: { name: string; _id: string }) => {
                     return <option value={cate.name}>{cate.name}</option>;
                   })}
                 </select>
@@ -145,8 +145,11 @@ const Productos = () => {
               </div>
 
               <div className=" self-center justify-self-center ">
-                <button className="bg-[#855C20] mr-4 py-2 px-2 text-white rounded-lg font-semibold">
-                  CREAR CATEGORIA
+                <button
+                  onClick={() => navigate("/admin/products/crear-categoria")}
+                  className="bg-[#855C20] mr-4 py-2 px-2 text-white rounded-lg font-semibold"
+                >
+                  CATEGORIA
                 </button>
                 <button
                   onClick={() => navigate("/admin/products/crear-producto")}
@@ -154,6 +157,7 @@ const Productos = () => {
                 >
                   CREAR PRODUCTO
                 </button>
+                
               </div>
             </div>
             <div className="relative">
@@ -185,14 +189,14 @@ const Productos = () => {
                         handleEditHistory(e, data._id);
                       }}
                     />
-                    <Link to={`editar-producto/${data._id}`} > 
-                    <FaEdit
-                      className="justify-self-center cursor-pointer "
-                      title="Editar producto"
-                      // onClick={(e) => {
-                      //   handleEditProd(e, data._id);
-                      // }}
-                    />  
+                    <Link to={`editar-producto/${data._id}`}>
+                      <FaEdit
+                        className="justify-self-center cursor-pointer "
+                        title="Editar producto"
+                        // onClick={(e) => {
+                        //   handleEditProd(e, data._id);
+                        // }}
+                      />
                     </Link>
                     <FaTrashAlt
                       className="justify-self-center cursor-pointer "

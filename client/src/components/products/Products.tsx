@@ -21,7 +21,7 @@ const Products = () => {
 
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [productsPerPage] = useState(9);
-  const [pageLimit, setPageLimit] = useState(5);
+  const [pageLimit] = useState(5);
   const [maxPageNumberLimit, setMaxPageNumberLimit] = useState(5);
   const [minPageNumberLimit, setMinPageNumberLimit] = useState(0);
   const lastPostIndex = currentPage * productsPerPage;

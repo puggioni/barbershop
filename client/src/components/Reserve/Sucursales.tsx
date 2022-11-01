@@ -57,7 +57,7 @@ const Sucursales = () => {
     // const cardBarber = "h-52 w-36 text-center rounded-lg font-bold  text-2xl text-black bg-slate-200/50	inline-block m-10"
 
     return (
-      <div className=" bg-white bg-store-banner bg-no-repeat pt-52 pb-8">
+      <div className=" bg-white bg-sucursales-banner bg-no-repeat pt-52 pb-2 bg-contain">
         <div className="border bg-white border-black rounded-xl mx-40">
           <VscArrowLeft
             onClick={() => goBack()}

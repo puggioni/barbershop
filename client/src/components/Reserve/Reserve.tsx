@@ -79,7 +79,7 @@ const Reserve = () => {
   };
 
   return (
-    <div className=" bg-white bg-store-banner justify-center bg-no-repeat pt-32 pb-8">
+    <div className="bg-white bg-turnos-banner bg-no-repeat pt-32 pb-20 bg-contain">
       {turno.user ? (
         <>
           <h2 className="flex justify-center my-auto text-5xl text-white mb-12">
@@ -242,9 +242,10 @@ const Reserve = () => {
           </div>
         </>
       ) : (
-        <div className="text-white">
-          Necesitas Iniciar sesión para solicitar un Turno
-        </div>
+          <div className="border h-86 bg-white border-black rounded-xl py-10 mx-40 my-auto">
+           <h2 className="text-center text-xl text-red-500 font-bold">*Necesitas iniciar sesión para solicitar un Turno*</h2>
+        </div>  
+        
       )}
     </div>
   );

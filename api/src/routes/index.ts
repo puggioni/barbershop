@@ -22,6 +22,7 @@ import banUser from "./User/banUser";
 import desbanearUser from "./User/desbanearUser";
 import getAllUsers from "./User/getAllUsers";
 import getOneUser from "./User/getOneUser";
+import editUsr from "./User/editUser";
 /* ============CATEGORIES============ */
 import postCategories from "./Categories/postCategories";
 import deleteCategory from "./Categories/deleteCategory";
@@ -81,11 +82,12 @@ router.use("/users", changeToCommon);
 router.use("/users", banUser);
 router.use("/users", desbanearUser);
 router.use("/users", getAllUsers);
+router.use("/users", editUsr);
 
 /* ============CATEGORIES============ */
 router.use("/categories", postCategories);
-router.use("/categories", deleteCategory);
 router.use("/categories", getCategories);
+router.use("/categories", deleteCategory);
 
 /* ============REVIEWS============ */
 router.use("/reviews", postReview);

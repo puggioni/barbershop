@@ -27,8 +27,8 @@ const AboutUs = () => {
 
 
   return (
-    <div className="bg-white  block bg-bg-prods pt-80 h-screen mb-10">
-      <div className="bg-white block bg-no-repeat align-bottom h-screen pt-10 ">
+    <div className="bg-white  block bg-bg-prods pt-80 h-screen  mb-10">
+      <div className="bg-white block bg-no-repeat align-bottom h-screen border-t-2 border-black pt-10 ">
         <div className="flex flex-col-2 pt-10 h-full">
             <div className="w-2/3  px-28 mt-4 items-center">
               <h1 className=" py-8 mt-20 text-center text-6xl">SOBRE NOSOTROS</h1>
@@ -55,8 +55,8 @@ const AboutUs = () => {
 
 
         <div className="place-items-center  bg-zinc-900 block bg-no-repeat align-bottom h-full pt-10" >
-        <img className="m-auto h-58" src="https://www.barbershop.cat/img/es/titol_serveis.png" alt="Servicios" />
-      <div className="place-items-center  flex flex-col-2 bg-zinc-900 block bg-no-repeat align-bottom   ">
+        <img className="m-auto h-52" src="https://www.barbershop.cat/img/es/titol_serveis.png" alt="Servicios" />
+      <div className="place-items-center  flex flex-col-2 bg-zinc-900 block bg-no-repeat align-bottom  m-10 ">
         <div className="text-center w-1/2 text-xl border-r-2 border-white">
             <p className="text-white">Nuestro sistema de reserva, permite asegurar el menor tiempo de espera posible y comodidad en el acceso a los servicios.</p>
             <Link to="/reserve">

@@ -1,5 +1,5 @@
 import React from "react";
-import { AiFillLeftSquare, AiFillRightSquare } from "react-icons/ai";
+// import { AiFillLeftSquare, AiFillRightSquare } from "react-icons/ai";
 import { BiChevronsLeft, BiChevronsRight } from "react-icons/bi";
 
 interface props {
@@ -36,7 +36,7 @@ const Paginate = (props: props) => {
   };
   const handlePrevBtn = () => {
     props.setCurrentPage((prev: number) => prev - 1);
-    if ((props.currentPage - 1) % props.pageLimit == 0) {
+    if ((props.currentPage - 1) % props.pageLimit === 0) {
       props.setMaxPageNumberLimit(props.maxPageNumberLimit - props.pageLimit);
       props.setMinPageNumberLimit(props.minPageNumberLimit - props.pageLimit);
     }
