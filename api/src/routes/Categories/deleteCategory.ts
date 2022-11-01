@@ -5,10 +5,10 @@ import CategoryModel from "../../models/categories";
 const router = Router();
 
 router.delete("/delete", verifyToken, isAdmin, async (req, res) => {
-  const { name } = req.body;
+  const { id } = req.query;
   try {
     const deletedCategory = await CategoryModel.findOneAndDelete({
-      name: name,
+      _id: id,
     });
     res.send(deletedCategory);
   } catch (error) {

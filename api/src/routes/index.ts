@@ -84,8 +84,8 @@ router.use("/users", getAllUsers);
 
 /* ============CATEGORIES============ */
 router.use("/categories", postCategories);
-router.use("/categories", deleteCategory);
 router.use("/categories", getCategories);
+router.use("/categories", deleteCategory);
 
 /* ============REVIEWS============ */
 router.use("/reviews", postReview);

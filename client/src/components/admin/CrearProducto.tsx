@@ -179,7 +179,7 @@ const CrearProducto = () => {
           >
             {categoriaProds.map((cate) => {
               return (
-                <option key={cate.id} value={cate.name}>
+                <option key={cate._id} value={cate.name}>
                   {cate.name}
                 </option>
               );
