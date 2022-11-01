@@ -1,4 +1,4 @@
-import { useEffect, useCallback } from "react";
+import { useEffect } from "react";
 import { RiArrowGoBackFill } from "react-icons/ri";
 import { useNavigate } from "react-router";
 import { useParams } from "react-router";
@@ -13,22 +13,14 @@ const Cancelacion = () => {
   const { purchaseOrder } = useAppSelector((state: RootState) => state.orders);
 
   const dispatch = useAppDispatch();
-  useEffect(() => {
-    return window.localStorage.removeItem("product");
-  }, []);
 
-  console.log(purchaseOrder);
-  const inicializar = useCallback(async () => {
+  useEffect(() => {
     if (idOrder) {
       dispatch(cancelOrders(idOrder));
     }
-  }, [dispatch, idOrder]);
-
-  useEffect(() => {
-    inicializar();
-
-    //return window.localStorage.removeItem("product");
-  }, [dispatch, inicializar]);
+    return window.localStorage.removeItem("product");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   let total = 0;
 
@@ -42,7 +34,7 @@ const Cancelacion = () => {
   total = Math.floor(total * 100) / 100;
 
   return (
-    <div className="h-full bg-white">
+    <div className="min-h-screen bg-white">
       <div className="bg-[#B1A26A] py-20 border-black"></div>
       <div className="bg-white border-2 border-black -mt-10 mx-8">
         <h1 className="flex justify-center font-bold text-2xl">
@@ -63,7 +55,10 @@ const Cancelacion = () => {
                 purchaseOrder.products.map((prod: any) => {
                   const total = prod.price * prod.quantity;
                   return (
-                    <div className="grid grid-cols-[2fr_1fr_1fr_1fr]">
+                    <div
+                      key={prod._id}
+                      className="grid grid-cols-[2fr_1fr_1fr_1fr]"
+                    >
                       <p>{prod.name}</p>
                       <p>{prod.price}</p>
                       <p>{prod.quantity}</p>

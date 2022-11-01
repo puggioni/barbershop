@@ -1,42 +1,36 @@
 import { useEffect } from "react";
 import { RiArrowGoBackFill } from "react-icons/ri";
-import { useNavigate } from "react-router";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
+import useHeaders from "../../app/header";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { confirmOrders } from "../slices/purchaseOrder";
+import { searchOrderId } from "../slices/admin";
 const Cofirmacion = () => {
-  let loading = true;
+  const token = JSON.parse(window.localStorage.getItem("token") || "{}");
+  const order = useAppSelector((state) => state.admin.orders);
+  const { idOrder } = useParams<{ idOrder: string }>();
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
-  const { purchaseOrder } = useAppSelector((state) => state.orders);
-  const { idOrder } = useParams<{ idOrder: string }>();
-  useEffect(() => {
-    if (loading) {
-      dispatch(confirmOrders(idOrder));
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-      loading = false;
-    }
-    return window.localStorage.removeItem("product");
+  const total = order[0]?.products?.length
+    ? order[0].products.reduce((acc: number, prod) => {
+        return acc + prod.price;
+      }, 0)
+    : 0;
+  const header = useHeaders(token);
 
+  useEffect(() => {
+    if (idOrder) {
+      dispatch(searchOrderId(header.headers, idOrder));
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  let total = 0;
-
-  const navigate = useNavigate();
-
-  if (purchaseOrder?.products?.length) {
-    total = purchaseOrder.products.reduce((acc: number, prod) => {
-      return acc + prod.price;
-    }, 0);
-  }
-  total = Math.floor(total * 100) / 100;
   return (
-    <div className="min-h-screen bg-white">
+    <div className="bg-white min-h-screen">
       <div className="bg-[#B1A26A] py-20 border-black"></div>
       <div className="bg-white border-2 border-black -mt-10 mx-8">
         <h1 className="flex justify-center font-bold text-2xl">
-          COMPRA CONFIRMADA
+          ORDEN DE COMPRA
         </h1>
 
         <div className="border border-black m-8 ">
@@ -49,8 +43,8 @@ const Cofirmacion = () => {
                 <p>cantidad</p>
                 <p>total</p>
               </div>
-              {purchaseOrder?.products?.length &&
-                purchaseOrder.products.map((prod: any) => {
+              {order[0]?.products?.length &&
+                order[0].products.map((prod: any) => {
                   const total = prod.price * prod.quantity;
                   return (
                     <div
@@ -68,13 +62,13 @@ const Cofirmacion = () => {
           </div>
           <div className="grid grid-cols-[2fr_.5fr] gap-16 mb-2">
             <div className="justify-self-end mr-16">total: </div>
-            <div className="justify-self-center">${total}</div>
+            <div className="justify-self-center">$ {total.toFixed(2)}</div>
           </div>
         </div>
 
         <RiArrowGoBackFill
           onClick={() => {
-            navigate("/");
+            navigate("/admin/compras");
           }}
           className="m-4 cursor-pointer"
           title="Home"
