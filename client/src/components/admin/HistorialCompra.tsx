@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { BsArrowCounterclockwise } from "react-icons/bs";
+import { Link } from "react-router-dom";
 import useHeaders from "../../app/header";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import Paginate from "../products/Paginate";
@@ -28,7 +29,7 @@ const HistorialCompra = () => {
   //=================pagination=======================//
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [productsPerPage] = useState(15);
-  const [pageLimit, setPageLimit] = useState(5);
+  const [pageLimit] = useState(5);
   const [maxPageNumberLimit, setMaxPageNumberLimit] = useState(5);
   const [minPageNumberLimit, setMinPageNumberLimit] = useState(0);
   const lastPostIndex = currentPage * productsPerPage;
@@ -162,9 +163,12 @@ const HistorialCompra = () => {
                       Procesando
                     </button>
                   </div>
-                  <button className="text-blue-800 ml-auto mr-4">
+                  <Link
+                    to={`/admin/compras/${data._id}`}
+                    className="text-blue-800 ml-auto mr-4"
+                  >
                     Ver orden de compra
-                  </button>
+                  </Link>
                 </div>
               );
             })}
