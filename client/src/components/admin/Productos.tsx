@@ -146,7 +146,7 @@ const Productos = () => {
 
               <div className=" self-center justify-self-center ">
                 <button className="bg-[#855C20] mr-4 py-2 px-2 text-white rounded-lg font-semibold">
-                  CREAR CATEGORIO
+                  CREAR CATEGORIA
                 </button>
                 <button
                   onClick={() => navigate("/admin/products/crear-producto")}
@@ -164,7 +164,7 @@ const Productos = () => {
                 <p>Precio</p>
               </div>
               <button className="absolute right-8 top-0 text-blue-800	">
-                Ver historial de comrpas
+                Ver historial de compras
               </button>
 
               {currentProducts?.map((data) => {

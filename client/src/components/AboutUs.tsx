@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import BarberCard from "./Reserve/BarberCard";
 import { buttonHover } from "./NavBar";
 import Footer from "./Footer";
+import { fetchAllOffices } from "./slices/offices";
 
 
 const AboutUs = () => {
@@ -14,13 +15,15 @@ const AboutUs = () => {
 
   const inicializar = useCallback(async () => {
     dispatch(fetchAllBarbers());
+    dispatch(fetchAllOffices())
   }, [dispatch]);
 
   useEffect(() => {
     inicializar();
   }, [inicializar]);
 
-  const data = useAppSelector((state: RootState) => state.barbers);
+  const dataBarbers = useAppSelector((state: RootState) => state.barbers);
+  const dataOffices = useAppSelector((state: RootState) => state.offices)
 
 
   return (
@@ -52,9 +55,9 @@ const AboutUs = () => {
 
 
         <div className="place-items-center  bg-zinc-900 block bg-no-repeat align-bottom h-full pt-10" >
-        <img className="m-auto h-60" src="https://www.barbershop.cat/img/es/titol_serveis.png" alt="Servicios" />
-      <div className="place-items-center  flex flex-col-2 bg-zinc-900 block bg-no-repeat align-bottom  pt-10 ">
-        <div className="m-10 text-center w-1/2 text-xl border-r-2 border-white">
+        <img className="m-auto h-58" src="https://www.barbershop.cat/img/es/titol_serveis.png" alt="Servicios" />
+      <div className="place-items-center  flex flex-col-2 bg-zinc-900 block bg-no-repeat align-bottom   ">
+        <div className="text-center w-1/2 text-xl border-r-2 border-white">
             <p className="text-white">Nuestro sistema de reserva, permite asegurar el menor tiempo de espera posible y comodidad en el acceso a los servicios.</p>
             <Link to="/reserve">
               <button className="bg-white px-4 py-1 rounded-lg m-auto my-3 border-r-2 border-b-2 font-display mt-10 border-black
@@ -69,24 +72,22 @@ const AboutUs = () => {
             </Link>
         </div>
       </div>
-      </div>
-      
-      
-      
+      </div>    
       
     <div className="bg-white block bg-no-repeat align-bottom h-screen pt-10 ">
         <img className="m-auto h-60" src="https://www.barbershop.cat/img/es/titol_barberies.png" alt="Barberias" />
 
-        <div className="py-8 mt-10 font-display text-center text-2xl">
-          <h1 className="mb-8">QUINTA FLORES: CÓRDOBA</h1>
-          <h1 className="mb-8">CAPITAL-CENTRO: CÓRDOBA</h1>
-          <h1 className="mb-8">CENTRO: PALERMO-BUENOS AIRES</h1>
-        </div>
+        <div className="py-8 mt-5 font-display text-center text-2xl">
+        {dataOffices.allOffices?.map((datas: any) =>(    
+          <h1 className="mb-8">{datas.location}</h1>
+        ))}
+      </div>
+        
 
         <div className="flex justify-center flex-col-3">
-            <img className="h-80 flex mx-5" src="https://www.theshaveclub.es/wp-content/uploads/2022/02/IMG_1452-2-scaled.jpg" alt="barber1" />
-            <img className="h-80 flex mx-20" src="https://www.baronsbarbershop.com/wp-content/uploads/2020/02/vistares_3_1200x800.jpg" alt="barber2" />
-            <img className="h-80  flex mx-5" src="https://cdn.shopify.com/s/files/1/0606/1157/files/1_7_grande.jpg?6443" alt="barber3" />            
+            <img className="h-60 flex mx-5" src="https://www.theshaveclub.es/wp-content/uploads/2022/02/IMG_1452-2-scaled.jpg" alt="barber1" />
+            <img className="h-60 flex mx-20" src="https://www.baronsbarbershop.com/wp-content/uploads/2020/02/vistares_3_1200x800.jpg" alt="barber2" />
+            <img className="h-60  flex mx-5" src="https://cdn.shopify.com/s/files/1/0606/1157/files/1_7_grande.jpg?6443" alt="barber3" />            
         </div>
 
       </div>
@@ -108,7 +109,7 @@ const AboutUs = () => {
         <img className="m-auto h-60" src="https://www.barbershop.cat/img/es/titol_equip.png" alt="Equipo" />
 
         <div className="flex my-20 justify-center">
-        {data.allBarbers?.map((datas: any) =>(
+        {dataBarbers.allBarbers?.map((datas: any) =>(
                       
             <div className={`${buttonHover} hover:rounded-lg m-10`}>            
            <BarberCard
