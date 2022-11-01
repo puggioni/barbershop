@@ -26,6 +26,7 @@ module.exports = {
         "bg-prods": "url('/src/imagenes/crear-modificar-producto.png')",
         "bg-historial": "url('/src/imagenes/banner-historial.png')",
         "about-us": "url('/src/imagenes/aboutusbanner.jpg')"
+        "bg-categorias": "url('/src/imagenes/crear-categorias.png')",
       },
     },
 
