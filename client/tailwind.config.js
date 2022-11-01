@@ -16,7 +16,7 @@ module.exports = {
       gridTemplateColumns: {
         nav: ".2fr 1fr .2fr .1fr",
       },
-      gridAutoColumns: {
+      gridAutoColumns: {  
         categorias: "minmax(0,8)",
       },
       backgroundImage: {
@@ -25,6 +25,8 @@ module.exports = {
         "admin-banner": "url('/src/imagenes/bannerAdmin.png')",
         "bg-prods": "url('/src/imagenes/crear-modificar-producto.png')",
         "bg-historial": "url('/src/imagenes/banner-historial.png')",
+        "about-us": "url('/src/imagenes/aboutusbanner.jpg')"
+        "bg-categorias": "url('/src/imagenes/crear-categorias.png')",
       },
     },
 
@@ -35,6 +37,7 @@ module.exports = {
       "100%": "100%",
       16: "4rem",
     },
+
   },
   plugins: [],
 };

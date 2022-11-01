@@ -23,7 +23,7 @@ interface ProductState {
   loading: boolean;
   errors: any;
   favs: Object[];
-  categorias: Array<{ name: string; id: string }>;
+  categorias: Array<{ name: string; _id: string }>;
   deleteProd: {};
 }
 
@@ -72,7 +72,7 @@ export const addFavoriteProduct = (
     try {
       const res = await axios.post(
         `${process.env.REACT_APP_BASE_URL}/products/addFavorite`,
-        { productId: idProduct, userId: IdUser},
+        { productId: idProduct, userId: IdUser },
         { headers: { token: token } }
       );
       console.log(res.data);
@@ -231,7 +231,6 @@ export const clearProducDetail: any = () => {
   };
 };
 
-
 export const reviewProduct = (review: object, config: object): AppThunk => {
   return async (dispatch) => {
     try {
@@ -355,7 +354,7 @@ export const getAllProductsSlice = createSlice({
 
     getCaterogias: (
       state,
-      action: PayloadAction<Array<{ name: string; id: string }>>
+      action: PayloadAction<Array<{ name: string; _id: string }>>
     ) => {
       state.categorias = action.payload;
     },

@@ -195,7 +195,7 @@ const EditarProducto = () => {
             >
               {categoriaProds?.map((cate) => {
                 return (
-                  <option key={cate.id} id={cate.id} value={cate.name}>
+                  <option key={cate._id} id={cate._id} value={cate.name}>
                     {cate.name}
                   </option>
                 );
