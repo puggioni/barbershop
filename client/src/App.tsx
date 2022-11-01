@@ -25,7 +25,7 @@ import HistorialCompra from "./components/admin/HistorialCompra";
 import MyAppointments from "./components/Reserve/MyAppointments";
 import CrearCategoria from "./components/admin/CrearCategorias";
 import BorrarCategoria from "./components/admin/BorrarCategoria";
-
+import ChangePassword from "./components/user/changePassword";
 export const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 
@@ -54,6 +54,10 @@ function App() {
         <Route path="/user/create" element={<CreateUser />} />
         <Route path="/user/login" element={<LoginUser />} />
         <Route path="/user/perfil" element={<Perfil />} />
+        <Route
+          path="/user/password-reset/:idUser"
+          element={<ChangePassword />}
+        />
         {/*===================sucursales============================*/}
         <Route path="/sucursales" element={<Sucursales />} />
         {/*===================turno=================================*/}

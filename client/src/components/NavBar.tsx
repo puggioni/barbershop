@@ -31,7 +31,7 @@ const NavBar = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
-    <div className="bg-stone-50/90 p-2 grid grid-flow-col justify-items-center items-center grid-cols-nav ">
+    <div className="bg-white p-2 grid grid-flow-col justify-items-center items-center grid-cols-nav ">
       <img
         className="h-12 hover:cursor-pointer"
         onClick={() => {
