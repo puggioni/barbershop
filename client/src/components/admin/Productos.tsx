@@ -49,7 +49,7 @@ const Productos = () => {
     firstPostIndex,
     lastPostIndex
   );
-  const [pageLimit, setPageLimit] = useState(5);
+  const [pageLimit] = useState(5);
   const [maxPageNumberLimit, setMaxPageNumberLimit] = useState(5);
   const [minPageNumberLimit, setMinPageNumberLimit] = useState(0);
 
@@ -149,7 +149,7 @@ const Productos = () => {
                   onClick={() => navigate("/admin/products/crear-categoria")}
                   className="bg-[#855C20] mr-4 py-2 px-2 text-white rounded-lg font-semibold"
                 >
-                  CREAR CATEGORIO
+                  CATEGORIO
                 </button>
                 <button
                   onClick={() => navigate("/admin/products/crear-producto")}
@@ -157,6 +157,7 @@ const Productos = () => {
                 >
                   CREAR PRODUCTO
                 </button>
+                
               </div>
             </div>
             <div className="relative">

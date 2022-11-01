@@ -1,5 +1,7 @@
 import React from "react";
-import { AiFillLeftSquare, AiFillRightSquare } from "react-icons/ai";
+// import { AiFillLeftSquare, AiFillRightSquare } from "react-icons/ai";
+import { BiChevronsLeft, BiChevronsRight } from "react-icons/bi";
+
 interface props {
   allProducts: number;
   productsPerPage: number;
@@ -11,6 +13,10 @@ interface props {
   setMinPageNumberLimit: any;
   minPageNumberLimit: number;
 }
+
+export const buttonFocus =
+  "focus:shadow-md focus:shadow-slate-500	focus:bg-[#855C20] focus:text-white focus:ease-in-out focus:duration-300";
+
 
 const Paginate = (props: props) => {
   const pageNumbers = [];
@@ -30,7 +36,7 @@ const Paginate = (props: props) => {
   };
   const handlePrevBtn = () => {
     props.setCurrentPage((prev: number) => prev - 1);
-    if ((props.currentPage - 1) % props.pageLimit == 0) {
+    if ((props.currentPage - 1) % props.pageLimit === 0) {
       props.setMaxPageNumberLimit(props.maxPageNumberLimit - props.pageLimit);
       props.setMinPageNumberLimit(props.minPageNumberLimit - props.pageLimit);
     }
@@ -53,11 +59,15 @@ const Paginate = (props: props) => {
     );
   }
   return (
-    <div className="text-center w-100% flex items-center ">
-      <button onClick={handlePrevBtn}>
-        <AiFillLeftSquare />
+    <div className=" text-center w-100% flex items-center  justify-center ">
+      <div >
+      <button onClick={handlePrevBtn} 
+       className ={` ${buttonFocus} border border-black rounded-lg font-bold text-base bg-white text-black h-9 mb-2 py-1 px-3 my-10 mx-3 focus:bg-stone-900 focus:text-white`}>
+        <BiChevronsLeft />
       </button>
+      </div>
       {pageDecrement}
+      <div className="m-4">
       {pageNumbers.map((page, index) => {
         if (
           page < props.maxPageNumberLimit + 1 &&
@@ -66,7 +76,7 @@ const Paginate = (props: props) => {
           return (
             <button
               key={index}
-              className="border border-black rounded-lg mx-2"
+              className ={` ${buttonFocus} border border-black rounded-lg font-bold text-base bg-white text-black mb-2 h-9 py-1 px-3 my-10 mx-3 focus:bg-stone-900 focus:text-white`}
               onClick={() => props.setCurrentPage(page)}
             >
               {page}
@@ -76,10 +86,17 @@ const Paginate = (props: props) => {
           return null;
         }
       })}
+      </div>
       {pageIncrementBtn}
-      <button onClick={handleNextBtn}>
-        <AiFillRightSquare />
+ 
+      
+     <div>
+
+      <button onClick={handleNextBtn}
+       className ={` ${buttonFocus} border border-black rounded-lg font-bold text-base bg-white text-black mb-2 h-9 py-1 px-3 my-10 mx-3 focus:bg-stone-900 focus:text-white`}>
+        <BiChevronsRight />
       </button>
+      </div>
     </div>
   );
 };

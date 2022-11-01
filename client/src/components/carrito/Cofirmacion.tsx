@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { RiArrowGoBackFill } from "react-icons/ri";
 import { useNavigate } from "react-router";
 import { useParams } from "react-router";
@@ -6,14 +6,12 @@ import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { confirmOrders } from "../slices/purchaseOrder";
 const Cofirmacion = () => {
   let loading = true;
-  // const { loading } = useAppSelector((state) => state.orders);
   const dispatch = useAppDispatch();
 
   const { purchaseOrder } = useAppSelector((state) => state.orders);
   const { idOrder } = useParams<{ idOrder: string }>();
   useEffect(() => {
     if (loading) {
-      console.log("entra");
       dispatch(confirmOrders(idOrder));
       // eslint-disable-next-line react-hooks/exhaustive-deps
       loading = false;
@@ -34,7 +32,7 @@ const Cofirmacion = () => {
   }
   total = Math.floor(total * 100) / 100;
   return (
-    <div className="h-full bg-white">
+    <div className="min-h-screen bg-white">
       <div className="bg-[#B1A26A] py-20 border-black"></div>
       <div className="bg-white border-2 border-black -mt-10 mx-8">
         <h1 className="flex justify-center font-bold text-2xl">
@@ -55,7 +53,10 @@ const Cofirmacion = () => {
                 purchaseOrder.products.map((prod: any) => {
                   const total = prod.price * prod.quantity;
                   return (
-                    <div className="grid grid-cols-[2fr_1fr_1fr_1fr]">
+                    <div
+                      key={prod._id}
+                      className="grid grid-cols-[2fr_1fr_1fr_1fr]"
+                    >
                       <p>{prod.name}</p>
                       <p>{prod.price}</p>
                       <p>{prod.quantity}</p>
