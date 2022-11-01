@@ -56,9 +56,9 @@ import { buttonHover } from "../NavBar";
 
     return(
         <> 
-            <div className=" bg-white bg-store-banner h-screen w-full justify-center bg-no-repeat pt-32 pb-20">
+            <div className="bg-white bg-sucursales-banner h-screen bg-no-repeat pt-40 pb-1  bg-contain">
 
-            <div className="border bg-white border-black rounded-xl h-full mx-40 my-auto">
+            <div className="border bg-white border-black rounded-xl py-10 mx-40 my-auto">
             <VscArrowLeft className=" ml-4 mt-3 h-6 w-6 fill-black"
                 onClick={goBack}
             />
