@@ -13,3 +13,4 @@ cloudinary.config({
 export async function uploadImage(fliePath: any) {
   return await cloudinary.uploader.upload(fliePath);
 }
+
