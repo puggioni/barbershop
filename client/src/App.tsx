@@ -24,6 +24,8 @@ import EditarProducto from "./components/admin/EditarProducto";
 import HistorialCompra from "./components/admin/HistorialCompra";
 import OrderUsuario from "./components/admin/OrderUsuario";
 import MyAppointments from "./components/Reserve/MyAppointments";
+import CrearCategoria from "./components/admin/CrearCategorias";
+import BorrarCategoria from "./components/admin/BorrarCategoria";
 
 export const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
@@ -59,8 +61,13 @@ function App() {
         <Route path="/reserve" element={<Reserve />} />
         <Route path="/reserve/barber" element={<MyAppointments />} />
         {/*===================admin=================================*/}
+
         <Route path="/admin/compras" element={<HistorialCompra />} />
         <Route path="/admin/compras/:idOrder" element={<OrderUsuario />} />
+        <Route
+          path="/admin/products/borrar-categoria"
+          element={<BorrarCategoria />}
+        />
         <Route path="/admin/users" element={<Users />} />
         <Route path="/admin/products" element={<Productos />} />
         <Route
@@ -71,6 +78,7 @@ function App() {
           path="/admin/products/editar-producto/:idProduct"
           element={<EditarProducto />}
         />
+        <Route path="/admin/users/historial" element={<HistorialCompra />} />
       </Routes>
     </div>
   );
