@@ -5,6 +5,9 @@ import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import Paginate from "../products/Paginate";
 import {
   cambiarEstadoOrden,
+  cambiarEstadoOrdenCancelada,
+  cambiarEstadoOrdenCompleta,
+  despacharOrden,
   filterOrderState,
   getAllOrders,
 } from "../slices/admin";
@@ -44,12 +47,30 @@ const HistorialCompra = () => {
   };
 
   const handleEstado = (id: string, newState: string) => {
-    if (
-      window.confirm(
-        `¿Esta seguro de querer cambiar el estado de orden ${id} a ${newState}`
-      )
-    ) {
-      dispatch(cambiarEstadoOrden(header.headers, id, newState));
+    if (newState === "Completa") {
+      if (
+        window.confirm(
+          `¿Esta seguro de querer cambiar el estado de orden ${id} a ${newState}`
+        )
+      ) {
+        dispatch(cambiarEstadoOrdenCompleta(header.headers, id));
+      }
+    } else if (newState === "Cancelada") {
+      if (
+        window.confirm(
+          `¿Esta seguro de querer cambiar el estado de orden ${id} a ${newState}`
+        )
+      ) {
+        dispatch(cambiarEstadoOrdenCancelada(header.headers, id));
+      }
+    } else {
+      if (
+        window.confirm(
+          `¿Esta seguro de querer cambiar el estado de orden ${id} a ${newState}`
+        )
+      ) {
+        dispatch(cambiarEstadoOrden(header.headers, id, newState));
+      }
     }
   };
 
@@ -61,6 +82,10 @@ const HistorialCompra = () => {
 
   const handleFilter = (e: any) => {
     dispatch(filterOrderState(e.target.value));
+  };
+
+  const handleDespachar = (id: string) => {
+    dispatch(despacharOrden(header.headers, id));
   };
 
   //==========================render================
@@ -129,7 +154,7 @@ const HistorialCompra = () => {
               }, 0);
               return (
                 <div
-                  className="grid grid-cols-[1.3fr_1fr_.2fr_.5fr_2fr_1fr] gap-16 py-2 pl-2 mt-8 border border-black rounded-lg items-center"
+                  className="grid grid-cols-[1fr_1fr_.2fr_.4fr_2fr_1fr] gap-6 break-words py-2 pl-2 mt-8 border border-black rounded-lg items-center"
                   key={data._id}
                 >
                   <p
@@ -141,8 +166,8 @@ const HistorialCompra = () => {
                   </p>
                   <p>{data._id}</p>
                   <p>{price.toFixed(2)}</p>
-                  <p className={`${estilo}`}>{estado}</p>
-                  <div className={"flex gap-4 "}>
+                  <p className={`text-sm ${estilo}`}>{estado}</p>
+                  <div className="flex gap-4 ">
                     <button
                       onClick={() => handleEstado(data._id, "Completa")}
                       className="border-r border-black pr-4 hover:text-[#855C20] font-semibold "
@@ -157,10 +182,18 @@ const HistorialCompra = () => {
                     </button>
                     <button
                       onClick={() => handleEstado(data._id, "Creada")}
-                      className="hover:text-[#855C20] font-semibold "
+                      className=" pr-4 hover:text-[#855C20] font-semibold "
                     >
                       Procesando
                     </button>
+                    {data.state === "Completa" && (
+                      <button
+                        onClick={() => handleDespachar(data._id)}
+                        className="border border-black px-2 hover:bg-[#855C20] hover:text-white text-sm "
+                      >
+                        DESPACHAR
+                      </button>
+                    )}
                   </div>
                   <button className="text-blue-800 ml-auto mr-4">
                     Ver orden de compra

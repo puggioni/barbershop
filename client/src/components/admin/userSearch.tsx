@@ -24,7 +24,7 @@ const UserSearch = () => {
       <input
         onChange={handleChange}
         name="searchParam"
-        className="border border-black rounded-md w-full pl-2 "
+        className="border border-black rounded-md w-full pl-2 h-12"
         value={searchParam}
         type="text"
         placeholder="Search"
