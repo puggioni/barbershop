@@ -34,7 +34,7 @@ router.get("/pwdRst/sendEmail/:usrEmail", async (req, res) => {
                   <p>Un reseteo de contraseña fue pedido para esta cuenta,</p>
                   <p>si fue asi hace click en el siguiente boton, sino ignora este email.</p>
                   <p>
-                  <button type="button"><a href="${process.env.CLIENT_URL}/passwordReset/${user._id}">Reset Password</a></button>
+                  <button type="button"><a href="${process.env.CLIENT_URL}/password-reset/${user._id}">Reset Password</a></button>
                   </p>
                 </body>
             </html>`
