@@ -28,6 +28,7 @@ import LoginUser from "./components/user/LoginUser";
 import Perfil from "./components/user/Perfil";
 import { firebaseConfig } from "./firebase";
 import ChangePassword from "./components/user/changePassword";
+import MenuResponsive from "./components/MenuResponsive";
 
 export const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
@@ -36,6 +37,7 @@ function App() {
   return (
     <div>
       <NavBar />
+      <MenuResponsive />
       <Routes>
         <Route path="/" element={<Home />} />
         {/*=====================productos==========================*/}
