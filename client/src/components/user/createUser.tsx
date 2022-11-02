@@ -21,7 +21,7 @@ export default function CreateUser() {
     lastname: "*Apellidos son obligatorios",
     email: "*Email obligatorio",
     password:
-      "La contraseña debe tener múmeros y letras y mínimo de 6 caracteres",
+      "La contraseña debe tener números y letras y mínimo de 6 caracteres",
     phone_number: "",
     repassword: "",
   };

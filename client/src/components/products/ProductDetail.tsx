@@ -90,10 +90,10 @@ export default function ProductDetail() {
   return (
     <div className="pt-20 bg-white bg-store-banner bg-no-repeat pb-8 bg-contain font-homenaje rounded-xl">
       <div className="  mx-20 bg-white rounded-xl">
-        <div className="border-2 border-black rounded-xl">
+        <div className=" rounded-xl">
           {product ? (
             <div>
-              <div className="grid grid-cols-[1fr_2fr]">
+              <div className="grid grid-cols-[1fr_2fr] rounded-lg border-2 border-black">
                 <div className=" overflow-hidden p-4">
                   <img className="" src={product.image} alt="product" />
                 </div>

@@ -1,6 +1,6 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import { AiFillCloseCircle } from "react-icons/ai";
-import { useNavigate,useParams } from "react-router";
+import { useParams } from "react-router";
 import useHeaders from "../../app/header";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { editProd } from "../slices/admin";
@@ -13,10 +13,6 @@ export interface input {
   categorias: Array<any>;
 }
 
-interface cat{
-  id:string;
-  name:string;
-}
 type QuizParams = {
     idProduct: string;
   };
@@ -43,6 +39,7 @@ const EditarProducto = () => {
       dispatch(productDetail(idProduct||""))
       dispatch(categorias());
       return ()=>{dispatch(clearDetail())}
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [dispatch]);
 
     useEffect(() => {
@@ -52,6 +49,7 @@ const EditarProducto = () => {
         stock: producto?.stock||0,
         descripcion:producto?.description||"",
         categorias: producto?.categories?.map(c=>c.name)||[],})
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [producto]);
 
 
@@ -195,7 +193,7 @@ const EditarProducto = () => {
             >
               {categoriaProds?.map((cate) => {
                 return (
-                  <option key={cate.id} id={cate.id} value={cate.name}>
+                  <option key={cate._id} id={cate._id} value={cate.name}>
                     {cate.name}
                   </option>
                 );

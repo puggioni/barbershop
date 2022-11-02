@@ -17,10 +17,10 @@ const auth_1 = require("../../middlewares/auth");
 const categories_1 = __importDefault(require("../../models/categories"));
 const router = (0, express_1.Router)();
 router.delete("/delete", auth_1.verifyToken, auth_1.isAdmin, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { name } = req.body;
+    const { id } = req.query;
     try {
         const deletedCategory = yield categories_1.default.findOneAndDelete({
-            name: name,
+            _id: id,
         });
         res.send(deletedCategory);
     }

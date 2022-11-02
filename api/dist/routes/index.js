@@ -26,6 +26,9 @@ const banUser_1 = __importDefault(require("./User/banUser"));
 const desbanearUser_1 = __importDefault(require("./User/desbanearUser"));
 const getAllUsers_1 = __importDefault(require("./User/getAllUsers"));
 const getOneUser_1 = __importDefault(require("./User/getOneUser"));
+const resetPwd_1 = __importDefault(require("./User/resetPwd"));
+const patchPwd_1 = __importDefault(require("./User/patchPwd"));
+const editUser_1 = __importDefault(require("./User/editUser"));
 /* ============CATEGORIES============ */
 const postCategories_1 = __importDefault(require("./Categories/postCategories"));
 const deleteCategory_1 = __importDefault(require("./Categories/deleteCategory"));
@@ -58,6 +61,7 @@ const getUserOrders_1 = __importDefault(require("./Orders/getUserOrders"));
 const getPurchaseOrders_1 = __importDefault(require("./Orders/getPurchaseOrders"));
 const searchOrder_1 = __importDefault(require("./Orders/searchOrder"));
 const changeStateOrder_1 = __importDefault(require("./Orders/changeStateOrder"));
+const filterOrders_1 = __importDefault(require("./Orders/filterOrders"));
 const router = (0, express_1.Router)();
 /* ============PRODUCTS============ */
 router.use("/products", postProducts_1.default);
@@ -82,10 +86,15 @@ router.use("/users", changeToCommon_1.default);
 router.use("/users", banUser_1.default);
 router.use("/users", desbanearUser_1.default);
 router.use("/users", getAllUsers_1.default);
+router.use("/users", resetPwd_1.default);
+router.use("/users", patchPwd_1.default);
+router.use("/users", editUser_1.default);
+router.use("/users", resetPwd_1.default);
+router.use("/users", patchPwd_1.default);
 /* ============CATEGORIES============ */
 router.use("/categories", postCategories_1.default);
-router.use("/categories", deleteCategory_1.default);
 router.use("/categories", getAllCategories_1.default);
+router.use("/categories", deleteCategory_1.default);
 /* ============REVIEWS============ */
 router.use("/reviews", postReview_1.default);
 router.use("/reviews", deleteReview_1.default);
@@ -108,6 +117,7 @@ router.use("/payments", createOrder_1.default);
 /*============ORDERS=============*/
 router.use("/orders", getPurchaseOrders_1.default);
 router.use("/orders", searchOrder_1.default);
+router.use("/orders", filterOrders_1.default);
 router.use("/orders", changeStateOrder_1.default);
 router.use("/orders", getOrder_1.default);
 router.use("/orders", completeOrder_1.default);

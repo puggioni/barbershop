@@ -13,13 +13,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
+const auth_1 = require("../../middlewares/auth");
 const purchaseOrder_1 = __importDefault(require("../../models/purchaseOrder"));
 const router = (0, express_1.Router)();
-router.patch("/editorder", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.patch("/editorder", auth_1.isAdmin, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id, state } = req.query;
     try {
         const order = yield purchaseOrder_1.default.findById(id);
-        state ? (order.state = `${state}`) : "";
+        state ? (order.state = `${state}`) : "Creada";
         yield order.save();
         res.status(200).send(order);
     }
