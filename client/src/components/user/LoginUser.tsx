@@ -57,22 +57,6 @@ export default function LoginUser() {
     }
   };
 
-  const validEmail = new RegExp(
-    '^[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]$'
- );
-
-  const handleForgotPass = (e: React.MouseEvent<HTMLElement>) => {
-    e.preventDefault();
-    if (!validEmail.test(email)) {
-      setEmailErr("*Ingrese email valido");
-   }
-   else{
-    alert("Si esta registrado un email de reseteo de contraseña sera enviado a su cuenta");
-    setEmailErr("");
-    axios(`${process.env.REACT_APP_BASE_URL}/users/pwdRst/sendEmail/${email}`);
-   }
-  };
-
   const handleLogInWithGoogle = async (e: any) => {
     e.preventDefault();
     setPersistence(auth, browserLocalPersistence);
