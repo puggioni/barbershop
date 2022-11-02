@@ -17,6 +17,7 @@ const appointments_1 = __importDefault(require("../../models/appointments"));
 const router = (0, express_1.Router)();
 router.post("/create", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     let { user, date, block, barber, office, service } = req.body;
+    block = parseInt(block);
     let todayDate = new Date();
     let todayDateString = todayDate.toISOString().split('T')[0];
     let todayDateString_year = todayDateString.split('-')[0];

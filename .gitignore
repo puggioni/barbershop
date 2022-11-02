@@ -14,3 +14,4 @@ api/package-lock.json
 api/package.json
 client/config.ts
 updates
+api/src/libs/config.ts

@@ -15,14 +15,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const purchaseOrder_1 = __importDefault(require("../../models/purchaseOrder"));
 const router = (0, express_1.Router)();
-router.get("/all", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.get("/all-orders", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const orders = yield purchaseOrder_1.default.find();
-        res.send(orders);
+        const orders = yield purchaseOrder_1.default.find({});
+        res.status(200).send(orders);
     }
-    catch (err) {
-        console.log(err);
-        res.status(500).send(err);
+    catch (error) {
+        res.status(500).send(error);
     }
 }));
 exports.default = router;

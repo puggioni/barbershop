@@ -1,4 +1,4 @@
-import {  useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { BsArrowCounterclockwise, BsCreditCardFill } from "react-icons/bs";
 import { FaEdit, FaTrashAlt } from "react-icons/fa";
 import { useNavigate } from "react-router";
@@ -7,6 +7,7 @@ import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { RootState } from "../../app/store";
 import Paginate from "../products/Paginate";
 import SearchBar from "../products/Searchbar";
+import { Link } from "react-router-dom";
 import { yaLog } from "../slices/logIn";
 import {
   deleteProd,
@@ -40,7 +41,7 @@ const Productos = () => {
     if (Object.keys(user).length) {
       dispatch(yaLog(user.email));
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   //===========pagination=============
@@ -48,6 +49,9 @@ const Productos = () => {
     firstPostIndex,
     lastPostIndex
   );
+  const [pageLimit] = useState(5);
+  const [maxPageNumberLimit, setMaxPageNumberLimit] = useState(5);
+  const [minPageNumberLimit, setMinPageNumberLimit] = useState(0);
 
   //=====================click handlers=====================
   const handleCateFilter = (event: any) => {
@@ -83,9 +87,9 @@ const Productos = () => {
     e.preventDefault();
   };
 
-  const handleEditProd = (e: any, id: string) => {
-    e.preventDefault();
-  };
+  // const handleEditProd = (e: any, id: string) => {
+  //   e.preventDefault();
+  // };
 
   const handleDelProd = (e: any, id: string) => {
     e.preventDefault();
@@ -110,7 +114,7 @@ const Productos = () => {
                   className="border border-black rounded-lg px-1"
                   onChange={(e) => handleOrder(e)}
                 >
-                  <option value="placeholder" disabled hidden>
+                  <option value="placeholder" disabled hidden selected>
                     Order by
                   </option>
                   <option value="alfa">Alfabetico</option>
@@ -124,11 +128,11 @@ const Productos = () => {
                   className="border border-black rounded-lg px-1 py-3"
                   onChange={(e) => handleCateFilter(e)}
                 >
-                  <option value="placeholder" disabled hidden>
+                  <option value="placeholder" disabled hidden selected>
                     Categorias
                   </option>
                   <option value="all">All</option>;
-                  {cate?.map((cate: { name: string; id: string }) => {
+                  {cate?.map((cate: { name: string; _id: string }) => {
                     return <option value={cate.name}>{cate.name}</option>;
                   })}
                 </select>
@@ -141,8 +145,13 @@ const Productos = () => {
               </div>
 
               <div className=" self-center justify-self-center ">
-                <button className="bg-[#855C20] mr-4 py-2 px-2 text-white rounded-lg font-semibold">
-                  CREAR CATEGORIO
+                <button
+                  onClick={() => navigate("/admin/products/crear-categoria")}
+                  className="bg-[#855C20] mr-4 py-2 px-2 text-white rounded-lg font-semibold"
+                >
+
+                  CATEGORIA
+
                 </button>
                 <button
                   onClick={() => navigate("/admin/products/crear-producto")}
@@ -150,6 +159,7 @@ const Productos = () => {
                 >
                   CREAR PRODUCTO
                 </button>
+                
               </div>
             </div>
             <div className="relative">
@@ -160,7 +170,7 @@ const Productos = () => {
                 <p>Precio</p>
               </div>
               <button className="absolute right-8 top-0 text-blue-800	">
-                Ver historial de comrpas
+                Ver historial de compras
               </button>
 
               {currentProducts?.map((data) => {
@@ -181,13 +191,15 @@ const Productos = () => {
                         handleEditHistory(e, data._id);
                       }}
                     />
-                    <FaEdit
-                      className="justify-self-center cursor-pointer "
-                      title="Editar producto"
-                      onClick={(e) => {
-                        handleEditProd(e, data._id);
-                      }}
-                    />
+                    <Link to={`editar-producto/${data._id}`}>
+                      <FaEdit
+                        className="justify-self-center cursor-pointer "
+                        title="Editar producto"
+                        // onClick={(e) => {
+                        //   handleEditProd(e, data._id);
+                        // }}
+                      />
+                    </Link>
                     <FaTrashAlt
                       className="justify-self-center cursor-pointer "
                       title="Eliminar producto"
@@ -203,6 +215,12 @@ const Productos = () => {
               allProducts={data.allProducts.length}
               productsPerPage={productsPerPage}
               setCurrentPage={setCurrentPage}
+              currentPage={currentPage}
+              pageLimit={pageLimit}
+              maxPageNumberLimit={maxPageNumberLimit}
+              minPageNumberLimit={minPageNumberLimit}
+              setMaxPageNumberLimit={setMaxPageNumberLimit}
+              setMinPageNumberLimit={setMinPageNumberLimit}
             />
           </div>
         </div>

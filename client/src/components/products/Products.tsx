@@ -21,6 +21,9 @@ const Products = () => {
 
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [productsPerPage] = useState(9);
+  const [pageLimit] = useState(5);
+  const [maxPageNumberLimit, setMaxPageNumberLimit] = useState(5);
+  const [minPageNumberLimit, setMinPageNumberLimit] = useState(0);
   const lastPostIndex = currentPage * productsPerPage;
   const firstPostIndex = lastPostIndex - productsPerPage;
   const [hideAlfa, setAlfa] = useState(false);
@@ -72,7 +75,7 @@ const Products = () => {
     );
 
     return (
-      <div className=" bg-white bg-store-banner bg-no-repeat pt-52 pb-8 bg-contain">
+      <div className=" bg-white bg-store-banner bg-no-repeat pt-52 pb-2 bg-contain">
         <div className="border bg-white border-black rounded-xl mx-40">
           <h1 className="flex justify-center py-8 text-5xl">STORE</h1>
           <div className="content-none border-b mx-40 border-black"></div>
@@ -151,6 +154,12 @@ const Products = () => {
             allProducts={data.allProducts.length}
             productsPerPage={productsPerPage}
             setCurrentPage={setCurrentPage}
+            currentPage={currentPage}
+            pageLimit={pageLimit}
+            maxPageNumberLimit={maxPageNumberLimit}
+            minPageNumberLimit={minPageNumberLimit}
+            setMaxPageNumberLimit={setMaxPageNumberLimit}
+            setMinPageNumberLimit={setMinPageNumberLimit}
           />
         </div>
       </div>

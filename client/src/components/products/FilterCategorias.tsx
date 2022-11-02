@@ -27,7 +27,7 @@ const Caregorias = ({ resetPage }: any) => {
       {categorias?.map((cate) => {
         return (
           <button
-            key={cate.id}
+            key={cate._id}
             name={cate.name}
             value={cate.name}
             onClick={(event) => handleClick(event)}

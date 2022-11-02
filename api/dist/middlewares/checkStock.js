@@ -17,7 +17,7 @@ const products_1 = __importDefault(require("../models/products"));
 const checkStock = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const { compra } = req.body;
     let error = 0;
-    compra.reduce((acc, prod) => __awaiter(void 0, void 0, void 0, function* () {
+    yield compra.reduce((acc, prod) => __awaiter(void 0, void 0, void 0, function* () {
         const producto = yield products_1.default.findOne({ name: prod["name"] });
         if (prod["cantidad"] > producto.stock) {
             error++;
