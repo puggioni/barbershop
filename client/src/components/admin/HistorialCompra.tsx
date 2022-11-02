@@ -15,6 +15,7 @@ import {
 import { yaLog } from "../slices/logIn";
 import OrderSearch from "./orderSearch";
 
+
 const HistorialCompra = () => {
   const token = JSON.parse(window.localStorage.getItem("token") || "{}");
   const user = JSON.parse(window.localStorage.getItem("user") || "{}");

@@ -82,6 +82,7 @@ router.get("/pwdRst/sendEmail/:usrEmail", (req, res) => __awaiter(void 0, void 0
             return (0, axios_1.default)(options);
         })
             .then((mailServerRes) => {
+
             console.log(mailServerRes);
             res.status(200).send("Success");
         });
