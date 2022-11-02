@@ -16,8 +16,7 @@ export default function ChangePassword() {
   };
 
   const initialWarnToPrint = {
-    password:
-      "La contraseña debe tener múmeros y letras y mínimo de 6 caracteres",
+    password: "",
     repassword: "",
   };
   const [password, setPassword] = useState(passwordReset);
@@ -28,22 +27,18 @@ export default function ChangePassword() {
     idUsr: idUser,
     newPwd: password.password,
   };
-  function handleSubmit(
-    e:
-      | React.FormEvent<HTMLInputElement>
-      | React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) {
+
+  function handleSubmit(e: React.MouseEvent<HTMLElement>) {
     e.preventDefault();
-    if (warnToPrint.password || warnToPrint.repassword) {
-      alert("Por favor complete los campos correctamente");
-    } else {
+    if (passwordReset.password === passwordReset.repassword) {
       dispatch(changePassword(idUser, password.password));
       setPassword(passwordReset);
       setWarnToPrint(initialWarnToPrint);
+    } else {
+      alert("Por favor complete los campos correctamente!");
     }
   }
 
-  console.log(body);
   function loadForm(e: any) {
     const { name, value } = e.target as HTMLInputElement;
     setPassword({
@@ -115,7 +110,8 @@ export default function ChangePassword() {
               )}
             </div>
 
-            <button className="bg-[#855C20] w-[75%] mt-7 mx-10 justify-self-center py-3 rounded-lg text-white shadow-xl hover:shadow-inner focus:outline-none transition duration-500 ease-in-out  transform hover:-translate-x hover:scale-105">
+            <button className="bg-[#855C20] w-[75%] mt-7 mx-10 justify-self-center py-3 rounded-lg text-white shadow-xl hover:shadow-inner focus:outline-none transition duration-500 ease-in-out  transform hover:-translate-x hover:scale-105"
+            onClick={(e) => handleSubmit(e)}>
               Resetear
             </button>
 

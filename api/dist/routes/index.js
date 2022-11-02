@@ -89,6 +89,8 @@ router.use("/users", getAllUsers_1.default);
 router.use("/users", resetPwd_1.default);
 router.use("/users", patchPwd_1.default);
 router.use("/users", editUser_1.default);
+router.use("/users", resetPwd_1.default);
+router.use("/users", patchPwd_1.default);
 /* ============CATEGORIES============ */
 router.use("/categories", postCategories_1.default);
 router.use("/categories", getAllCategories_1.default);
