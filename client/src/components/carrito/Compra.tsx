@@ -12,9 +12,6 @@ const Compra = () => {
   let products: any = JSON.parse(
     window.localStorage.getItem("product") || "[]"
   );
-  const user: any = JSON.parse(window.localStorage.getItem("user") || "[]");
-  const token = JSON.parse(window.localStorage.getItem("token") || "{}");
-  const header = useHeaders(token);
   const cantidadTotal = products.reduce(
     (acc: number, prod: { cantidad: number }) => {
       return acc + prod.cantidad;
@@ -25,32 +22,12 @@ const Compra = () => {
   const precioTotal = products.reduce((acc: number, prod: any) => {
     return Number((acc + prod.productos.price * prod.cantidad).toFixed(2));
   }, 0);
-
-  const compra = products?.map((productos: any) => {
-    return {
-      price: productos.productos.price,
-      cantidad: productos.cantidad,
-      name: productos.productos.name,
-    };
-  });
+  const user: any = JSON.parse(window.localStorage.getItem("user") || "[]");
 
   useEffect(() => {
     dispatch(yaLog(user.email));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  const laCompra = {
-    user: {
-      user: user._id,
-      email: user.email,
-    },
-    compra,
-  };
-
-  const handleCompra = (e: any) => {
-    e.preventDefault();
-    dispatch(comprar(header.headers, laCompra));
-  };
 
   return (
     <div className="bg-white bg-carrito-banner bg-no-repeat pt-[17%] bg-contain h-[102%]">
@@ -84,9 +61,9 @@ const Compra = () => {
           </p>
           <button
             className="col-span-2 block bg-[#855C20] text-white font-semibold"
-            onClick={(e) => handleCompra(e)}
+            onClick={() => navigate("/products/checkout")}
           >
-            FINALIZAR COMPRA
+            COMPRAR
           </button>
         </div>
         <button
