@@ -6,7 +6,7 @@ const router = Router();
 router.put("/edit/:idUsr", verifyToken, async (req: any, res) => {
     let { email, name, lastname, phone_number } = req.body;
     const { idUsr } = req.params;
-
+    
     try {
         const user = await User.findById(idUsr);
         email ? (user.email = email) : {};
