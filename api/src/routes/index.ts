@@ -22,7 +22,12 @@ import banUser from "./User/banUser";
 import desbanearUser from "./User/desbanearUser";
 import getAllUsers from "./User/getAllUsers";
 import getOneUser from "./User/getOneUser";
+
+import sendPwdRstEmail from "./User/resetPwd";
+import patchPwd from "./User/patchPwd";
+
 import editUsr from "./User/editUser";
+
 /* ============CATEGORIES============ */
 import postCategories from "./Categories/postCategories";
 import deleteCategory from "./Categories/deleteCategory";
@@ -82,6 +87,10 @@ router.use("/users", changeToCommon);
 router.use("/users", banUser);
 router.use("/users", desbanearUser);
 router.use("/users", getAllUsers);
+
+router.use("/users", sendPwdRstEmail);
+router.use("/users", patchPwd);
+
 router.use("/users", editUsr);
 
 /* ============CATEGORIES============ */
