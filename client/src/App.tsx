@@ -13,6 +13,7 @@ import Users from "./components/admin/Users";
 import Cancelacion from "./components/carrito/Cancelacion";
 import Confirmacion from "./components/carrito/Cofirmacion";
 import Compra from "./components/carrito/Compra";
+import FinalizarCompra from "./components/carrito/FinalizarCompra";
 import OrdenDeCompra from "./components/carrito/OrdenDeCompra";
 import Home from "./components/Home";
 import NavBar from "./components/NavBar";
@@ -51,6 +52,7 @@ function App() {
           path="/products/cancelacion/:idOrder"
           element={<Cancelacion />}
         />
+        <Route path="/products/checkout" element={<FinalizarCompra />} />
         {/*=====================user===============================*/}
         <Route path="/user/create" element={<CreateUser />} />
         <Route path="/user/login" element={<LoginUser />} />
