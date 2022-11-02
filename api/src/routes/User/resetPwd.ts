@@ -9,50 +9,48 @@ const router = Router();
 router.get("/pwdRst/sendEmail/:usrEmail", async (req, res) => {
   const { usrEmail } = req.params;
   try {
-    User.findOne({email: usrEmail})
-      .then(user => {
+    User.findOne({ email: usrEmail })
+      .then((user) => {
         const options = {
-          method: 'post',
-          url: 'https://api.sendinblue.com/v3/smtp/email',
+          method: "post",
+          url: "https://api.sendinblue.com/v3/smtp/email",
           data: {
-            "sender": {
-              "name": "Grupo Barbershop",
-              "email": "grupo7henry@gmail.com"
+            sender: {
+              name: "Grupo Barbershop",
+              email: "grupo7henry@gmail.com",
             },
-            "to": [
+            to: [
               {
-                "email": `${user.email}`,
-                "name": `${user.name}`
-              }
+                email: `${user.email}`,
+                name: `${user.name}`,
+              },
             ],
-            "subject": "Password Reset",
-            "htmlContent": 
-            `<html>
+            subject: "Password Reset",
+            htmlContent: `<html>
               <head></head>
                 <h1>Henry Barbershop</h1>
                 <body>
                   <p>Un reseteo de contraseña fue pedido para esta cuenta,</p>
                   <p>si fue asi hace click en el siguiente boton, sino ignora este email.</p>
                   <p>
-                  <button type="button"><a href="${process.env.CLIENT_URL}/password-reset/${user._id}">Reset Password</a></button>
+                  <button type="button"><a href="${process.env.CLIENT_URL}/user/password-reset/${user._id}">Reset Password</a></button>
                   </p>
                 </body>
-            </html>`
+            </html>`,
           },
           headers: {
-            'Content-Type': 'application/json',
-            'accept': 'application/json',
-            'api-key': `${process.env.SENDINBLUE_API_KEY}`
-          }
+            "Content-Type": "application/json",
+            accept: "application/json",
+            "api-key": `${process.env.SENDINBLUE_API_KEY}`,
+          },
         };
-        return axios(options)
+        return axios(options);
       })
-      .then(mailServerRes => {
+      .then((mailServerRes) => {
         console.log(mailServerRes);
         res.status(200).send("Success");
-      })
-  }
-  catch (error) {
+      });
+  } catch (error) {
     console.log(error);
     res.status(500).send(error);
   }

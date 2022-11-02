@@ -15,7 +15,7 @@ router.patch("/pwdRst", async (req, res) => {
         return user.save();
       })
       .then(resp => {
-        res.status(200).send("Success");
+        res.redirect(`${process.env.PORT_FRONT}/user/login`);
       })
   }
   catch (error) {

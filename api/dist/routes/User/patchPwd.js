@@ -50,7 +50,7 @@ router.patch("/pwdRst", (req, res) => __awaiter(void 0, void 0, void 0, function
             return user.save();
         })
             .then(resp => {
-            res.status(200).send("Success");
+            res.redirect(`${process.env.PORT_FRONT}/user/login`);
         });
     }
     catch (error) {
