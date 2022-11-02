@@ -84,6 +84,7 @@ export const logUp = (user: object): AppThunk => {
   };
 };
 
+
 export const updateUser = (idUser:string, formUser:object, header:object): AppThunk => {
   return async (dispatch) => {
     try {
@@ -104,6 +105,25 @@ export const updateUser = (idUser:string, formUser:object, header:object): AppTh
 
 //----------------Reducers------------------------------------------
 
+
+
+export const changePassword = (id: any, password: string): AppThunk => {
+  return async (dispatch) => {
+    try {
+      const response: any = await axios.patch(
+        `${process.env.REACT_APP_BASE_URL}/users/pwdRst`,
+        {
+          idUsr: id,
+          newPwd: password,
+        }
+      );
+      console.log(response.data);
+      dispatch(getNewPassword(response.data));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
 
 export const logInReducerSlice = createSlice({
   name: "login",
@@ -139,14 +159,21 @@ export const logInReducerSlice = createSlice({
       state.logeado = true;
     },
 
+
     userUpdate: (state: any, action: PayloadAction<userFound>) => {
       state.userFound = action.payload;
       localStorage.setItem("user", JSON.stringify(action.payload));
+
+    getNewPassword: (state: any, action: PayloadAction<string>) => {
+      //chequear
+
     },
   },
 });
 
 export default logInReducerSlice.reducer;
 
-export const { userLogIn, userLogOut, yaLogeado, userCreate,userUpdate } =
+
+export const { userLogIn, userLogOut, yaLogeado, userCreate, getNewPassword,userUpdate } =
+
   logInReducerSlice.actions;

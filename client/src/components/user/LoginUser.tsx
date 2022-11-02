@@ -5,25 +5,72 @@ import { logIn } from "../slices/logIn";
 import { getAuth, GoogleAuthProvider, signInWithPopup } from "@firebase/auth";
 import { getFavoritesProducts } from "../slices/productSlice";
 import { browserLocalPersistence, setPersistence } from "firebase/auth";
+import axios from "axios";
+/* import * as dotenv from "dotenv";
+dotenv.config(); */
 export default function LoginUser() {
   const [password, setPassword] = useState("");
   const [email, setUserName] = useState("");
-
+  const [buttonStyle, SetButtonStyle] = useState("bg-[#757575] w-[75%] mt-7 mx-10 justify-self-center py-3 rounded-lg text-white");
+  const [emailErr, setEmailErr] = useState("");
+  const [pwdErr, setPwdErr] = useState("");
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const user: any = JSON.parse(window.localStorage.getItem("user") || "{}");
   const auth = getAuth();
+
+  const validEmail = new RegExp(
+    '^[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]$'
+  );
+
   const handleSubmit = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
-    dispatch(logIn(email, password));
-
-    if (user.name) {
-      cargarFavs();
+    if (!validEmail.test(email)) {
+      setEmailErr("*Ingrese email valido");
     }
+    else if (!password) {
+      setEmailErr("");
+      setPwdErr("*Ingrese contraseña");
+    }
+    else {
+      dispatch(logIn(email, password));
+      if (user.name) {
+        cargarFavs();
+      }
+      setEmailErr("");
+      setPwdErr("");
+      setPassword("");
+      setUserName("");
+      navigate("/");
+    }
+  };
 
-    setPassword("");
-    setUserName("");
-    navigate("/");
+  const handleForgotPass = (e: React.MouseEvent<HTMLElement>) => {
+    e.preventDefault();
+    if (!validEmail.test(email)) {
+      setEmailErr("*Ingrese email valido");
+    }
+    else {
+      alert("Si esta registrado un email de reseteo de contraseña sera enviado a su cuenta");
+      setEmailErr("");
+      axios(`${process.env.REACT_APP_BASE_URL}/users/pwdRst/sendEmail/${email}`);
+    }
+  };
+
+  const validEmail = new RegExp(
+    '^[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]$'
+ );
+
+  const handleForgotPass = (e: React.MouseEvent<HTMLElement>) => {
+    e.preventDefault();
+    if (!validEmail.test(email)) {
+      setEmailErr("*Ingrese email valido");
+   }
+   else{
+    alert("Si esta registrado un email de reseteo de contraseña sera enviado a su cuenta");
+    setEmailErr("");
+    axios(`${process.env.REACT_APP_BASE_URL}/users/pwdRst/sendEmail/${email}`);
+   }
   };
 
   const handleLogInWithGoogle = async (e: any) => {
@@ -64,30 +111,41 @@ export default function LoginUser() {
       <div className=" -mt-20 border-2 border-[#222222] flex flex-col sm:justify-center w-1/4 mx-auto items-center">
         <div className=" w-full rounded-lg px-6 py-4 bg-white ">
           <form className="mt-10">
+            <span className="text-red-600 text-sm">{emailErr}</span>
             <input
               type="email"
               placeholder="Correo electronico"
-              className="mt-7 border-2 border-[#222222] pl-4 block w-full  bg-gray-100 h-11 rounded-lg shadow-lg hover:bg-blue-100 focus:bg-blue-100 focus:ring-0"
+              className="mb-3 border-2 border-[#222222] pl-4 block w-full  bg-gray-100 h-11 rounded-lg shadow-lg hover:bg-blue-100 focus:bg-blue-100 focus:ring-0"
               name="userName"
               value={email}
               onChange={(event) => {
                 setUserName(event.target.value);
               }}
             />
-
+            <span className="text-red-600 text-sm">{pwdErr}</span>
             <input
               type="password"
               placeholder="Contraseña"
-              className=" mt-7 border-2 border-[#222222] pl-4 block w-full bg-gray-100 h-11 rounded-lg shadow-lg hover:bg-blue-100 focus:bg-blue-100 focus:ring-0"
+              className=" mb-4 border-2 border-[#222222] pl-4 block w-full bg-gray-100 h-11 rounded-lg shadow-lg hover:bg-blue-100 focus:bg-blue-100 focus:ring-0"
               name="password"
-              onChange={(event) => setPassword(event.target.value)}
+              onChange={(event) => {
+                setPassword(event.target.value);
+                if((emailErr === "") && (password.length <= 1))
+                  {
+                    SetButtonStyle("bg-[#757575] w-[75%] mt-7 mx-10 justify-self-center py-3 rounded-lg text-white");
+                  }
+                else
+                  {
+                    SetButtonStyle("bg-[#855C20] w-[75%] mt-7 mx-10 justify-self-center py-3 rounded-lg text-white shadow-xl hover:shadow-inner focus:outline-none transition duration-500 ease-in-out  transform hover:-translate-x hover:scale-105");                    
+                  }}}
               value={password}
             />
 
+            <a className="cursor-pointer" onClick={(e) => handleForgotPass(e)}>Olvidé mi contraseña</a>
+
             <button
-              className="bg-[#855C20] w-[75%] mt-7 mx-10 justify-self-center py-3 rounded-lg text-white shadow-xl hover:shadow-inner focus:outline-none transition duration-500 ease-in-out  transform hover:-translate-x hover:scale-105"
-              onClick={(e) => handleSubmit(e)}
-            >
+              className={buttonStyle}
+              onClick={(e) => handleSubmit(e)}>
               Ingresar
             </button>
 
@@ -100,9 +158,9 @@ export default function LoginUser() {
             </div>
 
             <div className="flex mt-7 justify-center w-full">
-              <button className="mr-5 bg-blue-500 border-none px-4 py-2 rounded-xl cursor-pointer text-white shadow-xl hover:shadow-inner transition duration-500 ease-in-out  transform hover:-translate-x hover:scale-105">
+              {/* <button className="mr-5 bg-blue-500 border-none px-4 py-2 rounded-xl cursor-pointer text-white shadow-xl hover:shadow-inner transition duration-500 ease-in-out  transform hover:-translate-x hover:scale-105">
                 Facebook
-              </button>
+              </button> */}
 
               <button
                 onClick={(e) => {
