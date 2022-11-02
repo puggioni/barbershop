@@ -36,54 +36,21 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
-const purchaseOrder_1 = __importDefault(require("../../models/purchaseOrder"));
+const user_1 = __importDefault(require("../../models/user"));
 const dotenv = __importStar(require("dotenv"));
-const axios_1 = __importDefault(require("axios"));
 dotenv.config();
 const router = (0, express_1.Router)();
-router.get("/cancel/:idOrder", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { idOrder } = req.params;
+router.patch("/pwdRst", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { idUsr, newPwd } = req.body;
     try {
-        const order = yield (yield purchaseOrder_1.default.findById(idOrder)).populate("products");
-        order["state"] = "Cancelada";
-        order
-            .save()
-            .then((savedOrder) => {
-            const options = {
-                method: "post",
-                url: "https://api.sendinblue.com/v3/smtp/email",
-                data: {
-                    sender: {
-                        name: "grupo7henry",
-                        email: "grupo7henry@gmail.com",
-                    },
-                    to: [
-                        {
-                            email: `${savedOrder.user}`,
-                            name: `${savedOrder.user}`,
-                        },
-                    ],
-                    subject: "Confirmacion de cancelacion de compra",
-                    htmlContent: `<html>
-              <head></head>
-                <h1>Henry Barbershop</h1>
-                <body>
-                  <p>Estimado usuario,</p>
-                  <p>Confirmamos la cancelacion de su orden. Estamos a su disposición,</p>
-                  <p>equipo Henry Barbershop.</p>
-                </body>
-            </html>`,
-                },
-                headers: {
-                    "Content-Type": "application/json",
-                    accept: "application/json",
-                    "api-key": `${process.env.SENDINBLUE_API_KEY}`,
-                },
-            };
-            return (0, axios_1.default)(options);
+        const encryptedPwd = yield user_1.default.encryptPassword(newPwd);
+        user_1.default.findById(idUsr)
+            .then(user => {
+            user.password = encryptedPwd;
+            return user.save();
         })
-            .then((mailServerRes) => {
-            res.status(200).json(order);
+            .then(resp => {
+            res.redirect(`${process.env.PORT_FRONT}/user/login`);
         });
     }
     catch (error) {

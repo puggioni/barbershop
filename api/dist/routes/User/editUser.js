@@ -13,19 +13,24 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
+const user_1 = __importDefault(require("../../models/user"));
 const auth_1 = require("../../middlewares/auth");
-const purchaseOrder_1 = __importDefault(require("../../models/purchaseOrder"));
 const router = (0, express_1.Router)();
-router.patch("/editorder", auth_1.isAdmin, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { id, state } = req.query;
+router.put("/edit/:idUsr", auth_1.verifyToken, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    let { email, name, lastname, phone_number } = req.body;
+    const { idUsr } = req.params;
     try {
-        const order = yield purchaseOrder_1.default.findById(id);
-        state ? (order.state = `${state}`) : "Creada";
-        yield order.save();
-        res.status(200).send(order);
+        const user = yield user_1.default.findById(idUsr);
+        email ? (user.email = email) : {};
+        name ? (user.name = name) : {};
+        lastname ? (user.lastname = lastname) : {};
+        phone_number ? (user.phone_number = phone_number) : {};
+        const savedUser = yield user.save();
+        res.status(200).send(savedUser);
     }
-    catch (error) {
-        res.status(500).send(error);
+    catch (err) {
+        console.log(err);
+        res.status(500).send(err);
     }
 }));
 exports.default = router;

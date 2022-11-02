@@ -84,6 +84,45 @@ export const logUp = (user: object): AppThunk => {
   };
 };
 
+
+export const updateUser = (idUser:string, formUser:object, header:object): AppThunk => {
+  return async (dispatch) => {
+    try {
+      const userUpdated: dataUser = await axios.put(
+        `${process.env.REACT_APP_BASE_URL}/users/edit/${idUser}`,
+        formUser,
+        header
+      );
+      dispatch(userUpdate(userUpdated.data));
+      alert("Informacion actualizada exitosamente");    
+    } catch (error: any) {
+      console.log(error)
+        alert("Error al actualizar info");
+    }
+  };
+};
+
+
+//----------------Reducers------------------------------------------
+
+
+
+export const changePassword = (id: any, password: string): AppThunk => {
+  return async () => {
+    try {
+      const response: any = await axios.patch(
+        `${process.env.REACT_APP_BASE_URL}/users/pwdRst`,
+        {
+          idUsr: id,
+          newPwd: password,
+        }
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
 export const logInReducerSlice = createSlice({
   name: "login",
   initialState,
@@ -117,10 +156,18 @@ export const logInReducerSlice = createSlice({
 
       state.logeado = true;
     },
+
+
+    userUpdate: (state: any, action: PayloadAction<userFound>) => {
+      state.userFound = action.payload;
+      localStorage.setItem("user", JSON.stringify(action.payload));
+    }
   },
 });
 
 export default logInReducerSlice.reducer;
 
-export const { userLogIn, userLogOut, yaLogeado, userCreate } =
+
+export const { userLogIn, userLogOut, yaLogeado, userCreate, userUpdate } =
+
   logInReducerSlice.actions;

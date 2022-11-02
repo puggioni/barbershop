@@ -217,6 +217,42 @@ export const cambiarEstadoOrden = (
     }
   };
 };
+export const cambiarEstadoOrdenCompleta = (
+  header: { token: string | null },
+  id: string
+): AppThunk => {
+  return async (dispatch) => {
+    try {
+      const res = await axios(
+        `${process.env.REACT_APP_BASE_URL}/orders/confirm/${id}`,
+        {
+          headers: header,
+        }
+      );
+      dispatch(cambiarEstado(res.data));
+    } catch (error) {
+      alert("No se pudo cambiar el estado de la orden");
+    }
+  };
+};
+export const cambiarEstadoOrdenCancelada = (
+  header: { token: string | null },
+  id: string
+): AppThunk => {
+  return async (dispatch) => {
+    try {
+      const res = await axios(
+        `${process.env.REACT_APP_BASE_URL}/orders/cancel/${id}`,
+        {
+          headers: header,
+        }
+      );
+      dispatch(cambiarEstado(res.data));
+    } catch (error) {
+      alert("No se pudo cambiar el estado de la orden");
+    }
+  };
+};
 
 export const searchOrderName = (name: string): AppThunk => {
   return async (dispatch) => {
@@ -290,6 +326,25 @@ export const borrarCate = (
   };
 };
 
+export const despacharOrden = (
+  header: { token: string | null },
+  id: string
+): AppThunk => {
+  return async (dispatch) => {
+    try {
+      const res = await axios.post(
+        `${process.env.REACT_APP_BASE_URL}/orders/dispatch/` + id,
+        { id: id },
+        { headers: header }
+      );
+      dispatch(despachado(res.data));
+      alert("Producto despachado con exito");
+    } catch (error) {
+      alert("No se pudo despachar");
+    }
+  };
+};
+
 //================reducer===================
 const adminReducerSlice = createSlice({
   name: "admin",
@@ -341,6 +396,16 @@ const adminReducerSlice = createSlice({
       });
       state.orders = filtered;
     },
+    despachado: (
+      state: { orders: any[]; filtroOrden: any[] },
+      action: PayloadAction<string>
+    ) => {
+      const index = state.orders.findIndex((el) => {
+        return null; // el._id === action.payload._id;
+      });
+      state.orders[index] = action.payload;
+      state.filtroOrden[index] = action.payload;
+    },
   },
 });
 
@@ -353,4 +418,5 @@ export const {
   filterOrders,
   searchOrdersName,
   cambiarEstado,
+  despachado,
 } = adminReducerSlice.actions;

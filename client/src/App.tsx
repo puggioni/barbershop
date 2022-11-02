@@ -27,6 +27,7 @@ import CreateUser from "./components/user/createUser";
 import LoginUser from "./components/user/LoginUser";
 import Perfil from "./components/user/Perfil";
 import { firebaseConfig } from "./firebase";
+import ChangePassword from "./components/user/changePassword";
 
 export const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
@@ -57,6 +58,10 @@ function App() {
         <Route path="/user/create" element={<CreateUser />} />
         <Route path="/user/login" element={<LoginUser />} />
         <Route path="/user/perfil" element={<Perfil />} />
+        <Route
+          path="/user/password-reset/:idUser"
+          element={<ChangePassword />}
+        />
         {/*===================sucursales============================*/}
         <Route path="/sucursales" element={<Sucursales />} />
         {/*===================turno=================================*/}
