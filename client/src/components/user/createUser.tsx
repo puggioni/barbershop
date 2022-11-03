@@ -1,8 +1,9 @@
-import { Link } from "react-router-dom";
-import { MouseEvent, useState } from "react";
-import { logUp } from "../slices/logIn";
-import { useAppDispatch } from "../../app/hooks";
 import { getAuth, GoogleAuthProvider, signInWithPopup } from "@firebase/auth";
+import { MouseEvent, useState } from "react";
+import { Link } from "react-router-dom";
+import { useAppDispatch } from "../../app/hooks";
+import logo from "../../imagenes/Logo.png";
+import { logUp } from "../slices/logIn";
 
 export default function CreateUser() {
   const dispatch = useAppDispatch();
@@ -30,6 +31,8 @@ export default function CreateUser() {
   const [warnToPrint, setWarnToPrint] = useState(initialWarnToPrint);
 
   const auth = getAuth();
+
+  //===============================handlers===================================
 
   const handleGoogleSignIn = async (e: any) => {
     e.preventDefault();
@@ -159,20 +162,24 @@ export default function CreateUser() {
     }
   }
 
+  //======================================render===========================================
   return (
     <div className="bg-white">
-      <div className="z-1 w-[100vw] h-[40vh] bg-[#222222] flex justify-center items-center">
+      <div className="z-1 w-[100vw] h-[40vh] bg-[#222222] lg:flex hidden justify-center items-center">
         <label className=" font-bold text-white text-5xl	">Sign Up</label>
       </div>
+      <img className="lg:hidden m-auto h-[10%] mt-8" src={logo} alt="logo" />
 
-      <div className="-mt-20 border-2 border-[#222222] flex flex-col sm:justify-center w-1/2 mx-auto items-center">
+      <div className="lg:-mt-20 mt-6 border-2 border-[#222222] lg:w-1/2 lg:mx-auto mx-6 items-center lg:rounded-none rounded-lg">
         <div className=" w-full rounded-lg px-6 py-4 bg-white">
+          <span className="flex justify-center font-bold mx-[25%] pb-4 border-b text-xl border-b-black">
+            Sign up
+          </span>
           <form
             name="form"
             onChange={loadForm}
-            className="grid grid-cols-2 gap-8 mt-10"
+            className="lg:grid grid-cols-2 gap-8 mt-10"
           >
-            {/* ======= */}
             <div>
               <input
                 value={formUser.name}
@@ -187,7 +194,6 @@ export default function CreateUser() {
                 </span>
               )}
             </div>
-            {/* ======== */}
 
             <div className="">
               <input
@@ -203,7 +209,6 @@ export default function CreateUser() {
                 </span>
               )}
             </div>
-            {/* ======= */}
 
             <div className="">
               <input
@@ -219,7 +224,6 @@ export default function CreateUser() {
                 </span>
               )}
             </div>
-            {/* ======= */}
 
             <div className="">
               <input
@@ -235,7 +239,6 @@ export default function CreateUser() {
                 </span>
               )}
             </div>
-            {/* ======= */}
 
             <div className="">
               <input
@@ -243,7 +246,7 @@ export default function CreateUser() {
                 name="password"
                 type="password"
                 placeholder="Contraseña"
-                className=" border-2 border-[#222222] pl-4 block w-full  bg-gray-100 h-11 rounded-lg shadow-lg hover:bg-blue-100 focus:bg-blue-100 focus:ring-0"
+                className="lg:mt-0 mt-6 border-2 border-[#222222] pl-4 block w-full  bg-gray-100 h-11 rounded-lg shadow-lg hover:bg-blue-100 focus:bg-blue-100 focus:ring-0"
               />
 
               {!warnToPrint.password ? null : (
@@ -252,7 +255,6 @@ export default function CreateUser() {
                 </span>
               )}
             </div>
-            {/* ======= */}
 
             <div className="">
               <input
@@ -268,19 +270,18 @@ export default function CreateUser() {
                 </span>
               )}
             </div>
-            {/* ======= */}
 
             <button
               type="submit"
               onClick={(event: any) => {
                 handleSubmit(event);
               }}
-              className=" col-span-2 bg-[#855C20] w-[75%] mx-10 justify-self-center py-3 rounded-lg text-white shadow-xl focus:outline-none transition duration-500 ease-in-out  transform hover:-translate-x hover:scale-105"
+              className=" col-span-2 bg-[#855C20] lg:w-[75%] w-full lg:mt-0 mt-6 lg:mx-10 justify-self-center py-3 lg:rounded-lg text-white shadow-xl focus:outline-none transition duration-500 ease-in-out  transform hover:-translate-x hover:scale-105"
             >
               Registrar
             </button>
 
-            <div className="col-span-2 flex  items-center text-center">
+            <div className="col-span-2 lg:flex lg:my-0 my-8 items-center text-center">
               <hr className="border-gray-300 border-1 w-full rounded-md" />
               <label className="block font-medium text-sm text-600 w-full">
                 Registrate con
@@ -288,21 +289,12 @@ export default function CreateUser() {
               <hr className="border-gray-300 border-1 w-full rounded-md" />
             </div>
 
-            <div className="col-span-2 flex gap-10 justify-center w-full">
-              <button
-                onSubmit={(e) => e.preventDefault()}
-                className=" bg-blue-500 border-none px-4 py-2 rounded-xl cursor-pointer text-white shadow-xl hover:shadow-inner transition duration-500 ease-in-out  transform hover:-translate-x hover:scale-105"
-              >
-                Facebook
-              </button>
-
-              <button
-                onClick={(e) => handleGoogleSignIn(e)}
-                className="bg-red-500 border-none px-4 py-2 rounded-xl cursor-pointer text-white shadow-xl hover:shadow-inner transition duration-500 ease-in-out  transform hover:-translate-x hover:scale-105"
-              >
-                Google
-              </button>
-            </div>
+            <button
+              onClick={(e) => handleGoogleSignIn(e)}
+              className="bg-red-500 flex justify-center mx-auto lg:grid lg:justify-self-center w-1/2 col-span-2 border-none px-4 py-2 rounded-xl cursor-pointer text-white shadow-xl hover:shadow-inner transition duration-500 ease-in-out  transform hover:-translate-x hover:scale-105"
+            >
+              Google
+            </button>
 
             <div className="col-span-2  flex justify-center items-center">
               <label className="mr-2">¿Ya tienes una cuenta?</label>
