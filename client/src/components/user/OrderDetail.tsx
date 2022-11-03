@@ -2,7 +2,7 @@ import { useParams,useNavigate } from "react-router";
 import { useEffect } from "react";
 import { useAppDispatch,useAppSelector } from "../../app/hooks";
 import	{getDetailOrder} from "../slices/purchaseOrder"
-import { RiArrowGoBackFill } from "react-icons/ri";
+import { IoMdArrowBack } from "react-icons/io";
 
 
 const OrderDetail=()=>{
@@ -24,6 +24,7 @@ const OrderDetail=()=>{
         <div className="bg-white min-h-screen">
         <div className="bg-[#222222] py-24 border-black"></div>
         <div className="bg-white border-2 border-black -mt-20 mx-8 rounded-lg">
+        <IoMdArrowBack onClick={()=>navigate(-1)} className=" mt-4 ml-4 text-2xl"/>
           <h1 className="flex justify-center font-bold text-2xl">
             ORDEN DE COMPRA
           </h1>
@@ -66,13 +67,7 @@ const OrderDetail=()=>{
             </div>
           </div>
   
-          <RiArrowGoBackFill
-            onClick={() => {
-              navigate(-1);
-            }}
-            className="m-4 cursor-pointer"
-            title="Home"
-          />
+          
         </div>
       </div>
     )
