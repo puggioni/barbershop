@@ -84,7 +84,7 @@ router.get("/deliver/:idOrder", (req, res) => __awaiter(void 0, void 0, void 0, 
             return (0, axios_1.default)(options);
         })
             .then((mailServerRes) => {
-            res.status(200).json(mailServerRes);
+            res.status(200).json(order);
         });
     }
     catch (error) {
