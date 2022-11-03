@@ -6,7 +6,7 @@ dotenv.config();
 
 const router = Router();
 
-router.get("/deliver/:idOrder", async (req, res) => {
+router.post("/deliver/:idOrder", async (req, res) => {
   const { idOrder } = req.params;
   try {
     const order = await (await Orders.findById(idOrder)).populate("products");

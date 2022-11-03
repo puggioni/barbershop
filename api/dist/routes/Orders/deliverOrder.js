@@ -41,7 +41,7 @@ const dotenv = __importStar(require("dotenv"));
 const axios_1 = __importDefault(require("axios"));
 dotenv.config();
 const router = (0, express_1.Router)();
-router.get("/deliver/:idOrder", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.post("/deliver/:idOrder", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { idOrder } = req.params;
     try {
         const order = yield (yield purchaseOrder_1.default.findById(idOrder)).populate("products");
