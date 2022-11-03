@@ -39,7 +39,7 @@ const router = (0, express_1.Router)();
 router.get("/cancel-order/:idOrder", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { idOrder } = req.params;
     try {
-        res.redirect(`${process.env.PORT_FRONT}products/cancelacion/${idOrder}`);
+        res.redirect(`${process.env.CLIENT_URL}/products/cancelacion/${idOrder}`);
     }
     catch (error) {
         console.log(error);

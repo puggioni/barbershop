@@ -23,7 +23,7 @@ router.get("/capture-order", async (req, res) => {
 
   res
     .status(200)
-    .redirect(`${process.env.PORT_FRONT}products/confirmacion/${idOrder}`);
+    .redirect(`${process.env.CLIENT_URL}/products/confirmacion/${idOrder}`);
 });
 
 export default router;

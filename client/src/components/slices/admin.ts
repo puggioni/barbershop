@@ -333,7 +333,7 @@ export const despacharOrden = (
   return async (dispatch) => {
     try {
       const res = await axios.post(
-        `${process.env.REACT_APP_BASE_URL}/orders/dispatch/` + id,
+        `${process.env.REACT_APP_BASE_URL}/orders/deliver/` + id,
         { id: id },
         { headers: header }
       );
