@@ -13,6 +13,7 @@ export interface IPurchaseOrder {
   ];
   state: string;
   date: Date;
+  address: Object;
 }
 const PurchaseOrderSchema = new Schema<IPurchaseOrder>(
   {
@@ -37,6 +38,17 @@ const PurchaseOrderSchema = new Schema<IPurchaseOrder>(
     state: {
       type: String,
       default: "Creada",
+    },
+    address: {
+      direccion: {
+        type: String,
+      },
+      CP: {
+        type: Number,
+      },
+      localidad: {
+        type: String,
+      },
     },
     date: {
       type: Date,
