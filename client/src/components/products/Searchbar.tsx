@@ -12,6 +12,7 @@ type eventarget = {
 };
 
 const SearchBar = () => {
+
   const [tosearch, setTosearch] = useState("");
   const dispatch = useAppDispatch();
 
@@ -27,6 +28,8 @@ const SearchBar = () => {
   function handleChange(e: evento) {
     if (e.target.name === "tosearch") setTosearch(e.target.value);
   }
+
+//----------------------de aca para abajo lo de la busqueda con sugerencia------------------
 
   return (
     <div className="relative mx-8">
@@ -46,25 +49,9 @@ const SearchBar = () => {
           search(event);
         }}
       />
+   
     </div>
   );
 };
 
 export default SearchBar;
-
-// const SearchBar = () => {
-//   const handleClick = (event: any) => {
-//     //event.preventDefault();
-//     console.log(event);
-//   };
-//   return (
-//     <div className="mx-auto max-w-md relative">
-//       <input
-//         className="peer cursor-pointer z-10 h-8 w-12 rounded-full border bg-transparent pl-5 outline-none focus:w-full focus:cursor-text focus:border-lime-300 focus:pl-16 focus:pr-4"
-//         type="search "
-//         placeholder=""
-//       />
-
-//     </div>
-//   );
-// };
