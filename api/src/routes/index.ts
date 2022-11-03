@@ -38,12 +38,13 @@ import postAppointment from "./Appointments/postAppointment";
 import getAppointments from "./Appointments/getAppontments";
 import deleteAppointment from "./Appointments/deleteAppointment";
 import getAllAppointments from "./Appointments/getAllAppointments";
-/* ============OFFICES============ */
+/* ============BARBERS============ */
 import postbarber from "./Barbers/postbarber";
 import getbarbers from "./Barbers/getbarbers";
-/* ============BARBERS============ */
+/* ============OFFICES============ */
 import postOffice from "./Offices/postOffice";
 import getOffices from "./Offices/getOffices";
+import editOffices from "./Offices/patchOffice";
 /* ============PAYMENTS============*/
 import captureOrder from "./Payments/captureOrder";
 import cancelOrder from "./Payments/cancelOrder";
@@ -111,6 +112,7 @@ router.use("/agenda/", getAllAppointments);
 /* ============OFFICES============ */
 router.use("/office/", postOffice);
 router.use("/office/", getOffices);
+router.use("/office/", editOffices);
 
 /* ============BARBERS============ */
 router.use("/barber/", postbarber);
