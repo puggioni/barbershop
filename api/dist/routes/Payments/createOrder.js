@@ -59,6 +59,11 @@ router.post("/create-order", checkStock_1.checkStock, auth_1.verifyToken, (req, 
     });
     const newOrder = new purchaseOrder_1.default({
         user: user["email"],
+        address: {
+            direccion: user["direccionEnvio"],
+            localidad: user["localidad"],
+            CP: user["CP"],
+        },
         products: productos,
     });
     newOrder.save();
