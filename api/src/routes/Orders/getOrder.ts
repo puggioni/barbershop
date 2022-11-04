@@ -4,7 +4,7 @@ import Orders from "../../models/purchaseOrder";
 
 const router = Router();
 
-router.get("/:idOrder", isAdmin, async (req, res) => {
+router.get("/:idOrder", async (req, res) => {
   const { idOrder } = req.params;
   try {
     const order = await Orders.findById(idOrder);

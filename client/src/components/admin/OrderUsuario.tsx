@@ -17,7 +17,7 @@ const Cofirmacion = () => {
 
   const total = order[0]?.products?.length
     ? order[0].products.reduce((acc: number, prod) => {
-        return acc + prod.price;
+        return acc + (prod.price*prod.quantity);
       }, 0)
     : 0;
   const header = useHeaders(token);
