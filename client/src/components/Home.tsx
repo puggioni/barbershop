@@ -13,7 +13,7 @@ const Home = () => {
   return (
     <div
       className="lg:bg-transparent text-white lg:min-h-0
-    lg:bg-home-bg bg-cover overflow-hidden bg-no-repeat bg-center bg-home-responsive min-h-screen "
+    lg:bg-home-bg bg-cover overflow-hidden bg-no-repeat bg-center bg-home-responsive min-h-screen w-full"
     >
       {!logeado ? (
         <div className="inline-block float-right m-6">

@@ -14,8 +14,10 @@ const Logeado = ({ setHide }: any) => {
     setHide("-translate-y-full");
     navigate("/");
   }
-  const img =
-    "https://media.istockphoto.com/vectors/black-hipster-vector-mustache-vector-id485318064?k=20&m=485318064&s=170667a&w=0&h=krFPiCXz9kaEOS3gmFxGwYSOzTIxgOXqos7hEELiaTY=";
+  const img: any =
+    auth.currentUser !== null
+      ? auth.currentUser.photoURL
+      : "https://media.istockphoto.com/vectors/black-hipster-vector-mustache-vector-id485318064?k=20&m=485318064&s=170667a&w=0&h=krFPiCXz9kaEOS3gmFxGwYSOzTIxgOXqos7hEELiaTY=";
 
   return (
     <div className=" lg:grid flex lg:grid-cols-2 justify-end items-center">

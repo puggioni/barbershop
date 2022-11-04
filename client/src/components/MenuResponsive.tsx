@@ -29,14 +29,14 @@ const MenuResponsive = () => {
   //====================render=================================
   return (
     <div
-      className={`lg:hidden z-10 bg-white/95 left-0 right-0 top-0 bottom-0 absolute  ease-in-out duration-200 ${hideMenu}`}
+      className={`lg:hidden z-10 bg-white/95 min-h-screen w-full absolute top-0 ease-in-out duration-200 ${hideMenu}`}
     >
       <AiOutlineClose
         onClick={() => {
           setHide("-translate-y-full");
         }}
         size={25}
-        className="mt-8 ml-auto mr-8"
+        className="mt-4 ml-auto mr-8"
       />
       <img
         className="m-auto h-[10%] mt-8"
@@ -85,17 +85,7 @@ const MenuResponsive = () => {
           Carrito
         </Link>
       </div>
-      {logeado ? (
-        <Logeado setHide={setHide} />
-      ) : (
-        <Link to={"/user/login"}>
-          <button
-            className={`${buttonHover} bg-black text-white px-2 py-2 justify-self-center rounded-lg font-bold`}
-          >
-            Log In/Sign Up
-          </button>
-        </Link>
-      )}
+      {logeado && <Logeado setHide={setHide} />}
       <VscMenu
         size={30}
         onClick={() => setHide("")}

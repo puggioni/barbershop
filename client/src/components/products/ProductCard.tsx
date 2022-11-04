@@ -68,7 +68,7 @@ const ProductCard = (producto: products) => {
 
   return (
     <div
-      className=" flex lg:flex-col bg-white items-center max-w-3xl lg:max-h-full  h-1/2   
+      className=" flex lg:flex-col bg-white items-center max-w-3xl lg:h-full  h-1/2   
         justify-items-center rounded-xl hover:outline hover:outline-1	hover:outline-gray-300 
         lg:border-none lg:my-0 lg:mx-0 border border-black my-6 mx-3 relative"
     >
