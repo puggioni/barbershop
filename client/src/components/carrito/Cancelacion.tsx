@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { RiArrowGoBackFill } from "react-icons/ri";
-import { useNavigate } from "react-router";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { RootState } from "../../app/store";
 import { cancelOrders } from "../slices/purchaseOrder";
@@ -36,16 +35,16 @@ const Cancelacion = () => {
   return (
     <div className="min-h-screen bg-white">
       <div className="bg-[#B1A26A] py-20 border-black"></div>
-      <div className="bg-white border-2 border-black -mt-10 mx-8">
+      <div className="bg-white border-2 border-black -mt-10 lg:mx-8">
         <h1 className="flex justify-center font-bold text-2xl">
           COMPRA CANCELADA
         </h1>
 
         <div className="border border-black m-8 ">
-          <div className="grid grid-cols-[1fr_2fr] my-16 gap-4">
-            <div className="justify-self-center">id:{idOrder}</div>
-            <div className="border-l border-black pl-16  grid gap-4">
-              <div className="grid grid-cols-[2fr_1fr_1fr_1fr] pb-4">
+          <div className="lg:grid grid-cols-[1fr_2fr] lg:my-16 gap-4 flex flex-col lg:mx-0 mx-6">
+            <div className="justify-self-center lg:ml-0 ml-6">id:{idOrder}</div>
+            <div className="lg:border-l border-black lg:pl-16  grid gap-4">
+              <div className="grid grid-cols-[2fr_1fr_1fr_1fr] pb-4 lg:border-none border-b border-black">
                 <p>nombre</p>
                 <p>precio</p>
                 <p>cantidad</p>
@@ -57,7 +56,7 @@ const Cancelacion = () => {
                   return (
                     <div
                       key={prod._id}
-                      className="grid grid-cols-[2fr_1fr_1fr_1fr]"
+                      className="grid grid-cols-[2fr_1fr_1fr_1fr] border-b border-black"
                     >
                       <p>{prod.name}</p>
                       <p>{prod.price}</p>

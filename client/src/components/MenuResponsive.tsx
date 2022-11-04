@@ -90,7 +90,10 @@ const MenuResponsive = () => {
         size={30}
         onClick={() => setHide("")}
         className={`absolute bottom-[-3rem] ml-2  ${
-          location.pathname === "/" ? "text-white" : "text-black"
+          location.pathname === "/" ||
+          location.pathname === "/products/checkout"
+            ? "text-white"
+            : "text-black"
         }`}
       />
     </div>
