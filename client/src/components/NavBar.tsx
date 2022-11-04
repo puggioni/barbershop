@@ -60,6 +60,14 @@ const NavBar = () => {
           >
             Turnos
           </Link>
+          {logeado?
+           <Link
+           to={`/user/mis-compras/${user._id}`}
+           className={`${buttonHover} px-4 py-1 rounded-lg`}
+         >
+           Mis Compras
+         </Link>:<></>}
+         
           <Link
             to={"/contacto"}
             className={`${buttonHover} px-4 py-1 rounded-lg`}

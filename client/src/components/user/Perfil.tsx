@@ -116,7 +116,9 @@ const Perfil = () => {
             </div>
           </div>
           <div className="mt-20">
+            <Link to={`/user/mis-compras/${user._id}`}>
             <p>Ver mis compras</p>
+            </Link>
           </div>
         </div>
       </div>

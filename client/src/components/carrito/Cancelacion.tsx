@@ -27,7 +27,7 @@ const Cancelacion = () => {
 
   if (purchaseOrder?.products?.length) {
     total = purchaseOrder.products.reduce((acc: number, prod) => {
-      return acc + prod.price;
+      return acc + (prod.price*prod.quantity);
     }, 0);
   }
   total = Math.floor(total * 100) / 100;
