@@ -22,7 +22,7 @@ const Caregorias = ({ resetPage }: any) => {
         onClick={() => getAllProducts()}
         className="border-r-2 px-8 border-black "
       >
-        All
+        Todos
       </button>
       {categorias?.map((cate) => {
         return (

@@ -7,6 +7,10 @@ import { searchOrderId } from "../slices/admin";
 const Cofirmacion = () => {
   const token = JSON.parse(window.localStorage.getItem("token") || "{}");
   const order = useAppSelector((state) => state.admin.orders);
+  console.log(
+    "🚀 ~ file: OrderUsuario.tsx ~ line 10 ~ Cofirmacion ~ order",
+    order
+  );
   const { idOrder } = useParams<{ idOrder: string }>();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -35,7 +39,16 @@ const Cofirmacion = () => {
 
         <div className="border border-black m-8 ">
           <div className="grid grid-cols-[1fr_2fr] my-16 gap-4">
-            <div className="justify-self-center">id: {idOrder}</div>
+            <div className="justify-self-center">
+              id: {idOrder} <br></br>
+              {order[0]?.user} <br></br>
+              <div>
+                Direccion <br></br>
+                {/* <p>{order[0]?.address["direccion"]}</p>
+                <p>{order[0]?.address["localidad"]}</p>
+                <p>{order[0]?.address["CP"]}</p> */}
+              </div>
+            </div>
             <div className="border-l border-black pl-16  grid gap-4">
               <div className="grid grid-cols-[2fr_1fr_1fr_1fr] pb-4">
                 <p>nombre</p>

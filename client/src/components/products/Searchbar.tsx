@@ -16,15 +16,14 @@ const SearchBar = () => {
   const [tosearch, setTosearch] = useState("");
   const dispatch = useAppDispatch();
 
-
-    function search (searchTerm: any) {
-      setTosearch (searchTerm)
-      console.log (searchTerm)
-    }
+  function search(searchTerm: any) {
+    setTosearch(searchTerm);
+    console.log(searchTerm);
+  }
 
   function HandlertoSearch(e: any) {
     dispatch(fetchAllProducts(tosearch));
-    setTosearch ('')
+    setTosearch("");
   }
 
   function handleChange(e: evento) {
@@ -36,34 +35,42 @@ const SearchBar = () => {
   return (
     <div className="relative mx-8">
       <div>
-      <input
-        onChange={handleChange}
-        name="tosearch"
-        className="border border-black rounded-md w-full pl-2 "
-        value={tosearch}
-        type="text"
-        autoComplete="off"
-        placeholder="Search"
-      />
+        <input
+          onChange={handleChange}
+          name="tosearch"
+          className="border border-black rounded-md w-full pl-2 "
+          value={tosearch}
+          type="text"
+          autoComplete="off"
+          placeholder="Buscar..."
+        />
 
-      <BsSearch
-        className="absolute  top-1 right-1 cursor-pointer"
-        stroke="currentColor"
-        onClick={() => {
-          HandlertoSearch(tosearch);
-        }}
-      />
+        <BsSearch
+          className="absolute  top-1 right-1 cursor-pointer"
+          stroke="currentColor"
+          onClick={() => {
+            HandlertoSearch(tosearch);
+          }}
+        />
       </div>
       <div className="cursor-pointer border-black border">
-        {data.allProducts?.filter(item => {
-          const searchTerm = tosearch.toLowerCase()
-          const itemName = item.name.toLowerCase()
+        {data.allProducts
+          ?.filter((item) => {
+            const searchTerm = tosearch.toLowerCase();
+            const itemName = item.name.toLowerCase();
 
-          return searchTerm && itemName.startsWith(searchTerm) && itemName !== searchTerm
-        }).slice(0, 10)
-        ?.map((item)=><div className="p-2" onClick={()=>search(item.name)}>
-          {item.name}
-        </div>)}
+            return (
+              searchTerm &&
+              itemName.startsWith(searchTerm) &&
+              itemName !== searchTerm
+            );
+          })
+          .slice(0, 10)
+          ?.map((item) => (
+            <div className="p-2" onClick={() => search(item.name)}>
+              {item.name}
+            </div>
+          ))}
       </div>
     </div>
   );
@@ -88,10 +95,8 @@ export default SearchBar;
 //   );
 // };
 
-
 // function search(e: any) {
 //   e.preventDefault();
-  
 
 //   if (tosearch.length) {
 //     setTosearch(e);
