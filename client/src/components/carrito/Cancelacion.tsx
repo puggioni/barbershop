@@ -56,7 +56,7 @@ const Cancelacion = () => {
                   return (
                     <div
                       key={prod._id}
-                      className="grid grid-cols-[2fr_1fr_1fr_1fr] border-b border-black"
+                      className="grid grid-cols-[2fr_1fr_1fr_1fr] lg:border-none border-b border-black"
                     >
                       <p>{prod.name}</p>
                       <p>{prod.price}</p>

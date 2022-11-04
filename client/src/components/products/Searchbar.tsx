@@ -34,18 +34,18 @@ const SearchBar = () => {
 
   return (
     <div className="relative lg:mt-0 mt-6 mx-8">
-      <input
-        onChange={handleChange}
-        name="tosearch"
-        className="border border-black lg:rounded-md w-full pl-2 lg:h-full h-[5vh]"
-        value={tosearch}
-        type="text"
-        placeholder="Search"
-      />
-
+      <div>
+        <input
+          onChange={handleChange}
+          name="tosearch"
+          className="border border-black lg:rounded-md w-full pl-2 lg:h-full h-[5vh]"
+          value={tosearch}
+          type="text"
+          placeholder="Search"
+        />
         <BsSearch
-        className="absolute lg:top-1 top-3 right-1 cursor-pointer"
-        stroke="currentColor"
+          className="absolute lg:top-1 top-3 right-1 cursor-pointer"
+          stroke="currentColor"
           onClick={() => {
             HandlertoSearch(tosearch);
           }}
