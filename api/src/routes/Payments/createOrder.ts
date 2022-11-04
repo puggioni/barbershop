@@ -26,6 +26,11 @@ router.post("/create-order", checkStock, verifyToken, async (req, res) => {
 
   const newOrder = new purchaseOrder({
     user: user["email"],
+    address: {
+      direccion: user["direccionEnvio"],
+      localidad: user["localidad"],
+      CP: user["CP"],
+    },
     products: productos,
   });
   newOrder.save();

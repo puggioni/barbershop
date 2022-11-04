@@ -42,12 +42,13 @@ const postAppointment_1 = __importDefault(require("./Appointments/postAppointmen
 const getAppontments_1 = __importDefault(require("./Appointments/getAppontments"));
 const deleteAppointment_1 = __importDefault(require("./Appointments/deleteAppointment"));
 const getAllAppointments_1 = __importDefault(require("./Appointments/getAllAppointments"));
-/* ============OFFICES============ */
+/* ============BARBERS============ */
 const postbarber_1 = __importDefault(require("./Barbers/postbarber"));
 const getbarbers_1 = __importDefault(require("./Barbers/getbarbers"));
-/* ============BARBERS============ */
+/* ============OFFICES============ */
 const postOffice_1 = __importDefault(require("./Offices/postOffice"));
 const getOffices_1 = __importDefault(require("./Offices/getOffices"));
+const patchOffice_1 = __importDefault(require("./Offices/patchOffice"));
 /* ============PAYMENTS============*/
 const captureOrder_1 = __importDefault(require("./Payments/captureOrder"));
 const cancelOrder_1 = __importDefault(require("./Payments/cancelOrder"));
@@ -62,6 +63,7 @@ const getPurchaseOrders_1 = __importDefault(require("./Orders/getPurchaseOrders"
 const searchOrder_1 = __importDefault(require("./Orders/searchOrder"));
 const changeStateOrder_1 = __importDefault(require("./Orders/changeStateOrder"));
 const filterOrders_1 = __importDefault(require("./Orders/filterOrders"));
+const deliverOrder_1 = __importDefault(require("./Orders/deliverOrder"));
 const router = (0, express_1.Router)();
 /* ============PRODUCTS============ */
 router.use("/products", postProducts_1.default);
@@ -107,6 +109,7 @@ router.use("/agenda/", getAllAppointments_1.default);
 /* ============OFFICES============ */
 router.use("/office/", postOffice_1.default);
 router.use("/office/", getOffices_1.default);
+router.use("/office/", patchOffice_1.default);
 /* ============BARBERS============ */
 router.use("/barber/", postbarber_1.default);
 router.use("/barber/", getbarbers_1.default);
@@ -124,4 +127,5 @@ router.use("/orders", completeOrder_1.default);
 router.use("/orders", cancelOrders_1.default);
 router.use("/orders", deleteAllOrders_1.default);
 router.use("/orders", getUserOrders_1.default);
+router.use("/orders", deliverOrder_1.default);
 exports.default = router;

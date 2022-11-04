@@ -38,12 +38,13 @@ import postAppointment from "./Appointments/postAppointment";
 import getAppointments from "./Appointments/getAppontments";
 import deleteAppointment from "./Appointments/deleteAppointment";
 import getAllAppointments from "./Appointments/getAllAppointments";
-/* ============OFFICES============ */
+/* ============BARBERS============ */
 import postbarber from "./Barbers/postbarber";
 import getbarbers from "./Barbers/getbarbers";
-/* ============BARBERS============ */
+/* ============OFFICES============ */
 import postOffice from "./Offices/postOffice";
 import getOffices from "./Offices/getOffices";
+import editOffices from "./Offices/patchOffice";
 /* ============PAYMENTS============*/
 import captureOrder from "./Payments/captureOrder";
 import cancelOrder from "./Payments/cancelOrder";
@@ -58,6 +59,7 @@ import getPurchaseOrders from "./Orders/getPurchaseOrders";
 import searchOrder from "./Orders/searchOrder";
 import changeStateOrder from "./Orders/changeStateOrder";
 import filterOrders from "./Orders/filterOrders";
+import deliverOrder from "./Orders/deliverOrder";
 const router = Router();
 
 /* ============PRODUCTS============ */
@@ -111,6 +113,7 @@ router.use("/agenda/", getAllAppointments);
 /* ============OFFICES============ */
 router.use("/office/", postOffice);
 router.use("/office/", getOffices);
+router.use("/office/", editOffices);
 
 /* ============BARBERS============ */
 router.use("/barber/", postbarber);
@@ -131,4 +134,6 @@ router.use("/orders", confirmOrder);
 router.use("/orders", cancelOrders);
 router.use("/orders", deleteOrders);
 router.use("/orders", getUserOrders);
+router.use("/orders", deliverOrder);
+
 export default router;

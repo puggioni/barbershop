@@ -8,6 +8,7 @@ export interface PurchaseOrders {
   products?: Array<any>;
   state?: string;
   date?: Date;
+  address?: Object;
 }
 
 interface PurchaseOrder {
@@ -38,7 +39,7 @@ export const comprar = (header: object, compra: object) => {
       window.location.href = `${response.data.links[1].href}`;
     } catch (error) {
       console.log(error);
-      alert("No se pudo completar la compra");
+      alert("Debes estar logeado para finalizar la compra");
     }
   };
 };

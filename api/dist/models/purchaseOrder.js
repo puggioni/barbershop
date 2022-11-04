@@ -28,6 +28,17 @@ const PurchaseOrderSchema = new Schema({
         type: String,
         default: "Creada",
     },
+    address: {
+        direccion: {
+            type: String,
+        },
+        CP: {
+            type: Number,
+        },
+        localidad: {
+            type: String,
+        },
+    },
     date: {
         type: Date,
         default: Date.now(),

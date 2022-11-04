@@ -35,69 +35,60 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const axios_1 = __importDefault(require("axios"));
 const express_1 = require("express");
 const purchaseOrder_1 = __importDefault(require("../../models/purchaseOrder"));
-const checkStock_1 = require("../../middlewares/checkStock");
 const dotenv = __importStar(require("dotenv"));
-const auth_1 = require("../../middlewares/auth");
+const axios_1 = __importDefault(require("axios"));
 dotenv.config();
 const router = (0, express_1.Router)();
-router.post("/create-order", checkStock_1.checkStock, auth_1.verifyToken, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { user, compra } = req.body;
-    let value = 0;
-    compra.forEach((obj) => {
-        value = value + obj["price"];
-    });
-    value = (value * 100) / 100;
-    let productos = compra.map((obj) => {
-        return {
-            name: obj["name"],
-            quantity: obj["cantidad"],
-            price: obj["price"],
-        };
-    });
-    const newOrder = new purchaseOrder_1.default({
-        user: user["email"],
-        address: {
-            direccion: user["direccionEnvio"],
-            localidad: user["localidad"],
-            CP: user["CP"],
-        },
-        products: productos,
-    });
-    newOrder.save();
-    const idOrder = newOrder["_id"];
-    const id = idOrder.toString();
+router.post("/deliver/:idOrder", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { idOrder } = req.params;
     try {
-        const order = {
-            intent: "CAPTURE",
-            purchase_units: [
-                {
-                    reference_id: `${idOrder}`,
-                    amount: {
-                        currency_code: "USD",
-                        value: value,
+        const order = yield (yield purchaseOrder_1.default.findById(idOrder)).populate("products");
+        order["state"] = "Enviada";
+        order
+            .save()
+            .then((savedOrder) => {
+            const options = {
+                method: "post",
+                url: "https://api.sendinblue.com/v3/smtp/email",
+                data: {
+                    sender: {
+                        name: "grupo7henry",
+                        email: "grupo7henry@gmail.com",
                     },
+                    to: [
+                        {
+                            email: `${savedOrder.user}`,
+                            name: `${savedOrder.user}`,
+                        },
+                    ],
+                    subject: "Su orden esta en camino",
+                    htmlContent: `<html>
+              <head></head>
+                <h1>Henry Barbershop</h1>
+                <body>
+                  <p>Estimado usuario,</p>
+                  <p>Gracias por su compra!</p>
+                  <p>Su orden fue despachada a la direccion especificada. Estamos a su disposición,</p>
+                  <p>equipo Henry Barbershop.</p>
+                </body>
+            </html>`,
                 },
-            ],
-            application_context: {
-                brand_name: "Henry BarberShop",
-                landing_page: "LOGIN",
-                user_action: "PAY_NOW",
-                return_url: `http://localhost:${process.env.PORT}/payments/capture-order`,
-                cancel_url: `http://localhost:${process.env.PORT}/payments/cancel-order/${id}`,
-            },
-        };
-        const response = yield axios_1.default.post("https://api-m.sandbox.paypal.com/v2/checkout/orders", order, {
-            auth: {
-                username: `${process.env.PAYPAL_CLIENT_ID}`,
-                password: `${process.env.PAYPAL_CLIENT_SECRET}`,
-            },
+                headers: {
+                    "Content-Type": "application/json",
+                    accept: "application/json",
+                    "api-key": `${process.env.SENDINBLUE_API_KEY}`,
+                },
+            };
+            return (0, axios_1.default)(options);
+        })
+            .then((mailServerRes) => {
+            res.status(200).json(order);
         });
-        res.status(200).json(response.data);
     }
     catch (error) {
+        console.log(error);
         res.status(500).send(error);
     }
 }));

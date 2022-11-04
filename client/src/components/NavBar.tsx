@@ -46,7 +46,7 @@ const NavBar = () => {
             to={"/product"}
             className={`${buttonHover} px-4 py-1 rounded-lg`}
           >
-            Store
+            Tienda
           </Link>
           <Link
             to={"/sucursales"}

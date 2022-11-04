@@ -94,7 +94,9 @@ const Products = () => {
           onClick={() => navigate("/products/shopping-cart")}
         />
         <div className="lg:border bg-white border-black rounded-xl lg:my-6 lg:mx-40">
-          <h1 className="lg:flex justify-center py-8 text-5xl hidden">STORE</h1>
+          <h1 className="lg:flex justify-center py-8 text-5xl hidden">
+            TIENDA
+          </h1>
           <div className="lg:flex border-b mx-40 border-black hidden"></div>
           <div className="lg:flex justify-center hidden">
             <Categorias resetPage={resetPage} />
