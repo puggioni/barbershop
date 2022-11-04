@@ -12,6 +12,7 @@ import {
   deleteFavoritoLocal,
   products,
 } from "../slices/productSlice";
+import { agregarCarrito } from "../slices/purchaseOrder";
 
 const ProductCard = (producto: products) => {
   const added = (
@@ -63,8 +64,10 @@ const ProductCard = (producto: products) => {
     if (prod === -1) {
       productos.push({ productos: producto, cantidad: 1 });
       window.localStorage.setItem("product", JSON.stringify(productos));
+      dispatch(agregarCarrito(producto));
     }
   };
+  // dispatch(sacarCarrito(producto._id))
 
   return (
     <div

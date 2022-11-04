@@ -13,18 +13,18 @@ export interface PurchaseOrders {
 
 interface PurchaseOrder {
   purchaseOrder: PurchaseOrders | undefined;
-  allOrders: Array<PurchaseOrders>;
+  carrito: Array<PurchaseOrders>;
   ordersByUser: Array<PurchaseOrders>;
   loading: boolean;
-  order: PurchaseOrders
+  order: PurchaseOrders;
 }
 
 const initialState: PurchaseOrder = {
   purchaseOrder: undefined,
-  allOrders: [],
+  carrito: [],
   ordersByUser: [],
   loading: true,
-  order:{_id:""}
+  order: { _id: "" },
 };
 
 //==========action================//
@@ -110,6 +110,18 @@ export const getDetailOrder = (id: any): AppThunk => {
   };
 };
 
+export const agregarCarrito = (prod: any): AppThunk => {
+  return async (dispatch) => {
+    dispatch(addCarrito(prod));
+  };
+};
+
+export const sacarCarrito = (id: any): AppThunk => {
+  return async (dispatch) => {
+    dispatch(delCarrito(id));
+  };
+};
+
 //==========reducer================//
 
 export const getAllOrdersSlice = createSlice({
@@ -130,11 +142,27 @@ export const getAllOrdersSlice = createSlice({
       state.ordersByUser = action.payload;
     },
     setOrder: (state: any, action: PayloadAction<PurchaseOrders>) => {
-      state.order= action.payload;
+      state.order = action.payload;
+    },
+    addCarrito: (state: any, action: PayloadAction<PurchaseOrders>) => {
+      state.carrito.push(action.payload);
+    },
+    delCarrito: (state: any, action: PayloadAction<string>) => {
+      const filtered = state.carrito.filter((p: { _id: string }) => {
+        return p._id !== action.payload;
+      });
+      state.carrito = filtered;
     },
   },
 });
 
 export default getAllOrdersSlice.reducer;
-export const { order, confirmOrder, cancelOrder, orderUser, setOrder } =
-  getAllOrdersSlice.actions;
+export const {
+  order,
+  confirmOrder,
+  cancelOrder,
+  orderUser,
+  setOrder,
+  addCarrito,
+  delCarrito,
+} = getAllOrdersSlice.actions;

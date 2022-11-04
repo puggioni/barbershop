@@ -13,17 +13,27 @@ export const buttonHover =
 const NavBar = () => {
   const logeado = useAppSelector((state) => state.logIn.logeado);
   const navigate = useNavigate();
-
-  const handleRedirect = () => {
-    navigate("/");
-  };
-
   const dispatch = useAppDispatch();
+  const cantCarrito = useAppSelector((state) => state.orders.carrito);
   const user: any = JSON.parse(window.localStorage.getItem("user") || "{}");
   let adminAuth = false;
   if (Object.keys(user).length) {
     adminAuth = user.role[0].name === "admin";
   }
+  const products: any = JSON.parse(
+    window.localStorage.getItem("product") || "[]"
+  );
+  const cantidadTotal = products.reduce(
+    (acc: number, prod: { cantidad: number }) => {
+      return acc + prod.cantidad;
+    },
+    0
+  );
+
+  const handleRedirect = () => {
+    navigate("/");
+  };
+
   useEffect(() => {
     if (Object.keys(user).length) {
       dispatch(yaLog(user.email));
@@ -60,14 +70,17 @@ const NavBar = () => {
           >
             Turnos
           </Link>
-          {logeado?
-           <Link
-           to={`/user/mis-compras/${user._id}`}
-           className={`${buttonHover} px-4 py-1 rounded-lg`}
-         >
-           Mis Compras
-         </Link>:<></>}
-         
+          {logeado ? (
+            <Link
+              to={`/user/mis-compras/${user._id}`}
+              className={`${buttonHover} px-4 py-1 rounded-lg`}
+            >
+              Mis Compras
+            </Link>
+          ) : (
+            <></>
+          )}
+
           <Link
             to={"/contacto"}
             className={`${buttonHover} px-4 py-1 rounded-lg`}
@@ -113,9 +126,12 @@ const NavBar = () => {
 
       <Link
         title="ir al Carrito"
-        className="hover:text-[#855C20] "
+        className="hover:text-[#855C20] relative"
         to={"/products/shopping-cart"}
       >
+        <p className="absolute w-6 text-sm text-center m-auto bg-black text-white rounded-full right-[-.8rem] top-0">
+          {Math.max(cantidadTotal)}
+        </p>
         <RiShoppingBasket2Line size={40} />
       </Link>
       <Link title="ir a Favoritos" to={"/products/favorites"}>
