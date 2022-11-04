@@ -8,7 +8,8 @@ import CardCart from "./CardCart";
 const Compra = () => {
   const [, forceUpdate] = useReducer((x) => x + 1, 0);
   const navigate = useNavigate();
-  let products: any = JSON.parse(
+
+  const products: any = JSON.parse(
     window.localStorage.getItem("product") || "[]"
   );
   const cantidadTotal = products.reduce(
