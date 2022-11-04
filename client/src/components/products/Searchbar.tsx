@@ -18,7 +18,6 @@ const SearchBar = () => {
 
   function search(searchTerm: any) {
     setTosearch(searchTerm);
-    console.log(searchTerm);
   }
 
   function HandlertoSearch(e: any) {
@@ -53,7 +52,7 @@ const SearchBar = () => {
           }}
         />
       </div>
-      <div className="cursor-pointer border-black border">
+      <div className="cursor-pointer">
         {data.allProducts
           ?.filter((item) => {
             const searchTerm = tosearch.toLowerCase();

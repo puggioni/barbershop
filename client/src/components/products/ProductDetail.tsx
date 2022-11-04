@@ -107,7 +107,7 @@ export default function ProductDetail() {
                   </div>
 
                   <p className="h-[30vh] mr-4 my-12">{product.description}</p>
-
+                  <p className="h-[30vh] mr-4 my-12">{product.stock}</p>
                   <div className="flex flex-row gap-8 mb-16 ml-8">
                     <div className="flex flex-row relative border border-black py-1 pr-2 mr-4 items-center text-center">
                       <input

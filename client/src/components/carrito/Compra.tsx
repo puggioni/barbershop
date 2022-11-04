@@ -36,7 +36,7 @@ const Compra = () => {
         <div className="content-none w-1/4 border-b border-black"></div>
       </div>
 
-      <div className="grid grid-cols-[1.5fr_1fr] ">
+      <div className="grid grid-cols-[1.5fr_1fr]  ">
         <div className="">
           {products &&
             products.map((data: any) => (
@@ -52,7 +52,7 @@ const Compra = () => {
             ))}
         </div>
 
-        <div className="border h-60 border-black mx-20 grid grid-cols-2 p-8 gap-8 ">
+        <div className="border h-60 border-black mx-20 grid grid-cols-2 p-8 gap-8 mt-48 ">
           <p className="justify-self-center font-semibold mt-8">
             {cantidadTotal} articulos
           </p>
@@ -60,7 +60,7 @@ const Compra = () => {
             $ {precioTotal}
           </p>
           <button
-            className="col-span-2 block bg-[#855C20] text-white font-semibold"
+            className="col-span-2 block bg-[#855C20] text-white font-semibold "
             onClick={() => navigate("/products/checkout")}
           >
             COMPRAR

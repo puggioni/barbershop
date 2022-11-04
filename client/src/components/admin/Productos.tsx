@@ -149,9 +149,7 @@ const Productos = () => {
                   onClick={() => navigate("/admin/products/crear-categoria")}
                   className="bg-[#855C20] mr-4 py-2 px-2 text-white rounded-lg font-semibold"
                 >
-
                   CATEGORIA
-
                 </button>
                 <button
                   onClick={() => navigate("/admin/products/crear-producto")}
@@ -159,7 +157,6 @@ const Productos = () => {
                 >
                   CREAR PRODUCTO
                 </button>
-                
               </div>
             </div>
             <div className="relative">
@@ -169,9 +166,6 @@ const Productos = () => {
                 <p>Disponible</p>
                 <p>Precio</p>
               </div>
-              <button className="absolute right-8 top-0 text-blue-800	">
-                Ver historial de compras
-              </button>
 
               {currentProducts?.map((data) => {
                 const disp = data.available ? "Sí" : "Nó";
