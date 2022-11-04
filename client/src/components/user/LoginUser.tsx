@@ -161,7 +161,7 @@ export default function LoginUser() {
                 onClick={(e) => {
                   handleLogInWithGoogle(e);
                 }}
-                className="flex bg-red-500 border-none px-4 py-2 rounded-xl cursor-pointer text-white shadow-xl hover:shadow-inner transition duration-500 ease-in-out  transform hover:-translate-x hover:scale-105"
+                className="bg-red-500 flex justify-center mx-auto lg:grid lg:justify-self-center w-1/2 col-span-2 border-none px-4 py-2 rounded-xl cursor-pointer text-white shadow-xl hover:shadow-inner transition duration-500 ease-in-out  transform hover:-translate-x hover:scale-105"
               >
                 Google
               </button>

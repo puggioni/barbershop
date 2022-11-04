@@ -3,9 +3,10 @@ import { AiOutlineClose } from "react-icons/ai";
 import { VscMenu } from "react-icons/vsc";
 import { useLocation } from "react-router";
 import { Link, useNavigate } from "react-router-dom";
-import { useAppDispatch } from "../app/hooks";
+import { useAppDispatch, useAppSelector } from "../app/hooks";
 import logo from "../imagenes/Logo.png";
 import { yaLog } from "./slices/logIn";
+import Logeado from "./user/Logeado";
 
 export const buttonHover =
   "hover:shadow-md hover:shadow-slate-500 hover:bg-[#855C20] hover:text-white hover:ease-in-out hover:duration-300";
@@ -16,6 +17,7 @@ const MenuResponsive = () => {
   const dispatch = useAppDispatch();
   const user: any = JSON.parse(window.localStorage.getItem("user") || "{}");
   const location = useLocation();
+  const logeado = useAppSelector((state) => state.logIn.logeado);
 
   useEffect(() => {
     if (Object.keys(user).length) {
@@ -76,6 +78,17 @@ const MenuResponsive = () => {
           Contacto
         </Link>
       </div>
+      {logeado ? (
+        <Logeado />
+      ) : (
+        <Link to={"/user/login"}>
+          <button
+            className={`${buttonHover} bg-black text-white px-2 py-2 justify-self-center rounded-lg font-bold`}
+          >
+            Log In/Sign Up
+          </button>
+        </Link>
+      )}
       <VscMenu
         size={30}
         onClick={() => setHide("")}

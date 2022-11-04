@@ -13,7 +13,7 @@ import {
   getAllOrders,
 } from "../slices/admin";
 import { yaLog } from "../slices/logIn";
-import OrderSearch from "./OrderSearch";
+import OrderSearch from "./orderSearch";
 
 const HistorialCompra = () => {
   const token = JSON.parse(window.localStorage.getItem("token") || "{}");
