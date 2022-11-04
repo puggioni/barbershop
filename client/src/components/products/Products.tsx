@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { BsPlus } from "react-icons/bs";
-import { HiMinus } from "react-icons/hi";
+import { HiMinus, HiOutlineShoppingBag } from "react-icons/hi";
 import { HiOutlineAdjustmentsHorizontal } from "react-icons/hi2";
+import { useNavigate } from "react-router";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { RootState } from "../../app/store";
 import logo from "../../imagenes/Logo.png";
@@ -31,6 +32,7 @@ const Products = () => {
   const { favs } = useAppSelector((state: RootState) => state.products);
   const favoritos = JSON.stringify(favs);
   const data = useAppSelector((state: RootState) => state.products);
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(fetchAllProducts(""));
@@ -86,7 +88,11 @@ const Products = () => {
     return (
       <div className=" bg-white lg:bg-store-banner bg-no-repeat lg:pt-52 lg:pb-2 bg-contain">
         <img className="lg:hidden m-auto h-[10%] mt-8" src={logo} alt="logo" />
-
+        <HiOutlineShoppingBag
+          size={30}
+          className="lg:hidden absolute top-2 right-2"
+          onClick={() => navigate("/products/shopping-cart")}
+        />
         <div className="lg:border bg-white border-black rounded-xl lg:my-6 lg:mx-40">
           <h1 className="lg:flex justify-center py-8 text-5xl hidden">STORE</h1>
           <div className="lg:flex border-b mx-40 border-black hidden"></div>

@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-// import { useAppSelector } from "../app/hooks";
+import { useAppSelector } from "../app/hooks";
 import Footer from "./Footer";
 
 export const buttonStyle =
@@ -8,27 +8,31 @@ export const buttonHover =
   "hover:shadow-md hover:shadow-slate-500 hover:bg-[#855C20] hover:text-white hover:ease-in-out hover:duration-300";
 
 const Home = () => {
-  // const logeado = useAppSelector((state) => state.logIn.logeado);
+  const logeado = useAppSelector((state) => state.logIn.logeado);
 
   return (
     <div
       className="lg:bg-transparent text-white lg:min-h-0
     lg:bg-home-bg bg-cover overflow-hidden bg-no-repeat bg-center bg-home-responsive min-h-screen "
     >
-      <div className="inline-block float-right m-6">
-        <Link
-          className={` bg-[#C0914C] lg:hidden text-white px-2 py-2 rounded-lg font-bold`}
-          to={"/user/login"}
-        >
-          Log In
-        </Link>
-        <Link
-          className={` ml-6 bg-[#C0914C] lg:hidden text-white px-2 py-2 rounded-lg font-bold`}
-          to={"/user/create"}
-        >
-          Sign in
-        </Link>
-      </div>
+      {!logeado ? (
+        <div className="inline-block float-right m-6">
+          <Link
+            className={` bg-[#C0914C] lg:hidden text-white px-2 py-2 rounded-lg font-bold`}
+            to={"/user/login"}
+          >
+            Log In
+          </Link>
+          <Link
+            className={` ml-6 bg-[#C0914C] lg:hidden text-white px-2 py-2 rounded-lg font-bold`}
+            to={"/user/create"}
+          >
+            Sign in
+          </Link>
+        </div>
+      ) : (
+        <p></p>
+      )}
 
       <div className="h-[75vh]">
         <Link

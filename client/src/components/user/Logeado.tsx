@@ -3,7 +3,7 @@ import { useNavigate } from "react-router";
 import { useAppDispatch } from "../../app/hooks";
 import { logOut } from "../slices/logIn";
 import { clearFavorites } from "../slices/productSlice";
-const Logeado = () => {
+const Logeado = ({ setHide }: any) => {
   const dispatch = useAppDispatch();
   const auth = getAuth();
   const navigate = useNavigate();
@@ -11,6 +11,7 @@ const Logeado = () => {
     signOut(auth);
     dispatch(clearFavorites());
     dispatch(logOut());
+    setHide("-translate-y-full");
     navigate("/");
   }
   const img =
@@ -19,7 +20,10 @@ const Logeado = () => {
   return (
     <div className=" lg:grid flex lg:grid-cols-2 justify-end items-center">
       <img
-        onClick={() => navigate("/user/perfil")}
+        onClick={() => {
+          setHide("-translate-y-full");
+          navigate("/user/perfil");
+        }}
         src={img}
         alt="user pic"
         className="lg:static absolute top-4 left-4 h-8 bg-center rounded-full"

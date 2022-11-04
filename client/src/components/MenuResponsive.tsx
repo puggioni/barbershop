@@ -77,9 +77,16 @@ const MenuResponsive = () => {
         >
           Contacto
         </Link>
+        <Link
+          to={"/products/shopping-cart"}
+          onClick={() => setHide("-translate-y-full")}
+          className={`${buttonHover} px-4 py-1 rounded-lg lg:hidden`}
+        >
+          Carrito
+        </Link>
       </div>
       {logeado ? (
-        <Logeado />
+        <Logeado setHide={setHide} />
       ) : (
         <Link to={"/user/login"}>
           <button
