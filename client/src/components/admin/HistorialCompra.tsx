@@ -13,7 +13,7 @@ import {
   getAllOrders,
 } from "../slices/admin";
 import { yaLog } from "../slices/logIn";
-import OrderSearch from "./orderSearch";
+import OrderSearch from "./OrderSearch";
 
 
 const HistorialCompra = () => {

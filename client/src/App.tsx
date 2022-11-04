@@ -28,7 +28,8 @@ import LoginUser from "./components/user/LoginUser";
 import Perfil from "./components/user/Perfil";
 import { firebaseConfig } from "./firebase";
 import ChangePassword from "./components/user/changePassword";
-
+import MisCompras from "./components/user/MisCompras";
+import OrderDetail from "./components/user/OrderDetail";
 export const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 
@@ -62,6 +63,8 @@ function App() {
           path="/user/password-reset/:idUser"
           element={<ChangePassword />}
         />
+        <Route path="/user/mis-compras/:idUser" element={<MisCompras/>} />
+        <Route path="/user/mis-compras/compra/:idOrder" element={<OrderDetail/>} />
         {/*===================sucursales============================*/}
         <Route path="/sucursales" element={<Sucursales />} />
         {/*===================turno=================================*/}

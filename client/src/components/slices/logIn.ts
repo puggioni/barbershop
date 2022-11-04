@@ -101,12 +101,6 @@ export const updateUser = (idUser:string, formUser:object, header:object): AppTh
     }
   };
 };
-
-
-//----------------Reducers------------------------------------------
-
-
-
 export const changePassword = (id: any, password: string): AppThunk => {
   return async () => {
     try {
@@ -122,6 +116,9 @@ export const changePassword = (id: any, password: string): AppThunk => {
     }
   };
 };
+
+//----------------Reducers------------------------------------------
+
 
 export const logInReducerSlice = createSlice({
   name: "login",
