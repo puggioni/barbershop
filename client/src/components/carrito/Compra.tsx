@@ -37,13 +37,13 @@ const Compra = () => {
         alt="logo"
       />
 
-      <div className="flex flex-col items-center lg:pb-16 pb-2 bg-white/50 rounded-xl mx-12">
+      <div className="flex flex-col items-center lg:pb-16 pb-2 bg-white rounded-xl mx-12">
         <div className="font-semibold text-2xl pt-2 pb-6">Tu Carrito</div>
         <div className="content-none lg:w-1/4 w-3/4 border-b border-black"></div>
       </div>
 
-      <div className="grid grid-cols-[1.5fr_1fr] ">
-        <div className="">
+      <div className="lg:grid grid-cols-[1.5fr_1fr] ">
+        <div className="mt-4">
           {products &&
             products.map((data: any) => (
               <CardCart
@@ -58,15 +58,15 @@ const Compra = () => {
             ))}
         </div>
 
-        <div className="border h-60 border-black mx-20 grid grid-cols-2 p-8 gap-8 ">
-          <p className="justify-self-center font-semibold mt-8">
+        <div className="lg:border lg:h-60 lg:border-black lg:mx-20 lg:grid lg:grid-cols-2 lg:p-8 lg:gap-8 lg:mt-8 hidden ">
+          <p className="lg:justify-self-center lg:font-semibold lg:mt-8">
             {cantidadTotal} articulos
           </p>
-          <p className="justify-self-center font-semibold mt-8">
+          <p className="lg:justify-self-center lg:font-semibold lg:mt-8">
             $ {precioTotal}
           </p>
           <button
-            className="col-span-2 block bg-[#855C20] text-white font-semibold "
+            className="lg:col-span-2 lg:block bg-[#855C20] lg:text-white lg:font-semibold "
             onClick={() => navigate("/products/checkout")}
           >
             COMPRAR

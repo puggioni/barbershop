@@ -95,7 +95,7 @@ export default function ProductDetail() {
         <div className=" rounded-xl">
           {product ? (
             <div>
-              <div className="lg:grid grid-cols-[1fr_2fr] lg:rounded-lg border-2 lg:border-black ">
+              <div className="lg:grid grid-cols-[1fr_2fr] lg:rounded-lg border-2 lg:border-black">
                 <div className=" overflow-hidden p-4">
                   <img className="" src={product.image} alt="product" />
                 </div>

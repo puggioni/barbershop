@@ -40,17 +40,14 @@ const ProductCard = (producto: any) => {
   //==========================render=====================================
   if (producto) {
     return (
-      <div className="grid grid-cols-[.5fr_1fr_.2fr_.2fr_.2fr] mx-8 items-center">
-        <img className="h-32 " src={producto.image} alt="product" />
+      <div className="grid lg:grid-cols-[.5fr_1fr_.2fr_.2fr_.2fr] grid-cols-[1fr_2fr_.5fr] lg:mx-8 m-4 items-center  border border-black rounded-lg lg:border">
+        <img className="h-28 ml-1" src={producto.image} alt="product" />
 
-        <Link
-          className="lg:col-span-1 col-span-3"
-          to={`/product/${producto._id}`}
-        >
+        <Link className=" lg:col-span-1" to={`/product/${producto._id}`}>
           {producto.name}
         </Link>
         <h2>${producto.price}</h2>
-        <div className="relative border border-black py-1 pr-2 mr-4 items-center text-center">
+        <div className="relative border border-black py-1 pr-2 lg:mr-4 items-center text-center ml-4 mb-1">
           <div>{producto.cantidad}</div>
           <HiOutlineArrowDown
             onClick={(e) => {
@@ -71,6 +68,7 @@ const ProductCard = (producto: any) => {
         </div>
 
         <FaTrash
+          className="cursor-pointer mx-auto"
           onClick={(e) => {
             handleDelete(e, producto._id);
           }}

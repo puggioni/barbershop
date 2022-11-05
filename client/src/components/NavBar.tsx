@@ -8,9 +8,8 @@ import { yaLog } from "./slices/logIn";
 import { getCantCarrito } from "./slices/purchaseOrder";
 import Logeado from "./user/Logeado";
 
-export const buttonHover =
-  "hover:shadow-md hover:shadow-slate-500	hover:bg-[#855C20] hover:text-white hover:ease-in-out hover:duration-300";
-
+export const buttonHover = "text-[black] hover:text-[#855C20]";
+export const adminBtns = "text-[red] hover:text-[black]";
 const NavBar = () => {
   const logeado = useAppSelector((state) => state.logIn.logeado);
   const navigate = useNavigate();
@@ -90,21 +89,21 @@ const NavBar = () => {
             <>
               <Link
                 to="/admin/products"
-                className={`${buttonHover} px-4 py-1 rounded-lg`}
+                className={`${adminBtns} px-4 py-1 rounded-lg`}
               >
-                Productos(A)
+                Productos
               </Link>
               <Link
                 to="/admin/users"
-                className={`${buttonHover} px-4 py-1 rounded-lg`}
+                className={`${adminBtns} px-4 py-1 rounded-lg`}
               >
-                Usuarios(A)
+                Usuarios
               </Link>
               <Link
                 to="/admin/compras"
-                className={`${buttonHover} px-4 py-1 rounded-lg`}
+                className={`${adminBtns} px-4 py-1 rounded-lg`}
               >
-                Compras(A)
+                Compras
               </Link>
             </>
           )}
