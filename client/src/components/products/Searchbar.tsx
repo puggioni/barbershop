@@ -54,7 +54,7 @@ const SearchBar = () => {
           }}
         />
       </div>
-      <div className="cursor-pointer border-black border">
+      <div className="cursor-pointer bg-white border-black border position: absolute z-10 rounded-lg">
         {data.allProducts
           ?.filter((item) => {
             const searchTerm = tosearch.toLowerCase();
