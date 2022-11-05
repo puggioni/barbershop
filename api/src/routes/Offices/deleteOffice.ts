@@ -13,3 +13,6 @@ router.delete("/delete/:id", [verifyToken, isAdmin], async (req, res) => {
     res.status(500).send(err);
   }
 });
+
+
+export default router;
