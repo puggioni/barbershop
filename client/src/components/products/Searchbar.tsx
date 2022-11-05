@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useState} from "react";
 import { BsSearch } from "react-icons/bs";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { fetchAllProducts } from "../slices/productSlice";
+import { fetchAllProducts} from "../slices/productSlice";
 import { RootState } from "../../app/store";
+
 
 type evento = {
   target: eventarget;
@@ -16,6 +17,9 @@ const SearchBar = () => {
 
   const [tosearch, setTosearch] = useState("");
   const dispatch = useAppDispatch();
+  
+  const data = useAppSelector((state: RootState) => state.products);
+  const copyProducts = useAppSelector((state: RootState) => state.products.copyAllProducts);
 
   function search(searchTerm: any) {
     setTosearch(searchTerm);
@@ -31,7 +35,7 @@ const SearchBar = () => {
     if (e.target.name === "tosearch") setTosearch(e.target.value);
   }
 
-  const data = useAppSelector((state: RootState) => state.products);
+
 
   return (
     <div className="relative mx-8">
@@ -54,15 +58,16 @@ const SearchBar = () => {
           }}
         />
       </div>
+      {tosearch? 
       <div className="cursor-pointer bg-white border-black border position: absolute z-10 rounded-lg">
-        {data.allProducts
+        {copyProducts
           ?.filter((item) => {
             const searchTerm = tosearch.toLowerCase();
             const itemName = item.name.toLowerCase();
 
             return (
               searchTerm &&
-              itemName.startsWith(searchTerm) &&
+              itemName.includes(searchTerm) &&
               itemName !== searchTerm
             );
           })
@@ -73,34 +78,9 @@ const SearchBar = () => {
             </div>
           ))}
       </div>
+      :<></>}
     </div>
   );
 };
 
 export default SearchBar;
-
-// const SearchBar = () => {
-//   const handleClick = (event: any) => {
-//     //event.preventDefault();
-//     console.log(event);
-//   };
-//   return (
-//     <div className="mx-auto max-w-md relative">
-//       <input
-//         className="peer cursor-pointer z-10 h-8 w-12 rounded-full border bg-transparent pl-5 outline-none focus:w-full focus:cursor-text focus:border-lime-300 focus:pl-16 focus:pr-4"
-//         type="search "
-//         placeholder=""
-//       />
-
-//     </div>
-//   );
-// };
-
-// function search(e: any) {
-//   e.preventDefault();
-
-//   if (tosearch.length) {
-//     setTosearch(e);
-//     dispatch(fetchAllProducts(tosearch));
-//   }
-// }
