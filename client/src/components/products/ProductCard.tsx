@@ -12,27 +12,12 @@ import {
   deleteFavoritoLocal,
   products,
 } from "../slices/productSlice";
-import { agregarCarrito } from "../slices/purchaseOrder";
+import { getCantCarrito } from "../slices/purchaseOrder";
 
 const ProductCard = (producto: products) => {
-  const added = (
-    <AiTwotoneHeart
-      className="cursor-pointer"
-      title="Quitar de Favoritos"
-      size={25}
-      fill="#be0027"
-    />
-  );
-
-  const notAdded = (
-    <AiOutlineHeart
-      className="cursor-pointer"
-      title="Agregar a Favoritos"
-      size={25}
-    />
-  );
-
   const dispatch = useAppDispatch();
+
+  //====================================handlers====================================
   function handleBookmark(e: any) {
     e.preventDefault();
     const aux = window.localStorage.getItem("user");
@@ -64,11 +49,11 @@ const ProductCard = (producto: products) => {
     if (prod === -1) {
       productos.push({ productos: producto, cantidad: 1 });
       window.localStorage.setItem("product", JSON.stringify(productos));
-      dispatch(agregarCarrito(producto));
     }
+    dispatch(getCantCarrito());
   };
-  // dispatch(sacarCarrito(producto._id))
 
+  //===============================render==========================================
   return (
     <div
       className=" flex lg:flex-col bg-white items-center max-w-3xl lg:h-full  h-1/2   
@@ -98,7 +83,20 @@ const ProductCard = (producto: products) => {
 
       <div className="lg:grid grid-cols-2 lg:w-full lg:gap-0 lg:mr-0 lg:ml-0 justify-items-center flex flex-col ml-auto mr-4 gap-12">
         <div onClick={handleBookmark}>
-          {producto.userFavorite ? added : notAdded}
+          {producto.userFavorite ? (
+            <AiTwotoneHeart
+              className="cursor-pointer"
+              title="Quitar de Favoritos"
+              size={25}
+              fill="#be0027"
+            />
+          ) : (
+            <AiOutlineHeart
+              className="cursor-pointer"
+              title="Agregar a Favoritos"
+              size={25}
+            />
+          )}
         </div>
         <AiOutlineShoppingCart
           size={25}

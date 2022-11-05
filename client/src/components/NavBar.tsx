@@ -1,10 +1,11 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { MdFavoriteBorder } from "react-icons/md";
 import { RiShoppingBasket2Line } from "react-icons/ri";
 import { Link, useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import logo from "../imagenes/Logo.png";
 import { yaLog } from "./slices/logIn";
+import { getCantCarrito } from "./slices/purchaseOrder";
 import Logeado from "./user/Logeado";
 
 export const buttonHover =
@@ -14,32 +15,30 @@ const NavBar = () => {
   const logeado = useAppSelector((state) => state.logIn.logeado);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const cantCarrito = useAppSelector((state) => state.orders.carrito);
   const user: any = JSON.parse(window.localStorage.getItem("user") || "{}");
   let adminAuth = false;
   if (Object.keys(user).length) {
     adminAuth = user.role[0].name === "admin";
   }
-  const products: any = JSON.parse(
-    window.localStorage.getItem("product") || "[]"
-  );
-  const cantidadTotal = products.reduce(
-    (acc: number, prod: { cantidad: number }) => {
-      return acc + prod.cantidad;
-    },
-    0
-  );
-
-  const handleRedirect = () => {
-    navigate("/");
-  };
+  // const products: any = JSON.parse(
+  //   window.localStorage.getItem("product") || "[]"
+  // );
+  const cant = useAppSelector((state) => state.orders.carrito);
 
   useEffect(() => {
     if (Object.keys(user).length) {
       dispatch(yaLog(user.email));
     }
+    dispatch(getCantCarrito());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  //==================================handler==============================
+  const handleRedirect = () => {
+    navigate("/");
+  };
+
+  //================================render==========================
   return (
     <div className="bg-white p-2 lg:grid grid-flow-col justify-items-center items-center grid-cols-nav hidden">
       <img
@@ -130,7 +129,7 @@ const NavBar = () => {
         to={"/products/shopping-cart"}
       >
         <p className="absolute w-6 text-sm text-center m-auto bg-black text-white rounded-full right-[-.8rem] top-0">
-          {Math.max(cantidadTotal)}
+          {cant}
         </p>
         <RiShoppingBasket2Line size={40} />
       </Link>

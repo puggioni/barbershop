@@ -1,12 +1,20 @@
 import { FaTrash } from "react-icons/fa";
 import { HiOutlineArrowLongDown, HiOutlineArrowLongUp } from "react-icons/hi2";
 import { Link } from "react-router-dom";
+import { useAppDispatch } from "../../app/hooks";
+import { getCantCarrito } from "../slices/purchaseOrder";
 
 const ProductCard = (producto: any) => {
   let cantidad: number = producto.cantidad;
+  const dispatch = useAppDispatch();
   const prodLocalStorage: any = JSON.parse(
     window.localStorage.getItem("product") || "[]"
   );
+  const updateLocal = (updated: any) => {
+    window.localStorage.setItem("product", JSON.stringify(updated));
+  };
+
+  //================================handlers=================================
   const handleDelete = (
     event: React.MouseEvent<SVGElement, MouseEvent>,
     id: string
@@ -18,22 +26,18 @@ const ProductCard = (producto: any) => {
     });
     window.localStorage.setItem("product", JSON.stringify(prod));
     producto.forceUpdate();
+    dispatch(getCantCarrito());
   };
   const handleCantidadChange = (event: any, cantidad: number) => {
     const index = prodLocalStorage.findIndex((p: any) => {
       return p.productos._id === producto._id;
     });
-
     prodLocalStorage[index] = { productos: producto, cantidad };
-
     updateLocal(prodLocalStorage);
     producto.forceUpdate();
   };
 
-  const updateLocal = (updated: any) => {
-    window.localStorage.setItem("product", JSON.stringify(updated));
-  };
-
+  //==========================render=====================================
   if (producto) {
     return (
       <div className="grid lg:grid-cols-[.5fr_1fr_.2fr_.2fr_.2fr] lg:border-none border border-black rounded-lg grid-cols-[1fr_.5fr_.5fr_.5fr] mx-8  lg:my-0 my-6 items-center lg:font-normal font-semibold">

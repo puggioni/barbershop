@@ -13,7 +13,7 @@ export interface PurchaseOrders {
 
 interface PurchaseOrder {
   purchaseOrder: PurchaseOrders | undefined;
-  carrito: Array<PurchaseOrders>;
+  carrito: number;
   ordersByUser: Array<PurchaseOrders>;
   loading: boolean;
   order: PurchaseOrders;
@@ -21,7 +21,7 @@ interface PurchaseOrder {
 
 const initialState: PurchaseOrder = {
   purchaseOrder: undefined,
-  carrito: [],
+  carrito: 0,
   ordersByUser: [],
   loading: true,
   order: { _id: "" },
@@ -110,15 +110,9 @@ export const getDetailOrder = (id: any): AppThunk => {
   };
 };
 
-export const agregarCarrito = (prod: any): AppThunk => {
+export const getCantCarrito = (): AppThunk => {
   return async (dispatch) => {
-    dispatch(addCarrito(prod));
-  };
-};
-
-export const sacarCarrito = (id: any): AppThunk => {
-  return async (dispatch) => {
-    dispatch(delCarrito(id));
+    dispatch(cantidadCarrito());
   };
 };
 
@@ -144,14 +138,11 @@ export const getAllOrdersSlice = createSlice({
     setOrder: (state: any, action: PayloadAction<PurchaseOrders>) => {
       state.order = action.payload;
     },
-    addCarrito: (state: any, action: PayloadAction<PurchaseOrders>) => {
-      state.carrito.push(action.payload);
-    },
-    delCarrito: (state: any, action: PayloadAction<string>) => {
-      const filtered = state.carrito.filter((p: { _id: string }) => {
-        return p._id !== action.payload;
-      });
-      state.carrito = filtered;
+    cantidadCarrito: (state) => {
+      const products: any = JSON.parse(
+        window.localStorage.getItem("product") || "[]"
+      );
+      state.carrito = products.length;
     },
   },
 });
@@ -163,6 +154,5 @@ export const {
   cancelOrder,
   orderUser,
   setOrder,
-  addCarrito,
-  delCarrito,
+  cantidadCarrito,
 } = getAllOrdersSlice.actions;

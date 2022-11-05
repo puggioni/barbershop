@@ -8,7 +8,8 @@ import CardCart from "./CardCart";
 const Compra = () => {
   const [, forceUpdate] = useReducer((x) => x + 1, 0);
   const navigate = useNavigate();
-
+  const dispatch = useAppDispatch();
+  const user: any = JSON.parse(window.localStorage.getItem("user") || "[]");
   const products: any = JSON.parse(
     window.localStorage.getItem("product") || "[]"
   );
@@ -18,17 +19,17 @@ const Compra = () => {
     },
     0
   );
-  const dispatch = useAppDispatch();
   const precioTotal = products.reduce((acc: number, prod: any) => {
     return Number((acc + prod.productos.price * prod.cantidad).toFixed(2));
   }, 0);
-  const user: any = JSON.parse(window.localStorage.getItem("user") || "[]");
 
+  
   useEffect(() => {
     dispatch(yaLog(user.email));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  //======================================render============================
   return (
     <div className="bg-white lg:bg-carrito-banner bg-no-repeat lg:pt-[17%] bg-contain lg:h-[102%]">
       <img
