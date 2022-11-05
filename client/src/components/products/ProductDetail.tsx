@@ -90,18 +90,18 @@ export default function ProductDetail() {
   };
   //====================render=====================================
   return (
-    <div className="pt-20 bg-white bg-store-banner bg-no-repeat pb-8 bg-contain font-homenaje rounded-xl">
-      <div className="  mx-20 bg-white rounded-xl">
+    <div className="pt-20 bg-white lg:bg-store-banner bg-no-repeat pb-8 bg-contain font-homenaje rounded-xl">
+      <div className="  lg:mx-20 bg-white lg:rounded-xl">
         <div className=" rounded-xl">
           {product ? (
             <div>
-              <div className="grid grid-cols-[1fr_2fr] rounded-lg border-2 border-black">
+              <div className="lg:grid grid-cols-[1fr_2fr] lg:rounded-lg border-2 lg:border-black ">
                 <div className=" overflow-hidden p-4">
                   <img className="" src={product.image} alt="product" />
                 </div>
 
-                <div className="flex flex-col  ">
-                  <div className="flex flex-row mt-16 border-b border-black gap-8 mr-[30%] ml-12 ">
+                <div className="flex flex-col w-full ">
+                  <div className="flex flex-row mt-16 border-b border-black gap-8 lg:mr-[30%] lg:ml-12 ">
                     <h1 className=" text-center text-3xl">{product.name}</h1>
                     <h2 className=" text-[#855C20] text-3xl">
                       $ {product.price}
@@ -109,7 +109,7 @@ export default function ProductDetail() {
                   </div>
 
                   <p className="h-[30vh] mr-4 my-12">{product.description}</p>
-                  <p className="h-[30vh] mr-4 my-12">{product.stock}</p>
+
                   <div className="flex flex-row gap-8 mb-16 ml-8">
                     <div className="flex flex-row relative border border-black py-1 pr-2 mr-4 items-center text-center">
                       <input
