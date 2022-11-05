@@ -56,9 +56,9 @@ const Reserve = () => {
     }
   };
 
-  const putDate = (date:Date) => {
-   setDate(date)
-   setTurno({...turno,date:date})
+  const putDate = (date: Date) => {
+    setDate(date);
+    setTurno({ ...turno, date: date });
   };
 
   const selectBarber = (e: any, barber: any) => {
@@ -71,7 +71,6 @@ const Reserve = () => {
     if (!turno.barber || !turno.block || !turno.service || !turno.office) {
       alert("Por favor asegurate de completar todos los campos");
     } else {
-      
       dispatch(postAppointment(turno));
       setTurno(initialTurn);
       setDate(new Date(Date.now()));
@@ -79,7 +78,7 @@ const Reserve = () => {
   };
 
   return (
-    <div className="bg-white bg-turnos-banner bg-no-repeat pt-32 pb-20 bg-contain">
+    <div className="bg-white bg-turnos-banner bg-no-repeat pt-32 pb-20 bg-cover min-h-screen ">
       {turno.user ? (
         <>
           <h2 className="flex justify-center my-auto text-5xl text-white mb-12">
@@ -242,10 +241,11 @@ const Reserve = () => {
           </div>
         </>
       ) : (
-          <div className="border h-86 bg-white border-black rounded-xl py-10 mx-40 my-auto">
-           <h2 className="text-center text-xl text-red-500 font-bold">*Necesitas iniciar sesión para solicitar un Turno*</h2>
-        </div>  
-        
+        <div className="border h-86 bg-white border-black rounded-xl py-10 mx-40 my-auto">
+          <h2 className="text-center text-xl text-red-500 font-bold">
+            *Necesitas iniciar sesión para solicitar un Turno*
+          </h2>
+        </div>
       )}
     </div>
   );

@@ -23,7 +23,6 @@ const Compra = () => {
     return Number((acc + prod.productos.price * prod.cantidad).toFixed(2));
   }, 0);
 
-  
   useEffect(() => {
     dispatch(yaLog(user.email));
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -43,7 +42,7 @@ const Compra = () => {
         <div className="content-none lg:w-1/4 w-3/4 border-b border-black"></div>
       </div>
 
-      <div className="lg:grid grid-cols-[1.5fr_1fr]">
+      <div className="grid grid-cols-[1.5fr_1fr] ">
         <div className="">
           {products &&
             products.map((data: any) => (
@@ -59,7 +58,7 @@ const Compra = () => {
             ))}
         </div>
 
-        <div className="border h-60 border-black mx-20 lg:grid grid-cols-2 p-8 gap-8 hidden">
+        <div className="border h-60 border-black mx-20 grid grid-cols-2 p-8 gap-8 ">
           <p className="justify-self-center font-semibold mt-8">
             {cantidadTotal} articulos
           </p>
@@ -67,7 +66,7 @@ const Compra = () => {
             $ {precioTotal}
           </p>
           <button
-            className="col-span-2 block bg-[#855C20] text-white font-semibold"
+            className="col-span-2 block bg-[#855C20] text-white font-semibold "
             onClick={() => navigate("/products/checkout")}
           >
             COMPRAR

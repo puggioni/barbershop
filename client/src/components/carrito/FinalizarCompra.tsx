@@ -75,7 +75,7 @@ const CrearProducto = () => {
     compra,
   };
 
-  //===================render========================
+  //===================render========================//
   return (
     <div className="flex bg-bg-prods bg-cover">
       <div className="  lg:w-[40%] lg:mx-auto mx-4 my-16 py-8 px-8 bg-white/50 rounded-lg">

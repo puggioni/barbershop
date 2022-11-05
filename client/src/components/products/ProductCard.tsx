@@ -86,17 +86,18 @@ const ProductCard = (producto: products) => {
         src={producto.image}
         alt="product"
       />
+      <Link to={`/product/${producto._id}`} className=" py-4   underline-none">
+        <h3 className=" max-h-[5.5rem] underline-none">
+          {producto.name.toUpperCase()}
+        </h3>
+      </Link>
 
-      <h3 className="lg:max-h-full max-h-[5.5rem]">
-        {producto.name.toUpperCase()}
-      </h3>
-
-      <Link
+      {/*  <Link
         to={`/product/${producto._id}`}
         className="lg:block hidden py-4 underline underline-offset-2"
       >
         DESCRIPCION
-      </Link>
+      </Link> */}
 
       <h2 className="lg:block font-medium text-2xl absolute right-[40%] bottom-0">
         ${producto.price}

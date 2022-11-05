@@ -22,7 +22,7 @@ const Sucursales = () => {
     <div className=" bg-white lg:bg-sucursales-banner bg-no-repeat lg:pt-52 pb-2 bg-cover">
       <div className="border bg-white border-black lg:m-0 m-8 mt-12 rounded-xl lg:mx-40 ">
         <div className="lg:flex lg:flex-col-2 lg:mt-0 mt-4 align-center pb-12 text-center">
-          <div className="lg:flex justify-center lg:mx-12 lg:my-8 mx-4">
+          <div className="flex justify-center lg:mx-12 lg:my-8 mx-4">
             <MapView />
           </div>
           <div className=" justify-center block lg:ml-12 lg:mx-0 mx-8 mt-8">

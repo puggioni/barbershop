@@ -40,12 +40,8 @@ const ProductCard = (producto: any) => {
   //==========================render=====================================
   if (producto) {
     return (
-      <div className="grid lg:grid-cols-[.5fr_1fr_.2fr_.2fr_.2fr] lg:border-none border border-black rounded-lg grid-cols-[1fr_.5fr_.5fr_.5fr] mx-8  lg:my-0 my-6 items-center lg:font-normal font-semibold">
-        <img
-          className="h-32 lg:row-span-1 row-span-2 lg:ml-0 ml-2"
-          src={producto.image}
-          alt="product"
-        />
+      <div className="grid grid-cols-[.5fr_1fr_.2fr_.2fr_.2fr] mx-8 items-center">
+        <img className="h-32 " src={producto.image} alt="product" />
 
         <Link
           className="lg:col-span-1 col-span-3"
