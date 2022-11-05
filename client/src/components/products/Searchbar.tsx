@@ -13,9 +13,12 @@ type eventarget = {
 };
 
 const SearchBar = () => {
-
   const [tosearch, setTosearch] = useState("");
   const dispatch = useAppDispatch();
+
+  const copyProducts = useAppSelector(
+    (state: RootState) => state.products.copyAllProducts
+  );
 
   function search(searchTerm: any) {
     setTosearch(searchTerm);
@@ -29,8 +32,6 @@ const SearchBar = () => {
   function handleChange(e: evento) {
     if (e.target.name === "tosearch") setTosearch(e.target.value);
   }
-
-  const data = useAppSelector((state: RootState) => state.products);
 
   return (
     <div className="relative lg:mt-0 mt-6 mx-8">
@@ -51,25 +52,29 @@ const SearchBar = () => {
           }}
         />
       </div>
-      <div className="cursor-pointer">
-        {data.allProducts
-          ?.filter((item) => {
-            const searchTerm = tosearch.toLowerCase();
-            const itemName = item.name.toLowerCase();
+      {tosearch ? (
+        <div className="cursor-pointer bg-white border-black border absolute z-10 rounded-lg">
+          {copyProducts
+            .filter((item: any) => {
+              const searchTerm = tosearch.toLowerCase();
+              const itemName = item.name.toLowerCase();
 
-            return (
-              searchTerm &&
-              itemName.startsWith(searchTerm) &&
-              itemName !== searchTerm
-            );
-          })
-          .slice(0, 10)
-          ?.map((item) => (
-            <div className="p-2" onClick={() => search(item.name)}>
-              {item.name}
-            </div>
-          ))}
-      </div>
+              return (
+                searchTerm &&
+                itemName.includes(searchTerm) &&
+                itemName !== searchTerm
+              );
+            })
+            .slice(0, 10)
+            ?.map((item: any) => (
+              <div className="p-2" onClick={() => search(item.name)}>
+                {item.name}
+              </div>
+            ))}
+        </div>
+      ) : (
+        <></>
+      )}
     </div>
   );
 };

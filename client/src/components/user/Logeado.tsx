@@ -23,12 +23,12 @@ const Logeado = ({ setHide }: any) => {
     <div className=" lg:grid flex lg:grid-cols-2 justify-end items-center">
       <img
         onClick={() => {
-          setHide("-translate-y-full");
           navigate("/user/perfil");
+          setHide("-translate-y-full");
         }}
         src={img}
         alt="user pic"
-        className="lg:static absolute top-4 left-4 h-8 bg-center rounded-full"
+        className="lg:static absolute top-4 left-4 h-8 bg-center cursor-pointer rounded-full"
       />
 
       <button

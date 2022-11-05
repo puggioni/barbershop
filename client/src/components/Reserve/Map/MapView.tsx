@@ -22,6 +22,7 @@ const MapView = () => {
   //================render====================
   return (
     <MapContainer
+      style={{ zIndex: 1 }}
       zoom={4}
       center={[-32.94682, -60.63932]}
       scrollWheelZoom={true}
