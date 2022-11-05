@@ -169,9 +169,7 @@ const Productos = () => {
                 <p>Disponible</p>
                 <p>Precio</p>
               </div>
-              <button className="absolute right-8 top-0 text-blue-800	">
-                Ver historial de compras
-              </button>
+              
 
               {currentProducts?.map((data) => {
                 const disp = data.available ? "Sí" : "Nó";
