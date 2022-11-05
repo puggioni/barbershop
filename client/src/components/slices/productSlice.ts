@@ -25,6 +25,7 @@ interface ProductState {
   favs: Object[];
   categorias: Array<{ name: string; _id: string }>;
   deleteProd: {};
+  copyAllProducts:Array<products>;
 }
 
 const initialState: ProductState = {
@@ -35,6 +36,7 @@ const initialState: ProductState = {
   favs: [],
   categorias: [],
   deleteProd: {},
+  copyAllProducts: [],
 };
 
 //==========action==================
@@ -47,6 +49,7 @@ export const fetchAllProducts = (tosearch: string): AppThunk => {
           `${process.env.REACT_APP_BASE_URL}/products/all`
         );
         dispatch(allProducts(productos.data));
+        dispatch(copyAllProducts(productos.data));
       } catch (error) {
         return error;
       }
@@ -356,6 +359,12 @@ export const getAllProductsSlice = createSlice({
     setFavorites: (state, action: PayloadAction<Array<products>>) => {
       state.favs = action.payload;
     },
+
+    copyAllProducts: (state, action: PayloadAction<Array<products>>) => {
+      state.copyAllProducts = action.payload;
+    },
+
+
     addFavoritoLocal: (state, action: PayloadAction<products>) => {
       state.favs.push(action.payload);
       window.localStorage.setItem("favoritos", JSON.stringify(state.favs));
@@ -396,4 +405,5 @@ export const {
   sortProductsByStock,
   sortProductsByDisponible,
   clearFavorites,
+  copyAllProducts,
 } = getAllProductsSlice.actions;

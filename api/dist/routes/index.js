@@ -64,6 +64,7 @@ const searchOrder_1 = __importDefault(require("./Orders/searchOrder"));
 const changeStateOrder_1 = __importDefault(require("./Orders/changeStateOrder"));
 const filterOrders_1 = __importDefault(require("./Orders/filterOrders"));
 const deliverOrder_1 = __importDefault(require("./Orders/deliverOrder"));
+const getProductOrders_1 = __importDefault(require("./Orders/getProductOrders"));
 const router = (0, express_1.Router)();
 /* ============PRODUCTS============ */
 router.use("/products", postProducts_1.default);
@@ -128,4 +129,5 @@ router.use("/orders", cancelOrders_1.default);
 router.use("/orders", deleteAllOrders_1.default);
 router.use("/orders", getUserOrders_1.default);
 router.use("/orders", deliverOrder_1.default);
+router.use("/orders", getProductOrders_1.default);
 exports.default = router;

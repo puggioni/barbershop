@@ -65,7 +65,7 @@ const AboutUs = () => {
           src="https://www.barbershop.cat/img/es/titol_serveis.png"
           alt="Servicios"
         />
-        <div className="place-items-center  flex flex-col-2 bg-zinc-900 block bg-no-repeat align-bottom  m-10 ">
+        <div className="place-items-center  flex flex-col-2 bg-zinc-900 bg-no-repeat align-bottom  m-10 ">
           <div className="text-center w-1/2 text-xl border-r-2 border-white">
             <p className="text-white">
               Nuestro sistema de reserva, permite asegurar el menor tiempo de
