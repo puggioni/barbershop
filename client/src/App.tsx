@@ -31,6 +31,7 @@ import ChangePassword from "./components/user/changePassword";
 import MenuResponsive from "./components/MenuResponsive";
 import MisCompras from "./components/user/MisCompras";
 import OrderDetail from "./components/user/OrderDetail";
+import HistorialProducto from "./components/admin/HistorialProducto";
 export const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 
@@ -95,6 +96,10 @@ function App() {
         <Route
           path="/admin/products/editar-producto/:idProduct"
           element={<EditarProducto />}
+        />
+        <Route
+          path="/admin/products/hisrotial-producto/"
+          element={<HistorialProducto />}
         />
         <Route
           path="/admin/products/crear-producto"

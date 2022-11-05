@@ -16,7 +16,6 @@ import {
   orderByPrice,
   orderByStock,
 } from "../slices/productSlice";
-
 import { categorias, fetchAllProducts, filter } from "../slices/productSlice";
 
 const Productos = () => {
@@ -29,7 +28,8 @@ const Productos = () => {
   const cate = useAppSelector((state) => state.products.categorias);
   const token = JSON.parse(window.localStorage.getItem("token") || "{}");
   const user = JSON.parse(window.localStorage.getItem("user") || "{}");
-
+  const [orderSelect, setOrderSelect] = useState(true);
+  const [cateSelect, setCateSelect] = useState(true);
   const navigate = useNavigate();
   const header = useHeaders(token);
 
@@ -55,6 +55,7 @@ const Productos = () => {
 
   //=====================click handlers=====================
   const handleCateFilter = (event: any) => {
+    setCateSelect(false);
     if (event.target.value.length) {
       if (event.target.value === "all") {
         dispatch(fetchAllProducts(""));
@@ -66,12 +67,13 @@ const Productos = () => {
   };
 
   const handleRestore = (e: any) => {
-    e.preventDefault();
+    setOrderSelect(true);
+    setCateSelect(true);
     dispatch(fetchAllProducts(""));
   };
 
   const handleOrder = (e: any) => {
-    e.preventDefault();
+    setOrderSelect(false);
     if (e.target.value === "alfa") {
       dispatch(orderByName("name-asc"));
     } else if (e.target.value === "stock") {
@@ -83,16 +85,7 @@ const Productos = () => {
     }
   };
 
-  const handleEditHistory = (e: any, id: string) => {
-    e.preventDefault();
-  };
-
-  // const handleEditProd = (e: any, id: string) => {
-  //   e.preventDefault();
-  // };
-
   const handleDelProd = (e: any, id: string) => {
-    e.preventDefault();
     dispatch(deleteProd(header.headers, id));
   };
 
@@ -114,7 +107,12 @@ const Productos = () => {
                   className="border border-black rounded-lg px-1"
                   onChange={(e) => handleOrder(e)}
                 >
-                  <option value="placeholder" disabled hidden selected>
+                  <option
+                    value="placeholder"
+                    disabled
+                    hidden
+                    selected={orderSelect}
+                  >
                     Order by
                   </option>
                   <option value="alfa">Alfabetico</option>
@@ -128,7 +126,12 @@ const Productos = () => {
                   className="border border-black rounded-lg px-1 py-3"
                   onChange={(e) => handleCateFilter(e)}
                 >
-                  <option value="placeholder" disabled hidden selected>
+                  <option
+                    value="placeholder"
+                    disabled
+                    hidden
+                    selected={cateSelect}
+                  >
                     Categorias
                   </option>
                   <option value="all">All</option>;
@@ -178,20 +181,16 @@ const Productos = () => {
                     <p>{data.stock}</p>
                     <p>{disp}</p>
                     <p>{data.price}</p>
-                    <BsCreditCardFill
-                      className="justify-self-center cursor-pointer "
-                      title="Editar historial de compra"
-                      onClick={(e) => {
-                        handleEditHistory(e, data._id);
-                      }}
-                    />
+                    <Link to={`editar-producto/${data._id}`}>
+                      <BsCreditCardFill
+                        className="justify-self-center cursor-pointer "
+                        title="ver historial de compra de producto"
+                      />
+                    </Link>
                     <Link to={`editar-producto/${data._id}`}>
                       <FaEdit
                         className="justify-self-center cursor-pointer "
                         title="Editar producto"
-                        // onClick={(e) => {
-                        //   handleEditProd(e, data._id);
-                        // }}
                       />
                     </Link>
                     <FaTrashAlt
