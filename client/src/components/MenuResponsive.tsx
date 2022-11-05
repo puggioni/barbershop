@@ -29,7 +29,7 @@ const MenuResponsive = () => {
   //====================render=================================
   return (
     <div
-      className={`lg:hidden z-10 bg-white/95 min-h-screen w-full absolute top-0 ease-in-out duration-200 ${hideMenu}`}
+      className={`lg:hidden z-50 bg-white/95 min-h-screen w-full absolute top-0 ease-in-out duration-200 ${hideMenu}`}
     >
       <AiOutlineClose
         onClick={() => {
@@ -74,6 +74,7 @@ const MenuResponsive = () => {
           <Link
             to={`/user/mis-compras/${user._id}`}
             className={`${buttonHover} px-4 py-1 rounded-lg`}
+            onClick={() => setHide("-translate-y-full")}
           >
             Mis Compras
           </Link>
