@@ -3,6 +3,7 @@ import { HiOutlineArrowLongDown, HiOutlineArrowLongUp } from "react-icons/hi2";
 import { useParams } from "react-router";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { clearProducDetail, productDetail } from "../slices/productSlice";
+import { getCantCarrito } from "../slices/purchaseOrder";
 import ReviewsProduct from "./ReviewsProduct";
 
 type QuizParams = {
@@ -36,7 +37,7 @@ export default function ProductDetail() {
   };
 
   //====================handlers=====================================
-  const handleClick = (event: any) => {
+  const handleAgregarCarrito = (event: any) => {
     event.preventDefault();
     let productos: any = JSON.parse(
       window.localStorage.getItem("product") || "[]"
@@ -53,6 +54,7 @@ export default function ProductDetail() {
       productos.push({ productos: paraCarrito, cantidad: cantidad });
       window.localStorage.setItem("product", JSON.stringify(productos));
     }
+    dispatch(getCantCarrito());
   };
 
   const handleCantidadChange = (event: any) => {
@@ -140,7 +142,7 @@ export default function ProductDetail() {
                     <button
                       disabled={product?.stock ? false : true}
                       onClick={(event) => {
-                        handleClick(event);
+                        handleAgregarCarrito(event);
                       }}
                       className="text-[#855C20] border mr-4 border-[#855C20] py-1 px-10 select-none	"
                     >

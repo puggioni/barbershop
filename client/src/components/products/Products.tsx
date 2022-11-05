@@ -143,7 +143,6 @@ const Products = () => {
                   )}
                 </div>
                 <OrderingByName hidden={hideAlfa} />
-                {/* <span className="content-none border-b mx-4 border-black"></span> */}
                 <div className="relative">
                   <p className="underline underline-offset-2">Precio</p>
                   {!hidePrecio ? (
