@@ -32,7 +32,7 @@ const Logeado = ({ setHide }: any) => {
       />
 
       <button
-        className="lg:mt-0 mt-20 lg:mr-0 mr-4 "
+        className="lg:mt-0 mt-10 lg:mr-0 mr-4 "
         onClick={() => handleLogOut()}
       >
         Log Out

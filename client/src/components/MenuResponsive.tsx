@@ -48,13 +48,13 @@ const MenuResponsive = () => {
         alt="logo"
       />
 
-      <div className="grid grid-cols-1 mt-16 gap-8 justify-items-center ml-8 mr-20 text-3xl ">
+      <div className="grid grid-cols-1 mt-16 gap-8 justify-items-center text-3xl ">
         <Link
           to={"/product"}
           onClick={() => setHide("-translate-y-full")}
           className={`${buttonHover} px-4 py-1 rounded-lg`}
         >
-          Store
+          Tienda
         </Link>
         <Link
           to={"/sucursales"}
@@ -70,6 +70,16 @@ const MenuResponsive = () => {
         >
           Turnos
         </Link>
+        {logeado ? (
+          <Link
+            to={`/user/mis-compras/${user._id}`}
+            className={`${buttonHover} px-4 py-1 rounded-lg`}
+          >
+            Mis Compras
+          </Link>
+        ) : (
+          <></>
+        )}
         <Link
           to={"/contacto"}
           onClick={() => setHide("-translate-y-full")}
@@ -80,7 +90,7 @@ const MenuResponsive = () => {
         <Link
           to={"/products/shopping-cart"}
           onClick={() => setHide("-translate-y-full")}
-          className={`${buttonHover} px-4 py-1 rounded-lg lg:hidden`}
+          className={`${buttonHover} px-4 py-1 rounded-lg`}
         >
           Carrito
         </Link>
