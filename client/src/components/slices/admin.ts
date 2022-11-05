@@ -345,6 +345,23 @@ export const despacharOrden = (
   };
 };
 
+export const ordersProducto = (
+  header: { token: string | null },
+  id: string | undefined
+): AppThunk => {
+  return async (dispatch) => {
+    try {
+      const res = await axios.get(
+        `${process.env.REACT_APP_BASE_URL}/orders/product-orders/` + id,
+        { headers: header }
+      );
+      dispatch(historialProd(res.data));
+    } catch (error: any) {
+      alert(error.response.data.message);
+    }
+  };
+};
+
 //================reducer===================
 const adminReducerSlice = createSlice({
   name: "admin",
@@ -406,6 +423,13 @@ const adminReducerSlice = createSlice({
       state.orders[index] = action.payload;
       state.filtroOrden[index] = action.payload;
     },
+    historialProd: (
+      state: { orders: any[]; filtroOrden: any[] },
+      action: PayloadAction<any[]>
+    ) => {
+      state.orders = action.payload;
+      state.filtroOrden = action.payload;
+    },
   },
 });
 
@@ -419,4 +443,5 @@ export const {
   searchOrdersName,
   cambiarEstado,
   despachado,
+  historialProd,
 } = adminReducerSlice.actions;

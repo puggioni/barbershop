@@ -98,7 +98,7 @@ function App() {
           element={<EditarProducto />}
         />
         <Route
-          path="/admin/products/hisrotial-producto/"
+          path="/admin/products/hisrotial-producto/:id"
           element={<HistorialProducto />}
         />
         <Route

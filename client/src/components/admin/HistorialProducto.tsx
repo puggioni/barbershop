@@ -1,22 +1,23 @@
 import { useEffect, useState } from "react";
 import { BsArrowCounterclockwise } from "react-icons/bs";
+import { useParams } from "react-router";
+import { Link } from "react-router-dom";
 import useHeaders from "../../app/header";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { RootState } from "../../app/store";
 import Paginate from "../products/Paginate";
-import SearchBar from "../products/Searchbar";
+import { ordersProducto } from "../slices/admin";
 import { yaLog } from "../slices/logIn";
+import OrderSearch from "./OrderSearch";
 
-import { categorias, fetchAllProducts } from "../slices/productSlice";
-
-const Productos = () => {
+const HistorialProducto = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [productsPerPage] = useState(9);
   const lastPostIndex = currentPage * productsPerPage;
   const firstPostIndex = lastPostIndex - productsPerPage;
   const dispatch = useAppDispatch();
-
-  const data = useAppSelector((state: RootState) => state.products);
+  const { id } = useParams();
+  const data = useAppSelector((state: RootState) => state.admin.orders);
 
   const token = JSON.parse(window.localStorage.getItem("token") || "{}");
   const user = JSON.parse(window.localStorage.getItem("user") || "{}");
@@ -25,8 +26,8 @@ const Productos = () => {
   //============use effect=================
 
   useEffect(() => {
-    dispatch(fetchAllProducts(""));
-    dispatch(categorias());
+    dispatch(ordersProducto(header.headers, id));
+
     if (Object.keys(user).length) {
       dispatch(yaLog(user.email));
     }
@@ -34,10 +35,7 @@ const Productos = () => {
   }, []);
 
   //===========pagination=============
-  const currentProducts = data.allProducts?.slice(
-    firstPostIndex,
-    lastPostIndex
-  );
+  const currentProducts = data.slice(firstPostIndex, lastPostIndex);
   const [pageLimit] = useState(5);
   const [maxPageNumberLimit, setMaxPageNumberLimit] = useState(5);
   const [minPageNumberLimit, setMinPageNumberLimit] = useState(0);
@@ -45,7 +43,7 @@ const Productos = () => {
   //=====================click handlers=====================
 
   const handleRestore = (e: any) => {
-    dispatch(fetchAllProducts(""));
+    dispatch(ordersProducto(header.headers, id));
   };
 
   //==============render================================
@@ -58,8 +56,8 @@ const Productos = () => {
         <div className=" mx-8 bg-white border-2 px-4 border-black rounded-lg">
           <div>
             <div className="grid grid-cols-[1.5fr_1fr] gap-8">
-              <div className="grid grid-cols-[2fr_1fr_1fr_.2fr] gap-16  my-8">
-                <SearchBar />
+              <div className="flex w-[50vw] gap-16  my-8">
+                <OrderSearch />
 
                 <BsArrowCounterclockwise
                   onClick={(e) => handleRestore(e)}
@@ -70,30 +68,33 @@ const Productos = () => {
               </div>
             </div>
             <div className="relative">
-              <div className=" grid grid-cols-[1fr_.2fr_.2fr_.2fr] w-[55%] pr-8 gap-16 justify-items-center">
-                <p>Nombre</p>
-                <p>Stock</p>
-                <p>Disponible</p>
-                <p>Precio</p>
+              <div className=" grid grid-cols-5 ml-8 gap-16 ">
+                <p>User</p>
+                <p>Id Compra</p>
+                <p>Estado</p>
+                <p>Fecha</p>
               </div>
 
               {currentProducts.map((data) => {
-                const disp = data.available ? "Sí" : "Nó";
+                const fecha = String(data.date).split("T");
                 return (
                   <div
-                    className="grid grid-cols-[1fr_.2fr_.2fr_1fr_.2fr_.2fr_.2fr]  gap-16 py-2 pl-2 mt-8 border border-black rounded-lg items-center"
+                    className="grid grid-cols-5  gap-16 py-2 pl-2 mt-8 border border-black rounded-lg items-center"
                     key={data._id}
                   >
-                    <p>{data.name}</p>
-                    <p>{data.stock}</p>
-                    <p>{disp}</p>
-                    <p>{data.price}</p>
+                    <p>{data.user}</p>
+                    <p>{data._id}</p>
+                    <p>{data.state}</p>
+                    <p>{fecha[0]}</p>
+                    <Link to={`/user/mis-compras/compra/${data._id}`}>
+                      Ver historial
+                    </Link>
                   </div>
                 );
               })}
             </div>
             <Paginate
-              allProducts={data.allProducts.length}
+              allProducts={data.length}
               productsPerPage={productsPerPage}
               setCurrentPage={setCurrentPage}
               currentPage={currentPage}
@@ -112,4 +113,4 @@ const Productos = () => {
   }
 };
 
-export default Productos;
+export default HistorialProducto;
