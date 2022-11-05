@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { HiOutlineArrowLongDown, HiOutlineArrowLongUp } from "react-icons/hi2";
+import { HiOutlineArrowDown, HiOutlineArrowUp } from "react-icons/hi2";
 import { useParams } from "react-router";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { clearProducDetail, productDetail } from "../slices/productSlice";
@@ -123,14 +123,14 @@ export default function ProductDetail() {
                         }}
                       />
                       <div>
-                        <HiOutlineArrowLongUp
+                        <HiOutlineArrowUp
                           onClick={() => {
                             handleAgregar();
                           }}
                           size={10}
                           className="cursor-pointer mt-1"
                         />
-                        <HiOutlineArrowLongDown
+                        <HiOutlineArrowDown
                           onClick={() => {
                             handleRestar();
                           }}

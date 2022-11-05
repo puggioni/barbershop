@@ -1,5 +1,5 @@
 import { FaTrash } from "react-icons/fa";
-import { HiOutlineArrowLongDown, HiOutlineArrowLongUp } from "react-icons/hi2";
+import { HiOutlineArrowDown, HiOutlineArrowUp } from "react-icons/hi2";
 import { Link } from "react-router-dom";
 import { useAppDispatch } from "../../app/hooks";
 import { getCantCarrito } from "../slices/purchaseOrder";
@@ -20,7 +20,6 @@ const ProductCard = (producto: any) => {
     id: string
   ) => {
     event.preventDefault();
-
     const prod = prodLocalStorage.filter((p: any) => {
       return p.productos._id !== id;
     });
@@ -28,6 +27,7 @@ const ProductCard = (producto: any) => {
     producto.forceUpdate();
     dispatch(getCantCarrito());
   };
+
   const handleCantidadChange = (event: any, cantidad: number) => {
     const index = prodLocalStorage.findIndex((p: any) => {
       return p.productos._id === producto._id;
@@ -56,7 +56,7 @@ const ProductCard = (producto: any) => {
         <h2>${producto.price}</h2>
         <div className="relative border border-black py-1 pr-2 mr-4 items-center text-center">
           <div>{producto.cantidad}</div>
-          <HiOutlineArrowLongDown
+          <HiOutlineArrowDown
             onClick={(e) => {
               cantidad = cantidad - 1;
               handleCantidadChange(e, cantidad);
@@ -64,7 +64,7 @@ const ProductCard = (producto: any) => {
             size={10}
             className="absolute bottom-0 right-0 cursor-pointer mb-1"
           />
-          <HiOutlineArrowLongUp
+          <HiOutlineArrowUp
             onClick={(e) => {
               cantidad = cantidad + 1;
               handleCantidadChange(e, cantidad);

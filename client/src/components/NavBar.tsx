@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { MdFavoriteBorder } from "react-icons/md";
 import { RiShoppingBasket2Line } from "react-icons/ri";
 import { Link, useNavigate } from "react-router-dom";

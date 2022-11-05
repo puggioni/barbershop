@@ -1,8 +1,6 @@
-import {
-  AiOutlineHeart,
-  AiOutlineShoppingCart,
-  AiTwotoneHeart,
-} from "react-icons/ai";
+import { useEffect, useState } from "react";
+import { AiOutlineHeart, AiTwotoneHeart } from "react-icons/ai";
+import { BsCartPlus, BsCartXFill } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import { useAppDispatch } from "../../app/hooks";
 import {
@@ -16,7 +14,20 @@ import { getCantCarrito } from "../slices/purchaseOrder";
 
 const ProductCard = (producto: products) => {
   const dispatch = useAppDispatch();
+  const [agregado, setAgregado] = useState(false);
+  const products: any = JSON.parse(
+    window.localStorage.getItem("product") || "[]"
+  );
+  const prodFound = products.find((prod: { productos: any; _id: string }) => {
+    return prod.productos._id === producto._id;
+  });
 
+  useEffect(() => {
+    if (prodFound) {
+      setAgregado(true);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [prodFound]);
   //====================================handlers====================================
   function handleBookmark(e: any) {
     e.preventDefault();
@@ -37,7 +48,7 @@ const ProductCard = (producto: products) => {
     }
   }
 
-  const handleClick = (event: any) => {
+  const handleAgregarCarrito = (event: any) => {
     event.preventDefault();
     let productos: any = JSON.parse(
       window.localStorage.getItem("product") || "[]"
@@ -50,6 +61,16 @@ const ProductCard = (producto: products) => {
       productos.push({ productos: producto, cantidad: 1 });
       window.localStorage.setItem("product", JSON.stringify(productos));
     }
+    dispatch(getCantCarrito());
+    setAgregado(true);
+  };
+
+  const handleDelete = (id: string) => {
+    const prod = products.filter((p: any) => {
+      return p.productos._id !== id;
+    });
+    window.localStorage.setItem("product", JSON.stringify(prod));
+    setAgregado(false);
     dispatch(getCantCarrito());
   };
 
@@ -98,14 +119,26 @@ const ProductCard = (producto: products) => {
             />
           )}
         </div>
-        <AiOutlineShoppingCart
-          size={25}
-          title="Store"
-          onClick={(event) => {
-            handleClick(event);
-          }}
-          className="cursor-pointer"
-        />
+        {!agregado ? (
+          <BsCartPlus
+            size={25}
+            title="Agregar a carrito"
+            onClick={(event) => {
+              handleAgregarCarrito(event);
+            }}
+            className="cursor-pointer"
+          />
+        ) : (
+          <BsCartXFill
+            size={25}
+            fill={"#855C20"}
+            title="borrar de carrito"
+            onClick={() => {
+              handleDelete(producto._id);
+            }}
+            className="cursor-pointer"
+          />
+        )}
       </div>
     </div>
   );
