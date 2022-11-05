@@ -60,6 +60,7 @@ import searchOrder from "./Orders/searchOrder";
 import changeStateOrder from "./Orders/changeStateOrder";
 import filterOrders from "./Orders/filterOrders";
 import deliverOrder from "./Orders/deliverOrder";
+import getProductOrders from "./Orders/getProductOrders";
 const router = Router();
 
 /* ============PRODUCTS============ */
@@ -135,5 +136,5 @@ router.use("/orders", cancelOrders);
 router.use("/orders", deleteOrders);
 router.use("/orders", getUserOrders);
 router.use("/orders", deliverOrder);
-
+router.use("/orders", getProductOrders);
 export default router;
