@@ -33,20 +33,18 @@ const SearchBar = () => {
   const data = useAppSelector((state: RootState) => state.products);
 
   return (
-    <div className="relative mx-8">
+    <div className="relative lg:mt-0 mt-6 mx-8">
       <div>
         <input
           onChange={handleChange}
           name="tosearch"
-          className="border border-black rounded-md w-full pl-2 "
+          className="border border-black lg:rounded-md w-full pl-2 lg:h-full h-[5vh]"
           value={tosearch}
           type="text"
-          autoComplete="off"
-          placeholder="Buscar..."
+          placeholder="Search"
         />
-
         <BsSearch
-          className="absolute  top-1 right-1 cursor-pointer"
+          className="absolute lg:top-1 top-3 right-1 cursor-pointer"
           stroke="currentColor"
           onClick={() => {
             HandlertoSearch(tosearch);
@@ -77,29 +75,3 @@ const SearchBar = () => {
 };
 
 export default SearchBar;
-
-// const SearchBar = () => {
-//   const handleClick = (event: any) => {
-//     //event.preventDefault();
-//     console.log(event);
-//   };
-//   return (
-//     <div className="mx-auto max-w-md relative">
-//       <input
-//         className="peer cursor-pointer z-10 h-8 w-12 rounded-full border bg-transparent pl-5 outline-none focus:w-full focus:cursor-text focus:border-lime-300 focus:pl-16 focus:pr-4"
-//         type="search "
-//         placeholder=""
-//       />
-
-//     </div>
-//   );
-// };
-
-// function search(e: any) {
-//   e.preventDefault();
-
-//   if (tosearch.length) {
-//     setTosearch(e);
-//     dispatch(fetchAllProducts(tosearch));
-//   }
-// }

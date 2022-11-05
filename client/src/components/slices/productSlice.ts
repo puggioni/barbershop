@@ -165,10 +165,7 @@ export const filter = (categoria: string): AppThunk => {
 export const orderByName = (payload: string) => {
   return async (dispatch: any) => {
     try {
-      const ordered = await axios.get(
-        `${process.env.REACT_APP_BASE_URL}/products/all`
-      );
-      dispatch(sortProductsByName(ordered.data));
+      dispatch(sortProductsByName(payload));
     } catch (error) {
       return error;
     }
@@ -177,10 +174,7 @@ export const orderByName = (payload: string) => {
 export const orderByPrice = (payload: string) => {
   return async (dispatch: any) => {
     try {
-      const ordered = await axios.get(
-        `${process.env.REACT_APP_BASE_URL}/products/all`
-      );
-      dispatch(sortProductsByPrice(ordered.data));
+      dispatch(sortProductsByPrice(payload));
     } catch (error) {
       return error;
     }

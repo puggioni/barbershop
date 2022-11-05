@@ -1,15 +1,16 @@
 import { useEffect, useReducer } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../../app/hooks";
-import { comprar } from "../slices/purchaseOrder";
-import CardCart from "./CardCart";
-import useHeaders from "../../app/header";
+import logo from "../../imagenes/Logo.png";
 import { yaLog } from "../slices/logIn";
+import CardCart from "./CardCart";
 
 const Compra = () => {
   const [, forceUpdate] = useReducer((x) => x + 1, 0);
   const navigate = useNavigate();
-  let products: any = JSON.parse(
+  const dispatch = useAppDispatch();
+  const user: any = JSON.parse(window.localStorage.getItem("user") || "[]");
+  const products: any = JSON.parse(
     window.localStorage.getItem("product") || "[]"
   );
   const cantidadTotal = products.reduce(
@@ -18,25 +19,30 @@ const Compra = () => {
     },
     0
   );
-  const dispatch = useAppDispatch();
   const precioTotal = products.reduce((acc: number, prod: any) => {
     return Number((acc + prod.productos.price * prod.cantidad).toFixed(2));
   }, 0);
-  const user: any = JSON.parse(window.localStorage.getItem("user") || "[]");
 
   useEffect(() => {
     dispatch(yaLog(user.email));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  //======================================render============================
   return (
-    <div className="bg-white bg-carrito-banner bg-no-repeat pt-[17%] bg-contain h-[102%]">
-      <div className="flex flex-col items-center pb-[4rem] bg-white/50 rounded-xl mx-12">
+    <div className="bg-white lg:bg-carrito-banner bg-no-repeat lg:pt-[17%] bg-contain lg:h-[102%]">
+      <img
+        className="lg:hidden m-auto h-[10%] mt-16 mb-6"
+        src={logo}
+        alt="logo"
+      />
+
+      <div className="flex flex-col items-center lg:pb-16 pb-2 bg-white/50 rounded-xl mx-12">
         <div className="font-semibold text-2xl pt-2 pb-6">Tu Carrito</div>
-        <div className="content-none w-1/4 border-b border-black"></div>
+        <div className="content-none lg:w-1/4 w-3/4 border-b border-black"></div>
       </div>
 
-      <div className="grid grid-cols-[1.5fr_1fr]  ">
+      <div className="grid grid-cols-[1.5fr_1fr] ">
         <div className="">
           {products &&
             products.map((data: any) => (
@@ -52,7 +58,7 @@ const Compra = () => {
             ))}
         </div>
 
-        <div className="border h-60 border-black mx-20 grid grid-cols-2 p-8 gap-8 mt-48 ">
+        <div className="border h-60 border-black mx-20 grid grid-cols-2 p-8 gap-8 ">
           <p className="justify-self-center font-semibold mt-8">
             {cantidadTotal} articulos
           </p>
@@ -67,13 +73,21 @@ const Compra = () => {
           </button>
         </div>
         <button
-          className="  bg-[#855C20] my-8 text-white w-1/4 font-semibold mt-16 mx-8 px-4 py-2"
+          className="  bg-[#855C20] my-8 text-white w-1/4 font-semibold mt-16 mx-8 px-4 py-2 lg:block hidden"
           onClick={() => navigate("/product")}
         >
           Seguí comprando
         </button>
       </div>
-      <div className=""></div>
+      <div className="lg:hidden grid grid-cols-2 items-end m-4 mt-16 ">
+        <p className="font-semibold">Total: ${precioTotal}</p>
+        <button
+          className="py-4 px-6 bg-[#855C20] text-white font-semibold"
+          onClick={() => navigate("/products/checkout")}
+        >
+          TERMINAR PEDIDO
+        </button>
+      </div>
     </div>
   );
 };

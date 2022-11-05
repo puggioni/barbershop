@@ -28,6 +28,7 @@ import LoginUser from "./components/user/LoginUser";
 import Perfil from "./components/user/Perfil";
 import { firebaseConfig } from "./firebase";
 import ChangePassword from "./components/user/changePassword";
+import MenuResponsive from "./components/MenuResponsive";
 import MisCompras from "./components/user/MisCompras";
 import OrderDetail from "./components/user/OrderDetail";
 export const app = initializeApp(firebaseConfig);
@@ -37,6 +38,7 @@ function App() {
   return (
     <div>
       <NavBar />
+      <MenuResponsive />
       <Routes>
         <Route path="/" element={<Home />} />
         {/*=====================productos==========================*/}
@@ -63,8 +65,11 @@ function App() {
           path="/user/password-reset/:idUser"
           element={<ChangePassword />}
         />
-        <Route path="/user/mis-compras/:idUser" element={<MisCompras/>} />
-        <Route path="/user/mis-compras/compra/:idOrder" element={<OrderDetail/>} />
+        <Route path="/user/mis-compras/:idUser" element={<MisCompras />} />
+        <Route
+          path="/user/mis-compras/compra/:idOrder"
+          element={<OrderDetail />}
+        />
         {/*===================sucursales============================*/}
         <Route path="/sucursales" element={<Sucursales />} />
         {/*===================turno=================================*/}
