@@ -18,7 +18,6 @@ const SearchBar = () => {
   const [tosearch, setTosearch] = useState("");
   const dispatch = useAppDispatch();
   
-  const data = useAppSelector((state: RootState) => state.products);
   const copyProducts = useAppSelector((state: RootState) => state.products.copyAllProducts);
 
   function search(searchTerm: any) {
