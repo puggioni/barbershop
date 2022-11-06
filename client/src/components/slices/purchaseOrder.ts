@@ -8,6 +8,7 @@ export interface PurchaseOrders {
   products?: Array<any>;
   state?: string;
   date?: Date;
+  address?: Object;
 }
 
 interface PurchaseOrder {
@@ -15,6 +16,7 @@ interface PurchaseOrder {
   allOrders: Array<PurchaseOrders>;
   ordersByUser: Array<PurchaseOrders>;
   loading: boolean;
+  order: PurchaseOrders
 }
 
 const initialState: PurchaseOrder = {
@@ -22,6 +24,7 @@ const initialState: PurchaseOrder = {
   allOrders: [],
   ordersByUser: [],
   loading: true,
+  order:{_id:""}
 };
 
 //==========action================//
@@ -38,7 +41,7 @@ export const comprar = (header: object, compra: object) => {
       window.location.href = `${response.data.links[1].href}`;
     } catch (error) {
       console.log(error);
-      alert("No se pudo completar la compra");
+      alert("Debes estar logeado para finalizar la compra");
     }
   };
 };
@@ -86,9 +89,21 @@ export const getPersonalOrder = (id: any): AppThunk => {
   return async (dispatch) => {
     try {
       const res = await axios.get(
-        `${process.env.REACT_APP_BASE_URL}/personal-orders/${id}`
+        `${process.env.REACT_APP_BASE_URL}/orders/personal-orders/${id}`
       );
       dispatch(orderUser(res.data));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+export const getDetailOrder = (id: any): AppThunk => {
+  return async (dispatch) => {
+    try {
+      const res = await axios.get(
+        `${process.env.REACT_APP_BASE_URL}/orders/${id}`
+      );
+      dispatch(setOrder(res.data));
     } catch (error) {
       console.log(error);
     }
@@ -114,9 +129,12 @@ export const getAllOrdersSlice = createSlice({
     orderUser: (state: any, action: PayloadAction<PurchaseOrders>) => {
       state.ordersByUser = action.payload;
     },
+    setOrder: (state: any, action: PayloadAction<PurchaseOrders>) => {
+      state.order= action.payload;
+    },
   },
 });
 
 export default getAllOrdersSlice.reducer;
-export const { order, confirmOrder, cancelOrder, orderUser } =
+export const { order, confirmOrder, cancelOrder, orderUser, setOrder } =
   getAllOrdersSlice.actions;

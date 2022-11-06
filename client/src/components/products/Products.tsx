@@ -77,7 +77,7 @@ const Products = () => {
     return (
       <div className=" bg-white bg-store-banner bg-no-repeat pt-52 pb-2 bg-contain">
         <div className="border bg-white border-black rounded-xl mx-40">
-          <h1 className="flex justify-center py-8 text-5xl">STORE</h1>
+          <h1 className="flex justify-center py-8 text-5xl">TIENDA</h1>
           <div className="content-none border-b mx-40 border-black"></div>
           <Categorias resetPage={resetPage} />
 

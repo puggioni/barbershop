@@ -13,7 +13,11 @@ export interface IPurchaseOrder {
   ];
   state: string;
   date: Date;
-  address: Object;
+  address: {
+    direccion: string;
+    CP: number;
+    localidad: string;
+  };
 }
 const PurchaseOrderSchema = new Schema<IPurchaseOrder>(
   {
