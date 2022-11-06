@@ -98,7 +98,7 @@ router.post("/create-order", checkStock_1.checkStock, auth_1.verifyToken, (req, 
         res.status(200).json(response.data);
     }
     catch (error) {
-        res.status(500).send(error);
+        res.status(500).json(error);
     }
 }));
 exports.default = router;

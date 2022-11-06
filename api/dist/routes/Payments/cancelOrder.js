@@ -42,8 +42,6 @@ router.get("/cancel-order/:idOrder", (req, res) => __awaiter(void 0, void 0, voi
         res.redirect(`${process.env.CLIENT_URL}/products/cancelacion/${idOrder}`);
     }
     catch (error) {
-        console.log(error);
-        console.log(error);
         res.status(500).send(error);
     }
 }));
