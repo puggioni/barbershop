@@ -16,7 +16,8 @@ const express_1 = require("express");
 const office_1 = __importDefault(require("../../models/office"));
 const router = (0, express_1.Router)();
 router.post("/create", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    let { lat, long, location } = req.body;
+    const { lat, long, location } = req.body;
+    // console.log(req.body)
     try {
         const office = new office_1.default({
             lat,
