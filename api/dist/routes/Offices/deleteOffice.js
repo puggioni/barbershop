@@ -13,17 +13,17 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
-const purchaseOrder_1 = __importDefault(require("../../models/purchaseOrder"));
+const office_1 = __importDefault(require("../../models/office"));
+const auth_1 = require("../../middlewares/auth");
 const router = (0, express_1.Router)();
-router.get("/:idOrder", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { idOrder } = req.params;
+router.delete("/delete/:id", [auth_1.verifyToken, auth_1.isAdmin], (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const order = yield purchaseOrder_1.default.findById(idOrder);
-        res.status(200).send(order);
+        yield office_1.default.findByIdAndDelete(req.params.id);
+        res.status(200).send("Deleted");
     }
-    catch (error) {
-        console.log(error);
-        res.status(500).send(error);
+    catch (err) {
+        console.log(err);
+        res.status(500).send(err);
     }
 }));
 exports.default = router;
