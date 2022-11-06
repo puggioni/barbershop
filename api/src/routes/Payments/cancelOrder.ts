@@ -11,8 +11,6 @@ router.get("/cancel-order/:idOrder", async (req, res) => {
   try {
     res.redirect(`${process.env.CLIENT_URL}/products/cancelacion/${idOrder}`);
   } catch (error) {
-    console.log(error);
-    console.log(error);
     res.status(500).send(error);
   }
 });

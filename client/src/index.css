@@ -3,13 +3,6 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  background-image: url("../src/imagenes/landing-bg-img.png");
-  background-size: 100% 100%;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-color: black;
-}
 .leaflet-container {
   width: 500px;
   height: 300px;

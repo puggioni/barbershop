@@ -40,10 +40,10 @@ const Cofirmacion = () => {
         </h1>
 
         <div className="border border-black m-8 ">
-          <div className="grid grid-cols-[1fr_2fr] my-16 gap-4">
+          <div className="lg:grid grid-cols-[1fr_2fr] lg:my-16 gap-4 flex flex-col lg:mx-0 mx-6">
             <div className="justify-self-center">id: {idOrder}</div>
-            <div className="border-l border-black pl-16  grid gap-4">
-              <div className="grid grid-cols-[2fr_1fr_1fr_1fr] pb-4">
+            <div className="lg:border-l border-black lg:pl-16  grid gap-4">
+              <div className="grid grid-cols-[2fr_1fr_1fr_1fr] pb-4 lg:border-none border-b border-black">
                 <p>nombre</p>
                 <p>precio</p>
                 <p>cantidad</p>
@@ -55,7 +55,7 @@ const Cofirmacion = () => {
                   return (
                     <div
                       key={prod._id}
-                      className="grid grid-cols-[2fr_1fr_1fr_1fr]"
+                      className="grid grid-cols-[2fr_1fr_1fr_1fr] lg:border-none border-b border-black"
                     >
                       <p>{prod.name}</p>
                       <p>{prod.price}</p>
