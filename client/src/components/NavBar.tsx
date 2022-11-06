@@ -104,6 +104,12 @@ const NavBar = () => {
               >
                 Compras
               </Link>
+              <Link
+                to="/admin/offices"
+                className={`${buttonHover} px-4 py-1 rounded-lg`}
+              >
+                Sucursales(A)
+              </Link>
             </>
           )}
         </div>

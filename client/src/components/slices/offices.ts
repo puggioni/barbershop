@@ -9,17 +9,21 @@ export interface office {
   location: string;
 }
 
-interface BarberState {
+interface OfficeState {
   allOffices: Array<office> | undefined;
   loading: boolean;
   errors: any;
 }
 
-const initialState: BarberState = {
+const initialState: OfficeState = {
   allOffices: [],
   loading: false,
   errors: null,
 };
+
+type dataOffice = {
+  data: office
+}
 
 //==========action=================
 
@@ -36,6 +40,7 @@ export const fetchAllOffices = (): AppThunk => {
   };
 };
 
+
 //==========reducer================
 export const getAllOffices = createSlice({
   name: "allBarbers",
@@ -45,6 +50,7 @@ export const getAllOffices = createSlice({
       state.allOffices = action.payload;
       state.loading = false;
     },
+
   },
 });
 
