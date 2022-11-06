@@ -13,6 +13,7 @@ export interface IUser {
     [key: string]: any;
   };
   banned: boolean;
+  twofa: boolean;
   purchases: {
     [key: string]: any;
   };
@@ -54,6 +55,10 @@ const UserSchema = new Schema<IUser, UserModel>(
       default: "",
     },
     banned: {
+      type: Boolean,
+      default: false,
+    },
+    twofa: {
       type: Boolean,
       default: false,
     },
