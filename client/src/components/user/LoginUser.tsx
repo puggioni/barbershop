@@ -1,12 +1,13 @@
 import { getAuth, GoogleAuthProvider, signInWithPopup } from "@firebase/auth";
 import axios from "axios";
 import { browserLocalPersistence, setPersistence } from "firebase/auth";
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link, redirect, useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../../app/hooks";
 import logo from "../../imagenes/Logo.png";
 import { logIn } from "../slices/logIn";
 import { getFavoritesProducts } from "../slices/productSlice";
+import { useSelector } from "react-redux";
 
 export default function LoginUser() {
   const [password, setPassword] = useState("");
@@ -61,9 +62,11 @@ export default function LoginUser() {
       setPwdErr("");
       setPassword("");
       setUserName("");
-      navigate("/");
     }
   };
+
+  const logeado = useSelector((state : any) => state.logIn.logeado);
+  useEffect(() => {if(logeado) navigate("/")}, [logeado]);
 
   const handleForgotPass = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();

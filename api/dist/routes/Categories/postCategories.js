@@ -19,7 +19,7 @@ const router = (0, express_1.Router)();
 router.post("/create", auth_1.verifyToken, auth_1.isAdmin, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     let { name } = req.body;
     if (typeof name === "string")
-        name = name[0].toUpperCase() + name.substring(1);
+        name = name[0].toUpperCase() + name.slice(1).toLowerCase();
     try {
         const response = yield categories_1.default.create({
             name,
