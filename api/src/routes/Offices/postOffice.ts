@@ -6,8 +6,8 @@ import { verifyToken, isAdmin } from "../../middlewares/auth";
 const router = Router();
 
 router.post("/create", async (req, res) => {
-  let { lat, long, location } = req.body;
-
+  const { lat, long, location } = req.body;
+  // console.log(req.body)
   try {
     const office = new Office({
       lat,

@@ -28,8 +28,11 @@ import LoginUser from "./components/user/LoginUser";
 import Perfil from "./components/user/Perfil";
 import { firebaseConfig } from "./firebase";
 import ChangePassword from "./components/user/changePassword";
+import AllOffices from "./components/admin/Offices";
+import CrearOffice from "./components/admin/crearOffice";
 import MisCompras from "./components/user/MisCompras";
 import OrderDetail from "./components/user/OrderDetail";
+
 export const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 
@@ -98,6 +101,10 @@ function App() {
         <Route path="/admin/users/historial" element={<HistorialCompra />} />
         {/*  ======================About Us============================  */}
         <Route path="/contacto" element={<AboutUs />} />
+
+
+        <Route path="/admin/offices" element={<AllOffices />} />
+        <Route path="/admin/offices/create" element={<CrearOffice />} />
       </Routes>
     </div>
   );
