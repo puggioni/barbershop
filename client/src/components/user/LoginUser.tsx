@@ -82,7 +82,7 @@ export default function LoginUser() {
 
   const handleLogInWithGoogle = async (e: any) => {
     e.preventDefault();
-    setPersistence(auth, browserLocalPersistence);
+    await setPersistence(auth, browserLocalPersistence);
     const response: any = await signInWithPopup(auth, new GoogleAuthProvider());
     cargarFavs();
     navigate("/");

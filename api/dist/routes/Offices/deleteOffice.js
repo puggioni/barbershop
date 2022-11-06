@@ -12,28 +12,18 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.checkStock = void 0;
-const products_1 = __importDefault(require("../models/products"));
-const checkStock = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const { compra } = req.body;
+const express_1 = require("express");
+const office_1 = __importDefault(require("../../models/office"));
+const auth_1 = require("../../middlewares/auth");
+const router = (0, express_1.Router)();
+router.delete("/delete/:id", [auth_1.verifyToken, auth_1.isAdmin], (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        let error = 0;
-        yield compra.reduce((acc, prod) => __awaiter(void 0, void 0, void 0, function* () {
-            const producto = yield products_1.default.findOne({ name: prod["name"] });
-            if (prod["cantidad"] > producto.stock) {
-                error++;
-                return producto;
-            }
-        }), []);
-        if (error === 0) {
-            next();
-        }
-        else {
-            throw new Error("No hay stock suficiente");
-        }
+        yield office_1.default.findByIdAndDelete(req.params.id);
+        res.status(200).send("Deleted");
     }
-    catch (error) {
-        res.status(500).json({ message: "No hay stock suficiente" });
+    catch (err) {
+        console.log(err);
+        res.status(500).send(err);
     }
-});
-exports.checkStock = checkStock;
+}));
+exports.default = router;

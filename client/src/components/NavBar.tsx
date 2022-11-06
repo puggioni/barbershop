@@ -105,6 +105,12 @@ const NavBar = () => {
               >
                 Compras
               </Link>
+              <Link
+                to="/admin/offices"
+                className={`${buttonHover} px-4 py-1 rounded-lg`}
+              >
+                Sucursales(A)
+              </Link>
             </>
           )}
         </div>
@@ -115,7 +121,7 @@ const NavBar = () => {
       ) : (
         <Link to={"/user/login"}>
           <button
-            className={`${buttonHover} bg-black text-white px-2 py-2 justify-self-center rounded-lg font-bold`}
+            className={`${buttonHover}  px-2 py-2 justify-self-center rounded-lg font-bold`}
           >
             Log In/Sign Up
           </button>

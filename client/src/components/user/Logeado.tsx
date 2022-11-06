@@ -23,16 +23,16 @@ const Logeado = ({ setHide }: any) => {
     <div className=" lg:grid flex lg:grid-cols-2 justify-end items-center">
       <img
         onClick={() => {
-          navigate("/user/perfil");
           setHide("-translate-y-full");
+          navigate("/user/perfil");
         }}
         src={img}
         alt="user pic"
-        className="lg:static absolute top-4 left-4 h-8 bg-center cursor-pointer rounded-full"
+        className="lg:static absolute top-4 left-4 h-8 bg-center rounded-full"
       />
 
       <button
-        className="lg:mt-0 mt-10 lg:mr-0 mr-4 "
+        className="lg:mt-0 mt-20 lg:mr-0 mr-4 "
         onClick={() => handleLogOut()}
       >
         Log Out

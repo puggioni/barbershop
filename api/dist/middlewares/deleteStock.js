@@ -19,6 +19,9 @@ const deleteStock = (order) => __awaiter(void 0, void 0, void 0, function* () {
         yield order["products"].forEach((obj) => __awaiter(void 0, void 0, void 0, function* () {
             const producto = yield products_1.default.findOne({ name: obj["name"] });
             producto.stock -= obj["quantity"];
+            if (producto.stock === 0 || producto.stock < 0) {
+                producto.available = false;
+            }
             yield producto.save();
         }));
         return order;

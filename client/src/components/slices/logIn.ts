@@ -50,6 +50,7 @@ export const logOut = () => {
     dispatch(userLogOut());
   };
 };
+
 export const yaLog = (email: string) => {
   return async (dispatch: any) => {
     const res = await axios(
@@ -84,8 +85,11 @@ export const logUp = (user: object): AppThunk => {
   };
 };
 
-
-export const updateUser = (idUser:string, formUser:object, header:object): AppThunk => {
+export const updateUser = (
+  idUser: string,
+  formUser: object,
+  header: object
+): AppThunk => {
   return async (dispatch) => {
     try {
       const userUpdated: dataUser = await axios.put(
@@ -94,10 +98,10 @@ export const updateUser = (idUser:string, formUser:object, header:object): AppTh
         header
       );
       dispatch(userUpdate(userUpdated.data));
-      alert("Informacion actualizada exitosamente");    
+      alert("Informacion actualizada exitosamente");
     } catch (error: any) {
-      console.log(error)
-        alert("Error al actualizar info");
+      console.log(error);
+      alert("Error al actualizar info");
     }
   };
 };
@@ -119,7 +123,6 @@ export const changePassword = (id: any, password: string): AppThunk => {
 
 //----------------Reducers------------------------------------------
 
-
 export const logInReducerSlice = createSlice({
   name: "login",
   initialState,
@@ -137,7 +140,9 @@ export const logInReducerSlice = createSlice({
       state.token = "";
       state.user = "";
       state.logeado = false;
-      localStorage.clear();
+      // localStorage.clear();
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
     },
 
     yaLogeado: (state) => {
@@ -154,17 +159,14 @@ export const logInReducerSlice = createSlice({
       state.logeado = true;
     },
 
-
     userUpdate: (state: any, action: PayloadAction<userFound>) => {
       state.userFound = action.payload;
       localStorage.setItem("user", JSON.stringify(action.payload));
-    }
+    },
   },
 });
 
 export default logInReducerSlice.reducer;
 
-
 export const { userLogIn, userLogOut, yaLogeado, userCreate, userUpdate } =
-
   logInReducerSlice.actions;
