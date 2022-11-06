@@ -19,10 +19,9 @@ const NavBar = () => {
   if (Object.keys(user).length) {
     adminAuth = user.role[0].name === "admin";
   }
-  // const products: any = JSON.parse(
-  //   window.localStorage.getItem("product") || "[]"
-  // );
+
   const cant = useAppSelector((state) => state.orders.carrito);
+  const favs = useAppSelector((state) => state.products.favs);
 
   useEffect(() => {
     if (Object.keys(user).length) {
@@ -138,7 +137,15 @@ const NavBar = () => {
         </p>
         <RiShoppingBasket2Line size={40} />
       </Link>
-      <Link title="ir a Favoritos" to={"/products/favorites"}>
+      <Link
+        className="hover:text-[#855C20] relative"
+        title="ir a Favoritos"
+        to={"/products/favorites"}
+      >
+        <p className="absolute w-6 text-sm text-center m-auto bg-black text-white rounded-full right-0 top-0">
+          {favs.length}
+        </p>
+
         <MdFavoriteBorder size={40} className="mx-4" />
       </Link>
     </div>

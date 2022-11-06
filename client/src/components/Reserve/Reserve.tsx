@@ -80,10 +80,12 @@ const Reserve = () => {
     <div className="lg:bg-white lg:bg-turnos-banner bg-no-repeat lg:pt-32 pb-20 bg-cover min-h-screen align-items- ">
       {turno.user ? (
         <>
-          <h2 className="flex  justify-center my-auto text-5xl text-white mb-12">
+
+          <h2 className="flex justify-center my-auto text-5xl text-white mb-12 lg:min-w-[80rem]">
             PEDI TU TURNO
           </h2>
-          <div className="lg:border bg-white border-black rounded-xl py-10 lg:mx-40 my-auto">
+          <div className="border bg-white border-black rounded-xl py-10 mx-40 my-auto lg:min-w-[80rem]">
+
             <form
               onChange={(e) => handleFormTurn(e)}
               className="lg:flex items-center place-content-baseline text-black"

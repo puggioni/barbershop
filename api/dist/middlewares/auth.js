@@ -24,12 +24,14 @@ const verifyToken = (req, res, next) => __awaiter(void 0, void 0, void 0, functi
         const decoded = jsonwebtoken_1.default.verify(token, "token");
         req.userId = decoded["_id"];
         const user = yield user_1.default.findById(req.userId, { password: 0 });
-        if (!user) {
-            throw new Error("No existe el usuario");
-        }
-        else {
-            next();
-        }
+
+
+        if (!user)
+            return res
+                .status(404)
+                .json({ message: "Debes estar logeado para acceder" });
+        next();
+
     }
     catch (error) {
         return res.status(401).json({ message: "Debes loguearte primero" });

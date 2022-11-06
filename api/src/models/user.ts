@@ -9,6 +9,7 @@ export interface IUser {
   lastname: string;
   user_image: string;
   phone_number: string;
+  google_account: boolean;
   role: {
     [key: string]: any;
   };
@@ -63,6 +64,10 @@ const UserSchema = new Schema<IUser, UserModel>(
         ref: "Role",
       },
     ],
+    google_account: {
+      type: Boolean,
+      default: false,
+    },
     purchases: [
       {
         type: Schema.Types.ObjectId,

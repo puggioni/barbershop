@@ -1,5 +1,6 @@
 import { initializeApp } from "@firebase/app";
 import { getAuth } from "@firebase/auth";
+import { browserLocalPersistence, setPersistence } from "firebase/auth";
 import { Route, Routes } from "react-router-dom";
 import AboutUs from "./components/AboutUs";
 import BorrarCategoria from "./components/admin/BorrarCategoria";
@@ -7,6 +8,7 @@ import CrearCategoria from "./components/admin/CrearCategorias";
 import CrearProducto from "./components/admin/CrearProducto";
 import EditarProducto from "./components/admin/EditarProducto";
 import HistorialCompra from "./components/admin/HistorialCompra";
+import HistorialProducto from "./components/admin/HistorialProducto";
 import OrderUsuario from "./components/admin/OrderUsuario";
 import Productos from "./components/admin/Productos";
 import Users from "./components/admin/Users";
@@ -16,6 +18,7 @@ import Compra from "./components/carrito/Compra";
 import FinalizarCompra from "./components/carrito/FinalizarCompra";
 import OrdenDeCompra from "./components/carrito/OrdenDeCompra";
 import Home from "./components/Home";
+import MenuResponsive from "./components/MenuResponsive";
 import NavBar from "./components/NavBar";
 import Favorites from "./components/products/Favorites";
 import ProductDetail from "./components/products/ProductDetail";
@@ -23,11 +26,15 @@ import Products from "./components/products/Products";
 import MyAppointments from "./components/Reserve/MyAppointments";
 import Reserve from "./components/Reserve/Reserve";
 import Sucursales from "./components/Reserve/Sucursales";
+import ChangePassword from "./components/user/changePassword";
 import CreateUser from "./components/user/createUser";
 import LoginUser from "./components/user/LoginUser";
+import MisCompras from "./components/user/MisCompras";
+import OrderDetail from "./components/user/OrderDetail";
 import Perfil from "./components/user/Perfil";
 import { firebaseConfig } from "./firebase";
 import ChangePassword from "./components/user/changePassword";
+
 
 import MenuResponsive from "./components/MenuResponsive";
 import HistorialProducto from "./components/admin/HistorialProducto";
@@ -36,8 +43,10 @@ import CrearOffice from "./components/admin/crearOffice";
 import MisCompras from "./components/user/MisCompras";
 import OrderDetail from "./components/user/OrderDetail";
 
+
 export const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
+setPersistence(auth, browserLocalPersistence);
 
 function App() {
   return (
@@ -112,6 +121,7 @@ function App() {
         <Route path="/admin/users/historial" element={<HistorialCompra />} />
         {/*  ======================About Us============================  */}
         <Route path="/contacto" element={<AboutUs />} />
+
 
         <Route path="/admin/offices" element={<AllOffices />} />
         <Route path="/admin/offices/create" element={<CrearOffice />} />
