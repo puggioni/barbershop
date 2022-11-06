@@ -49,6 +49,7 @@ const getbarbers_1 = __importDefault(require("./Barbers/getbarbers"));
 const postOffice_1 = __importDefault(require("./Offices/postOffice"));
 const getOffices_1 = __importDefault(require("./Offices/getOffices"));
 const patchOffice_1 = __importDefault(require("./Offices/patchOffice"));
+const deleteOffice_1 = __importDefault(require("./Offices/deleteOffice"));
 /* ============PAYMENTS============*/
 const captureOrder_1 = __importDefault(require("./Payments/captureOrder"));
 const cancelOrder_1 = __importDefault(require("./Payments/cancelOrder"));
@@ -111,6 +112,7 @@ router.use("/agenda/", getAllAppointments_1.default);
 router.use("/office/", postOffice_1.default);
 router.use("/office/", getOffices_1.default);
 router.use("/office/", patchOffice_1.default);
+router.use("/office/", deleteOffice_1.default);
 /* ============BARBERS============ */
 router.use("/barber/", postbarber_1.default);
 router.use("/barber/", getbarbers_1.default);
