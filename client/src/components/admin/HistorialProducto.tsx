@@ -8,7 +8,7 @@ import { RootState } from "../../app/store";
 import Paginate from "../products/Paginate";
 import { ordersProducto } from "../slices/admin";
 import { yaLog } from "../slices/logIn";
-import OrderSearch from "./OrderSearch";
+import OrderSearch from "./orderSearch";
 
 const HistorialProducto = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
