@@ -12,7 +12,7 @@ interface barberCard {
 const BarberCard = (barber: barberCard) => {
 
   return (
-    <div className="h-86 border rounded-lg align-center p-3 my-0 border-black">
+    <div className="h-86 border rounded-lg align-center p-3 my-0 bg-contain border-black">
 
       <img
         className="h-48 w-48 object-cover bg-white  rounded-xl m-auto mt-2"
