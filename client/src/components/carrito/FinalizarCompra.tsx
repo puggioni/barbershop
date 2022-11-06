@@ -75,15 +75,15 @@ const CrearProducto = () => {
     compra,
   };
 
-  //===================render========================
+  //===================render========================//
   return (
     <div className="flex bg-bg-prods bg-cover">
-      <div className="  w-[40%] mx-auto my-16 py-8 px-8 bg-white/50 rounded-lg">
+      <div className="  lg:w-[40%] lg:mx-auto mx-4 my-16 py-8 px-8 bg-white/50 rounded-lg">
         <h1 className="text-lg  flex ">
           Por favor llene los campos para finalizar su compra
         </h1>
-        <div className="grid grid-cols-2 my-16 gap-y-8">
-          <div>
+        <div className="lg:grid flex flex-col grid-cols-2 my-16 gap-y-8">
+          <div className="lg:block flex flex-col">
             <label htmlFor="nombre">Nombre: </label>
             <input
               value={inputs.nombre}
@@ -93,7 +93,7 @@ const CrearProducto = () => {
               className="rounded-lg bg-white/70 pl-4"
             />
           </div>
-          <div>
+          <div className="lg:block flex flex-col">
             <label htmlFor="apellido">Apellido: </label>
             <input
               value={inputs.apellido}
@@ -145,7 +145,7 @@ const CrearProducto = () => {
             />
           </div>
 
-          <div className="flex">
+          <div className="flex lg:flex-row flex-col">
             <label htmlFor="precio">CP: </label>
             <input
               value={inputs.CP}
@@ -163,7 +163,7 @@ const CrearProducto = () => {
           onClick={() => {
             handleSubmit();
           }}
-          className="flex justify-self-end bg-black text-white w-[20%] rounded-sm p-2 ml-auto "
+          className="lg:flex justify-self-end bg-black text-white lg:w-[20%] block rounded-sm p-4 ml-auto "
         >
           FINALIZAR COMPRA
         </button>

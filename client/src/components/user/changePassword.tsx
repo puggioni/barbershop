@@ -1,8 +1,9 @@
-import React from "react";
-import { useState, MouseEvent } from "react";
-import { useAppDispatch } from "../../app/hooks";
+import React, { useState } from "react";
 import { useParams } from "react-router-dom";
+import { useAppDispatch } from "../../app/hooks";
+import logo from "../../imagenes/Logo.png";
 import { changePassword } from "../slices/logIn";
+
 export default function ChangePassword() {
   type QuizParams = {
     idUser: string;
@@ -14,20 +15,17 @@ export default function ChangePassword() {
     password: "",
     repassword: "",
   };
-
   const initialWarnToPrint = {
     password: "",
     repassword: "",
   };
   const [password, setPassword] = useState(passwordReset);
-
   const [warnToPrint, setWarnToPrint] = useState(initialWarnToPrint);
-
   const body = {
     idUsr: idUser,
     newPwd: password.password,
   };
-
+  //======================hendler======================
   function handleSubmit(e: React.MouseEvent<HTMLElement>) {
     e.preventDefault();
     if (passwordReset.password === passwordReset.repassword) {
@@ -38,7 +36,7 @@ export default function ChangePassword() {
       alert("Por favor complete los campos correctamente!");
     }
   }
-
+  //====================helper=====================
   function loadForm(e: any) {
     const { name, value } = e.target as HTMLInputElement;
     setPassword({
@@ -69,16 +67,22 @@ export default function ChangePassword() {
         break;
     }
   }
+
+  //===================================render============================
   return (
     <div className="bg-white h-[100vh]">
-      <div className="z-10 w-[100vw] h-[40vh] bg-[#222222] flex justify-center items-center">
-        <label className=" font-bold text-white text-5xl	">
+      <div className=" lg:flex hidden w-[100vw] h-[40vh] bg-[#222222]  justify-center items-center">
+        <label className="font-bold text-white text-5xl	">
           Renova tu contraseña
         </label>
       </div>
-
-      <div className=" -mt-20 border-2 border-[#222222] flex flex-col sm:justify-center w-1/4 mx-auto items-center">
+      <img className="lg:hidden m-auto h-[10%] mt-8" src={logo} alt="logo" />
+      <div className=" lg:-mt-20 mx-6 border-2 border-[#222222] lg:w-1/4 mt-8 lg:mx-auto items-center">
         <div className=" w-full rounded-lg px-6 py-4 bg-white ">
+          <span className="flex justify-center font-bold mx-[25%] pb-4 border-b text-xl border-b-black whitespace-nowrap">
+            Recupera tu contraseña
+          </span>
+
           <form className="mt-10" name="form" onChange={loadForm}>
             <span className="text-red-600 text-sm"></span>
             <div className="">
@@ -110,8 +114,10 @@ export default function ChangePassword() {
               )}
             </div>
 
-            <button className="bg-[#855C20] w-[75%] mt-7 mx-10 justify-self-center py-3 rounded-lg text-white shadow-xl hover:shadow-inner focus:outline-none transition duration-500 ease-in-out  transform hover:-translate-x hover:scale-105"
-            onClick={(e) => handleSubmit(e)}>
+            <button
+              className="bg-[#855C20] lg:w-[75%] mt-7 lg:mx-10 w-full justify-self-center py-3 lg:rounded-lg text-white shadow-xl hover:shadow-inner focus:outline-none transition duration-500 ease-in-out  transform hover:-translate-x hover:scale-105"
+              onClick={(e) => handleSubmit(e)}
+            >
               Resetear
             </button>
 

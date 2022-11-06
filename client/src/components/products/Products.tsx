@@ -1,36 +1,47 @@
 import { useEffect, useState } from "react";
 import { BsPlus } from "react-icons/bs";
-import { HiMinus } from "react-icons/hi";
+import { HiMinus, HiOutlineShoppingBag } from "react-icons/hi";
+import { HiOutlineAdjustmentsHorizontal } from "react-icons/hi2";
+import { useNavigate } from "react-router";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { RootState } from "../../app/store";
-import Paginate from "./Paginate";
+import logo from "../../imagenes/Logo.png";
+import {
+  OrderingAlfaResp,
+  OrderingByName,
+  OrderingByPrice,
+  OrderingPriceResp,
+} from "../products/Order";
 import {
   categorias,
   fetchAllProducts,
   getFavoritesProducts,
-  setFavosBulk,
   setFavorites,
+  setFavosBulk,
 } from "../slices/productSlice";
-import { OrderingByName, OrderingByPrice } from "../products/Order";
 import Categorias from "./FilterCategorias";
+import Paginate from "./Paginate";
 import ProductCard from "./ProductCard";
 import SearchBar from "./Searchbar";
 
 const Products = () => {
   const dispatch = useAppDispatch();
-
-  const [currentPage, setCurrentPage] = useState<number>(1);
-  const [productsPerPage] = useState(9);
-  const [pageLimit] = useState(5);
-  const [maxPageNumberLimit, setMaxPageNumberLimit] = useState(5);
-  const [minPageNumberLimit, setMinPageNumberLimit] = useState(0);
-  const lastPostIndex = currentPage * productsPerPage;
-  const firstPostIndex = lastPostIndex - productsPerPage;
+  const [hideCate, setHideCate] = useState(true);
   const [hideAlfa, setAlfa] = useState(false);
   const [hidePrecio, setPrecio] = useState(false);
   const { favs } = useAppSelector((state: RootState) => state.products);
   const favoritos = JSON.stringify(favs);
+  const data = useAppSelector((state: RootState) => state.products);
+  const navigate = useNavigate();
 
+  useEffect(() => {
+    dispatch(fetchAllProducts(""));
+    dispatch(categorias());
+    cargarFavs();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  //========================helpers===========================
   const cargarFavs = () => {
     const aux = window.localStorage.getItem("user");
     const aux2 = window.localStorage.getItem("token");
@@ -55,34 +66,56 @@ const Products = () => {
     }
   };
 
-  useEffect(() => {
-    dispatch(fetchAllProducts(""));
-    dispatch(categorias());
-    cargarFavs();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const data = useAppSelector((state: RootState) => state.products);
-
-  const resetPage = () => {
-    setCurrentPage(1);
-  };
+  //=====================================paginado==============================
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [productsPerPage] = useState(9);
+  const [pageLimit] = useState(5);
+  const [maxPageNumberLimit, setMaxPageNumberLimit] = useState(5);
+  const [minPageNumberLimit, setMinPageNumberLimit] = useState(0);
+  const lastPostIndex = currentPage * productsPerPage;
+  const firstPostIndex = lastPostIndex - productsPerPage;
 
   if (data?.allProducts instanceof Array) {
     const currentProducts = data.allProducts.slice(
       firstPostIndex,
       lastPostIndex
     );
+    const resetPage = () => {
+      setCurrentPage(1);
+    };
 
+    //===========================render====================
     return (
-      <div className=" bg-white bg-store-banner bg-no-repeat pt-52 pb-2 bg-contain">
-        <div className="border bg-white border-black rounded-xl mx-40">
-          <h1 className="flex justify-center py-8 text-5xl">TIENDA</h1>
-          <div className="content-none border-b mx-40 border-black"></div>
-          <Categorias resetPage={resetPage} />
-
-          <div className="font-Hubballi grid grid-cols-4 gap-8 pr-8 ">
-            <div className="row-span-3">
+      <div className=" bg-white lg:bg-store-banner bg-no-repeat lg:pt-52 lg:pb-2 bg-contain">
+        <img className="lg:hidden m-auto h-[10%] mt-8" src={logo} alt="logo" />
+        <HiOutlineShoppingBag
+          size={30}
+          className="lg:hidden absolute top-2 right-2"
+          onClick={() => navigate("/products/shopping-cart")}
+        />
+        <div className="lg:border bg-white border-black rounded-xl lg:my-6 lg:mx-40">
+          <h1 className="lg:flex justify-center py-8 text-5xl hidden">
+            TIENDA
+          </h1>
+          <div className="lg:flex border-b mx-40 border-black hidden"></div>
+          <div className="lg:flex justify-center hidden">
+            <Categorias resetPage={resetPage} />
+          </div>
+          <div className="lg:hidden mr-4">
+            <SearchBar />
+            <div className="grid grid-cols-3">
+              <HiOutlineAdjustmentsHorizontal
+                onClick={() => setHideCate(!hideCate)}
+                className="ml-6 mt-4"
+                size={30}
+              />
+              <OrderingPriceResp hidden={!hideCate} />
+              <OrderingAlfaResp hidden={!hideCate} />
+            </div>
+            <Categorias resetPage={resetPage} hide={hideCate} />
+          </div>
+          <div className="font-Hubballi lg:grid lg:grid-cols-4 lg:gap-8 lg:pr-8">
+            <div className="lg:flex flex-col hidden row-span-3">
               <SearchBar />
               <div className="flex flex-col px-4 py-8 gap-10 mt-8 mx-8 border border-black h-fit rounded-md">
                 <label className="underline underline-offset-4 ">
@@ -110,7 +143,6 @@ const Products = () => {
                   )}
                 </div>
                 <OrderingByName hidden={hideAlfa} />
-                {/* <span className="content-none border-b mx-4 border-black"></span> */}
                 <div className="relative">
                   <p className="underline underline-offset-2">Precio</p>
                   {!hidePrecio ? (

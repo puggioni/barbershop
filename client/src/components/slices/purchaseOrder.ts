@@ -13,18 +13,18 @@ export interface PurchaseOrders {
 
 interface PurchaseOrder {
   purchaseOrder: PurchaseOrders | undefined;
-  allOrders: Array<PurchaseOrders>;
+  carrito: number;
   ordersByUser: Array<PurchaseOrders>;
   loading: boolean;
-  order: PurchaseOrders
+  order: PurchaseOrders;
 }
 
 const initialState: PurchaseOrder = {
   purchaseOrder: undefined,
-  allOrders: [],
+  carrito: 0,
   ordersByUser: [],
   loading: true,
-  order:{_id:""}
+  order: { _id: "" },
 };
 
 //==========action================//
@@ -39,9 +39,9 @@ export const comprar = (header: object, compra: object) => {
         }
       );
       window.location.href = `${response.data.links[1].href}`;
-    } catch (error) {
+    } catch (error: any) {
       console.log(error);
-      alert("Debes estar logeado para finalizar la compra");
+      alert(error.response.data.message);
     }
   };
 };
@@ -110,6 +110,12 @@ export const getDetailOrder = (id: any): AppThunk => {
   };
 };
 
+export const getCantCarrito = (): AppThunk => {
+  return async (dispatch) => {
+    dispatch(cantidadCarrito());
+  };
+};
+
 //==========reducer================//
 
 export const getAllOrdersSlice = createSlice({
@@ -130,11 +136,23 @@ export const getAllOrdersSlice = createSlice({
       state.ordersByUser = action.payload;
     },
     setOrder: (state: any, action: PayloadAction<PurchaseOrders>) => {
-      state.order= action.payload;
+      state.order = action.payload;
+    },
+    cantidadCarrito: (state) => {
+      const products: any = JSON.parse(
+        window.localStorage.getItem("product") || "[]"
+      );
+      state.carrito = products.length;
     },
   },
 });
 
 export default getAllOrdersSlice.reducer;
-export const { order, confirmOrder, cancelOrder, orderUser, setOrder } =
-  getAllOrdersSlice.actions;
+export const {
+  order,
+  confirmOrder,
+  cancelOrder,
+  orderUser,
+  setOrder,
+  cantidadCarrito,
+} = getAllOrdersSlice.actions;
