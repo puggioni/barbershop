@@ -25,6 +25,7 @@ import getOneUser from "./User/getOneUser";
 import sendPwdRstEmail from "./User/resetPwd";
 import patchPwd from "./User/patchPwd";
 import editUsr from "./User/editUser";
+import twofa from "./User/getTwoFA";
 /* ============CATEGORIES============ */
 import postCategories from "./Categories/postCategories";
 import deleteCategory from "./Categories/deleteCategory";
@@ -94,6 +95,7 @@ router.use("/users", patchPwd);
 router.use("/users", editUsr);
 router.use("/users", sendPwdRstEmail);
 router.use("/users", patchPwd);
+router.use("/users", twofa);
 
 /* ============CATEGORIES============ */
 router.use("/categories", postCategories);
