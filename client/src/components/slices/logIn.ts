@@ -36,11 +36,8 @@ export const logIn = (email: string, password: string): AppThunk => {
         dispatch(userLogIn(res.data));
       }
     } catch (error: any) {
-      if (error.response.status === 400) {
-        alert("Su cuenta fue baneada");
-      } else if (error.response.status === 401) {
-        alert("Contraseña invalida");
-      }
+      console.log(error);
+      alert(error.response.data.message);
     }
   };
 };
@@ -77,10 +74,7 @@ export const logUp = (user: object): AppThunk => {
       alert("Usuario creado exitosamente");
       window.location.pathname = "/";
     } catch (error: any) {
-      if (error.response.status === 400) {
-        alert("La cuenta ya existe");
-        window.location.pathname = "/user/login";
-      }
+      alert(error.response.data.message);
     }
   };
 };
@@ -101,22 +95,19 @@ export const updateUser = (
       alert("Informacion actualizada exitosamente");
     } catch (error: any) {
       console.log(error);
-      alert("Error al actualizar info");
+      alert(error.response.data.message);
     }
   };
 };
 export const changePassword = (id: any, password: string): AppThunk => {
   return async () => {
     try {
-      const response: any = await axios.patch(
-        `${process.env.REACT_APP_BASE_URL}/users/pwdRst`,
-        {
-          idUsr: id,
-          newPwd: password,
-        }
-      );
-    } catch (error) {
-      console.log(error);
+      await axios.patch(`${process.env.REACT_APP_BASE_URL}/users/pwdRst`, {
+        idUsr: id,
+        newPwd: password,
+      });
+    } catch (error: any) {
+      alert(error.response.data.message);
     }
   };
 };

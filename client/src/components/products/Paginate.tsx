@@ -51,21 +51,20 @@ const Paginate = (props: props) => {
   let pageDecrement = null;
   if (pageNumbers.length < props.maxPageNumberLimit) {
     pageDecrement = pageIncrementBtn = (
-      <li onClick={handlePrevBtn} className="list-none">
+      <li onClick={handlePrevBtn} className="list-none ">
         &hellip;
       </li>
     );
   }
   return (
     <div className=" text-center w-full flex items-center  justify-center ">
-      <div>
-        <button
-          onClick={handlePrevBtn}
-          className={` ${buttonFocus} border border-black rounded-lg font-bold text-base bg-white text-black lg:h-9 lg:mb-2 py-1 px-3 lg:my-10 lg:mx-3 focus:bg-stone-900 focus:text-white`}
-        >
-          <BiChevronsLeft />
-        </button>
-      </div>
+      <button
+        onClick={handlePrevBtn}
+        className={`border border-black rounded-lg font-bold text-base bg-white text-black lg:h-9 lg:mb-2 py-1 px-3 lg:my-10 lg:mx-3 focus:bg-stone-900 focus:text-white`}
+      >
+        <BiChevronsLeft />
+      </button>
+
       {pageDecrement}
       <div className="lg:m-4">
         {pageNumbers.map((page, index) => {
@@ -76,7 +75,7 @@ const Paginate = (props: props) => {
             return (
               <button
                 key={index}
-                className={` ${buttonFocus} border border-black rounded-lg font-bold text-base bg-white text-black mb-2 lg:h-9 py-1 px-3 lg:my-10 mx-3 focus:bg-stone-900 focus:text-white`}
+                className={`border border-black rounded-lg font-bold text-base bg-white text-black lg:h-9 lg:mb-2 py-1 px-3 lg:my-10 lg:mx-3 focus:bg-stone-900 focus:text-white`}
                 onClick={() => props.setCurrentPage(page)}
               >
                 {page}
@@ -92,7 +91,7 @@ const Paginate = (props: props) => {
       <div>
         <button
           onClick={handleNextBtn}
-          className={` ${buttonFocus} border border-black rounded-lg font-bold text-base bg-white text-black lg:mb-2 hlg:-9 py-1 px-3 lg:my-10 lg:mx-3 focus:bg-stone-900 focus:text-white`}
+          className={`border border-black rounded-lg font-bold text-base bg-white text-black lg:h-9 lg:mb-2 py-1 px-3 lg:my-10 lg:mx-3 focus:bg-stone-900 focus:text-white`}
         >
           <BiChevronsRight />
         </button>

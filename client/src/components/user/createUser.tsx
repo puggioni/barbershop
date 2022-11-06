@@ -1,6 +1,7 @@
-import { getAuth, GoogleAuthProvider, signInWithPopup } from "@firebase/auth";
+import { GoogleAuthProvider, signInWithPopup } from "@firebase/auth";
 import { MouseEvent, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { auth } from "../../App";
 import { useAppDispatch } from "../../app/hooks";
 import logo from "../../imagenes/Logo.png";
 import { logUp } from "../slices/logIn";
@@ -15,6 +16,7 @@ export default function CreateUser() {
     phone_number: "",
     role: "",
     repassword: "",
+    google: false,
   };
 
   const initialWarnToPrint = {
@@ -26,11 +28,9 @@ export default function CreateUser() {
     phone_number: "",
     repassword: "",
   };
-
+  const navigate = useNavigate();
   const [formUser, setFormUser] = useState(initialFormUser);
   const [warnToPrint, setWarnToPrint] = useState(initialWarnToPrint);
-
-  const auth = getAuth();
 
   //===============================handlers===================================
 
@@ -43,8 +43,10 @@ export default function CreateUser() {
       password: response.user.email,
       phone_number: response.user.phoneNumber,
       image: response.user.photoURL,
+      google: true,
     };
     dispatch(logUp(datos));
+    navigate("/");
   };
   function handleSubmit(
     e:
@@ -182,7 +184,7 @@ export default function CreateUser() {
           >
             <div>
               <input
-                value={formUser.name}
+                defaultValue={formUser.name}
                 name="name"
                 type="text"
                 placeholder="Nombre"
@@ -197,7 +199,7 @@ export default function CreateUser() {
 
             <div className="">
               <input
-                value={formUser.lastname}
+                defaultValue={formUser.lastname}
                 name="lastname"
                 type="text"
                 placeholder="Apellidos"
@@ -212,7 +214,7 @@ export default function CreateUser() {
 
             <div className="">
               <input
-                value={formUser.email}
+                defaultValue={formUser.email}
                 name="email"
                 type="email"
                 placeholder="Correo electronico"
@@ -227,7 +229,7 @@ export default function CreateUser() {
 
             <div className="">
               <input
-                value={formUser.phone_number}
+                defaultValue={formUser.phone_number}
                 name="phone_number"
                 type="number"
                 placeholder="Número telefónico"
@@ -242,7 +244,7 @@ export default function CreateUser() {
 
             <div className="">
               <input
-                value={formUser.password}
+                defaultValue={formUser.password}
                 name="password"
                 type="password"
                 placeholder="Contraseña"
@@ -258,7 +260,7 @@ export default function CreateUser() {
 
             <div className="">
               <input
-                value={formUser.repassword}
+                defaultValue={formUser.repassword}
                 name="repassword"
                 type="password"
                 placeholder="Confirmar contraseña"

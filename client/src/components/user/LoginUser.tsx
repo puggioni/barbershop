@@ -1,8 +1,8 @@
-import { getAuth, GoogleAuthProvider, signInWithPopup } from "@firebase/auth";
+import { GoogleAuthProvider, signInWithPopup } from "@firebase/auth";
 import axios from "axios";
-import { browserLocalPersistence, setPersistence } from "firebase/auth";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { auth } from "../../App";
 import { useAppDispatch } from "../../app/hooks";
 import logo from "../../imagenes/Logo.png";
 import { logIn } from "../slices/logIn";
@@ -19,7 +19,6 @@ export default function LoginUser() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const user: any = JSON.parse(window.localStorage.getItem("user") || "{}");
-  const auth = getAuth();
 
   const validEmail = new RegExp(
     "^[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]$"
@@ -33,7 +32,6 @@ export default function LoginUser() {
       // esta parte es para traerse los favoritos si el usuario se logueo
       const user = JSON.parse(aux);
       const token = JSON.parse(aux2);
-      const favoritos = JSON.parse(aux3);
 
       window.localStorage.removeItem("favoritos");
       dispatch(getFavoritesProducts(user._id, token));
@@ -82,7 +80,6 @@ export default function LoginUser() {
 
   const handleLogInWithGoogle = async (e: any) => {
     e.preventDefault();
-    await setPersistence(auth, browserLocalPersistence);
     const response: any = await signInWithPopup(auth, new GoogleAuthProvider());
     cargarFavs();
     navigate("/");
