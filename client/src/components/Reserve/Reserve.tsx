@@ -13,24 +13,20 @@ import { Link } from "react-router-dom";
 
 const initialTurn = {
   service: "",
-  user: JSON.parse(window.localStorage.getItem("user") || '{"_id":""}')._id,
+
   date: new Date(Date.now()),
   barber: "",
   office: "",
   block: 0,
 };
 const selected = "bg-black text-white hover:ease-in-out duration-300";
-
+const user = JSON.parse(window.localStorage.getItem("user") || "{}");
 const Reserve = () => {
   const dispatch = useAppDispatch();
   const [turno, setTurno] = useState(initialTurn);
 
   useEffect(() => {
-    dispatch(yaLog(turno.user.email));
-    setTurno({
-      ...turno,
-      user: JSON.parse(window.localStorage.getItem("user") || '{"_id":""}')._id,
-    });
+    dispatch(yaLog(user.email));
     dispatch(fetchAllBarbers());
     dispatch(fetchAllOffices());
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -78,7 +74,7 @@ const Reserve = () => {
 
   return (
     <div className="lg:bg-white lg:bg-turnos-banner bg-no-repeat lg:pt-32 pb-20 bg-cover min-h-screen align-items- ">
-      {turno.user ? (
+      {user.email.length ? (
         <>
           <h2 className="flex  justify-center my-auto text-5xl text-white mb-12">
             PEDI TU TURNO

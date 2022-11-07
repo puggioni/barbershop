@@ -2,23 +2,25 @@ import { useEffect, useState } from "react";
 import { BsArrowCounterclockwise, BsCreditCardFill } from "react-icons/bs";
 import { FaEdit, FaTrashAlt } from "react-icons/fa";
 import { useNavigate } from "react-router";
-import useHeaders from "../../app/header";
-import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { RootState } from "../../app/store";
-import Paginate from "../products/Paginate";
-import SearchBar from "../products/Searchbar";
 import { Link } from "react-router-dom";
-import { yaLog } from "../slices/logIn";
+import useHeaders from "../../../app/header";
+import { useAppDispatch, useAppSelector } from "../../../app/hooks";
+import { RootState } from "../../../app/store";
+import Paginate from "../../products/Paginate";
+import SearchBar from "../../products/Searchbar";
+import { yaLog } from "../../slices/logIn";
 import {
+  categorias,
   deleteProd,
+  fetchAllProducts,
+  filter,
   orderByDisponible,
   orderByName,
   orderByPrice,
   orderByStock,
-} from "../slices/productSlice";
-import { categorias, fetchAllProducts, filter } from "../slices/productSlice";
+} from "../../slices/productSlice";
 
-const Productos = () => {
+const PanelProductos = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [productsPerPage] = useState(9);
   const lastPostIndex = currentPage * productsPerPage;
@@ -181,15 +183,18 @@ const Productos = () => {
                     <p>{data.stock}</p>
                     <p>{disp}</p>
                     <p>{data.price}</p>
-                    <Link to={`editar-producto/${data._id}`}>
+                    <Link
+                      className="w-4"
+                      to={`/admin/products/hisrotial-producto/${data._id}`}
+                    >
                       <BsCreditCardFill
-                        className="justify-self-center cursor-pointer "
+                        className="w-4 cursor-pointer "
                         title="ver historial de compra de producto"
                       />
                     </Link>
-                    <Link to={`editar-producto/${data._id}`}>
+                    <Link className="w-4" to={`editar-producto/${data._id}`}>
                       <FaEdit
-                        className="justify-self-center cursor-pointer "
+                        className="w-4 cursor-pointer "
                         title="Editar producto"
                       />
                     </Link>
@@ -224,4 +229,4 @@ const Productos = () => {
   }
 };
 
-export default Productos;
+export default PanelProductos;

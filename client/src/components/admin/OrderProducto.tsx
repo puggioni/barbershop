@@ -10,7 +10,7 @@ import { ordersProducto } from "../slices/admin";
 import { yaLog } from "../slices/logIn";
 import OrderSearch from "./OrderSearch";
 
-const HistorialProducto = () => {
+const OrderProducto = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [productsPerPage] = useState(9);
   const lastPostIndex = currentPage * productsPerPage;
@@ -42,7 +42,7 @@ const HistorialProducto = () => {
 
   //=====================click handlers=====================
 
-  const handleRestore = (e: any) => {
+  const handleRestore = () => {
     dispatch(ordersProducto(header.headers, id));
   };
 
@@ -51,7 +51,7 @@ const HistorialProducto = () => {
     return (
       <div className=" bg-white bg-admin-banner bg-no-repeat bg-contain h-full">
         <h1 className="text-white justify-center py-20 mb-2 text-5xl font-bold flex align-middle items-center">
-          Historia de compra de producto
+          Orden de compra de producto
         </h1>
         <div className=" mx-8 bg-white border-2 px-4 border-black rounded-lg">
           <div>
@@ -60,7 +60,7 @@ const HistorialProducto = () => {
                 <OrderSearch />
 
                 <BsArrowCounterclockwise
-                  onClick={(e) => handleRestore(e)}
+                  onClick={() => handleRestore()}
                   size={30}
                   title="restaurar productos"
                   className="cursor-pointer"
@@ -113,4 +113,4 @@ const HistorialProducto = () => {
   }
 };
 
-export default HistorialProducto;
+export default OrderProducto;
