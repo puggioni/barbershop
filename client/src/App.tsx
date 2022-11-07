@@ -35,7 +35,6 @@ import Perfil from "./components/user/Perfil";
 import { firebaseConfig } from "./firebase";
 import AllOffices from "./components/admin/Offices";
 import CrearOffice from "./components/admin/crearOffice";
-
 export const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 setPersistence(auth, browserLocalPersistence);
