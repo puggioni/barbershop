@@ -40,29 +40,17 @@ const Productos = () => {
     banned: boolean | undefined
   ) => {
     if (!banned) {
-      if (window.confirm(`¿Esta seguro que quiere BANEAR a ${user}?`)) {
-        dispatch(banearUsuario(header.headers, id));
-      }
+      dispatch(banearUsuario(header.headers, id));
     } else {
-      if (window.confirm(`¿Esta seguro que quiere DESBANEAR a ${user}?`)) {
-        dispatch(banearUsuario(header.headers, id));
-      }
+      dispatch(banearUsuario(header.headers, id));
     }
   };
 
   const handleAdmin = (id: string, user: string, rol: string) => {
     if (rol === "user") {
-      if (
-        window.confirm(`¿Esta seguro de dar privilegios de ADMIN a ${user}?`)
-      ) {
-        dispatch(hacerAdmin(header.headers, id, rol));
-      }
+      dispatch(hacerAdmin(header.headers, id, rol));
     } else {
-      if (
-        window.confirm(`¿Esta seguro de QUITAR privilegios de ADMIN a ${user}?`)
-      ) {
-        dispatch(hacerAdmin(header.headers, id, rol));
-      }
+      dispatch(hacerAdmin(header.headers, id, rol));
     }
   };
 
@@ -128,7 +116,7 @@ const Productos = () => {
                     />
                     <Link
                       className="justify-self-end mr-3 text-blue-700"
-                      to="/"
+                      to={`/admin/products/hisrotial-producto/${data._id}`}
                     >
                       Ver historial de compra
                     </Link>
