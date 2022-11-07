@@ -32,6 +32,7 @@ router.post("/signup", (req, res) => __awaiter(void 0, void 0, void 0, function*
             phone_number: phone_number,
             user_image: image,
             role: role,
+            twofa: false,
         });
         if (role) {
             const foundRoles = yield role_1.default.find({

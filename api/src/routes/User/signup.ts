@@ -21,6 +21,7 @@ router.post("/signup", async (req, res) => {
       phone_number: phone_number,
       user_image: image,
       role: role,
+      twofa : false,
     });
 
     if (role) {
