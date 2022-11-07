@@ -13,13 +13,18 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
+const categories_1 = __importDefault(require("../../models/categories"));
 const auth_1 = require("../../middlewares/auth");
-const purchaseOrder_1 = __importDefault(require("../../models/purchaseOrder"));
 const router = (0, express_1.Router)();
-router.get("/all-orders", auth_1.isAdmin, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.post("/create", auth_1.verifyToken, auth_1.isAdmin, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    let { name } = req.body;
+    if (typeof name === "string")
+        name = name[0].toUpperCase() + name.slice(1).toLowerCase();
     try {
-        const orders = yield purchaseOrder_1.default.find({});
-        res.status(200).send(orders);
+        const response = yield categories_1.default.create({
+            name,
+        });
+        res.status(200).send(response);
     }
     catch (error) {
         res.status(500).send(error);
