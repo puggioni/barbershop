@@ -33,15 +33,13 @@ import MisCompras from "./components/user/MisCompras";
 import OrderDetail from "./components/user/OrderDetail";
 import Perfil from "./components/user/Perfil";
 import { firebaseConfig } from "./firebase";
-import ChangePassword from "./components/user/changePassword";
 
 
-import MenuResponsive from "./components/MenuResponsive";
-import HistorialProducto from "./components/admin/HistorialProducto";
+
+
 import AllOffices from "./components/admin/Offices";
 import CrearOffice from "./components/admin/crearOffice";
-import MisCompras from "./components/user/MisCompras";
-import OrderDetail from "./components/user/OrderDetail";
+
 
 
 export const app = initializeApp(firebaseConfig);
