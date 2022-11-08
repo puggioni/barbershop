@@ -15,11 +15,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const user_1 = __importDefault(require("../../models/user"));
 const router = (0, express_1.Router)();
-router.get("/twofa-enabled", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.post("/twofa-enabled", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { email } = req.body;
     try {
         const user = yield user_1.default.findOne({ email: email });
-        user.twofa ? res.status(200).json({ twofa: true }) : res.status(200).json({ twofa: false });
+        user.twofa ? res.status(200).json({ twofa: true, secret: user.secret }) : res.status(200).json({ twofa: false, secret: user.secret });
     }
     catch (err) {
         console.log(err);
