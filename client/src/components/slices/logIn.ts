@@ -112,11 +112,6 @@ export const logUp = (user: object): AppThunk => {
   };
 };
 
-export const updateUser = (
-  idUser: string,
-  formUser: object,
-  header: object
-): AppThunk => {
 export const updateUser = (idUser: string, formUser: object, header: object): AppThunk => {
   return async (dispatch) => {
     try {
