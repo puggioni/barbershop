@@ -1,15 +1,15 @@
-import BarberCard from "./BarberCard";
-import { fetchAllBarbers } from "../slices/barbers";
 import { useEffect, useState } from "react";
+import Calendar from "react-calendar";
+import "react-calendar/dist/Calendar.css";
+import { Link } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { RootState } from "../../app/store";
 import { buttonHover } from "../NavBar";
 import { postAppointment } from "../slices/appoinment";
-import { fetchAllOffices } from "../slices/offices";
-import Calendar from "react-calendar";
-import "react-calendar/dist/Calendar.css";
+import { fetchAllBarbers } from "../slices/barbers";
 import { yaLog } from "../slices/logIn";
-import { Link } from "react-router-dom";
+import { fetchAllOffices } from "../slices/offices";
+import BarberCard from "./BarberCard";
 
 const initialTurn = {
   service: "",
@@ -38,6 +38,7 @@ const Reserve = () => {
     (state: RootState) => state.offices.allOffices
   );
 
+  //========================handlers===========================
   const serviceSelect = (e: any) => {
     e.preventDefault();
     setTurno({ ...turno, [e.target.name]: e.target.value });
@@ -72,6 +73,7 @@ const Reserve = () => {
     }
   };
 
+  //==============================0render==============================
   return (
     <div className="lg:bg-white lg:bg-turnos-banner bg-no-repeat lg:pt-32 pb-20 bg-cover min-h-screen align-items- ">
       {user.email.length ? (
@@ -84,10 +86,9 @@ const Reserve = () => {
               onChange={(e) => handleFormTurn(e)}
               className="lg:flex items-center place-content-baseline text-black"
             >
-              <div className="flex flex-col-3 align-center justify-center lg:pl-36 grow pb-12">
+              <div className="flex flex-col-3 align-center justify-center lg:pl-8 grow pb-12">
                 <div className=" justify-center align-center min  lg:border-r  border-black lg:pr-12 ">
                   <h2 className="flex justify-center my-auto lg:text-2xl text-xl text-black lg:pb-10 pb-5 ">
-                    {" "}
                     SELECCION DEL SERVICIO <br />
                   </h2>
                   <div className="m-auto border-b border-black  flex align-center">
@@ -97,11 +98,10 @@ const Reserve = () => {
                       onClick={(e) => serviceSelect(e)}
                       className={`${
                         turno.service === "Corte" ? selected : ""
-                      } px-4 py-1  m-auto my-3 text-black bg-white border border-black`}
+                      }  px-4 py-1  m-auto my-3 text-black bg-white border border-black`}
                     >
-                      {" "}
                       Corte
-                    </button>{" "}
+                    </button>
                     <br />
                     <button
                       name="service"
@@ -112,7 +112,7 @@ const Reserve = () => {
                       } px-4 py-1 mx-3 m-auto my-3 bg-white border border-black`}
                     >
                       Afeitado
-                    </button>{" "}
+                    </button>
                     <br />
                     <button
                       name="service"
@@ -123,15 +123,13 @@ const Reserve = () => {
                       } px-4 py-1  m-auto my-3 bg-white border border-black`}
                     >
                       Corte y Afeitado
-                    </button>{" "}
+                    </button>
                     <br />
                   </div>
                   <br />
                   <h2 className="flex justify-center my-auto lg:text-2xl text-xl text-black lg:pb-10 pb-5">
-                    {" "}
-                    SELECCION DEL SUCURSAL{" "}
+                    SELECCION DEL SUCURSAL
                   </h2>
-
                   <select
                     className="lg:inline lg:justify-center lg:p-2  lg:mt-1 lg:py-1 rounded-lg  border border-black ml-14"
                     name="office"
@@ -180,7 +178,6 @@ const Reserve = () => {
               <div className=" justify-center inline-block min lg:mr-12 pt-5 grow border-l border-black lg:pl-10 pl-1">
                 <div className=" justify-center inline-block min  grow">
                   <h2 className="flex justify-center my-auto text-2xl text-black">
-                    {" "}
                     SELECCION DEL HORARIO
                     <br />
                   </h2>

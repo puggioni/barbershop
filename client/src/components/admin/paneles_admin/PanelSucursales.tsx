@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from "react";
+import { useEffect } from "react";
 import { FaTrashAlt } from "react-icons/fa";
 import { useNavigate } from "react-router";
 import useHeaders from "../../../app/header";
@@ -9,18 +9,14 @@ import { fetchAllOffices } from "../../slices/offices";
 
 const PanleSucuersales = () => {
   const token = JSON.parse(window.localStorage.getItem("token") || "{}");
-  // const navigate = useNavigate();
   const header = useHeaders(token);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const inicializar = useCallback(async () => {
-    dispatch(fetchAllOffices());
-  }, [dispatch]);
-
   useEffect(() => {
-    inicializar();
-  }, [inicializar]);
+    dispatch(fetchAllOffices());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const deleteOffice = (e: any, id: string) => {
     window.location.reload();
@@ -31,7 +27,7 @@ const PanleSucuersales = () => {
   const data = useAppSelector((state: RootState) => state.offices);
 
   return (
-    <div className="bg-white bg-admin-banner h-screen bg-no-repeat pt-20 pb-1  bg-contain">
+    <div className="bg-white bg-admin-banner bg-no-repeat pt-20 pb-1  bg-contain">
       <h1 className="text-white justify-center py-20 mb-2 text-5xl font-bold flex align-middle items-center">
         PANEL DE SUCURSALES
       </h1>
@@ -55,14 +51,14 @@ const PanleSucuersales = () => {
 
         {data.allOffices?.map((office) => (
           <div
-            className="m-5 grid grid-cols-[1fr_.2fr_.2fr_1fr_.2fr_.2fr_.2fr]  gap-16 py-2 pl-2 mt-8 border border-black rounded-lg justify-items-start
+            className="m-5 grid grid-cols-4  gap-16 py-2 pl-2 mt-8 border border-black rounded-lg justify-items-start
               "
           >
             <h1>{office.location}</h1>
             <h1>{office.lat}</h1>
             <h1>{office.long}</h1>
             <FaTrashAlt
-              className="justify-self-end cursor-pointer "
+              className="cursor-pointer "
               title="Eliminar producto"
               onClick={(e) => {
                 deleteOffice(e, office._id);

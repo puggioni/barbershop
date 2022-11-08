@@ -38,7 +38,7 @@ const NavBar = () => {
 
   //================================render==========================
   return (
-    <div className="bg-white p-2 lg:grid grid-flow-col justify-items-center items-center grid-cols-nav hidden">
+    <div className="bg-white p-2 lg:flex justify-items-center items-center hidden">
       <img
         className="h-12 hover:cursor-pointer"
         onClick={() => {
@@ -47,7 +47,7 @@ const NavBar = () => {
         src={logo}
         alt="logo"
       />
-      <div className="justify-self-start	ml-16">
+      <div className="justify-self-start	ml-4">
         <div className="grid grid-flow-col  font-medium ">
           <Link
             to={"/product"}
@@ -126,28 +126,29 @@ const NavBar = () => {
           </button>
         </Link>
       )}
+      <div className="flex gap-4 ml-auto mr-8">
+        <Link
+          title="ir al Carrito"
+          className="hover:text-[#855C20] relative"
+          to={"/products/shopping-cart"}
+        >
+          <p className="absolute w-6 text-sm text-center m-auto bg-black text-white rounded-full right-[-.8rem] top-0">
+            {cant}
+          </p>
+          <RiShoppingBasket2Line size={40} />
+        </Link>
+        <Link
+          className="hover:text-[#855C20] relative"
+          title="ir a Favoritos"
+          to={"/products/favorites"}
+        >
+          <p className="absolute w-6 text-sm text-center m-auto bg-black text-white rounded-full right-[-.8rem] top-0">
+            {favs.length}
+          </p>
 
-      <Link
-        title="ir al Carrito"
-        className="hover:text-[#855C20] relative"
-        to={"/products/shopping-cart"}
-      >
-        <p className="absolute w-6 text-sm text-center m-auto bg-black text-white rounded-full right-[-.8rem] top-0">
-          {cant}
-        </p>
-        <RiShoppingBasket2Line size={40} />
-      </Link>
-      <Link
-        className="hover:text-[#855C20] relative"
-        title="ir a Favoritos"
-        to={"/products/favorites"}
-      >
-        <p className="absolute w-6 text-sm text-center m-auto bg-black text-white rounded-full right-0 top-0">
-          {favs.length}
-        </p>
-
-        <MdFavoriteBorder size={40} className="mx-4" />
-      </Link>
+          <MdFavoriteBorder size={40} className="" />
+        </Link>
+      </div>
     </div>
   );
 };

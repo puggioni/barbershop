@@ -24,7 +24,7 @@ const PanelUsuarios = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  //===========pagination=´-===========
+  //===========pagination===========
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [productsPerPage] = useState(9);
   const [pageLimit] = useState(5);
@@ -128,7 +128,7 @@ const PanelUsuarios = () => {
                     />
                     <Link
                       className="justify-self-end mr-3 text-blue-700"
-                      to="/"
+                      to={`/admin/compras/${data._id}`}
                     >
                       Ver historial de compra
                     </Link>

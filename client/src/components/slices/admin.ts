@@ -20,8 +20,8 @@ interface users {
 }
 
 export interface inputs {
-  lat:0;
-  long:0;
+  lat: 0;
+  long: 0;
   location: string;
 }
 
@@ -45,9 +45,6 @@ const initialState: init = {
   filtroOrden: [],
 };
 
-type dataOffice = {
-  data: inputs;
-};
 //==========action==================
 export const deleteProd = (
   header: { token: string | null },
@@ -68,37 +65,35 @@ export const createOffice = (
 ): AppThunk => {
   return async () => {
     try {
-
-      await axios.post( 
+      await axios.post(
         `${process.env.REACT_APP_BASE_URL}/office/create`,
-        oficina, 
-        );
-      
-        alert("Oficina creada con exito");
-      } catch (error) {
-        console.log(error)
-        alert("No se pudo crear la oficina");
-      }
-    };
+        oficina
+      );
+
+      alert("Oficina creada con exito");
+    } catch (error) {
+      console.log(error);
+      alert("No se pudo crear la oficina");
+    }
   };
-  export const borrarOffice= (
-    header: { token: string | null },
-    id: string
-  ): AppThunk => {
-    return async () => {
-      try {
-        console.log(id)
-        await axios.delete(
-          `${process.env.REACT_APP_BASE_URL}/office/delete/${id}`,
-          { headers: header }
-        );
-  
-        alert("Oficina borrada con exito");
-      } catch (error) {
-        alert("No se pudo borrar la oficina");
-      }
-    };
+};
+export const borrarOffice = (
+  header: { token: string | null },
+  id: string
+): AppThunk => {
+  return async () => {
+    try {
+      await axios.delete(
+        `${process.env.REACT_APP_BASE_URL}/office/delete/${id}`,
+        { headers: header }
+      );
+
+      alert("Oficina borrada con exito");
+    } catch (error) {
+      alert("No se pudo borrar la oficina");
+    }
   };
+};
 
 export const createProd = (
   header: { token: string | null },
@@ -355,8 +350,6 @@ export const createCate = (
     }
   };
 };
-
-
 
 export const borrarCate = (
   header: { token: string | null },

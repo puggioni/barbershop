@@ -1,12 +1,12 @@
 import { useEffect } from "react";
+import { FaTrashAlt } from "react-icons/fa";
 import { VscArrowLeft } from "react-icons/vsc";
 import { useNavigate } from "react-router";
-import { getAppointments, deleteAppointment } from "../slices/appoinment";
+import { Link } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { RootState } from "../../app/store";
-import { FaTrashAlt } from "react-icons/fa";
-import { Link } from "react-router-dom";
 import { buttonHover } from "../NavBar";
+import { deleteAppointment, getAppointments } from "../slices/appoinment";
 
 const MyAppointments = () => {
   const dispatch = useAppDispatch();
@@ -48,8 +48,8 @@ const MyAppointments = () => {
   //========================render========================
   return (
     <>
-      <div className="bg-white bg-sucursales-banner h-screen bg-no-repeat lg:pt-40 pt-28 pb-1  bg-contain">
-        <div className="s bg-white border-black rounded-xl bg-contain lg:py-10 lg:mx-40 my-auto">
+      <div className="bg-white bg-sucursales-banner bg-no-repeat lg:pt-40 pt-28 pb-1 bg-cover">
+        <div className="s bg-white border-black rounded-xl lg:py-10 lg:mx-40 my-auto">
           <VscArrowLeft
             className=" ml-4 mt-3 h-6 w-6 fill-black"
             onClick={goBack}
@@ -58,7 +58,7 @@ const MyAppointments = () => {
             MIS TURNOS
           </label>
           <div className="content-none border-b mx-40 border-black"></div>
-          <div className="grid grid-cols-6 gap-4 py-2  px-4 mt-8 font-bold rounded-lg text-center">
+          <div className="grid grid-cols-6 gap-4 py-2  px-4 mt-8 font-bold rounded-lg text-center lg:mx-4">
             <h2>Oficina</h2>
             <h2>Fecha</h2>
             <h2>Horario</h2>
@@ -67,10 +67,10 @@ const MyAppointments = () => {
           </div>
           {data ? (
             data.map((appo: any) => (
-              <div className="grid grid-cols-6 gap-4 py-2  px-4 mt-3 border mb-5 content-center border-black rounded-lg text-center">
+              <div className="grid grid-cols-6 gap-4 py-2  px-4 mt-3 border mb-5 content-center border-black rounded-lg text-center lg:mx-4">
                 <p>{appo.office.location}</p>
                 <p>{appo.date.slice(0, 10)}</p>
-                <p>{appo.block}</p>sa
+                <p>{appo.block}</p>
                 <p>{appo.service}</p>
                 <p>{appo.barber.name}</p>
                 <FaTrashAlt

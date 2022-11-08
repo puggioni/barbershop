@@ -20,7 +20,7 @@ const Logeado = ({ setHide }: any) => {
     img = user.user_image;
   }
   return (
-    <div className=" lg:grid flex lg:grid-cols-2 justify-end items-center">
+    <div className="lg:mx-4 flex lg:flex-col justify-end items-center">
       <img
         onClick={() => {
           setHide("-translate-y-full");
@@ -28,11 +28,11 @@ const Logeado = ({ setHide }: any) => {
         }}
         src={img}
         alt="user pic"
-        className="lg:static absolute top-4 right-4 h-8 bg-center rounded-full"
+        className="lg:static absolute top-4 right-4 h-8 bg-center cursor-pointer rounded-full"
       />
 
       <button
-        className="lg:mt-0 mt-20 lg:mr-0 mr-4 "
+        className="lg:mt-0 mt-20 lg:mr-0 mr-4 text-xs "
         onClick={() => handleLogOut()}
       >
         Log Out
