@@ -1,7 +1,7 @@
 import { Router } from "express";
 import Review from "../../models/ProductReviews";
 import Product from "../../models/products";
-import { verifyToken, isCommon } from "../../middlewares/auth";
+import { verifyToken } from "../../middlewares/auth";
 const router = Router();
 
 router.delete("/delete", verifyToken, async (req, res) => {

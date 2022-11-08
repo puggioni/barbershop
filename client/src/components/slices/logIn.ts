@@ -80,6 +80,7 @@ export const logOut = () => {
     dispatch(userLogOut());
   };
 };
+
 export const yaLog = (email: string) => {
   return async (dispatch: any) => {
     const res = await axios(
@@ -106,13 +107,16 @@ export const logUp = (user: object): AppThunk => {
       alert("Usuario creado exitosamente");
       window.location.pathname = "/";
     } catch (error: any) {
-      if (error.response.status === 400) {
-        alert("La cuenta ya existe");
-        window.location.pathname = "/user/login";
-      }
+      alert(error.response.data.message);
     }
   };
 };
+
+export const updateUser = (
+  idUser: string,
+  formUser: object,
+  header: object
+): AppThunk => {
 export const updateUser = (idUser: string, formUser: object, header: object): AppThunk => {
   return async (dispatch) => {
     try {
@@ -132,21 +136,17 @@ export const updateUser = (idUser: string, formUser: object, header: object): Ap
 export const changePassword = (id: any, password: string): AppThunk => {
   return async () => {
     try {
-      const response: any = await axios.patch(
-        `${process.env.REACT_APP_BASE_URL}/users/pwdRst`,
-        {
-          idUsr: id,
-          newPwd: password,
-        }
-      );
-    } catch (error) {
-      console.log(error);
+      await axios.patch(`${process.env.REACT_APP_BASE_URL}/users/pwdRst`, {
+        idUsr: id,
+        newPwd: password,
+      });
+    } catch (error: any) {
+      alert(error.response.data.message);
     }
   };
 };
 
 //----------------Reducers------------------------------------------
-
 
 export const logInReducerSlice = createSlice({
   name: "login",
@@ -170,7 +170,9 @@ export const logInReducerSlice = createSlice({
       state.token = "";
       state.user = "";
       state.logeado = false;
-      localStorage.clear();
+      // localStorage.clear();
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
     },
 
     yaLogeado: (state) => {
@@ -187,11 +189,10 @@ export const logInReducerSlice = createSlice({
       state.logeado = true;
     },
 
-
     userUpdate: (state: any, action: PayloadAction<userFound>) => {
       state.userFound = action.payload;
       localStorage.setItem("user", JSON.stringify(action.payload));
-    }
+    },
   },
 });
 

@@ -27,8 +27,8 @@ import patchPwd from "./User/patchPwd";
 import editUsr from "./User/editUser";
 import twofa from "./User/getTwoFA";
 /* ============CATEGORIES============ */
-import postCategories from "./Categories/postCategories";
-import deleteCategory from "./Categories/deleteCategory";
+import postCategories from "./Admin/postCategories";
+import deleteCategory from "./Admin/deleteCategory";
 import getCategories from "./Categories/getAllCategories";
 /* ============REVIEWS============ */
 import postReview from "./Reviews/postReview";
@@ -40,12 +40,13 @@ import getAppointments from "./Appointments/getAppontments";
 import deleteAppointment from "./Appointments/deleteAppointment";
 import getAllAppointments from "./Appointments/getAllAppointments";
 /* ============BARBERS============ */
-import postbarber from "./Barbers/postbarber";
+import postbarber from "./Admin/postbarber";
 import getbarbers from "./Barbers/getbarbers";
 /* ============OFFICES============ */
-import postOffice from "./Offices/postOffice";
+import postOffice from "./Admin/postOffice";
 import getOffices from "./Offices/getOffices";
-import editOffices from "./Offices/patchOffice";
+import editOffices from "./Admin/patchOffice";
+import deleteOffice from "./Admin/deleteOffice";
 /* ============PAYMENTS============*/
 import captureOrder from "./Payments/captureOrder";
 import cancelOrder from "./Payments/cancelOrder";
@@ -115,6 +116,7 @@ router.use("/agenda/", getAllAppointments);
 router.use("/office/", postOffice);
 router.use("/office/", getOffices);
 router.use("/office/", editOffices);
+router.use("/office/", deleteOffice);
 
 /* ============BARBERS============ */
 router.use("/barber/", postbarber);

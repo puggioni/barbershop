@@ -59,6 +59,10 @@ const UserSchema = new Schema({
             ref: "Role",
         },
     ],
+    google_account: {
+        type: Boolean,
+        default: false,
+    },
     purchases: [
         {
             type: Schema.Types.ObjectId,

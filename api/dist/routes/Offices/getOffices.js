@@ -17,8 +17,7 @@ const office_1 = __importDefault(require("../../models/office"));
 const router = (0, express_1.Router)();
 router.get("/all", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        yield office_1.default.find()
-            .then((offs) => res.status(200).send(offs));
+        yield office_1.default.find().then((offs) => res.status(200).send(offs));
     }
     catch (err) {
         console.log(err);

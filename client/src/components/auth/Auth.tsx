@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { onAuthStateChanged } from "firebase/auth";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
+import { auth } from "../../App";
 
 const Auth: React.FunctionComponent<any> = (props) => {
   const { children } = props;
-  const auth = getAuth();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 

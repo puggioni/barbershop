@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 // import { FaEdit} from "react-icons/fa";
 import { getAuth } from "firebase/auth";
 import { useEffect, useState } from "react";
+import { auth } from "../../App";
 import useHeaders from "../../app/header";
 import { useAppDispatch } from "../../app/hooks";
 import { updateUser } from "../slices/logIn";
@@ -12,8 +13,6 @@ const Perfil = () => {
   let user: any = JSON.parse(window.localStorage.getItem("user") || "{}");
   const token: string = JSON.parse(window.localStorage.getItem("token") || "");
   const dispatch = useAppDispatch();
-  const auth = getAuth();
-  console.log(auth);
   const header = useHeaders(token);
   const [formUser, setFormUser] = useState(user);
   const [enabledTwoFA, setEnabledTwoFA] = useState("");

@@ -36,7 +36,7 @@ const MenuResponsive = () => {
           setHide("-translate-y-full");
         }}
         size={25}
-        className="mt-4 ml-auto mr-8"
+        className="mt-4 mr-auto ml-8"
       />
       <img
         className="m-auto h-[10%] mt-8"

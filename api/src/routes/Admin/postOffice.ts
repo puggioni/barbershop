@@ -1,12 +1,12 @@
 import { Router } from "express";
 
 import Office from "../../models/office";
-import { verifyToken, isAdmin } from "../../middlewares/auth";
+import { isAdmin } from "../../middlewares/auth";
 
 const router = Router();
 
-router.post("/create", async (req, res) => {
-  let { lat, long, location } = req.body;
+router.post("/create", isAdmin, async (req, res) => {
+  const { lat, long, location } = req.body;
 
   try {
     const office = new Office({
