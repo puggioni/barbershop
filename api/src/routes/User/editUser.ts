@@ -4,7 +4,7 @@ import { verifyToken } from "../../middlewares/auth";
 const router = Router();
 
 router.put("/edit/:idUsr", verifyToken, async (req: any, res) => {
-    let { email, name, lastname, phone_number } = req.body;
+    let { email, name, lastname, phone_number, twofa, secret } = req.body;
     const { idUsr } = req.params;
     
     try {
@@ -13,6 +13,8 @@ router.put("/edit/:idUsr", verifyToken, async (req: any, res) => {
         name ? (user.name = name) : {};
         lastname ? (user.lastname = lastname) : {};
         phone_number ? (user.phone_number = phone_number) : {};
+        (twofa === true) ? (user.twofa = true) : (user.twofa = false);
+        secret ? (user.secret = secret) : {};
         const savedUser = await user.save();
         res.status(200).send(savedUser);
     } catch (err) {

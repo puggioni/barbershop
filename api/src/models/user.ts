@@ -10,10 +10,12 @@ export interface IUser {
   user_image: string;
   phone_number: string;
   google_account: boolean;
+  secret: string;
   role: {
     [key: string]: any;
   };
   banned: boolean;
+  twofa: boolean;
   purchases: {
     [key: string]: any;
   };
@@ -57,6 +59,14 @@ const UserSchema = new Schema<IUser, UserModel>(
     banned: {
       type: Boolean,
       default: false,
+    },
+    twofa: {
+      type: Boolean,
+      default: false,
+    },
+    secret: {
+      type: String,
+      default: "",
     },
     role: [
       {

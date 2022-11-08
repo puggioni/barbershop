@@ -9,10 +9,17 @@ interface userFound {
   logeado: boolean;
 }
 
+interface twofa {
+  twofa: boolean;
+  secret: string;
+}
+
 const initialState = {
   user: "",
   token: "",
   logeado: false,
+  twoFaEnabled: false,
+  secret: ""
 };
 
 type dataUser = {
@@ -36,8 +43,34 @@ export const logIn = (email: string, password: string): AppThunk => {
         dispatch(userLogIn(res.data));
       }
     } catch (error: any) {
-      console.log(error);
-      alert(error.response.data.message);
+      if (error.response.status === 400) {
+        alert("Su cuenta fue baneada");
+      } else if (error.response.status === 401) {
+        alert("Contraseña invalida");
+      }
+    }
+  };
+};
+
+export const checkTwoFa = (email: string, password: string) => {
+  return async (dispatch: any) => {
+    try {
+      const res: any = await axios.post(
+        `${process.env.REACT_APP_BASE_URL}/users/twofa-enabled`,
+        {
+          email
+        }
+      );
+      dispatch(setTwoFaState(res.data));
+      if (!res.data.twofa) {
+        dispatch(logIn(email, password));
+      }//si 2fa es true loginUser se encarga
+    } catch (error: any) {
+      if (error.response.status === 500) {
+        alert("error 500: 2FA");
+      } else {
+        alert("general error: 2FA");
+      }
     }
   };
 };
@@ -84,6 +117,7 @@ export const updateUser = (
   formUser: object,
   header: object
 ): AppThunk => {
+export const updateUser = (idUser: string, formUser: object, header: object): AppThunk => {
   return async (dispatch) => {
     try {
       const userUpdated: dataUser = await axios.put(
@@ -94,8 +128,8 @@ export const updateUser = (
       dispatch(userUpdate(userUpdated.data));
       alert("Informacion actualizada exitosamente");
     } catch (error: any) {
-      console.log(error);
-      alert(error.response.data.message);
+      console.log(error)
+      alert("Error al actualizar info");
     }
   };
 };
@@ -125,6 +159,11 @@ export const logInReducerSlice = createSlice({
       state.userFound = action.payload.user;
       localStorage.setItem("user", JSON.stringify(action.payload.user));
       state.logeado = true;
+    },
+
+    setTwoFaState: (state: any, action: PayloadAction<twofa>) => {
+      state.twoFaEnabled = action.payload.twofa;
+      state.secret = action.payload.secret;
     },
 
     userLogOut: (state) => {
@@ -159,5 +198,7 @@ export const logInReducerSlice = createSlice({
 
 export default logInReducerSlice.reducer;
 
-export const { userLogIn, userLogOut, yaLogeado, userCreate, userUpdate } =
+
+export const { userLogIn, setTwoFaState, userLogOut, yaLogeado, userCreate, userUpdate } =
+
   logInReducerSlice.actions;

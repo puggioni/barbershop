@@ -45,6 +45,14 @@ const UserSchema = new Schema({
         type: Boolean,
         default: false,
     },
+    twofa: {
+        type: Boolean,
+        default: false,
+    },
+    secret: {
+        type: String,
+        default: "",
+    },
     role: [
         {
             type: Schema.Types.ObjectId,

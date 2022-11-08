@@ -1,23 +1,53 @@
 import { Link } from "react-router-dom";
 // import { FaEdit} from "react-icons/fa";
-import { useState } from "react";
+import { getAuth } from "firebase/auth";
+import { useEffect, useState } from "react";
 import { auth } from "../../App";
 import useHeaders from "../../app/header";
 import { useAppDispatch } from "../../app/hooks";
 import { updateUser } from "../slices/logIn";
+const qrcode = require('qrcode');
+const speakeasy = require("speakeasy");
 
 const Perfil = () => {
-  const user: any = JSON.parse(window.localStorage.getItem("user") || "{}");
+  let user: any = JSON.parse(window.localStorage.getItem("user") || "{}");
   const token: string = JSON.parse(window.localStorage.getItem("token") || "");
   const dispatch = useAppDispatch();
   const header = useHeaders(token);
   const [formUser, setFormUser] = useState(user);
+  const [enabledTwoFA, setEnabledTwoFA] = useState("");
+  const [qrCodeSrc, setQrCodeSrc] = useState("");
+  const [showTwoFa, SetshowTwoFa] = useState("visibility: hidden");
+  const [twofaCode, setTwofaCode] = useState("");
+  const [stateSecret, setStateSecret] = useState("");
   const img: any =
     auth.currentUser !== null
       ? auth.currentUser.photoURL
       : "https://media.istockphoto.com/vectors/black-hipster-vector-mustache-vector-id485318064?k=20&m=485318064&s=170667a&w=0&h=krFPiCXz9kaEOS3gmFxGwYSOzTIxgOXqos7hEELiaTY=";
 
+  useEffect(() => {
+    formUser.twofa ? setEnabledTwoFA("habilitado") : setEnabledTwoFA("deshabilitado");
+  }, [formUser]);
+
   //==================================handlers==================================
+  const handleVerify = (e: React.MouseEvent<HTMLElement>) => {
+    e.preventDefault();
+    var verified = speakeasy.totp.verify({
+      secret: stateSecret,
+      encoding: 'ascii',
+      token: twofaCode
+    })
+    if(verified){
+      formUser.twofa = true;
+      formUser.secret = stateSecret;
+      dispatch(updateUser(user._id, formUser, header));
+      setEnabledTwoFA("habilitado");
+      SetshowTwoFa("visibility: hidden");
+    }
+    else{
+      alert("Codigo incorrecto");
+    }
+  };
   function fillFormUser(e: React.ChangeEvent<HTMLInputElement>) {
     e.preventDefault();
     setFormUser({ ...formUser, [e.target.name]: e.target.value });
@@ -25,6 +55,20 @@ const Perfil = () => {
   function submitUserInfo(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
     e.preventDefault();
     dispatch(updateUser(user._id, formUser, header));
+  }
+  function showQrCode(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
+    e.preventDefault();
+    if(enabledTwoFA === "deshabilitado"){
+      var secret = speakeasy.generateSecret({ name : "barbershop" });
+      setStateSecret(secret.ascii);
+      qrcode.toDataURL(secret.otpauth_url, (err: any, data: any) => setQrCodeSrc(data));
+      SetshowTwoFa("visibility: visible");
+    }
+    else{
+      formUser.twofa = false;
+      dispatch(updateUser(user._id, formUser, header));
+      setEnabledTwoFA("deshabilitado");
+    }
   }
   //=======================render=============================
   return (
@@ -82,17 +126,41 @@ const Perfil = () => {
                     <input
                       type="number"
                       value={formUser.phone_number}
-                      className="rounded-lg bg-red-100 w-2/3 text-left p-1 "
+                      className="rounded-lg bg-red-100 w-2/3 text-left p-1"
                       placeholder="Teléfono"
                       name="phone_number"
                       onChange={(e) => fillFormUser(e)}
                     />
+                    <div className="block mt-3">
+                      <span>Autenticación de 2 factores: {enabledTwoFA}</span>
+                      <button
+                        className="border border-black rounded-lg hover:bg-gray-200 p-1 inline-block ml-4"
+                        onClick={(e) => showQrCode(e)}>
+                        Cambiar
+                      </button>
+                    </div>
+                    <div className={`${showTwoFa} border border-black rounded-xl w-full p-5 mt-4 grid place-items-center`}>
+                      <p>Abra la app Google Authenticator y escanee el siguiente codigo QR: </p>
+                      <img className="mx-auto" src={qrCodeSrc} alt="qrcode" />
+                      <p className="mb-3">Luego introduzca el codigo numerico llamado "barbershop":</p>
+                      <input
+                        type="text"
+                        className="rounded-lg bg-yellow-100 w-2/3 text-left p-1"
+                        name="twofa"
+                        onChange={(event) => {
+                          setTwofaCode(event.target.value);
+                        }}/>
+                      <button
+                        className="border border-black rounded-lg bg-lime-200 hover:bg-lime-600 p-1 inline-block mt-4 ml-4"
+                        onClick={(e) => handleVerify(e)}>
+                        Verificar
+                      </button>
+                    </div>
                   </div>
                   <div className="grid justify-items-stretch">
                     <button
                       className=" border border-black rounded-lg hover:bg-gray-200 p-1 mb-10 justify-self-center"
-                      onClick={(e) => submitUserInfo(e)}
-                    >
+                      onClick={(e) => submitUserInfo(e)}>
                       Actualizar Info
                     </button>
                   </div>
