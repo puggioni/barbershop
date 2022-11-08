@@ -9,6 +9,7 @@ export interface IUser {
   lastname: string;
   user_image: string;
   phone_number: string;
+  secret: string;
   role: {
     [key: string]: any;
   };
@@ -61,6 +62,10 @@ const UserSchema = new Schema<IUser, UserModel>(
     twofa: {
       type: Boolean,
       default: false,
+    },
+    secret: {
+      type: String,
+      default: "",
     },
     role: [
       {
