@@ -13,18 +13,22 @@ import BarberCard from "./BarberCard";
 
 const initialTurn = {
   service: "",
-
   date: new Date(Date.now()),
   barber: "",
   office: "",
   block: 0,
 };
+
+interface user {
+  email:string;
+
+}
 const selected = "bg-black text-white hover:ease-in-out duration-300";
 
 const Reserve = () => {
   const dispatch = useAppDispatch();
   const [turno, setTurno] = useState(initialTurn);
-  const [user, setUser]=JSON.parse(window.localStorage.getItem("user") || "{}");
+  const [user, setUser]=useState(Object)
 
   useEffect(() => {
     if(user)dispatch(yaLog(user.email));
@@ -78,7 +82,7 @@ const Reserve = () => {
   //==============================0render==============================
   return (
     <div className="lg:bg-white lg:bg-turnos-banner bg-no-repeat lg:pt-32 pb-20 bg-cover min-h-screen align-items- ">
-      {user.email? (
+      {user? (
         <>
           <h2 className="flex  justify-center my-auto text-5xl text-white mb-12">
             PEDI TU TURNO

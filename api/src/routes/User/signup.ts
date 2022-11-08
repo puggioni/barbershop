@@ -23,6 +23,7 @@ router.post("/signup", async (req, res) => {
       user_image: image,
       role: role,
       google_account: google,
+      twofa : false,
     });
 
     if (role) {

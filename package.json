@@ -1,6 +1,7 @@
 {
   "dependencies": {
-    "jsonwebtoken": "^8.5.1"
+    "jsonwebtoken": "^8.5.1",
+    "qrcode": "^1.5.1"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
