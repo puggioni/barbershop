@@ -118,15 +118,14 @@ const NavBar = () => {
       {logeado ? (
         <Logeado />
       ) : (
-        <Link to={"/user/login"}>
-          <button
-            className={`${buttonHover}  px-2 py-2 justify-self-center rounded-lg font-bold`}
-          >
-            Log In/Sign Up
-          </button>
+        <Link
+          className={`${buttonHover} ml-auto px-2 py-2 justify-self-center rounded-lg font-bold`}
+          to={"/user/login"}
+        >
+          Log In/Sign Up
         </Link>
       )}
-      <div className="flex gap-4 ml-auto mr-8">
+      <div className="flex gap-4 mx-8">
         <Link
           title="ir al Carrito"
           className="hover:text-[#855C20] relative"

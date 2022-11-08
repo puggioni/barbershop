@@ -20,7 +20,7 @@ const Logeado = ({ setHide }: any) => {
     img = user.user_image;
   }
   return (
-    <div className="lg:mx-4 flex lg:flex-col justify-end items-center">
+    <div className="lg:mx-4 lg:ml-auto flex lg:flex-col justify-end items-center">
       <img
         onClick={() => {
           setHide("-translate-y-full");
