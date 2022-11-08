@@ -16,7 +16,6 @@ export interface input {
 
 const CrearProducto = () => {
   const token = JSON.parse(window.localStorage.getItem("token") || "{}");
-  // const navigate = useNavigate();
   const header = useHeaders(token);
   const dispatch = useAppDispatch();
   const categoriaProds = useAppSelector((state) => state.products.categorias);
@@ -91,20 +90,21 @@ const CrearProducto = () => {
 
   //===================render========================
   return (
-    <div className="background flex bg-bg-prods bg-cover">
-      <div className="flex flex-col container h-screen !w-full mx-40 my-16 py-4 px-8 bg-white/50 rounded-lg">
+    <div className=" flex bg-bg-prods bg-cover">
+      <div className="flex flex-col mx-auto my-16 py-4 px-8 bg-white/50 rounded-lg">
         <h1 className="text-5xl font-bold flex justify-center">
           CREAR PRODUCTO
         </h1>
-        <div className="flex m-auto w-[40%] pt-4 border-b-2 border-black"></div>
-        <div className="container flex flex-row justify-around h-12 my-16">
+        <div className="flex m-auto pt-4 border-b-2 border-black"></div>
+        <div className="flex flex-row justify-around  my-16">
+          <label htmlFor="precio">Nombre: </label>
+
           <input
             value={inputs.nombre}
             type="text"
             name="nombre"
             onChange={(e) => handleInput(e)}
             className="rounded-lg bg-white/70 pl-4"
-            placeholder="Nombre del producto"
           />
           <div>
             <label htmlFor="precio">Precio: </label>
@@ -135,7 +135,8 @@ const CrearProducto = () => {
           value={inputs.descripcion}
           name="descripcion"
           onChange={(e) => handleInput(e)}
-          className="flex m-auto w-[80%] rounded-lg bg-white/70 p-4 h-[30vh] mb-8"
+          rows={10}
+          className="flex m-auto rounded-lg bg-white/70 p-4 mb-8 w-[90%]"
           placeholder="Descripción"
         />
 
@@ -156,26 +157,13 @@ const CrearProducto = () => {
           >
             <p className="bg-white/70 rounded-lg px-2">Choose file</p>
           </label>
-          {/* <div className="categoriasagregadas grid grid-cols-7 bg-white/70 rounded-lg gap-4">
-            {inputs.imagen.map((img) => {
-              return (
-                <div className="bg-white/70 flex flex-row rounded-lg gap-1">
-                  <p>{img}</p>
-                  <AiFillCloseCircle
-                    className=""
-                    onClick={() => deleteImg(img)}
-                  />
-                </div>
-              );
-            })}
-          </div> */}
         </div>
 
-        <div className="grid grid-cols-[.5fr_4fr] justify-self-center gap-4 w-[80%] m-auto">
+        <div className="flex justify-self-center flex-wrap gap-4  m-auto">
           <select
             name="categorias"
             onChange={(e) => handleGenreChange(e)}
-            className="categorias rounded-lg"
+            className="h-10 rounded-lg"
           >
             {categoriaProds.map((cate) => {
               return (
@@ -185,13 +173,14 @@ const CrearProducto = () => {
               );
             })}
           </select>
-          <div className="categoriasagregadas grid grid-cols-7 bg-white/70 rounded-lg gap-4 ">
+          <div className="grid grid-cols-3 bg-white/70 rounded-lg gap-4 ">
             {inputs.categorias.map((cate) => {
               return (
-                <div className="bg-white/70 flex flex-row rounded-lg w-fit pl-2">
+                <div className="bg-white/70 relative rounded-lg p-2">
                   <p>{cate}</p>
                   <AiFillCloseCircle
-                    className=""
+                    size={15}
+                    className="absolute top-0 right-0"
                     onClick={() => deleteCate(cate)}
                   />
                 </div>
@@ -204,7 +193,7 @@ const CrearProducto = () => {
             onClick={() => {
               handleCreateOrder();
             }}
-            className="mt-20 mb-4 bg-black text-white w-[10%] rounded-sm p-2 "
+            className="block mt-16 mb-4 bg-black text-white rounded-sm p-2 "
           >
             CREAR PRODUCTO
           </button>

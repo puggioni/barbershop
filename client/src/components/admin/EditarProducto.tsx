@@ -4,7 +4,7 @@ import { useParams } from "react-router";
 import useHeaders from "../../app/header";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { editProd } from "../slices/admin";
-import { categorias, productDetail, clearDetail } from "../slices/productSlice";
+import { categorias, clearDetail, productDetail } from "../slices/productSlice";
 export interface input {
   nombre: string;
   precio: number;
@@ -20,7 +20,6 @@ type QuizParams = {
 const EditarProducto = () => {
   const token = JSON.parse(window.localStorage.getItem("token") || "{}");
   const { idProduct } = useParams<QuizParams>();
-  // const navigate = useNavigate();
   const header = useHeaders(token);
   const dispatch = useAppDispatch();
   const producto = useAppSelector((state) => state.products.product);
@@ -97,8 +96,8 @@ const EditarProducto = () => {
 
   //===================render========================
   return (
-    <div className="background flex bg-bg-prods bg-cover">
-      <div className="flex flex-col container h-screen !w-full mx-40 my-16 py-4 px-8 bg-white/50 rounded-lg">
+    <div className="flex bg-bg-prods bg-cover">
+      <div className="flex flex-col container mx-40 my-16 py-4 px-8 bg-white/50 rounded-lg">
         <h1 className="text-5xl font-bold flex justify-center">
           EDITAR PRODUCTO
         </h1>
@@ -144,8 +143,9 @@ const EditarProducto = () => {
         <textarea
           value={inputs.descripcion}
           name="descripcion"
+          rows={10}
           onChange={(e) => handleInput(e)}
-          className="flex m-auto w-[80%] rounded-lg bg-white/70 p-4 h-[30vh] mb-8"
+          className="flex m-auto w-[80%] rounded-lg bg-white/70 p-4 mb-8"
           placeholder="Descripción"
         />
 
