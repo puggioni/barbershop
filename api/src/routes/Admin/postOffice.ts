@@ -1,13 +1,13 @@
 import { Router } from "express";
 
 import Office from "../../models/office";
-import { verifyToken, isAdmin } from "../../middlewares/auth";
+import { isAdmin } from "../../middlewares/auth";
 
 const router = Router();
 
-router.post("/create", async (req, res) => {
+router.post("/create", isAdmin, async (req, res) => {
   const { lat, long, location } = req.body;
-  // console.log(req.body)
+
   try {
     const office = new Office({
       lat,

@@ -13,13 +13,18 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
+const office_1 = __importDefault(require("../../models/office"));
 const auth_1 = require("../../middlewares/auth");
-const purchaseOrder_1 = __importDefault(require("../../models/purchaseOrder"));
 const router = (0, express_1.Router)();
-router.get("/all-orders", auth_1.isAdmin, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.post("/create", auth_1.isAdmin, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { lat, long, location } = req.body;
     try {
-        const orders = yield purchaseOrder_1.default.find({});
-        res.status(200).send(orders);
+        const office = new office_1.default({
+            lat,
+            long,
+            location,
+        });
+        office.save().then((savedOffice) => res.status(200).send(savedOffice));
     }
     catch (error) {
         res.status(500).send(error);

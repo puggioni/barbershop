@@ -30,8 +30,8 @@ const resetPwd_1 = __importDefault(require("./User/resetPwd"));
 const patchPwd_1 = __importDefault(require("./User/patchPwd"));
 const editUser_1 = __importDefault(require("./User/editUser"));
 /* ============CATEGORIES============ */
-const postCategories_1 = __importDefault(require("./Categories/postCategories"));
-const deleteCategory_1 = __importDefault(require("./Categories/deleteCategory"));
+const postCategories_1 = __importDefault(require("./Admin/postCategories"));
+const deleteCategory_1 = __importDefault(require("./Admin/deleteCategory"));
 const getAllCategories_1 = __importDefault(require("./Categories/getAllCategories"));
 /* ============REVIEWS============ */
 const postReview_1 = __importDefault(require("./Reviews/postReview"));
@@ -43,13 +43,13 @@ const getAppontments_1 = __importDefault(require("./Appointments/getAppontments"
 const deleteAppointment_1 = __importDefault(require("./Appointments/deleteAppointment"));
 const getAllAppointments_1 = __importDefault(require("./Appointments/getAllAppointments"));
 /* ============BARBERS============ */
-const postbarber_1 = __importDefault(require("./Barbers/postbarber"));
+const postbarber_1 = __importDefault(require("./Admin/postbarber"));
 const getbarbers_1 = __importDefault(require("./Barbers/getbarbers"));
 /* ============OFFICES============ */
-const postOffice_1 = __importDefault(require("./Offices/postOffice"));
+const postOffice_1 = __importDefault(require("./Admin/postOffice"));
 const getOffices_1 = __importDefault(require("./Offices/getOffices"));
-const patchOffice_1 = __importDefault(require("./Offices/patchOffice"));
-const deleteOffice_1 = __importDefault(require("./Offices/deleteOffice"));
+const patchOffice_1 = __importDefault(require("./Admin/patchOffice"));
+const deleteOffice_1 = __importDefault(require("./Admin/deleteOffice"));
 /* ============PAYMENTS============*/
 const captureOrder_1 = __importDefault(require("./Payments/captureOrder"));
 const cancelOrder_1 = __importDefault(require("./Payments/cancelOrder"));
