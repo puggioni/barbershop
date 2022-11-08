@@ -5,16 +5,19 @@ import { useState, useEffect } from "react";
 import { Link, redirect, useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../../app/hooks";
 import logo from "../../imagenes/Logo.png";
-import { logIn } from "../slices/logIn";
+import { logIn, checkTwoFa, setTwoFaState } from "../slices/logIn";
 import { getFavoritesProducts } from "../slices/productSlice";
 import { useSelector } from "react-redux";
+const speakeasy = require("speakeasy");
 
 export default function LoginUser() {
   const [password, setPassword] = useState("");
   const [email, setUserName] = useState("");
+  const [twofaCode, setTwofaCode] = useState("");
   const [buttonStyle, SetButtonStyle] = useState(
     "bg-[#757575] w-[75%] mt-7 mx-10 justify-self-center py-3 rounded-lg text-white"
   );
+  const [showTwoFa, SetshowTwoFa] = useState("visibility: hidden");
   const [emailErr, setEmailErr] = useState("");
   const [pwdErr, setPwdErr] = useState("");
   const navigate = useNavigate();
@@ -25,6 +28,7 @@ export default function LoginUser() {
   const validEmail = new RegExp(
     "^[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]$"
   );
+
   function cargarFavs() {
     const aux = window.localStorage.getItem("user");
     const aux2 = window.localStorage.getItem("token");
@@ -54,6 +58,20 @@ export default function LoginUser() {
       setEmailErr("");
       setPwdErr("*Ingrese contraseña");
     } else {
+      dispatch(checkTwoFa(email, password));
+    }
+  };
+
+  const handleVerify = (e: React.MouseEvent<HTMLElement>) => {
+    e.preventDefault();
+    var verified = speakeasy.totp.verify({
+      secret: secret,
+      encoding: 'ascii',
+      token: twofaCode
+    })
+    if (verified) {
+      SetshowTwoFa("visibility: hidden");
+      dispatch(setTwoFaState({ twofa: false, secret: "" }));
       dispatch(logIn(email, password));
       if (user.name) {
         cargarFavs();
@@ -63,10 +81,17 @@ export default function LoginUser() {
       setPassword("");
       setUserName("");
     }
+    else {
+      alert("Codigo incorrecto");
+    }
   };
 
-  const logeado = useSelector((state : any) => state.logIn.logeado);
-  useEffect(() => {if(logeado) navigate("/")}, [logeado]);
+  const logeado = useSelector((state: any) => state.logIn.logeado);
+  const twofa = useSelector((state: any) => state.logIn.twoFaEnabled);
+  const secret = useSelector((state: any) => state.logIn.secret);
+
+  useEffect(() => { if (logeado) navigate("/") }, [logeado]);
+  useEffect(() => { if (twofa) { SetshowTwoFa("visibility: visible bg-orange-100 p-4 rounded-lg") } }, [twofa]);
 
   const handleForgotPass = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
@@ -88,7 +113,6 @@ export default function LoginUser() {
     setPersistence(auth, browserLocalPersistence);
     const response: any = await signInWithPopup(auth, new GoogleAuthProvider());
     cargarFavs();
-    navigate("/");
     dispatch(logIn(response.user.email, response.user.email));
   };
 
@@ -145,11 +169,28 @@ export default function LoginUser() {
             </button>
 
             <button
-              className={`${buttonStyle} lg:w-[75%] mt-7 lg:mx-10 justify-self-center py-3 lg:rounded-lg text-white w-full `}
-              onClick={(e) => handleSubmit(e)}
-            >
+              className={`${buttonStyle} lg:w-[75%] mt-7 mb-3 lg:mx-10 justify-self-center py-3 lg:rounded-lg text-white w-full `}
+              onClick={(e) => handleSubmit(e)}>
               Ingresar
             </button>
+
+            <div className={`${showTwoFa}`}>
+              <span>2FA habilitado: ingrese su codigo</span>
+              <input
+                type="text"
+                placeholder="2 Factor Authentication Code"
+                className="mt-5 border-2 border-[#222222] pl-4 block w-full  bg-gray-100 h-11 rounded-lg shadow-lg hover:bg-blue-100 focus:bg-blue-100 focus:ring-0 appearance-none"
+                name="twofa"
+                onChange={(event) => {
+                  setTwofaCode(event.target.value);
+                }}
+              />
+              <button
+                className={`bg-[#7db32d] w-[75%] mx-10 justify-self-center py-3 rounded-lg text-white lg:w-[75%] mt-7 lg:mx-10 justify-self-center py-3 lg:rounded-lg text-white w-full `}
+                onClick={(e) => handleVerify(e)}>
+                Validar Codigo
+              </button>
+            </div>
 
             <div className="flex mt-7 items-center text-center">
               <hr className="border-gray-300 border w-full rounded-md" />
