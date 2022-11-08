@@ -88,10 +88,8 @@ router.use("/users", changeToCommon);
 router.use("/users", banUser);
 router.use("/users", desbanearUser);
 router.use("/users", getAllUsers);
-
 router.use("/users", sendPwdRstEmail);
 router.use("/users", patchPwd);
-
 router.use("/users", editUsr);
 router.use("/users", sendPwdRstEmail);
 router.use("/users", patchPwd);
