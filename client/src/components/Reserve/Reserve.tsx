@@ -20,15 +20,17 @@ const initialTurn = {
   block: 0,
 };
 const selected = "bg-black text-white hover:ease-in-out duration-300";
-const user = JSON.parse(window.localStorage.getItem("user") || "{}");
+
 const Reserve = () => {
   const dispatch = useAppDispatch();
   const [turno, setTurno] = useState(initialTurn);
+  const [user, setUser]=JSON.parse(window.localStorage.getItem("user") || "{}");
 
   useEffect(() => {
-    dispatch(yaLog(user.email));
+    if(user)dispatch(yaLog(user.email));
     dispatch(fetchAllBarbers());
     dispatch(fetchAllOffices());
+    setUser(JSON.parse(window.localStorage.getItem("user") || "{}"))
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -76,7 +78,7 @@ const Reserve = () => {
   //==============================0render==============================
   return (
     <div className="lg:bg-white lg:bg-turnos-banner bg-no-repeat lg:pt-32 pb-20 bg-cover min-h-screen align-items- ">
-      {user.email.length ? (
+      {user.email? (
         <>
           <h2 className="flex  justify-center my-auto text-5xl text-white mb-12">
             PEDI TU TURNO

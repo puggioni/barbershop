@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-// import { FaEdit} from "react-icons/fa";
 import { useState } from "react";
 import { auth } from "../../App";
 import useHeaders from "../../app/header";
