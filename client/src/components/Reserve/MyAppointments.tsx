@@ -68,7 +68,7 @@ const MyAppointments = () => {
           {data ? (
             data.map((appo: any) => (
               <div className="grid grid-cols-6 gap-4 py-2  px-4 mt-3 border mb-5 content-center border-black rounded-lg text-center lg:mx-4">
-                <p>{appo.office.location}</p>
+                <p>{appo.office?.location}</p>
                 <p>{appo.date.slice(0, 10)}</p>
                 <p>{appo.block}</p>
                 <p>{appo.service}</p>
