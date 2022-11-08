@@ -17,7 +17,7 @@ const user_1 = __importDefault(require("../../models/user"));
 const auth_1 = require("../../middlewares/auth");
 const router = (0, express_1.Router)();
 router.put("/edit/:idUsr", auth_1.verifyToken, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    let { email, name, lastname, phone_number } = req.body;
+    let { email, name, lastname, phone_number, twofa, secret } = req.body;
     const { idUsr } = req.params;
     try {
         const user = yield user_1.default.findById(idUsr);
@@ -25,6 +25,8 @@ router.put("/edit/:idUsr", auth_1.verifyToken, (req, res) => __awaiter(void 0, v
         name ? (user.name = name) : {};
         lastname ? (user.lastname = lastname) : {};
         phone_number ? (user.phone_number = phone_number) : {};
+        (twofa === true) ? (user.twofa = true) : (user.twofa = false);
+        secret ? (user.secret = secret) : {};
         const savedUser = yield user.save();
         res.status(200).send(savedUser);
     }
