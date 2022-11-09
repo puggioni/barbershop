@@ -25,9 +25,10 @@ import getOneUser from "./User/getOneUser";
 import sendPwdRstEmail from "./User/resetPwd";
 import patchPwd from "./User/patchPwd";
 import editUsr from "./User/editUser";
+import twofa from "./User/getTwoFA";
 /* ============CATEGORIES============ */
-import postCategories from "./Categories/postCategories";
-import deleteCategory from "./Categories/deleteCategory";
+import postCategories from "./Admin/postCategories";
+import deleteCategory from "./Admin/deleteCategory";
 import getCategories from "./Categories/getAllCategories";
 /* ============REVIEWS============ */
 import postReview from "./Reviews/postReview";
@@ -38,12 +39,14 @@ import postAppointment from "./Appointments/postAppointment";
 import getAppointments from "./Appointments/getAppontments";
 import deleteAppointment from "./Appointments/deleteAppointment";
 import getAllAppointments from "./Appointments/getAllAppointments";
-/* ============OFFICES============ */
-import postbarber from "./Barbers/postbarber";
-import getbarbers from "./Barbers/getbarbers";
 /* ============BARBERS============ */
-import postOffice from "./Offices/postOffice";
+import postbarber from "./Admin/postbarber";
+import getbarbers from "./Barbers/getbarbers";
+/* ============OFFICES============ */
+import postOffice from "./Admin/postOffice";
 import getOffices from "./Offices/getOffices";
+import editOffices from "./Admin/patchOffice";
+import deleteOffice from "./Admin/deleteOffice";
 /* ============PAYMENTS============*/
 import captureOrder from "./Payments/captureOrder";
 import cancelOrder from "./Payments/cancelOrder";
@@ -58,6 +61,8 @@ import getPurchaseOrders from "./Orders/getPurchaseOrders";
 import searchOrder from "./Orders/searchOrder";
 import changeStateOrder from "./Orders/changeStateOrder";
 import filterOrders from "./Orders/filterOrders";
+import deliverOrder from "./Orders/deliverOrder";
+import getProductOrders from "./Orders/getProductOrders";
 const router = Router();
 
 /* ============PRODUCTS============ */
@@ -84,13 +89,12 @@ router.use("/users", changeToCommon);
 router.use("/users", banUser);
 router.use("/users", desbanearUser);
 router.use("/users", getAllUsers);
-
 router.use("/users", sendPwdRstEmail);
 router.use("/users", patchPwd);
-
 router.use("/users", editUsr);
 router.use("/users", sendPwdRstEmail);
 router.use("/users", patchPwd);
+router.use("/users", twofa);
 
 /* ============CATEGORIES============ */
 router.use("/categories", postCategories);
@@ -111,6 +115,8 @@ router.use("/agenda/", getAllAppointments);
 /* ============OFFICES============ */
 router.use("/office/", postOffice);
 router.use("/office/", getOffices);
+router.use("/office/", editOffices);
+router.use("/office/", deleteOffice);
 
 /* ============BARBERS============ */
 router.use("/barber/", postbarber);
@@ -131,4 +137,6 @@ router.use("/orders", confirmOrder);
 router.use("/orders", cancelOrders);
 router.use("/orders", deleteOrders);
 router.use("/orders", getUserOrders);
+router.use("/orders", deliverOrder);
+router.use("/orders", getProductOrders);
 export default router;

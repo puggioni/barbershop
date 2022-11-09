@@ -1,37 +1,34 @@
-import {
-  AiOutlineHeart,
-  AiOutlineShoppingCart,
-  AiTwotoneHeart,
-} from "react-icons/ai";
+import { useEffect, useState } from "react";
+import { AiOutlineHeart, AiTwotoneHeart } from "react-icons/ai";
+import { BsCartPlus, BsCartXFill } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import { useAppDispatch } from "../../app/hooks";
 import {
   addFavoriteProduct,
-  products,
-  deleteFavoriteProduct,
   addFavoritoLocal,
+  deleteFavoriteProduct,
   deleteFavoritoLocal,
+  products,
 } from "../slices/productSlice";
+import { getCantCarrito } from "../slices/purchaseOrder";
 
 const ProductCard = (producto: products) => {
-  const added = (
-    <AiTwotoneHeart
-      className="cursor-pointer"
-      title="Quitar de Favoritos"
-      size={25}
-      fill="#be0027"
-    />
-  );
-
-  const notAdded = (
-    <AiOutlineHeart
-      className="cursor-pointer"
-      title="Agregar a Favoritos"
-      size={25}
-    />
-  );
-
   const dispatch = useAppDispatch();
+  const [agregado, setAgregado] = useState(false);
+  const products: any = JSON.parse(
+    window.localStorage.getItem("product") || "[]"
+  );
+  const prodFound = products.find((prod: { productos: any; _id: string }) => {
+    return prod.productos._id === producto._id;
+  });
+
+  useEffect(() => {
+    if (prodFound) {
+      setAgregado(true);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [prodFound]);
+  //====================================handlers====================================
   function handleBookmark(e: any) {
     e.preventDefault();
     const aux = window.localStorage.getItem("user");
@@ -51,7 +48,7 @@ const ProductCard = (producto: products) => {
     }
   }
 
-  const handleClick = (event: any) => {
+  const handleAgregarCarrito = (event: any) => {
     event.preventDefault();
     let productos: any = JSON.parse(
       window.localStorage.getItem("product") || "[]"
@@ -64,42 +61,85 @@ const ProductCard = (producto: products) => {
       productos.push({ productos: producto, cantidad: 1 });
       window.localStorage.setItem("product", JSON.stringify(productos));
     }
+    dispatch(getCantCarrito());
+    setAgregado(true);
   };
 
+  const handleDelete = (id: string) => {
+    const prod = products.filter((p: any) => {
+      return p.productos._id !== id;
+    });
+    window.localStorage.setItem("product", JSON.stringify(prod));
+    setAgregado(false);
+    dispatch(getCantCarrito());
+  };
+
+  //===============================render==========================================
   return (
     <div
-      className=" flex flex-col bg-white items-center max-w-3xl max-h-full    
-        justify-items-center rounded-xl hover:outline hover:outline-1	hover:outline-gray-300  "
+      className=" flex lg:flex-col bg-white items-center max-w-3xl lg:h-full  h-1/2   
+        justify-items-center rounded-xl hover:outline hover:outline-1	hover:outline-gray-300 
+        lg:border-none lg:my-0 lg:mx-0 border border-black my-6 mx-3 relative"
     >
       <img
-        className=" object-cover bg-white rounded-xl h-full m-0"
+        className=" object-cover bg-white rounded-xl lg:max-w-full max-w-[40%] m-0"
         src={producto.image}
         alt="product"
       />
-
-      <h3>{producto.name.toUpperCase()}</h3>
-
-      <Link
-        to={`/product/${producto._id}`}
-        className="py-4 underline underline-offset-2"
-      >
-        DESCRIPCION
+      <Link to={`/product/${producto._id}`} className=" py-4   underline-none">
+        <h3 className=" max-h-[5.5rem] underline-none">
+          {producto.name.toUpperCase()}
+        </h3>
       </Link>
 
-      <h2 className="font-medium text-2xl">${producto.price}</h2>
+      {/*  <Link
+        to={`/product/${producto._id}`}
+        className="lg:block hidden py-4 underline underline-offset-2"
+      >
+        DESCRIPCION
+      </Link> */}
 
-      <div className="grid grid-cols-2 w-full justify-items-center">
+      <h2 className="lg:block font-medium text-2xl absolute right-[40%] bottom-0">
+        ${producto.price}
+      </h2>
+
+      <div className="lg:grid grid-cols-2 lg:w-full lg:gap-0 lg:mr-0 lg:ml-0 justify-items-center flex flex-col ml-auto mr-4 gap-12">
         <div onClick={handleBookmark}>
-          {producto.userFavorite ? added : notAdded}
+          {producto.userFavorite ? (
+            <AiTwotoneHeart
+              className="cursor-pointer"
+              title="Quitar de Favoritos"
+              size={25}
+              fill="#be0027"
+            />
+          ) : (
+            <AiOutlineHeart
+              className="cursor-pointer"
+              title="Agregar a Favoritos"
+              size={25}
+            />
+          )}
         </div>
-        <AiOutlineShoppingCart
-          size={25}
-          title="Store"
-          onClick={(event) => {
-            handleClick(event);
-          }}
-          className="cursor-pointer"
-        />
+        {!agregado ? (
+          <BsCartPlus
+            size={25}
+            title="Agregar a carrito"
+            onClick={(event) => {
+              handleAgregarCarrito(event);
+            }}
+            className="cursor-pointer"
+          />
+        ) : (
+          <BsCartXFill
+            size={25}
+            fill={"#855C20"}
+            title="borrar de carrito"
+            onClick={() => {
+              handleDelete(producto._id);
+            }}
+            className="cursor-pointer"
+          />
+        )}
       </div>
     </div>
   );

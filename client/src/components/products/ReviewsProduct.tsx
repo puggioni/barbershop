@@ -12,7 +12,7 @@ export default function ReviewsProduct(props: {
   const initialReview = {
     productId: props.idProduct,
     comment: "",
-    rating: "5",
+    rating: 5,
   };
   const [review, setReview] = useState(initialReview);
   const [error, setError] = useState<string | undefined>();
@@ -28,7 +28,7 @@ export default function ReviewsProduct(props: {
   function handleComentar(e: React.FormEvent<HTMLButtonElement>) {
     e.preventDefault();
     if (review.comment && review.rating) {
-      if (parseInt(review.rating) > 5 || parseInt(review.rating) < 0)
+      if (review.rating > 5 || review.rating < 0)
         alert("Calificacion entre 0 y 5");
       else {
         let token = "";
@@ -81,7 +81,7 @@ export default function ReviewsProduct(props: {
         <div className="flex flex-col mb-4">
           <label className="font-bold">Agrega un Comentario:</label>
           <textarea
-            value={review.comment}
+            defaultValue={review.comment}
             name="comment"
             className={`rounded-lg w-10/12 p-2 border border-black h-[10vh] outline-none ${
               error?.length ? "border-red-500" : ""
@@ -92,12 +92,11 @@ export default function ReviewsProduct(props: {
         <div>
           <label>De 0 a 5, ¿Que tanto recomiendas el producto? </label>
           <input
-            value={review.rating}
             name="rating"
             type="number"
             min={0}
             max={5}
-            defaultValue={5}
+            defaultValue={review.rating}
             className="text-center ml-4 pl-2 border border-black"
           />
           <br />

@@ -5,6 +5,11 @@ export const deleteStock = async (order: Object) => {
     await order["products"].forEach(async (obj: any) => {
       const producto = await Product.findOne({ name: obj["name"] });
       producto.stock -= obj["quantity"];
+
+      if (producto.stock === 0 || producto.stock < 0) {
+        producto.available = false;
+      }
+
       await producto.save();
     });
     return order;

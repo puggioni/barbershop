@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
-import { HiOutlineArrowLongDown, HiOutlineArrowLongUp } from "react-icons/hi2";
+import { HiOutlineArrowDown, HiOutlineArrowUp } from "react-icons/hi2";
 import { useParams } from "react-router";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { clearProducDetail, productDetail } from "../slices/productSlice";
+import { getCantCarrito } from "../slices/purchaseOrder";
 import ReviewsProduct from "./ReviewsProduct";
 
 type QuizParams = {
@@ -36,7 +37,7 @@ export default function ProductDetail() {
   };
 
   //====================handlers=====================================
-  const handleClick = (event: any) => {
+  const handleAgregarCarrito = (event: any) => {
     event.preventDefault();
     let productos: any = JSON.parse(
       window.localStorage.getItem("product") || "[]"
@@ -53,6 +54,7 @@ export default function ProductDetail() {
       productos.push({ productos: paraCarrito, cantidad: cantidad });
       window.localStorage.setItem("product", JSON.stringify(productos));
     }
+    dispatch(getCantCarrito());
   };
 
   const handleCantidadChange = (event: any) => {
@@ -88,18 +90,18 @@ export default function ProductDetail() {
   };
   //====================render=====================================
   return (
-    <div className="pt-20 bg-white bg-store-banner bg-no-repeat pb-8 bg-contain font-homenaje rounded-xl">
-      <div className="  mx-20 bg-white rounded-xl">
+    <div className="pt-20 bg-white lg:bg-store-banner bg-no-repeat pb-8 bg-contain font-homenaje rounded-xl">
+      <div className="  lg:mx-20 bg-white lg:rounded-xl">
         <div className=" rounded-xl">
           {product ? (
             <div>
-              <div className="grid grid-cols-[1fr_2fr] rounded-lg border-2 border-black">
+              <div className="lg:grid grid-cols-[1fr_2fr] lg:rounded-lg border-2 lg:border-black">
                 <div className=" overflow-hidden p-4">
                   <img className="" src={product.image} alt="product" />
                 </div>
 
-                <div className="flex flex-col  ">
-                  <div className="flex flex-row mt-16 border-b border-black gap-8 mr-[30%] ml-12 ">
+                <div className="flex flex-col w-full ">
+                  <div className="flex flex-row mt-16 border-b border-black gap-8 lg:mr-[30%] lg:ml-12 ">
                     <h1 className=" text-center text-3xl">{product.name}</h1>
                     <h2 className=" text-[#855C20] text-3xl">
                       $ {product.price}
@@ -121,14 +123,14 @@ export default function ProductDetail() {
                         }}
                       />
                       <div>
-                        <HiOutlineArrowLongUp
+                        <HiOutlineArrowUp
                           onClick={() => {
                             handleAgregar();
                           }}
                           size={10}
                           className="cursor-pointer mt-1"
                         />
-                        <HiOutlineArrowLongDown
+                        <HiOutlineArrowDown
                           onClick={() => {
                             handleRestar();
                           }}
@@ -140,7 +142,7 @@ export default function ProductDetail() {
                     <button
                       disabled={product?.stock ? false : true}
                       onClick={(event) => {
-                        handleClick(event);
+                        handleAgregarCarrito(event);
                       }}
                       className="text-[#855C20] border mr-4 border-[#855C20] py-1 px-10 select-none	"
                     >

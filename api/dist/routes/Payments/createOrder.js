@@ -59,6 +59,11 @@ router.post("/create-order", checkStock_1.checkStock, auth_1.verifyToken, (req, 
     });
     const newOrder = new purchaseOrder_1.default({
         user: user["email"],
+        address: {
+            direccion: user["direccionEnvio"],
+            localidad: user["localidad"],
+            CP: user["CP"],
+        },
         products: productos,
     });
     newOrder.save();
@@ -93,7 +98,7 @@ router.post("/create-order", checkStock_1.checkStock, auth_1.verifyToken, (req, 
         res.status(200).json(response.data);
     }
     catch (error) {
-        res.status(500).send(error);
+        res.status(500).json(error);
     }
 }));
 exports.default = router;

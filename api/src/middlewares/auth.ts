@@ -5,15 +5,21 @@ import User from "../models/user";
 export const verifyToken = async (req, res, next) => {
   try {
     const token = req.headers["token"];
+
     if (!token) return res.status(403).json({ message: "No hay token" });
     const decoded = jwt.verify(token, "token");
+
     req.userId = decoded["_id"];
+
     const user = await User.findById(req.userId, { password: 0 });
-    if (!user)
-      return res.status(404).json({ message: "No se encontro ningun usuario" });
-    next();
+
+    if (!user) {
+      throw new Error("No existe el usuario");
+    } else {
+      next();
+    }
   } catch (error) {
-    return res.status(401).json({ message: "No Autorizado!" });
+    return res.status(401).json({ message: "Debes loguearte primero" });
   }
 };
 

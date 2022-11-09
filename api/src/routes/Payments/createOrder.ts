@@ -26,6 +26,11 @@ router.post("/create-order", checkStock, verifyToken, async (req, res) => {
 
   const newOrder = new purchaseOrder({
     user: user["email"],
+    address: {
+      direccion: user["direccionEnvio"],
+      localidad: user["localidad"],
+      CP: user["CP"],
+    },
     products: productos,
   });
   newOrder.save();
@@ -66,7 +71,7 @@ router.post("/create-order", checkStock, verifyToken, async (req, res) => {
 
     res.status(200).json(response.data);
   } catch (error) {
-    res.status(500).send(error);
+    res.status(500).json(error);
   }
 });
 export default router;

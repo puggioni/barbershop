@@ -5,7 +5,8 @@ import jwt from "jsonwebtoken";
 const router = Router();
 
 router.post("/signup", async (req, res) => {
-  const { name, lastname, email, password, phone_number, image, role } = req.body;
+  const { name, lastname, email, password, phone_number, image, role, google } =
+    req.body;
 
   try {
     const userFound: any = await User.findOne({ email: email });
@@ -21,6 +22,8 @@ router.post("/signup", async (req, res) => {
       phone_number: phone_number,
       user_image: image,
       role: role,
+      google_account: google,
+      twofa : false,
     });
 
     if (role) {

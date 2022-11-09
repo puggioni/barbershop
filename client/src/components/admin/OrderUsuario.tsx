@@ -4,7 +4,8 @@ import { useNavigate, useParams } from "react-router";
 import useHeaders from "../../app/header";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { searchOrderId } from "../slices/admin";
-const Cofirmacion = () => {
+
+const OrderUsuario = () => {
   const token = JSON.parse(window.localStorage.getItem("token") || "{}");
   const order = useAppSelector((state) => state.admin.orders);
   const { idOrder } = useParams<{ idOrder: string }>();
@@ -13,7 +14,7 @@ const Cofirmacion = () => {
 
   const total = order[0]?.products?.length
     ? order[0].products.reduce((acc: number, prod) => {
-        return acc + prod.price;
+        return acc + prod.price * prod.quantity;
       }, 0)
     : 0;
   const header = useHeaders(token);
@@ -24,7 +25,7 @@ const Cofirmacion = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
+  //=====================render========================
   return (
     <div className="bg-white min-h-screen">
       <div className="bg-[#B1A26A] py-20 border-black"></div>
@@ -32,10 +33,15 @@ const Cofirmacion = () => {
         <h1 className="flex justify-center font-bold text-2xl">
           ORDEN DE COMPRA
         </h1>
-
         <div className="border border-black m-8 ">
           <div className="grid grid-cols-[1fr_2fr] my-16 gap-4">
-            <div className="justify-self-center">id: {idOrder}</div>
+            <div className="justify-self-center">
+              id: {idOrder} <br></br>
+              {order[0]?.user} <br></br>
+              <div>
+                Direccion <br></br>
+              </div>
+            </div>
             <div className="border-l border-black pl-16  grid gap-4">
               <div className="grid grid-cols-[2fr_1fr_1fr_1fr] pb-4">
                 <p>nombre</p>
@@ -78,4 +84,4 @@ const Cofirmacion = () => {
   );
 };
 
-export default Cofirmacion;
+export default OrderUsuario;

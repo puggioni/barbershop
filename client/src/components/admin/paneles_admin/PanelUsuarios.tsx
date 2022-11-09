@@ -1,17 +1,17 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import useHeaders from "../../app/header";
-import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { RootState } from "../../app/store";
-import Paginate from "../products/Paginate";
-import { banearUsuario, getUsers, hacerAdmin } from "../slices/admin";
-import { yaLog } from "../slices/logIn";
-import UserSearch from "./userSearch";
 import { BsArrowCounterclockwise } from "react-icons/bs";
+import { Link } from "react-router-dom";
+import useHeaders from "../../../app/header";
+import { useAppDispatch, useAppSelector } from "../../../app/hooks";
+import { RootState } from "../../../app/store";
+import Paginate from "../../products/Paginate";
+import { banearUsuario, getUsers, hacerAdmin } from "../../slices/admin";
+import { yaLog } from "../../slices/logIn";
+import UserSearch from "../UserSearch";
 
 const user = JSON.parse(window.localStorage.getItem("user") || "{}");
 
-const Productos = () => {
+const PanelUsuarios = () => {
   const dispatch = useAppDispatch();
   const { users } = useAppSelector((state: RootState) => state.admin);
   const token = JSON.parse(window.localStorage.getItem("token") || "{}");
@@ -24,7 +24,7 @@ const Productos = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  //===========pagination=´-===========
+  //===========pagination===========
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [productsPerPage] = useState(9);
   const [pageLimit] = useState(5);
@@ -128,7 +128,7 @@ const Productos = () => {
                     />
                     <Link
                       className="justify-self-end mr-3 text-blue-700"
-                      to="/"
+                      to={`/admin/compras/${data._id}`}
                     >
                       Ver historial de compra
                     </Link>
@@ -156,4 +156,4 @@ const Productos = () => {
   }
 };
 
-export default Productos;
+export default PanelUsuarios;

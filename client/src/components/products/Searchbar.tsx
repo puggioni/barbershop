@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { BsSearch } from "react-icons/bs";
-import { useAppDispatch } from "../../app/hooks";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { fetchAllProducts } from "../slices/productSlice";
+import { RootState } from "../../app/store";
 
 type evento = {
   target: eventarget;
@@ -15,13 +16,17 @@ const SearchBar = () => {
   const [tosearch, setTosearch] = useState("");
   const dispatch = useAppDispatch();
 
-  function search(e: any) {
-    e.preventDefault();
+  const copyProducts = useAppSelector(
+    (state: RootState) => state.products.copyAllProducts
+  );
 
-    if (tosearch.length) {
-      setTosearch("");
-      dispatch(fetchAllProducts(tosearch));
-    }
+  function search(searchTerm: any) {
+    setTosearch(searchTerm);
+  }
+
+  function HandlertoSearch(e: any) {
+    dispatch(fetchAllProducts(tosearch));
+    setTosearch("");
   }
 
   function handleChange(e: evento) {
@@ -29,42 +34,49 @@ const SearchBar = () => {
   }
 
   return (
-    <div className="relative mx-8">
-      <input
-        onChange={handleChange}
-        name="tosearch"
-        className="border border-black rounded-md w-full pl-2 "
-        value={tosearch}
-        type="text"
-        placeholder="Search"
-      />
+    <div className="relative lg:mt-0 mt-6 mx-8">
+      <div>
+        <input
+          onChange={handleChange}
+          name="tosearch"
+          className="border border-black lg:rounded-md w-full pl-2 lg:h-full h-[5vh]"
+          value={tosearch}
+          type="text"
+          placeholder="Search"
+        />
+        <BsSearch
+          className="absolute lg:top-1 top-3 right-1 cursor-pointer"
+          stroke="currentColor"
+          onClick={() => {
+            HandlertoSearch(tosearch);
+          }}
+        />
+      </div>
+      {tosearch ? (
+        <div className="cursor-pointer bg-white border-black border absolute z-10 rounded-lg">
+          {copyProducts
+            .filter((item: any) => {
+              const searchTerm = tosearch.toLowerCase();
+              const itemName = item.name.toLowerCase();
 
-      <BsSearch
-        className="absolute  top-1 right-1 cursor-pointer"
-        stroke="currentColor"
-        onClick={(event) => {
-          search(event);
-        }}
-      />
+              return (
+                searchTerm &&
+                itemName.includes(searchTerm) &&
+                itemName !== searchTerm
+              );
+            })
+            .slice(0, 10)
+            ?.map((item: any) => (
+              <div className="p-2" onClick={() => search(item.name)}>
+                {item.name}
+              </div>
+            ))}
+        </div>
+      ) : (
+        <></>
+      )}
     </div>
   );
 };
 
 export default SearchBar;
-
-// const SearchBar = () => {
-//   const handleClick = (event: any) => {
-//     //event.preventDefault();
-//     console.log(event);
-//   };
-//   return (
-//     <div className="mx-auto max-w-md relative">
-//       <input
-//         className="peer cursor-pointer z-10 h-8 w-12 rounded-full border bg-transparent pl-5 outline-none focus:w-full focus:cursor-text focus:border-lime-300 focus:pl-16 focus:pr-4"
-//         type="search "
-//         placeholder=""
-//       />
-
-//     </div>
-//   );
-// };

@@ -8,20 +8,23 @@ export interface PurchaseOrders {
   products?: Array<any>;
   state?: string;
   date?: Date;
+  address?: Object;
 }
 
 interface PurchaseOrder {
   purchaseOrder: PurchaseOrders | undefined;
-  allOrders: Array<PurchaseOrders>;
+  carrito: number;
   ordersByUser: Array<PurchaseOrders>;
   loading: boolean;
+  order: PurchaseOrders;
 }
 
 const initialState: PurchaseOrder = {
   purchaseOrder: undefined,
-  allOrders: [],
+  carrito: 0,
   ordersByUser: [],
   loading: true,
+  order: { _id: "" },
 };
 
 //==========action================//
@@ -36,9 +39,9 @@ export const comprar = (header: object, compra: object) => {
         }
       );
       window.location.href = `${response.data.links[1].href}`;
-    } catch (error) {
+    } catch (error: any) {
       console.log(error);
-      alert("No se pudo completar la compra");
+      alert(error.response.data.message);
     }
   };
 };
@@ -86,12 +89,30 @@ export const getPersonalOrder = (id: any): AppThunk => {
   return async (dispatch) => {
     try {
       const res = await axios.get(
-        `${process.env.REACT_APP_BASE_URL}/personal-orders/${id}`
+        `${process.env.REACT_APP_BASE_URL}/orders/personal-orders/${id}`
       );
       dispatch(orderUser(res.data));
     } catch (error) {
       console.log(error);
     }
+  };
+};
+export const getDetailOrder = (id: any): AppThunk => {
+  return async (dispatch) => {
+    try {
+      const res = await axios.get(
+        `${process.env.REACT_APP_BASE_URL}/orders/${id}`
+      );
+      dispatch(setOrder(res.data));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const getCantCarrito = (): AppThunk => {
+  return async (dispatch) => {
+    dispatch(cantidadCarrito());
   };
 };
 
@@ -114,9 +135,24 @@ export const getAllOrdersSlice = createSlice({
     orderUser: (state: any, action: PayloadAction<PurchaseOrders>) => {
       state.ordersByUser = action.payload;
     },
+    setOrder: (state: any, action: PayloadAction<PurchaseOrders>) => {
+      state.order = action.payload;
+    },
+    cantidadCarrito: (state) => {
+      const products: any = JSON.parse(
+        window.localStorage.getItem("product") || "[]"
+      );
+      state.carrito = products.length;
+    },
   },
 });
 
 export default getAllOrdersSlice.reducer;
-export const { order, confirmOrder, cancelOrder, orderUser } =
-  getAllOrdersSlice.actions;
+export const {
+  order,
+  confirmOrder,
+  cancelOrder,
+  orderUser,
+  setOrder,
+  cantidadCarrito,
+} = getAllOrdersSlice.actions;

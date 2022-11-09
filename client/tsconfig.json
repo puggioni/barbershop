@@ -18,7 +18,16 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "baseUrl": "./",
+    "paths": {
+      "crypto": [
+        "node_modules/@types/node/crypto.d.ts"
+      ],
+      "url": [
+        "node_modules/@types/node/url.d.ts"
+      ]
+    }
   },
   "include": [
     "src"

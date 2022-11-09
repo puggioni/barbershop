@@ -1,37 +1,32 @@
-import BarberCard from "./BarberCard";
-import { fetchAllBarbers } from "../slices/barbers";
 import { useEffect, useState } from "react";
+import Calendar from "react-calendar";
+import "react-calendar/dist/Calendar.css";
+import { Link } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { RootState } from "../../app/store";
 import { buttonHover } from "../NavBar";
 import { postAppointment } from "../slices/appoinment";
-import { fetchAllOffices } from "../slices/offices";
-import Calendar from "react-calendar";
-import "react-calendar/dist/Calendar.css";
+import { fetchAllBarbers } from "../slices/barbers";
 import { yaLog } from "../slices/logIn";
-import { Link } from "react-router-dom";
+import { fetchAllOffices } from "../slices/offices";
+import BarberCard from "./BarberCard";
 
 const initialTurn = {
   service: "",
-  user: JSON.parse(window.localStorage.getItem("user") || '{"_id":""}')._id,
+
   date: new Date(Date.now()),
   barber: "",
   office: "",
   block: 0,
 };
-const selected =
-  "shadow-md hover:shadow-slate-500\tbg-[#855C20] text-white hover:ease-in-out duration-300";
-
+const selected = "bg-black text-white hover:ease-in-out duration-300";
+const user = JSON.parse(window.localStorage.getItem("user") || "{}");
 const Reserve = () => {
   const dispatch = useAppDispatch();
   const [turno, setTurno] = useState(initialTurn);
 
   useEffect(() => {
-    dispatch(yaLog(turno.user.email));
-    setTurno({
-      ...turno,
-      user: JSON.parse(window.localStorage.getItem("user") || '{"_id":""}')._id,
-    });
+    dispatch(yaLog(user.email));
     dispatch(fetchAllBarbers());
     dispatch(fetchAllOffices());
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -43,6 +38,7 @@ const Reserve = () => {
     (state: RootState) => state.offices.allOffices
   );
 
+  //========================handlers===========================
   const serviceSelect = (e: any) => {
     e.preventDefault();
     setTurno({ ...turno, [e.target.name]: e.target.value });
@@ -56,9 +52,9 @@ const Reserve = () => {
     }
   };
 
-  const putDate = (date:Date) => {
-   setDate(date)
-   setTurno({...turno,date:date})
+  const putDate = (date: Date) => {
+    setDate(date);
+    setTurno({ ...turno, date: date });
   };
 
   const selectBarber = (e: any, barber: any) => {
@@ -71,43 +67,41 @@ const Reserve = () => {
     if (!turno.barber || !turno.block || !turno.service || !turno.office) {
       alert("Por favor asegurate de completar todos los campos");
     } else {
-      
       dispatch(postAppointment(turno));
       setTurno(initialTurn);
       setDate(new Date(Date.now()));
     }
   };
 
+  //==============================0render==============================
   return (
-    <div className="bg-white bg-turnos-banner bg-no-repeat pt-32 pb-20 bg-contain">
-      {turno.user ? (
+    <div className="lg:bg-white lg:bg-turnos-banner bg-no-repeat lg:pt-32 pb-20 bg-cover min-h-screen align-items- ">
+      {user.email.length ? (
         <>
-          <h2 className="flex justify-center my-auto text-5xl text-white mb-12">
+          <h2 className="flex  justify-center my-auto text-5xl text-white mb-12">
             PEDI TU TURNO
           </h2>
-          <div className="border bg-white border-black rounded-xl py-10 mx-40 my-auto">
+          <div className="lg:border bg-white border-black rounded-xl py-10 lg:mx-40 my-auto">
             <form
               onChange={(e) => handleFormTurn(e)}
-              className="flex items-center place-content-baseline text-black"
+              className="lg:flex items-center place-content-baseline text-black"
             >
-              <div className="flex flex-col-3 align-center justify-center pl-36 grow pb-12">
-                <div className=" justify-center align-center min  border-r border-black pr-12 ">
-                  <h2 className="flex justify-center my-auto text-2xl text-black pb-12">
-                    {" "}
+              <div className="flex flex-col-3 align-center justify-center lg:pl-8 grow pb-12">
+                <div className=" justify-center align-center min  lg:border-r  border-black lg:pr-12 ">
+                  <h2 className="flex justify-center my-auto lg:text-2xl text-xl text-black lg:pb-10 pb-5 ">
                     SELECCION DEL SERVICIO <br />
                   </h2>
-                  <div className="m-auto">
+                  <div className="m-auto border-b border-black  flex align-center">
                     <button
                       name="service"
                       value="Corte"
                       onClick={(e) => serviceSelect(e)}
                       className={`${
                         turno.service === "Corte" ? selected : ""
-                      } px-4 py-1 rounded-lg m-auto my-3 border-b border-black`}
+                      }  px-4 py-1  m-auto my-3 text-black bg-white border border-black`}
                     >
-                      {" "}
                       Corte
-                    </button>{" "}
+                    </button>
                     <br />
                     <button
                       name="service"
@@ -115,10 +109,10 @@ const Reserve = () => {
                       onClick={(e) => serviceSelect(e)}
                       className={`${
                         turno.service === "Afeitado" ? selected : ""
-                      } px-4 py-1 rounded-lg m-auto my-3 border-b border-black`}
+                      } px-4 py-1 mx-3 m-auto my-3 bg-white border border-black`}
                     >
                       Afeitado
-                    </button>{" "}
+                    </button>
                     <br />
                     <button
                       name="service"
@@ -126,20 +120,18 @@ const Reserve = () => {
                       value="Corte y Afeitado"
                       className={`${
                         turno.service === "Corte y Afeitado" ? selected : ""
-                      } px-4 py-1 rounded-lg m-auto my-3 border-b border-black`}
+                      } px-4 py-1  m-auto my-3 bg-white border border-black`}
                     >
                       Corte y Afeitado
-                    </button>{" "}
+                    </button>
                     <br />
                   </div>
                   <br />
-                  <h2 className="flex justify-center my-auto text-2xl text-black pb-10">
-                    {" "}
-                    SELECCION DEL SUCURSAL{" "}
+                  <h2 className="flex justify-center my-auto lg:text-2xl text-xl text-black lg:pb-10 pb-5">
+                    SELECCION DEL SUCURSAL
                   </h2>
-
                   <select
-                    className="inline justify-center p-2  mt-1 py-1 rounded-lg  border border-black"
+                    className="lg:inline lg:justify-center lg:p-2  lg:mt-1 lg:py-1 rounded-lg  border border-black ml-14"
                     name="office"
                     id=""
                     value={turno.office}
@@ -156,9 +148,10 @@ const Reserve = () => {
                   </select>
                 </div>
               </div>
-              <div className="text-center my-auto mr-10 text-2xl text-black">
-                {" "}
-                SELECCIONE UN BARBER@
+              <div className="text-center my-auto lg:mr-10 text-2xl text-black">
+                <h2 className="flex justify-center my-auto lg:text-2xl text-xl text-black lg:pb-10 pb-5">
+                  SELECCIONE UN BARBER@{" "}
+                </h2>
                 <div className="grid grid-cols-2  gap-4 m-10 mb-5">
                   {data.allBarbers?.map((datas: any) =>
                     turno.office === datas.office ? (
@@ -166,7 +159,7 @@ const Reserve = () => {
                         onClick={(e) => selectBarber(e, datas)}
                         className={`${
                           turno.barber === datas._id ? selected : ""
-                        } p-0 m-0 rounded-lg`}
+                        } p-0 m-0 `}
                       >
                         <BarberCard
                           key={datas.name}
@@ -182,10 +175,9 @@ const Reserve = () => {
                   )}
                 </div>
               </div>
-              <div className=" justify-center inline-block min mr-12 pt-5 grow border-l border-black pl-10">
+              <div className=" justify-center inline-block min lg:mr-12 pt-5 grow border-l border-black lg:pl-10 pl-1">
                 <div className=" justify-center inline-block min  grow">
                   <h2 className="flex justify-center my-auto text-2xl text-black">
-                    {" "}
                     SELECCION DEL HORARIO
                     <br />
                   </h2>
@@ -204,7 +196,7 @@ const Reserve = () => {
                   {/* <input  className="justify-center justify-center my-auto   text-xl  text-black" type="date" /> */}
                   <br />
                   <select
-                    className="inline justify-center p-2  mt-5 py-1 rounded-lg border border-black"
+                    className="lg:inline justify-center lg:p-2 ml-10 lg:mt-5 py-1 rounded-lg border border-black"
                     name="block"
                     id=""
                     value={turno.block}
@@ -225,14 +217,14 @@ const Reserve = () => {
                 <button
                   type="submit"
                   onClick={(e) => sendTurno(e)}
-                  className={`${buttonHover} px-4 py-1 rounded-lg m-auto mt-10 border-b border-black`}
+                  className={`${buttonHover} px-4 py-1  m-auto mt-10 bg-white border border-black`}
                 >
                   AGENDAR
                 </button>
                 <br />
                 <Link to="/reserve/barber">
                   <button
-                    className={`${buttonHover} px-4 py-1 rounded-lg m-auto mt-5 border-b mb-3 border-black`}
+                    className={`${buttonHover} px-4 py-1  m-auto mt-5 bg-white border border-black`}
                   >
                     MIS TURNOS
                   </button>
@@ -242,10 +234,11 @@ const Reserve = () => {
           </div>
         </>
       ) : (
-          <div className="border h-86 bg-white border-black rounded-xl py-10 mx-40 my-auto">
-           <h2 className="text-center text-xl text-red-500 font-bold">*Necesitas iniciar sesión para solicitar un Turno*</h2>
-        </div>  
-        
+        <div className="border h-86 bg-white border-black rounded-xl py-10 mx-40 my-auto">
+          <h2 className="text-center text-xl text-red-500 font-bold">
+            *Necesitas iniciar sesión para solicitar un Turno*
+          </h2>
+        </div>
       )}
     </div>
   );

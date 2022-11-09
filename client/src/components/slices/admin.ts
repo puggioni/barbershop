@@ -19,6 +19,12 @@ interface users {
   purchases?: Array<any>;
 }
 
+export interface inputs {
+  lat: 0;
+  long: 0;
+  location: string;
+}
+
 interface PurchaseOrders {
   _id: string;
   user?: string;
@@ -38,6 +44,7 @@ const initialState: init = {
   orders: [],
   filtroOrden: [],
 };
+
 //==========action==================
 export const deleteProd = (
   header: { token: string | null },
@@ -49,6 +56,42 @@ export const deleteProd = (
       { headers: header, data: { id } }
     );
     dispatch(adminDeleteProd(res));
+  };
+};
+
+export const createOffice = (
+  // header: { token: string | null },
+  oficina: object
+): AppThunk => {
+  return async () => {
+    try {
+      await axios.post(
+        `${process.env.REACT_APP_BASE_URL}/office/create`,
+        oficina
+      );
+
+      alert("Oficina creada con exito");
+    } catch (error) {
+      console.log(error);
+      alert("No se pudo crear la oficina");
+    }
+  };
+};
+export const borrarOffice = (
+  header: { token: string | null },
+  id: string
+): AppThunk => {
+  return async () => {
+    try {
+      await axios.delete(
+        `${process.env.REACT_APP_BASE_URL}/office/delete/${id}`,
+        { headers: header }
+      );
+
+      alert("Oficina borrada con exito");
+    } catch (error) {
+      alert("No se pudo borrar la oficina");
+    }
   };
 };
 
@@ -333,7 +376,7 @@ export const despacharOrden = (
   return async (dispatch) => {
     try {
       const res = await axios.post(
-        `${process.env.REACT_APP_BASE_URL}/orders/dispatch/` + id,
+        `${process.env.REACT_APP_BASE_URL}/orders/deliver/` + id,
         { id: id },
         { headers: header }
       );
@@ -341,6 +384,23 @@ export const despacharOrden = (
       alert("Producto despachado con exito");
     } catch (error) {
       alert("No se pudo despachar");
+    }
+  };
+};
+
+export const ordersProducto = (
+  header: { token: string | null },
+  id: string | undefined
+): AppThunk => {
+  return async (dispatch) => {
+    try {
+      const res = await axios.get(
+        `${process.env.REACT_APP_BASE_URL}/orders/product-orders/` + id,
+        { headers: header }
+      );
+      dispatch(historialProd(res.data));
+    } catch (error: any) {
+      alert(error.response.data.message);
     }
   };
 };
@@ -406,6 +466,13 @@ const adminReducerSlice = createSlice({
       state.orders[index] = action.payload;
       state.filtroOrden[index] = action.payload;
     },
+    historialProd: (
+      state: { orders: any[]; filtroOrden: any[] },
+      action: PayloadAction<any[]>
+    ) => {
+      state.orders = action.payload;
+      state.filtroOrden = action.payload;
+    },
   },
 });
 
@@ -419,4 +486,5 @@ export const {
   searchOrdersName,
   cambiarEstado,
   despachado,
+  historialProd,
 } = adminReducerSlice.actions;

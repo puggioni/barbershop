@@ -1,28 +1,34 @@
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { fetchAllProducts, filter } from "../slices/productSlice";
 
-const Caregorias = ({ resetPage }: any) => {
+const Caregorias = ({ resetPage, hide }: any) => {
   const dispatch = useAppDispatch();
   const { categorias } = useAppSelector((state) => state.products);
+  const getAllProducts = () => {
+    dispatch(fetchAllProducts(""));
+  };
 
+  //===========================handler========================
   const handleClick = (event: any) => {
     if (event.target.value.length) {
       dispatch(filter(event.target.value));
       resetPage();
     }
   };
-  const getAllProducts = () => {
-    dispatch(fetchAllProducts(""));
-  };
 
+  //=====================render=======================
   return (
-    <div className="font-Hubballi flex justify-center flex-wrap my-4">
+    <div
+      className={`font-Hubballi lg:flex ${
+        hide ? "hidden" : ""
+      } justify-center lg:flex-wrap lg:my-4 grid grid-cols-3 `}
+    >
       <button
         key={"all"}
         onClick={() => getAllProducts()}
-        className="border-r-2 px-8 border-black "
+        className="border-r-2 lg:px-8 lg:my-0 px-2 my-2 border-black "
       >
-        All
+        Todos
       </button>
       {categorias?.map((cate) => {
         return (
@@ -31,7 +37,7 @@ const Caregorias = ({ resetPage }: any) => {
             name={cate.name}
             value={cate.name}
             onClick={(event) => handleClick(event)}
-            className="border-r-2 px-8 border-black "
+            className="border-r-2 lg:px-8 lg:my-0 px-2 my-2 border-black "
           >
             {cate.name}
           </button>

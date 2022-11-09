@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { BsArrowCounterclockwise } from "react-icons/bs";
 import { Link } from "react-router-dom";
-import useHeaders from "../../app/header";
-import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import Paginate from "../products/Paginate";
+import useHeaders from "../../../app/header";
+import { useAppDispatch, useAppSelector } from "../../../app/hooks";
+import Paginate from "../../products/Paginate";
 import {
   cambiarEstadoOrden,
   cambiarEstadoOrdenCancelada,
@@ -11,12 +11,11 @@ import {
   despacharOrden,
   filterOrderState,
   getAllOrders,
-} from "../slices/admin";
-import { yaLog } from "../slices/logIn";
-import OrderSearch from "./orderSearch";
+} from "../../slices/admin";
+import { yaLog } from "../../slices/logIn";
+import OrderSearch from "../OrderSearch";
 
-
-const HistorialCompra = () => {
+const PanelCompras = () => {
   const token = JSON.parse(window.localStorage.getItem("token") || "{}");
   const user = JSON.parse(window.localStorage.getItem("user") || "{}");
   const header = useHeaders(token);
@@ -94,7 +93,7 @@ const HistorialCompra = () => {
   return (
     <div className="flex flex-col bg-white bg-bg-historial bg-no-repeat bg-contain ">
       <h1 className="text-white justify-center py-20 mb-2 text-5xl font-bold flex align-middle items-center">
-        HISTORIAL DE COMPRAS
+        PANEL DE COMPRAS
       </h1>
       <div className=" mx-8 bg-white border-2 px-4 border-black rounded-lg">
         <div>
@@ -224,4 +223,4 @@ const HistorialCompra = () => {
   );
 };
 
-export default HistorialCompra;
+export default PanelCompras;

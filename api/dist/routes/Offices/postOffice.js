@@ -14,9 +14,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const office_1 = __importDefault(require("../../models/office"));
+const auth_1 = require("../../middlewares/auth");
 const router = (0, express_1.Router)();
-router.post("/create", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    let { lat, long, location } = req.body;
+router.post("/create", auth_1.isAdmin, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { lat, long, location } = req.body;
+    // console.log(req.body)
     try {
         const office = new office_1.default({
             lat,
