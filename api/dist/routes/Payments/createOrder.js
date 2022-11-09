@@ -85,8 +85,8 @@ router.post("/create-order", checkStock_1.checkStock, auth_1.verifyToken, (req, 
                 brand_name: "Henry BarberShop",
                 landing_page: "LOGIN",
                 user_action: "PAY_NOW",
-                return_url: `http://localhost:${process.env.PORT}/payments/capture-order`,
-                cancel_url: `http://localhost:${process.env.PORT}/payments/cancel-order/${id}`,
+                return_url: `https://barbershop-back.vercel.app/payments/capture-order`,
+                cancel_url: `https://barbershop-back.vercel.app/payments/cancel-order/${id}`,
             },
         };
         const response = yield axios_1.default.post("https://api-m.sandbox.paypal.com/v2/checkout/orders", order, {

@@ -54,8 +54,8 @@ router.post("/create-order", checkStock, verifyToken, async (req, res) => {
         landing_page: "LOGIN",
         user_action: "PAY_NOW",
 
-        return_url: `http://localhost:${process.env.PORT}/payments/capture-order`,
-        cancel_url: `http://localhost:${process.env.PORT}/payments/cancel-order/${id}`,
+        return_url: `https://barbershop-back.vercel.app/payments/capture-order`,
+        cancel_url: `https://barbershop-back.vercel.app/payments/cancel-order/${id}`,
       },
     };
     const response = await axios.post(
