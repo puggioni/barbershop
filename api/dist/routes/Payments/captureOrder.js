@@ -51,6 +51,6 @@ router.get("/capture-order", (req, res) => __awaiter(void 0, void 0, void 0, fun
     const idOrder = response.data.purchase_units[0].reference_id;
     res
         .status(200)
-        .redirect(`${process.env.CLIENT_URL}/products/confirmacion/${idOrder}`);
+        .redirect(`https://barbershop-front-deploy.vercel.app/products/confirmacion/${idOrder}`);
 }));
 exports.default = router;
