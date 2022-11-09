@@ -23,7 +23,7 @@ router.get("/capture-order", async (req, res) => {
 
   res
     .status(200)
-    .redirect(`${process.env.CLIENT_URL}/products/confirmacion/${idOrder}`);
+    .redirect(`https://barbershop-front-deploy.vercel.app/products/confirmacion/${idOrder}`);
 });
 
 export default router;
