@@ -18,7 +18,9 @@ const Logeado = ({ setHide }: any) => {
   function handleLogOut() {
     signOut(auth);
     dispatch(logOut());
-    setHide("-translate-y-full");
+    if (typeof setHide === "function") {
+      setHide("-translate-y-full");
+    }
     navigate("/");
   }
   let img =

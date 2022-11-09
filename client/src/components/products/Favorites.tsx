@@ -1,13 +1,16 @@
-import { useEffect, useCallback } from "react";
-import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { RootState } from "../../app/store";
-import ProductCard from "./ProductCard";
+import { useEffect, useState } from "react";
 import { VscArrowLeft } from "react-icons/vsc";
 import { useNavigate } from "react-router";
-import { getFavoritesProducts, setFavosBulk } from "../slices/productSlice";
-import { setFavorites } from "../slices/productSlice";
-import { useState } from "react";
+import { Link } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { RootState } from "../../app/store";
+import {
+  getFavoritesProducts,
+  setFavorites,
+  setFavosBulk,
+} from "../slices/productSlice";
 import Paginate from "./Paginate";
+import ProductCard from "./ProductCard";
 
 export default function Favorites() {
   const dispatch = useAppDispatch();
@@ -47,35 +50,24 @@ export default function Favorites() {
     }
   };
 
-  const inicializar = useCallback(async () => {
+  useEffect(() => {
     cargarFavs();
-  }, [dispatch]);
-
-  useEffect(() => {
-    inicializar();
-
-    return () => {};
-  }, [dispatch]);
-
-  useEffect(() => {
-    inicializar();
-    return () => {};
-  }, [dispatch, inicializar]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const goBack = () => {
     navigate(-1);
   };
-  if (favoritos instanceof Array) {
-    const currentFavs = favoritos.slice(firstPostIndex, lastPostIndex);
+  const currentFavs = favoritos.slice(firstPostIndex, lastPostIndex);
+  return (
+    <div className=" bg-white bg-favorites-banner bg-no-repeat pb-2 bg-cover min-h-screen">
+      <VscArrowLeft onClick={() => goBack()} className="h-7 w-7 fill-white" />
+      <h1 className="flex justify-center text-white pb-4 pt-36 text-6xl">
+        MIS FAVORITOS
+      </h1>
 
-    return (
-      <div className=" bg-white bg-favorites-banner bg-no-repeat pb-2 bg-contain min-h-screen">
-        <VscArrowLeft onClick={() => goBack()} className="h-7 w-7 fill-white" />
-        <h1 className="flex justify-center text-white pb-4 pt-36 text-6xl">
-          MIS FAVORITOS
-        </h1>
-
-        <div className="border bg-white border-black rounded-xl p-3 mx-4 mt-10">
+      <div className="border bg-white border-black rounded-xl p-3 mx-4 mt-10">
+        {favoritos.length ? (
           <div className="grid grid-cols-4 gap-4 p-10 mx-4">
             {currentFavs?.map((Favoritos: any) => (
               <ProductCard
@@ -90,20 +82,28 @@ export default function Favorites() {
               />
             ))}
           </div>
-          <br />
-          <Paginate
-            allProducts={favoritos.length}
-            productsPerPage={productsPerPage}
-            setCurrentPage={setCurrentPage}
-            currentPage={currentPage}
-            pageLimit={pageLimit}
-            maxPageNumberLimit={maxPageNumberLimit}
-            minPageNumberLimit={minPageNumberLimit}
-            setMaxPageNumberLimit={setMaxPageNumberLimit}
-            setMinPageNumberLimit={setMinPageNumberLimit}
-          />
-        </div>
+        ) : (
+          <div className="flex justify-center lg:flex-row flex-col mt-8">
+            Aun no tiene favortino precione
+            <Link className="text-blue-400 mx-2 " to="/product">
+              aqui
+            </Link>
+            para agregar alguno
+          </div>
+        )}
+        <br />
+        <Paginate
+          allProducts={favoritos.length}
+          productsPerPage={productsPerPage}
+          setCurrentPage={setCurrentPage}
+          currentPage={currentPage}
+          pageLimit={pageLimit}
+          maxPageNumberLimit={maxPageNumberLimit}
+          minPageNumberLimit={minPageNumberLimit}
+          setMaxPageNumberLimit={setMaxPageNumberLimit}
+          setMinPageNumberLimit={setMinPageNumberLimit}
+        />
       </div>
-    );
-  } else return <h1>Aún no hay productos favoritos</h1>;
+    </div>
+  );
 }

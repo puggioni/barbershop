@@ -65,9 +65,9 @@ export default function LoginUser() {
     e.preventDefault();
     var verified = speakeasy.totp.verify({
       secret: secret,
-      encoding: 'ascii',
-      token: twofaCode
-    })
+      encoding: "ascii",
+      token: twofaCode,
+    });
     if (verified) {
       SetshowTwoFa("visibility: hidden");
       dispatch(setTwoFaState({ twofa: false, secret: "" }));
@@ -79,8 +79,7 @@ export default function LoginUser() {
       setPwdErr("");
       setPassword("");
       setUserName("");
-    }
-    else {
+    } else {
       alert("Codigo incorrecto");
     }
   };
@@ -89,8 +88,15 @@ export default function LoginUser() {
   const twofa = useSelector((state: any) => state.logIn.twoFaEnabled);
   const secret = useSelector((state: any) => state.logIn.secret);
 
-  useEffect(() => { if (logeado) navigate("/") }, [logeado]);
-  useEffect(() => { if (twofa) { SetshowTwoFa("visibility: visible bg-orange-100 p-4 rounded-lg") } }, [twofa]);
+  useEffect(() => {
+    if (logeado) navigate("/");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  useEffect(() => {
+    if (twofa) {
+      SetshowTwoFa("visibility: visible bg-orange-100 p-4 rounded-lg");
+    }
+  }, [twofa]);
 
   const handleForgotPass = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
@@ -168,7 +174,8 @@ export default function LoginUser() {
 
             <button
               className={`${buttonStyle} lg:w-[75%] mt-7 mb-3 lg:mx-10 justify-self-center py-3 lg:rounded-lg text-white w-full `}
-              onClick={(e) => handleSubmit(e)}>
+              onClick={(e) => handleSubmit(e)}
+            >
               Ingresar
             </button>
 
@@ -185,7 +192,8 @@ export default function LoginUser() {
               />
               <button
                 className={`bg-[#7db32d] w-[75%] mx-10 justify-self-center py-3 rounded-lg text-white lg:w-[75%] mt-7 lg:mx-10 justify-self-center py-3 lg:rounded-lg text-white w-full `}
-                onClick={(e) => handleVerify(e)}>
+                onClick={(e) => handleVerify(e)}
+              >
                 Validar Codigo
               </button>
             </div>
