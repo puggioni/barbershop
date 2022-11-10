@@ -12,7 +12,7 @@ router.post("/create", verifyToken, isAdmin, async (req: any, res: any) => {
   try {
     if (typeof name === "string") name = name.toLocaleLowerCase();
     const image: Object = await uploadImage(req.files.image.tempFilePath);
-
+    console.log(image);
     const product = new Product({
       name: name,
       description: description,
